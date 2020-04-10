@@ -17,7 +17,10 @@ router.get("/", function(req, res){
 
 
 router.post("/register",middleware.password,middleware.email,function(req,res){
-	var newUser = new User({username: req.body.username});
+	var newUser = new User({
+		username: req.body.username,
+		email   : req.body.email
+	});
 	User.register(newUser , req.body.password , function(err,user){
 		if(err){
 			req.flash("regError",err.message);
