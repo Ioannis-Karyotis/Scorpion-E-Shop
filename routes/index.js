@@ -2,6 +2,7 @@ var express 	= require("express");
 var router 		= express.Router();
 var passport 	= require("passport");
 var User 		= require("../models/user");
+var Product = require("../models/product");
 var middleware  = require("../middleware/index.js");
 
 
@@ -41,7 +42,7 @@ router.post("/login",passport.authenticate("local",
 	{
 		successRedirect: "back",
 		failureRedirect: "back",
-		failureFlash: true 
+		failureFlash: true
 	}), function(req,res){
 });
 

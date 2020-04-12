@@ -1,0 +1,49 @@
+.container {
+  background-color: lightblue;
+  padding: 3rem;
+}
+
+.card-footer {
+    padding: 0rem;;
+}
+
+.filter-card {
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: black;
+  border-radius: 1rem;
+}
+/*asign this class only when the width>768 */
+@media screen and (min-width:768px){
+  .modal-card {
+    width: 200%;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    align-self: center;
+  }
+}
+
+/*animatezoom*/
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
