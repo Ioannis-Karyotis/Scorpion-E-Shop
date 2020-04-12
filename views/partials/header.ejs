@@ -15,7 +15,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<ul id="f-nav" class="navbar-nav ml-auto ">
-			    	<% if(!currentUser){ %>	
+			    	<% if(!currentUser){ %>
 						<li  class="nav-item ">
 						<a class="nav-link" onclick="document.getElementById('id01').style.display='block'"><span>Login</span></a>
 						</li>
@@ -42,7 +42,7 @@
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-auto my-auto">
 					<div class="row">
 						<div class="mx-auto my-auto">
-							<a id="logo-bck" class="navbar-brand mt-n2 ml-4" href="/">
+							<a id="logo-bck" class="navbar-brand mt-n2 ml-2" href="/">
 								<img src="http://localhost:3000/images/alt.png">
 							</a>
 						</div>
@@ -83,7 +83,7 @@
 						    </li>
 						    <li class="nav-item ">
 						        <a class="nav-link" href="/logout"><span>Contact us</span></a>
-						    </li>		  
+						    </li>
 						</ul>
 					</div>
 				<div>
@@ -93,27 +93,27 @@
 </div>
 
 <!-- Login Modal -->
-<div id="id01" class="modal"> 
+<div id="id01" class="modal">
     <form class="modal-content animate" action="/login" method="post">
-        <div class="pr-3"> 
+        <div class="pr-3">
             <div class="form-group" style="float:right">
                 <a onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
                     <i class="far fa-times-circle"></i>
                 </a>
             </div>
         </div>
-        <div id="desc">   
+        <div id="desc">
             <div class="container mx-auto my-auto">
-                <h1>Log In</h1> 
+                <h1>Log In</h1>
                 <div class="form-group">
-                    <input type="text" name="username" placeholder="Username" required> 
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" required> 
+                    <input type="password" name="password" placeholder="Password" required>
                 </div>
-                <div class="form-group"> 
-                    <button class="btn btn-success" type="submit">Login</button>  
-                </div>  
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Login</button>
+                </div>
                 <hr>
             </div>
         </div>
@@ -121,40 +121,40 @@
 			<div class="container">
 				<div class="alert alert-danger" role="alert">
 					<%= error %>
-				</div>	
+				</div>
 			</div>
-		<% } %>         
+		<% } %>
     </form>
 </div>
 
 <!-- Register Modal -->
-<div id="id02" class="modal"> 
+<div id="id02" class="modal">
     <form class="modal-content animate" action="/register" method="post">
-        <div class="pr-3"> 
+        <div class="pr-3">
             <div class="form-group" style="float:right">
                 <a onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">
                     <i class="far fa-times-circle"></i>
                 </a>
             </div>
         </div>
-        <div id="desc">   
+        <div id="desc">
             <div class="container mx-auto my-auto">
-                <h1>Sign Up</h1> 
+                <h1>Sign Up</h1>
                 <div class="form-group">
-                    <input type="text" name="username" placeholder="Username" required> 
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" required> 
+                    <input type="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password2" placeholder="Confirm Password" required> 
+                    <input type="password" name="password2" placeholder="Confirm Password" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="email" placeholder="Email" required> 
+                    <input type="text" name="email" placeholder="Email" required>
                 </div>
-                <div class="form-group"> 
-                    <button class="btn btn-success" type="submit">Sign Up</button>  
-                </div>  
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                </div>
                 <hr>
             </div>
         </div>
@@ -162,9 +162,9 @@
 			<div class="container">
 				<div class="alert alert-danger" role="alert">
 					<%= regError %>
-				</div>	
+				</div>
 			</div>
-		<% } %>     
+		<% } %>
     </form>
 </div>
 
@@ -174,7 +174,7 @@
 			var modal= document.getElementById('id02');
 			modal.style.display = "block";
 		}
-	</script>	 
+	</script>
 <% } %>
 <%	if(error && error.length > 0) {%>
 	<script>
@@ -182,7 +182,7 @@
 			var modal= document.getElementById('id01');
 			modal.style.display = "block";
 		}
-	</script>	
+	</script>
 <% 	} %>
 
 
@@ -190,20 +190,12 @@
 <div class="container">
 	<div class="alert alert-danger" role="alert">
 		<%= genError %>
-	</div>	
+	</div>
 </div>
 <% }else if(genSuccess && genSuccess.length > 0) {%>
 <div class="container">
 	<div class="alert alert-success" role="alert">
 		<%= genSuccess %>
-	</div>	
+	</div>
 </div>
 <% } %>
-
-
-		
-		
-	
-
-
-
