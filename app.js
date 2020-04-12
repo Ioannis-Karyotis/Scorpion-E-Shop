@@ -9,6 +9,7 @@ var express 		= require("express");
 	flash			= require("connect-flash");
 	jquery 			= require('jquery');
 	User 	    	= require("./models/user");
+	Product			= require("./models/product");
 	//seedDB			= require("./seeds");
 
 var indexRoutes 	 = require("./routes/index");
@@ -32,11 +33,11 @@ app.use(require("express-session")({
 	secret: "testing the authentication",
 	resave: false,
 	saveUninitialized: false
-})); 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-  
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -52,7 +53,7 @@ app.use(function(req, res, next){
 });
 
 
-app.use(indexRoutes); 
+app.use(indexRoutes);
 
 
 app.listen(3000,function(){
