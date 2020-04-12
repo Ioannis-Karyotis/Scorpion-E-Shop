@@ -7,13 +7,16 @@ var middleware  = require("../middleware/index.js");
 // Product ROUTES
 //===================
 
-router.get("/products", function(req, res){
-
-    Product.find({}, function(err ,  ){
+router.get("/products/:type", function(req, res){
+	var wantedType = req.params.type;
+    Product.find({ type : wantedType }, function(err , foundProducts ){
         if(err){
             console.log(err)
         } else{
-            res.render("campgrounds/index", {campgrounds : allCampgrounds});
+            res.render("products", {products : foundProducts });
         }
     });
 });
+
+
+module.exports = router;

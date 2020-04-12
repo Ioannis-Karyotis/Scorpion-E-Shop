@@ -10,9 +10,10 @@ var express 		= require("express");
 	jquery 			= require('jquery');
 	User 	    	= require("./models/user");
 	Product			= require("./models/product");
-	//seedDB			= require("./seeds");
+	seedDB			= require("./seeds");
 
 var indexRoutes 	 = require("./routes/index");
+var productRoutes 	 = require("./routes/products");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
@@ -23,7 +24,7 @@ app.use(flash());
 app.set("view engine","ejs");
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-// seedDB(); //seed the database
+seedDB(); //seed the database with products
 
 //======================
 //PASSPORT CONFIGURATION
@@ -47,13 +48,14 @@ app.use(function(req, res, next){
 	res.locals.error       = req.flash("error");
 	res.locals.regError    = req.flash("regError");
 	res.locals.genError    = req.flash("genError");
-	res.locals.genSuccess     = req.flash("genSuccess");
+	res.locals.genSuccess  = req.flash("genSuccess");
 	next();
 
 });
 
 
 app.use(indexRoutes);
+app.use(productRoutes);
 
 
 app.listen(3000,function(){

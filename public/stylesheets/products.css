@@ -1,8 +1,6 @@
-.container {
-  background-color: lightblue;
-  padding: 3rem;
+/*.card img{
+  height:10em;
 }
-
 .card-footer {
     padding: 0rem;;
 }
@@ -16,7 +14,7 @@
   border-radius: 1rem;
 }
 /*asign this class only when the width>768 */
-@media screen and (min-width:768px){
+/*@media screen and (min-width:768px){
   .modal-card {
     width: 200%;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -25,12 +23,12 @@
 }
 
 /*animatezoom*/
-.animate {
+/*.animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
-
-@-webkit-keyframes animatezoom {
+*/
+/*@-webkit-keyframes animatezoom {
     from {
         -webkit-transform: scale(0)
     }
@@ -46,4 +44,4 @@
     to {
         transform: scale(1)
     }
-}
+}*/
