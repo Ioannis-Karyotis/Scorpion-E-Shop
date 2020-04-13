@@ -13,9 +13,28 @@ router.get("/products/:type", function(req, res){
         if(err){
             console.log(err)
         } else{
-            res.render("products", {products : foundProducts });
+        	var procount = 0;
+        	var countArray=[];
+        	foundProducts.forEach(function(){
+        		countArray.push(procount);
+        		procount = procount + 1;
+        	})
+        	console.log(countArray);
+            res.render("products", {products : foundProducts , count : countArray});
         }
     });
+});
+
+router.get("/products/:type/:id", function(req ,res){
+	Product.findById(req.params.id ,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+			var images = foundProduct.images;
+			console.log(images);
+			res.render("products/show", {product: foundProduct, images :images});
+		}
+	});
 });
 
 

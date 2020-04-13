@@ -3,25 +3,25 @@ var Product = require("./models/product");
 
 var data = [
     {
-        name: "Cloud's Rest",
+        name: "Example 1",
         type: "isothermika" ,
         price: "15.00 $",
-        image: "https://farm4.staticflickr.com/3795/10131087094_c1c0a1c859.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit" 
     },
     {
-        name: "Cloud's Rest",
+        name: "Example 2",
         type: "isothermika" ,
-        price: "15.00 $", 
-        image: "https://farm6.staticflickr.com/5487/11519019346_f66401b6c1.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        price: "10.00 $", 
+        images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
     },
     {
-        name: "Cloud's Rest",
+        name: "Example 3",
         type: "isothermika" ,
-        price: "15.00 $",
-        image: "https://farm1.staticflickr.com/189/493046463_841a18169e.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        price: "22.00 $",
+        images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
     }
 ]
  
