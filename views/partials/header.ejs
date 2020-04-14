@@ -10,8 +10,7 @@
 	</head>
 <body>
 
-<div id="nav-main">
-	<nav class="navbar navbar-expand navbar-light bg-light py-0">
+	<nav class="navbar navbar-expand navbar-light bg-light py-0 ">
 		<div class="container-fluid">
 			<div class="row">
 				<ul id="f-nav" class="navbar-nav ml-auto ">
@@ -36,61 +35,60 @@
 	</nav>
 
 
-	<nav class="navbar navbar-expand-md navbar-light bg-light pt-0  mb-2">
-		<div class="container-fluid">
+	<nav class="navbar navbar-expand-md navbar-light bg-light pt-0 pb-1">
+		<div class="container-fluid center-content">
 			<div class="row">
-				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-auto my-auto">
-					<div class="row">
-						<div class="mx-auto my-auto">
-							<a id="logo-bck" class="navbar-brand mt-n2 ml-2" href="/">
-								<img src="http://localhost:3000/images/alt.png">
-							</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="mx-auto my-auto">
-							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-							</button>
-						</div>
-					</div>
+				<div id="smth" class="my-auto mx-auto px-auto">
+					<a id="logo-bck" class="mt-n2 mx-auto my-auto d-flex justify-content-center" href="/">
+						<img src="http://localhost:3000/images/alt.png">
+					</a>
 				</div>
-
-				<div class="col-xl-0 col-lg-0 col-md-0 col-sm-0 col-xs-0 navbar-nav mx-auto my-auto ">
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav mb-n2">
-							<li class="nav-item">
-					        	<a class="nav-link" href="/products/isothermika"><span>Ισοθερμικά</span></a>
-					      	</li>
-					       	<li class="nav-item">
-					        	<a class="nav-link .nav-link-ltr" href="/logout"><span>Στρατιωτικά</span></a>
-					      	</li>
-						    <li class="nav-item">
-						        <a class="nav-link" href="#"><span>Φούτερ</span></a>
-					      	</li>
-						    <li class="nav-item">
-						        <a class="nav-link" href="/logout"><span>Μπατίκ</span></a>
-					      	</li>
-					      	</li>
-					       	<li class="nav-item ">
-						        <a class="nav-link" href="/logout"><span>Έξτρα</span></a>
-						    </li>
-						    <li class="nav-item ">
-						        <a class="nav-link" href="/logout"><span>Custom</span></a>
-						    </li>
-						    <li class="nav-item ">
-						        <a class="nav-link" href="/logout"><span>About</span></a>
-						    </li>
-						    <li class="nav-item ">
-						        <a class="nav-link" href="/logout"><span>Contact us</span></a>
-						    </li>
-						</ul>
-					</div>
-				<div>
 			</div>
 		</div>
 	</nav>
-</div>
+
+	<nav id="menu-nav" class="navbar navbar-expand-md navbar-dark bg-dark mb-2 pt-0 pb-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 collapse navbar-collapse " id="navbarSupportedContent">
+					<ul class="navbar-nav mb-n2 mx-auto my-auto ">
+						<li class="nav-item">
+				      <a class="nav-link" href="/products/isothermika"><span>Ισοθερμικά</span></a>
+		      	</li>
+		       	<li class="nav-item">
+		     			<a class="nav-link .nav-link-ltr" href="/logout"><span>Στρατιωτικά</span></a>
+		      	</li>
+				    <li class="nav-item">
+				    	<a class="nav-link" href="#"><span>Φούτερ</span></a>
+			      </li>
+				    <li class="nav-item">
+				    	<a class="nav-link" href="/logout"><span>Μπατίκ</span></a>
+			      </li>
+			      <li class="nav-item ">
+				     	<a class="nav-link" href="/logout"><span>Έξτρα</span></a>
+				    </li>
+				    <li class="nav-item ">
+				    	<a class="nav-link" href="/logout"><span>Custom</span></a>
+				    </li>
+				    <li class="nav-item ">
+				    	<a class="nav-link" href="/logout"><span>About</span></a>
+				    </li>
+				    <li class="nav-item ">
+				    	<a class="nav-link" href="/logout"><span>Contact us</span></a>
+				    </li>
+					</ul>
+				</div>
+
+
+
+				<div class="col-xs-0 mx-auto my-auto d-flex justify-content-center">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</nav>
 
 <!-- Login Modal -->
 <div id="id01" class="modal">
@@ -102,7 +100,7 @@
 	                    <i class="far fa-times-circle fa-lg"></i>
 	                </a>
 	            </div>
-	        </div>   
+	        </div>
 	        <div id="desc">
 	                <h1>Log In</h1>
 	                <div class="form-group">
@@ -124,7 +122,7 @@
 				</div>
 			<% } %>
 	    </form>
-	</div>    
+	</div>
 </div>
 
 <!-- Register Modal -->
@@ -164,7 +162,7 @@
 				</div>
 			<% } %>
 	    </form>
-	</div>    
+	</div>
 </div>
 
 <% if(regError && regError.length > 0){ %>
