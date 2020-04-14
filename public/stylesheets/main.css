@@ -3,8 +3,8 @@
 /*==============*/
 body{
 	font-family: 'Vollkorn', serif;
-	font-weight: 900;
-	font-size: 20px;
+	font-weight: 700;
+	font-size: 1.1rem;
 	color: black;
 	background-image:url("http://localhost:3000/images/camo.jpg");
 }
@@ -23,12 +23,16 @@ hr{
 	display: inline-block;
 }
 
+.nav-link{
+	text-align: center;
+}
+
 .nav-link span:after {
 	content: '';
 	display: block;
 	border-radius: 25px;
 	width:0;
-	height: 5px;
+	height: 3px;
 	background: #9AAF5E;
 	transition: width .3s;
 }
@@ -36,7 +40,7 @@ hr{
 .nav-link span:hover::after {
 	width:100%;
 	transition: width .3s;
-  }
+}
 
 .row{
 	flex-grow: 1;
@@ -49,6 +53,10 @@ hr{
 	margin-bottom: -0.5rem !important;
 }
 
+#menu-nav a span{
+	color:#FFFFFF;
+}
+
 #f-nav{
   z-index: 3;
 }
@@ -56,6 +64,10 @@ hr{
 #logo-bck{
   margin-top: -0.5rem;
   z-index: 3;
+}
+
+#logo-bck img{
+	width:90%;
 }
 
 #logo-bck img:hover {
@@ -69,15 +81,11 @@ hr{
   transform: translateY(4px);
 }
 
-#nav-main{
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
 /*==============*/
 /* Landing Page */
 /*==============*/
 .carousel-item img{
-	border-radius: 10px;
+	/* border-radius: 10px; */
 	width: 100%;
   height: 100%;
 }
@@ -88,16 +96,15 @@ hr{
 	background-color: black;
 }
 
-
 #main{
 	background: white;
-	border-radius: 10px;
+	/* border-radius: 10px; */
   	padding : 0px;
   	width:100%;
   	height: 100%;
   	margin-top:2em;
   	margin-bottom:2em;
-  	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  	/* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
 }
 
 #desc{
@@ -109,20 +116,20 @@ hr{
 /*=========*/
 
 .cancelbtn i{
-    color: #f44336;  
+    color: #f44336;
 }
 
 .cancelbtn i:hover{
-    opacity:0.8;  
-}  
+    opacity:0.8;
+}
 
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     overflow-y: scroll;
     -ms-overflow-style: none;
-    background-color: rgba(0, 0, 0, 0.4); 
-    padding-top: 60px; 
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
 }
 
 .modal::-webkit-scrollbar {
@@ -130,19 +137,18 @@ hr{
 }
 
 
-@media screen and (min-width:768px){
+@media screen and (min-width:1000px){
 
-  .modal-content { 
-  font-family: 'Vollkorn', serif;
-  border-radius: 10px;
-  overflow: hidden; 
-  background-color: #fefefe; 
-  margin: auto; 
-  border: 2px solid #888;
-  border-radius: 10px; 
-  width: 50%;
-  height: 60%;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+  .modal-content {
+	  font-family: 'Vollkorn', serif;
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 50%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
 }
 
@@ -154,27 +160,27 @@ hr{
 	background-color:#9AAF5E;
 }
 
-.animate { 
-    -webkit-animation: animatezoom 0.6s; 
-    animation: animatezoom 0.6s 
-} 
-  
-@-webkit-keyframes animatezoom { 
-    from { 
-        -webkit-transform: scale(0) 
-    } 
-    to { 
-        -webkit-transform: scale(1) 
-    } 
-} 
-  
-@keyframes animatezoom { 
-    from { 
-        transform: scale(0) 
-    } 
-    to { 
-        transform: scale(1) 
-    } 
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 #modal-carousel img{
   border-radius: 10px;
@@ -202,4 +208,43 @@ hr{
 .card button{
   width:100%;
   height:100%;
+}
+
+/*=============*/
+/*Footer*/
+/*=============*/
+
+.page-footer{
+	font-family: 'Vollkorn',serif;
+	font-weight: 600;
+	font-size: 0.8rem;
+	color: white;
+	/* box-shadow: -8px -9px 5px 0px rgba(0,0,0,0.75); */
+  position: static;
+  width:100%;
+  bottom: 0;
+}
+
+.page-footer a{
+	color: #FFFFFF;
+}
+
+#desc{
+	text-align: center;
+}
+
+#logo-foot img{
+	width: 5em;
+	height: 8em;
+}
+
+#logo-foot img:hover {
+  opacity: 0.75;
+}
+#logo-foot img:hover:active {
+  content:url("http://localhost:3000/images/logo3.png");
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0);
+  filter: drop-shadow(5px 5px 5px #222);
+  transform: translateY(4px);
 }
