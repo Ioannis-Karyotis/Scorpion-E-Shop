@@ -1,0 +1,119 @@
+<%- include("partials/header")%>
+
+<div id="main" class="main container py-2">
+    <div class="row d-flex justify-content-around">
+	    <form action="/register" class="col-lg-6" method="post">
+	        <div class="desc">
+	        	<% if(regError && regError.length > 0){ %>
+					
+					<h1 class="pb-3">Φόρμα Εγγραφής</h1>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input
+			                	<%if(rest.username == ""){ %>
+			                		class="wrninput" onfocus="this.value=''"
+			                		type="text" name="username" value="<%= regError %>"
+			                	<% }else { %>
+			                 		type="text" name="username" value="<%= rest.username %>"
+			                 	<%} %> 
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Το ψευδόνυμο πρέπει να αποτελείται απο 6 εώς 14 χαρακτήρες, χωρίς ειδικούς χαρακτήρες </div>
+			                	</i>
+			            </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input 
+								<%if(rest.password == "" && rest.password2!=""){ %>
+			                		id="pass" class="wrninput" 
+			                		type="text" name="password" value="<%= regError %>" onfocus="checkPassword()"
+			                	<% }else { %>	
+			                		type="password" name="password" value="<%= rest.password %>" 
+			                	<% }%>
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
+			                	</i>
+			            </span>
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input 
+								<%if(rest.password2 == "" && rest.password==""){ %>
+			                		id="pass" class="wrninput" 
+			                		type="text" name="password2" value="<%= regError %>" onfocus="checkPassword()"
+			                	<% }else { %>	
+			                		type="password" name="password2" value="<%= rest.password2 %>" 
+			                	<% }%>
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
+			                	</i>
+	                	</span>
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input
+			                	<%if(rest.email == ""){ %>
+			                		class="wrninput" onfocus="this.value=''"
+			                		type="text" name="email" value="<%= regError %>"
+			                	<% } %>
+			                 		type="text" name="email" value="<%= rest.email %>" 
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+			                	</i>
+	                	</span>
+		            </div>
+		            <div class="form-group">
+		                <button class="btn btn-success" type="submit">Sign Up</button>
+		            </div>
+				<% }else { %>
+
+
+					<h1 class="pb-3">Φόρμα Εγγραφής</h1>
+		            <div class="form-group pl-2">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="username" placeholder="Ψευδώνυμο" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Το Ψευδώνυμο πρέπει να αποτελείται απο 6 εώς 14 χαρακτήρες, χωρίς ειδικούς χαρακτήρες </div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+		                	<input type="password" name="password" placeholder="Κωδικός" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		                <span class="d-flex align-items-center">	
+		                	<input type="password" name="password2" placeholder="Επιβεβαίωση κωδικού" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		                <span class="d-flex align-items-center">	
+		                	<input type="text" name="email" placeholder="E-mail" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group">
+		                <button class="btn btn-success" type="submit">Εγγραφή</button>
+		            </div>
+
+	            <% } %>
+	            <hr>
+	        </div>
+		</form>
+	</div>
+</div>
+
+<%- include("partials/footer")%>

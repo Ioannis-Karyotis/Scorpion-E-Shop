@@ -15,9 +15,19 @@ router.get("/", function(req, res){
 //======================
 // AUTHENTICATION ROUTES
 //======================
+router.get("/register",function(req,res){
+	if(req.app.locals.specialContext!= null){
+		var rest = req.app.locals.specialContext;
+		req.app.locals.specialContext = null;
+		res.render("register",{rest : rest});
+	}else{
+		var rest = {};
+		res.render("register",{rest : rest});
+	}
+})
 
 
-router.post("/register",middleware.password,middleware.email,function(req,res){
+router.post("/register",middleware.username , middleware.password , middleware.email,function(req,res){
 	var newUser = new User({
 		username: req.body.username,
 		email   : req.body.email
@@ -29,7 +39,7 @@ router.post("/register",middleware.password,middleware.email,function(req,res){
 		}
 		passport.authenticate("local")(req, res, function(){
 			req.flash("genSuccess","You Successfully Signed Up");
-			res.redirect("back");
+			res.redirect("/");
 		});
 	});
 });
@@ -38,9 +48,13 @@ router.post("/register",middleware.password,middleware.email,function(req,res){
 //	LOGIN ROUTE
 //===============
 
+router.get("/login",function(req,res){
+	res.render("login");
+})
+
 router.post("/login",passport.authenticate("local",
 	{
-		successRedirect: "back",
+		successRedirect: "/",
 		failureRedirect: "back",
 		failureFlash: true
 	}), function(req,res){
@@ -56,5 +70,12 @@ router.get("/logout",function(req,res){
 	res.redirect("back");
 })
 
+
+//===============
+//FACEBOOK ROUTE
+//===============
+
+// router.route('/oauth/facebook')
+// 	.post(passport.authenticate('facebookToken', {session:false}), UsersController.facebookOAuth);
 
 module.exports = router;

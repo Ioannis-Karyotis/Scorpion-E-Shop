@@ -1,16 +1,16 @@
 <%- include("./../partials/header")%>
-<div id="main" class="container">
+
+<div id="main" class="container-fluid product">
   <h1>Products</h1>
-  <div class="row my-3 mx-3">
+  <div class="row my-3 mx-5 d-flex justify-content-lg-start justify-content-around">
     <% count.forEach(function(count){ %>
-    <div class="col-md-6 col-lg-4 mb-4">
+    <div class="px-0 col-10 col-sm-8 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
       <div class="card">
         <img src="<%=products[count].images[0].url %>" onclick="document.getElementById('exampleModalCenter<%= count %>').style.display='block'" class="card-img-top" alt="">
         <div class="card-footer">
           <h4><%=products[count].price %></h4> 
           <h3><%=products[count].name %></h3>
           <a  class="btn btn-primary btn-lg btn-block" href="/products/<%=products[count].type %>/<%=products[count]._id%>">
-            <!-- onclick="document.getElementById('exampleModalCenter<%= count %>').style.display='block'" -->
             Details
           </a>
         </div>

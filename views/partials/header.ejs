@@ -9,6 +9,8 @@
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 	</head>
 <body>
+<div id="page-container">
+	<div id="content-wrap">	
 
 	<nav class="navbar navbar-expand navbar-light bg-light py-0 ">
 		<div class="container-fluid">
@@ -16,17 +18,32 @@
 				<ul id="f-nav" class="navbar-nav ml-auto ">
 			    	<% if(!currentUser){ %>
 						<li  class="nav-item ">
-						<a class="nav-link" onclick="document.getElementById('id01').style.display='block'"><span>Login</span></a>
+						<a class="nav-link" href="/login">
+							<span>
+								<i class="fas fa-sign-in-alt"></i> Είσοδος 
+							</span>
+						</a>
 						</li>
 						<li class="nav-item ">
-						<a class="nav-link" onclick="document.getElementById('id02').style.display='block'"><span>Register</span></a>
+						<a class="nav-link" href="/register">
+							<span>
+								 <i class="fas fa-user-plus"></i> Εγγραφή
+							</span>
+						</a>
 						</li>
 				    <% } else { %>
 						<li class="nav-item">
-						<a class="nav-link" href="#">Welcome, <%= currentUser.username %></a>
+						<a class="nav-link" href="#">
+							<span>
+								<i class="fas fa-user"></i> Καλωσήρθατε, <%= currentUser.username %></a>
+							</span>
 						</li>
 						<li class="nav-item ">
-						<a class="nav-link" href="/logout">Log out</a>
+						<a class="nav-link" href="/logout">
+							<span>
+								<i class="fas fa-sign-out-alt"></i> Έξοδος 
+							</span>
+						</a>
 				      </li>
 			      	<% } %>
 				</ul>
@@ -35,7 +52,7 @@
 	</nav>
 
 
-	<nav class="navbar navbar-expand-md navbar-light bg-light pt-0 pb-1">
+	<nav id="logo-nav" class="navbar navbar-expand-md navbar-light bg-light pt-0 pb-1 mt-n2">
 		<div class="container-fluid center-content">
 			<div class="row">
 				<div id="smth" class="my-auto mx-auto px-auto">
@@ -47,41 +64,38 @@
 		</div>
 	</nav>
 
-	<nav id="menu-nav" class="navbar navbar-expand-md navbar-dark bg-dark mb-2 pt-0 pb-0">
-		<div class="container">
+	<nav id="menu-nav" class="navbar navbar-fixed-top navbar-expand-md navbar-dark bg-dark mb-2 pt-0 pb-1">
+		<div id="header-container"  class="container">
 			<div class="row">
 				<div class="col-xs-12 collapse navbar-collapse " id="navbarSupportedContent">
 					<ul class="navbar-nav mb-n2 mx-auto my-auto ">
 						<li class="nav-item">
-				      <a class="nav-link" href="/products/isothermika"><span>Ισοθερμικά</span></a>
-		      	</li>
-		       	<li class="nav-item">
-		     			<a class="nav-link .nav-link-ltr" href="/logout"><span>Στρατιωτικά</span></a>
-		      	</li>
-				    <li class="nav-item">
-				    	<a class="nav-link" href="#"><span>Φούτερ</span></a>
-			      </li>
-				    <li class="nav-item">
-				    	<a class="nav-link" href="/logout"><span>Μπατίκ</span></a>
-			      </li>
-			      <li class="nav-item ">
-				     	<a class="nav-link" href="/logout"><span>Έξτρα</span></a>
-				    </li>
-				    <li class="nav-item ">
-				    	<a class="nav-link" href="/logout"><span>Custom</span></a>
-				    </li>
-				    <li class="nav-item ">
-				    	<a class="nav-link" href="/logout"><span>About</span></a>
-				    </li>
-				    <li class="nav-item ">
-				    	<a class="nav-link" href="/logout"><span>Contact us</span></a>
-				    </li>
+				      		<a class="nav-link" href="/products/isothermika"><span>Ισοθερμικά</span></a>
+				      	</li>
+				       	<li class="nav-item">
+				     		<a class="nav-link .nav-link-ltr" href="/logout"><span>Στρατιωτικά</span></a>
+				      	</li>
+					    <li class="nav-item">
+					    	<a class="nav-link" href="#"><span>Φούτερ</span></a>
+				     	</li>
+					    <li class="nav-item">
+					    	<a class="nav-link" href="/logout"><span>Μπατίκ</span></a>
+				      	</li>
+				      	<li class="nav-item ">
+					     	<a class="nav-link" href="/logout"><span>Έξτρα</span></a>
+					    </li>
+					    <li class="nav-item ">
+					    	<a class="nav-link" href="/logout"><span>Custom</span></a>
+					    </li>
+					    <li class="nav-item ">
+					    	<a class="nav-link" href="/logout"><span>About</span></a>
+					    </li>
+					    <li class="nav-item ">
+					    	<a class="nav-link" href="/logout"><span>Contact us</span></a>
+					    </li>
 					</ul>
 				</div>
-
-
-
-				<div class="col-xs-0 mx-auto my-auto d-flex justify-content-center">
+				<div id="toggle-container" class="col-xs-0 mx-auto my-auto d-flex justify-content-center">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -89,99 +103,6 @@
 			</div>
 		</div>
 	</nav>
-
-<!-- Login Modal -->
-<div id="id01" class="modal">
-	<div class="container-fluid">
-	    <form class="modal-content animate" action="/login" method="post">
-	        <div class="pr-1 pt-1">
-	            <div class="form-group" style="float:right">
-	                <a onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-	                    <i class="far fa-times-circle fa-lg"></i>
-	                </a>
-	            </div>
-	        </div>
-	        <div id="desc">
-	                <h1>Log In</h1>
-	                <div class="form-group">
-	                    <input type="text" name="username" placeholder="Username" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="password" name="password" placeholder="Password" required>
-	                </div>
-	                <div class="form-group">
-	                    <button class="btn btn-success" type="submit">Login</button>
-	                </div>
-	            </div>
-	        </div>
-	        <% if(error && error.length > 0){ %>
-				<div class="container">
-					<div class="alert alert-danger" role="alert">
-						<%= error %>
-					</div>
-				</div>
-			<% } %>
-	    </form>
-	</div>
-</div>
-
-<!-- Register Modal -->
-<div id="id02" class="modal">
-	<div class="container-fluid">
-	    <form class="modal-content animate" action="/register" method="post">
-	        <div class="pr-1 pt-1">
-	            <div class="form-group" style="float:right">
-	                <a onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">
-	                    <i class="far fa-times-circle fa-lg"></i>
-	                </a>
-	            </div>
-	        </div>
-	        <div id="desc">
-	                <h1>Sign Up</h1>
-	                <div class="form-group">
-	                    <input type="text" name="username" placeholder="Username" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="password" name="password" placeholder="Password" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="password" name="password2" placeholder="Confirm Password" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="text" name="email" placeholder="Email" required>
-	                </div>
-	                <div class="form-group">
-	                    <button class="btn btn-success" type="submit">Sign Up</button>
-	                </div>
-	            </div>
-	         <% if(regError && regError.length > 0){ %>
-				<div class="container">
-					<div class="alert alert-danger" role="alert">
-						<%= regError %>
-					</div>
-				</div>
-			<% } %>
-	    </form>
-	</div>
-</div>
-
-<% if(regError && regError.length > 0){ %>
-	<script>
-		window.onload = function() {
-			var modal= document.getElementById('id02');
-			modal.style.display = "block";
-		}
-	</script>
-<% } %>
-<%	if(error && error.length > 0) {%>
-	<script>
-		window.onload = function() {
-			var modal= document.getElementById('id01');
-			modal.style.display = "block";
-		}
-	</script>
-<% 	} %>
-
 
 <% if(genSuccess && genError.length > 0){ %>
 <div class="container">

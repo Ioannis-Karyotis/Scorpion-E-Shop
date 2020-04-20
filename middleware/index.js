@@ -48,25 +48,71 @@ middlewareObj.isLoggedIn = function (req, res , next){
 	res.redirect("back");
 }
 
+middlewareObj.username = function (req , res ,  next){
+  if (/^[a-zA-Z]\w{6,14}$/.test(req.body.username))
+    {
+      return next();
+    }else{
+      res.app.locals.specialContext = 
+      {
+          username : "",
+          password : req.body.password,
+          password2 : req.body.password2,
+          email : req.body.email
+        }
+      req.flash("regError","Το Ψευδώνυμο δεν έχει τη σωστή μορφή");
+      res.redirect("back");   
+    }     
+}
+
+middlewareObj.password = function (req , res ,  next){
+  if (req.body.password === req.body.password2)
+    {
+      if (/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,14}$/.test(req.body.password)){
+        return next();
+      }else{
+        res.app.locals.specialContext = 
+        {
+          username : req.body.username,
+          password : "",
+          password2 : req.body.password2,
+          email : req.body.email
+        }
+        req.flash("regError","Ο κωδικός δεν έχει τη σωστή μορφή");
+        res.redirect("back"); 
+      }
+    }else{
+      res.app.locals.specialContext = 
+      {
+          username : req.body.username,
+          password : "",
+          password2 : "",
+          email : req.body.email
+      }
+      req.flash("regError","Τα πεδία των κωδικών δεν ταιριάζουν μεταξύ τους");
+      res.redirect("back");   
+    }     
+}
+
+
+
 middlewareObj.email = function (req , res ,  next){
 	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email))
   	{
     	return next();
   	}else{
-  		req.flash("regError","Please , Write a valid email form");
-		res.redirect("back");   
+      res.app.locals.specialContext = 
+      {
+          username : req.body.username,
+          password : req.body.password,
+          password2 : req.body.password2,
+          email : ""
+        }
+  		req.flash("regError","Please ,To e-mail δεν έχει τη σωστή μορφή");
+		  res.redirect("back");   
   	}   	
 }
 
-middlewareObj.password = function (req , res ,  next){
-	if (req.body.password === req.body.password2)
-  	{
-    	return next();
-  	}else{
-  		req.flash("regError","The password fields do not match with eachother");
-		res.redirect("back");   
-  	}   	
-}
 
 
 

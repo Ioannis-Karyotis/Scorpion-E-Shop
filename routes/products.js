@@ -20,6 +20,7 @@ router.get("/products/:type", function(req, res){
         		procount = procount + 1;
         	})
         	console.log(countArray);
+            console.log(foundProducts);
             res.render("products", {products : foundProducts , count : countArray});
         }
     });
@@ -30,9 +31,13 @@ router.get("/products/:type/:id", function(req ,res){
 		if(err){
 			console.log(err);
 		} else {
-			var images = foundProduct.images;
-			console.log(images);
-			res.render("products/show", {product: foundProduct, images :images});
+            if(foundProduct!= null){
+    		    var images = foundProduct.images;
+    		    console.log(images);
+    		    res.render("products/show", {product: foundProduct, images :images});
+            } else{
+                res.redirect("back");
+            }
 		}
 	});
 });
