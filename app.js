@@ -1,21 +1,21 @@
-var express 		= require("express");
-	app				= express();
-	path 			= require('path');
-	bodyParser 		= require("body-parser");
-	expressSanitizer= require("express-sanitizer");
-	mongoose 		= require("mongoose");
-	passport 		= require("passport");
-	LocalStrategy   = require("passport-local");
-	FaceBookTokenStrategy = require("passport-facebook-token");
-	methodOverride  = require("method-override");
-	flash			= require("connect-flash");
-	jquery 			= require('jquery');
-	User 	    	= require("./models/user");
-	Product			= require("./models/product");
+const express 		= require("express"),
+	app				= express(),
+	path 			= require('path'),
+	bodyParser 		= require("body-parser"),
+	expressSanitizer= require("express-sanitizer"),
+	mongoose 		= require("mongoose"),
+	passport 		= require("passport"),
+	LocalStrategy   = require("passport-local"),
+	FaceBookTokenStrategy = require("passport-facebook-token"),
+	methodOverride  = require("method-override"),
+	flash			= require("connect-flash"),
+	jquery 			= require('jquery'),
+	User 	    	= require("./models/user"),
+	Product			= require("./models/product"),
 	seedDB			= require("./seeds");
 
-var indexRoutes 	 = require("./routes/index");
-var productRoutes 	 = require("./routes/products");
+const indexRoutes 	 = require("./routes/index"),
+	  productRoutes  = require("./routes/products");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
@@ -39,24 +39,13 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 passport.use(new LocalStrategy(User.authenticate()));
+
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-// passport.use("faceBookToken", new FaceBookTokenStrategy({
-// 	clientID: config.oauth.facebook.clientID,
-// 	clientSecret: config.oauth.facebook.clientSecret,
-// }, async(accessToken, refreshToken, profile, done) => {
-// 	try{
-// 		console.log('profile',profile);
-// 		console.log('accessToken',accessToken);
-// 		console.log('refreshToken',refreshToken);
-// 	} catch{
-// 		done(error, false , error.message);
-// 	}
-// }));
 
 
 app.use(function(req, res, next){
@@ -66,14 +55,11 @@ app.use(function(req, res, next){
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
 	next();
-
 });
 
 
 app.use(indexRoutes);
 app.use(productRoutes);
 
+module.exports = app;
 
-app.listen(3000,function(){
-	console.log("Scorpion Server has started");
-})
