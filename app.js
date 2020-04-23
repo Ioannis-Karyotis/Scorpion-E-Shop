@@ -15,7 +15,8 @@ const express 		= require("express"),
 	seedDB			= require("./seeds");
 
 const indexRoutes 	 = require("./routes/index"),
-	  productRoutes  = require("./routes/products");
+	  productRoutes  = require("./routes/products"),
+	  config 		 = require("./configuration/passport");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
@@ -28,9 +29,6 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
 seedDB(); //seed the database with products
 
-//======================
-//PASSPORT CONFIGURATION
-//======================
 
 app.use(require("express-session")({
 	secret: "testing the authentication",
@@ -39,12 +37,6 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 
 

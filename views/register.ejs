@@ -10,17 +10,46 @@
 		            <div class="form-group pl-2">
 		            	<span class="d-flex align-items-center">
 			                <input
-			                	<%if(rest.username == ""){ %>
+			                	<%if(rest.name == ""){ %>
 			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="username" value="<%= regError %>"
+			                		type="text" name="name" value="<%= regError %>"
 			                	<% }else { %>
-			                 		type="text" name="username" value="<%= rest.username %>"
+			                 		type="text" name="name" value="<%= rest.name %>"
 			                 	<%} %> 
 			                required>
 			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Το ψευδόνυμο πρέπει να αποτελείται απο 6 εώς 14 χαρακτήρες, χωρίς ειδικούς χαρακτήρες </div>
+			                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το όνομά σας </div>
 			                	</i>
 			            </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input
+			                	<%if(rest.surname == ""){ %>
+			                		class="wrninput" onfocus="this.value=''"
+			                		type="text" name="surname" value="<%= regError %>"
+			                	<% }else { %>
+			                 		type="text" name="surname" value="<%= rest.surname %>"
+			                 	<%} %> 
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το επίθετό σας </div>
+			                	</i>
+			            </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		            	<span class="d-flex align-items-center">
+			                <input
+			                	<%if(rest.email == ""){ %>
+			                		class="wrninput" onfocus="this.value=''"
+			                		type="text" name="email" value="<%= regError %>"
+			                	<% } %>
+			                 		type="text" name="email" value="<%= rest.email %>" 
+			                required>
+			                	<i class="fas fa-info-circle fa-lg px-2">
+			                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+			                	</i>
+	                	</span>
 		            </div>
 		            <div class="form-group pl-2">
 		            	<span class="d-flex align-items-center">
@@ -52,20 +81,6 @@
 			                	</i>
 	                	</span>
 		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input
-			                	<%if(rest.email == ""){ %>
-			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="email" value="<%= regError %>"
-			                	<% } %>
-			                 		type="text" name="email" value="<%= rest.email %>" 
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-			                	</i>
-	                	</span>
-		            </div>
 		            <div class="form-group">
 		                <button class="btn btn-success" type="submit">Sign Up</button>
 		            </div>
@@ -75,9 +90,25 @@
 					<h1 class="pb-3">Φόρμα Εγγραφής</h1>
 		            <div class="form-group pl-2">
 		                <span class="d-flex align-items-center">
-		                	<input type="text" name="username" placeholder="Ψευδώνυμο" required>
+		                	<input type="text" name="name" placeholder="Όνομα" required>
 		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Το Ψευδώνυμο πρέπει να αποτελείται απο 6 εώς 14 χαρακτήρες, χωρίς ειδικούς χαρακτήρες </div>
+		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το όνομά σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="surname" placeholder="Επίθετο" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το επίθετό σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pl-2">
+		                <span class="d-flex align-items-center">	
+		                	<input type="text" name="email" placeholder="E-mail" required>
+		                	<i class="fas fa-info-circle fa-lg px-2">
+		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
 		                	</i>
 		                </span>	
 		            </div>
@@ -94,14 +125,6 @@
 		                	<input type="password" name="password2" placeholder="Επιβεβαίωση κωδικού" required>
 		                	<i class="fas fa-info-circle fa-lg px-2">
 		                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		                <span class="d-flex align-items-center">	
-		                	<input type="text" name="email" placeholder="E-mail" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
 		                	</i>
 		                </span>	
 		            </div>

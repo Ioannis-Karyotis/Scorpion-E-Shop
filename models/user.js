@@ -1,15 +1,24 @@
-var mongoose = require("mongoose");
-var passportLocalMongoose = require("passport-local-mongoose");
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 var UserSchema = new mongoose.Schema({
-	username: { type:String, required:true },
-	email:    { type:String, required:true },
-	password:String
+	name: String,
+	surname:String, 
+	email: String,
+	password:String,
+	hash: String,
+	salt: String,
 });
-UserSchema.methods.validPassword = function( pwd ) {
-    // EXAMPLE CODE!
-    return ( this.password === pwd );
+
+UserSchema.methods.setPassword = function(password) {
+	console.log("dasdsadsadsad");
+  this.salt = crypto.randomBytes(16).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.methods.validatePassword = function(password) {
+  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  return this.hash === hash;
+};
+
 module.exports = mongoose.model("User",UserSchema);

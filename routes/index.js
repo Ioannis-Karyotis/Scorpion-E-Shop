@@ -27,21 +27,24 @@ router.get("/register",function(req,res){
 })
 
 
-router.post("/register",middleware.username , middleware.password , middleware.email,function(req,res){
+router.post("/register",middleware.namesur , middleware.email , middleware.password ,function(req,res){
 	var newUser = new User({
-		username: req.body.username,
-		email   : req.body.email
+		name    : req.body.name,
+		surname : req.body.surname,
+		email : req.body.email
 	});
-	User.register(newUser , req.body.password , function(err,user){
+	console.log(newUser);
+	newUser.setPassword(req.body.password);
+	console.log(newUser);
+	newUser.save(function(err){
 		if(err){
-			req.flash("regError",err.message);
-			res.redirect('back');
+			console.log(err.message);
 		}
 		passport.authenticate("local")(req, res, function(){
 			req.flash("genSuccess","You Successfully Signed Up");
 			res.redirect("/");
 		});
-	});
+	})
 });
 
 //===============
@@ -75,7 +78,11 @@ router.get("/logout",function(req,res){
 //FACEBOOK ROUTE
 //===============
 
-// router.route('/oauth/facebook')
-// 	.post(passport.authenticate('facebookToken', {session:false}), UsersController.facebookOAuth);
+router.get('/auth/facebook', passport.authenticate('facebook'));
+
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
+
 
 module.exports = router;
