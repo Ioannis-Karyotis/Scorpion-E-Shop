@@ -6,11 +6,12 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/cart.css">
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 	</head>
 <body>
 <div id="page-container">
-	<div id="content-wrap">	
+	<div id="content-wrap">
 
 	<nav class="navbar navbar-expand navbar-light bg-light py-0 ">
 		<div class="container-fluid">
@@ -18,18 +19,18 @@
 				<ul id="f-nav" class="navbar-nav ml-auto ">
 			    	<% if(!currentUser){ %>
 						<li  class="nav-item ">
-						<a class="nav-link" href="/login">
-							<span>
-								<i class="fas fa-sign-in-alt"></i> Είσοδος 
-							</span>
-						</a>
+							<a class="nav-link" href="/login">
+								<span>
+									<i class="fas fa-sign-in-alt"></i> Είσοδος
+								</span>
+							</a>
 						</li>
 						<li class="nav-item ">
-						<a class="nav-link" href="/register">
-							<span>
-								 <i class="fas fa-user-plus"></i> Εγγραφή
-							</span>
-						</a>
+							<a class="nav-link" href="/register">
+								<span>
+									 <i class="fas fa-user-plus"></i> Εγγραφή
+								</span>
+							</a>
 						</li>
 				    <% } else { %>
 						<li class="nav-item">
@@ -39,13 +40,41 @@
 							</span>
 						</li>
 						<li class="nav-item ">
-						<a class="nav-link" href="/logout">
-							<span>
-								<i class="fas fa-sign-out-alt"></i> Έξοδος 
-							</span>
-						</a>
+							<a class="nav-link" href="/logout">
+								<span>
+									<i class="fas fa-sign-out-alt"></i> Έξοδος
+								</span>
+							</a>
 				      </li>
 			      	<% } %>
+							<li  class="nav-item ">
+								<span class="nav-link" href=""> <!-- span instead of a so that the links inside work-->
+									<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fas fa-shopping-cart badge-pill">
+												<%=session.cart ? session.cart.totalQuantity : " "%>
+										</i>
+									</span>
+									<div class="dropdown-menu dropdown-menu-right">
+								    <%if(session.productList){ %>
+											 <% session.productList.forEach(function(item){ %>
+												 <div class="dropdown-item" type="button">
+													<img src=" <%=	item.product.images[0].url %> " height="42" width="42"></img>,
+													<%= item.product.name %>,
+													<%=	item.quantity %>,
+													<%= item.price %>
+												</div>
+											 <%});%>
+											 <a class="dropdown-item" href="/cart">
+												 Μετάβαση στο καλάθι
+											 </a>
+										<%}else{ %>
+												<div>
+													Δεν υπάρχουν προϊόντα στο καλάθι σας!
+												</div>
+										<%}%>
+							  	</div>
+								</span>
+							</li>
 				</ul>
 			</div>
 		</div>

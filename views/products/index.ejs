@@ -3,43 +3,44 @@
 <div id="main" class="container-fluid product">
   <h1>Products</h1>
   <div class="row my-3 mx-5 d-flex justify-content-lg-start justify-content-around">
-    <% count.forEach(function(count){ %>
+<% products.forEach(function(product){ %>
     <div class="px-0 col-10 col-sm-8 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
       <div class="card">
-        <img src="<%=products[count].images[0].url %>" onclick="document.getElementById('exampleModalCenter<%= count %>').style.display='block'" class="card-img-top" alt="">
+        <img src="<%=product.images[0].url %>" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'" class="card-img-top" alt="">
         <div class="card-footer">
-          <h4><%=products[count].price %></h4> 
-          <h3><%=products[count].name %></h3>
-          <a  class="btn btn-primary btn-lg btn-block" href="/products/<%=products[count].type %>/<%=products[count]._id%>">
+          <h4><%=product.price %></h4>
+          <h3><%=product.name %></h3>
+          <a  class="btn btn-primary btn-lg btn-block" href="/products/<%=product.type %>/<%=product._id%>">
             Details
           </a>
         </div>
       </div>
     </div>
 
-<div class="modal" id="exampleModalCenter<%= count %>">
+
+<div class="modal" id="product_modal_<%= product._id %>">
   <div class="container-fluid">
     <div class="modal-content animate ">
         <div class="row">
           <div class="col-md-8">
-            <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+            <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
-                <% Object.keys(products[count].images).forEach(function(key) { %>    
-                  <div id="modal-carousel" class="carousel-item 
+                <% Object.keys(product.images).forEach(function(key) { %>
+                  <div class="carousel-item modal-carousel
                   <% if(key == 0){ %>
                       active">
                   <% } else{ %>
                       ">
                   <% } %>
-                      <img class="d-block w-100" src="<%=products[count].images[key].url%>" alt="">
+                      <img class="d-block w-100" src="<%=product.images[key].url%>" alt="">
                   </div>
                 <% }) %>
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <a class="carousel-control-prev" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
               </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <a class="carousel-control-next" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
               </a>
@@ -48,26 +49,25 @@
           <div class="col-md-4">
             <div class="pr-1 pt-1">
               <div class="form-group" style="float:right">
-                  <a onclick="document.getElementById('exampleModalCenter<%= count %>').style.display='none'" class="cancelbtn">
+                  <a onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
                       <i class="far fa-times-circle fa-lg"></i>
                   </a>
               </div>
-            </div>  
+            </div>
             <div class="card-body">
-              <h5 class="card-title"><%=products[count].name %></h5>
-              <p class="card-text"><%=products[count].description %></p>
+              <h5 class="card-title"><%=product.name %></h5>
+              <p class="card-text"><%=product.description %></p>
+              <a href="/products/<%=product.type%>/<%=product._id%>/add" type="button" class="btn btn-primary">
+                Add to Cart
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-      <script>
-        var number = number + 1; 
-    </script>
-      <% }) %> 
+<% }) %>
   </div>
 </div>
 
- 
 <%- include("./../partials/footer")%>

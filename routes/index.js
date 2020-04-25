@@ -11,7 +11,6 @@ router.get("/", function(req, res){
 	res.render("landing");
 });
 
-
 //======================
 // AUTHENTICATION ROUTES
 //======================
@@ -77,5 +76,13 @@ router.get("/logout",function(req,res){
 
 // router.route('/oauth/facebook')
 // 	.post(passport.authenticate('facebookToken', {session:false}), UsersController.facebookOAuth);
+
+//===============
+//CART ROUTE
+//===============
+
+router.get("/cart", function(req, res){
+	res.render("cart");
+});
 
 module.exports = router;
