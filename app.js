@@ -38,23 +38,11 @@ mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnif
 seedDB(); //seed the database with products
 
 
+
 app.use(require("express-session")({
 	secret: require("./configuration/index").SESSION_SECRET,
 	resave: false,
-	saveUninitialized: true
-
-
-mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-seedDB(); //seed the database with products
-
-
-//======================
-//PASSPORT CONFIGURATION
-//======================
-app.use(session({
-	secret: "testing the authentication",
-	resave: false,
-	saveUninitialized: false,
+	saveUninitialized: true,
 	store:	new mongoStore({	//for session
 		mongooseConnection: mongoose.connection
 	}),
