@@ -322,6 +322,24 @@ hr{
    color: #9AAF5E;
 }
 
+.facebook{
+  background-color: #000000;
+  border:0px solid black;
+}
+
+.facebook:hover{
+  background-color: #2D88FF;
+}
+
+.google{
+  background-color: #000000;
+  border:0px solid black;
+}
+
+.google:hover{
+  background-color: #DD4B3E;
+}
+
 .tooltiptext {
   margin-left:-14em ;
   font-size: 15px;

@@ -1,23 +1,122 @@
 const mongoose = require('mongoose'),
       passport = require('passport'),
-      LocalStrategy = require('passport-local'),
+      LocalStrategy = require('passport-local').Strategy,
+      JwtStrategy = require('passport-jwt').Strategy,
+      FacebookStrategy = require('passport-facebook').Strategy,
+      GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+      {ExtractJwt } = require('passport-jwt'),
       User    = require("../models/user"),
-      FacebookStrategy = require('passport-facebook').Strategy;
+      config = require('./index');
+      
+      
+const cookieExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['access_token'];
+  }
+  return token;
+}
+
+// JSON WEB TOKENS STRATEGY
+passport.use('jwt', new JwtStrategy({
+  jwtFromRequest: cookieExtractor,
+  secretOrKey: config.JWT_SECRET,
+  passReqToCallback: true
+}, function(req, payload, done){
+    process.nextTick(function(){
+      const user = User.findById(payload.sub , function(err){
+        if(err){
+          done(error, false);
+        }
+      
+        if (!user) {
+          console.log("user doens't exist");
+          return done(null, false);
+        }
+        console.log("trololo 2");
+        req.user = user;
+        done(null, user);
+    });  
+  });
+}));    
+
+passport.use("facebook" , new FacebookStrategy({
+      clientID: config.oauth.facebook.clientID,
+      clientSecret: config.oauth.facebook.clientSecret,
+      callbackURL: "http://localhost:3000/auth/facebook/callback",
+      profileFields: ['id', 'emails', 'name']
+    },
+    function(accessToken, refreshToken, profile, done) {
+      process.nextTick(function(){
+        User.findOne({'facebook.id': profile.id}, function(err, user){
+          if(err)
+            return done(err);
+          if(user)
+            return done(null, user);
+          else {
+            var newUser = new User();
+            newUser.facebook.id = profile.id;
+            newUser.facebook.name = profile.name.givenName + " " + profile.name.familyName;
+            newUser.facebook.email = profile.emails[0].value;
+            newUser.save(function(err){
+              if(err)
+                throw err;
+
+              return done(null, newUser);
+            })
+          }
+        });
+      });  
+  }));
+  
+passport.use("google" , new GoogleStrategy({
+      clientID: config.oauth.google.clientID,
+      clientSecret: config.oauth.google.clientSecret,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+      // profileFields: ['id', 'emails', 'name']
+    },
+    function(accessToken, refreshToken, profile, done) {
+      process.nextTick(function(){
+        User.findOne({'google.id': profile.id}, function(err, user){
+          if(err)
+            return done(err);
+          if(user)
+            return done(null, user);
+          else {
+            var newUser = new User();
+            newUser.google.id = profile.id;
+            newUser.google.name = profile.displayName;
+            newUser.google.email = profile.emails[0].value;
+            newUser.save(function(err){
+              if(err)
+                throw err;
+
+              return done(null, newUser);
+            })
+          }
+        });
+      });  
+  }));
+  
 
 
-passport.use(new LocalStrategy({
+passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
-}, (email, password, done) => {
-  User.findOne({ email })
-    .then((user) => {
-      if(!user || !user.validatePassword(password)) {
-        return done(null, false, { message: { 'email or password': 'is invalid' } });
-      }
+}, function (email, password, done){
+  process.nextTick(function(){
+    User.findOne({ "local.email" : email }, function(err,user){
+        if(!user || !user.validatePassword(password)) {
+          user={};
+          return done(null, false);
+        }
+        return done(null, user);
+      });
+    });
+  })
+);
 
-      return done(null, user);
-    }).catch(done);
-}));
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -28,19 +127,6 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-
-passport.use(new FacebookStrategy({
-    clientID: 537686946939757,
-    clientSecret: "c47aa3886774d13942417cf5d95305b1",
-    callbackURL: "http://localhost:3000/"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ "local.email": profile.emails[0].value }, function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));
 
 
 

@@ -1,20 +1,20 @@
 <%- include("partials/header")%>
 
-<div id="main" class="main container py-2">
-    <div class="row d-flex justify-content-around">
+<div id="main" class="main container">
+    <div class="row d-flex justify-content-around py-5">
 	    <form action="/register" class="col-lg-6" method="post">
 	        <div class="desc">
 	        	<% if(regError && regError.length > 0){ %>
 					
-					<h1 class="pb-3">Φόρμα Εγγραφής</h1>
+					<h1 class="pb-5">Φόρμα Εγγραφής</h1>
 		            <div class="form-group pl-2">
 		            	<span class="d-flex align-items-center">
 			                <input
 			                	<%if(rest.name == ""){ %>
 			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="name" value="<%= regError %>"
+			                		type="text" name="name" placeholder="Ονοματεπώνυμο" value="<%= regError %>"
 			                	<% }else { %>
-			                 		type="text" name="name" value="<%= rest.name %>"
+			                 		type="text" name="name" placeholder="Ονοματεπώνυμο" value="<%= rest.name %>"
 			                 	<%} %> 
 			                required>
 			                	<i class="fas fa-info-circle fa-lg px-2">
@@ -25,26 +25,11 @@
 		            <div class="form-group pl-2">
 		            	<span class="d-flex align-items-center">
 			                <input
-			                	<%if(rest.surname == ""){ %>
-			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="surname" value="<%= regError %>"
-			                	<% }else { %>
-			                 		type="text" name="surname" value="<%= rest.surname %>"
-			                 	<%} %> 
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το επίθετό σας </div>
-			                	</i>
-			            </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input
 			                	<%if(rest.email == ""){ %>
 			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="email" value="<%= regError %>"
+			                		type="text" name="email" placeholder="E-mail" value="<%= regError %>"
 			                	<% } %>
-			                 		type="text" name="email" value="<%= rest.email %>" 
+			                 		type="text" name="email" placeholder="E-mail" value="<%= rest.email %>" 
 			                required>
 			                	<i class="fas fa-info-circle fa-lg px-2">
 			                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
@@ -56,9 +41,9 @@
 			                <input 
 								<%if(rest.password == "" && rest.password2!=""){ %>
 			                		id="pass" class="wrninput" 
-			                		type="text" name="password" value="<%= regError %>" onfocus="checkPassword()"
+			                		type="text" name="password" placeholder="Κωδικός" value="<%= regError %>" onfocus="checkPassword()"
 			                	<% }else { %>	
-			                		type="password" name="password" value="<%= rest.password %>" 
+			                		type="password" name="password" placeholder="Κωδικός" Κωδικός value="<%= rest.password %>" 
 			                	<% }%>
 			                required>
 			                	<i class="fas fa-info-circle fa-lg px-2">
@@ -71,9 +56,9 @@
 			                <input 
 								<%if(rest.password2 == "" && rest.password==""){ %>
 			                		id="pass" class="wrninput" 
-			                		type="text" name="password2" value="<%= regError %>" onfocus="checkPassword()"
+			                		type="text" placeholder="Επιβεβαίωση κωδικού" name="password2" value="<%= regError %>" onfocus="checkPassword()"
 			                	<% }else { %>	
-			                		type="password" name="password2" value="<%= rest.password2 %>" 
+			                		type="password" placeholder="Επιβεβαίωση κωδικού" name="password2" value="<%= rest.password2 %>" 
 			                	<% }%>
 			                required>
 			                	<i class="fas fa-info-circle fa-lg px-2">
@@ -87,20 +72,12 @@
 				<% }else { %>
 
 
-					<h1 class="pb-3">Φόρμα Εγγραφής</h1>
+					<h1 class="pb-5">Φόρμα Εγγραφής</h1>
 		            <div class="form-group pl-2">
 		                <span class="d-flex align-items-center">
-		                	<input type="text" name="name" placeholder="Όνομα" required>
+		                	<input type="text" name="name" placeholder="Ονοματεπώνυμο" required>
 		                	<i class="fas fa-info-circle fa-lg px-2">
 		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το όνομά σας</div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		                <span class="d-flex align-items-center">
-		                	<input type="text" name="surname" placeholder="Επίθετο" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το επίθετό σας</div>
 		                	</i>
 		                </span>	
 		            </div>
@@ -134,6 +111,11 @@
 
 	            <% } %>
 	            <hr>
+	            <div class='desc'>
+                    <h5>Κάνε εγγραφή μέσω</h5>
+                    <a href="/auth/facebook" class="btn btn-primary pt-2 facebook"><span><i class="fab fa-facebook-f fa-lg pr-2"></i></span>  Facebook</a>
+                    <a href="/auth/google" class="btn btn-danger google pt-2"><span><i class="fab fa-google fa-lg pr-2"></i></span> Google</a>
+                </div>  
 	        </div>
 		</form>
 	</div>

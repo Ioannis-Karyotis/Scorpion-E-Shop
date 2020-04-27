@@ -2,6 +2,8 @@ const express 		= require("express"),
 	app				= express(),
 	path 			= require('path'),
 	bodyParser 		= require("body-parser"),
+	cors 			= require("cors"),
+	cookieParser 	= require("cookie-parser"),
 	expressSanitizer= require("express-sanitizer"),
 	mongoose 		= require("mongoose"),
 	passport 		= require("passport"),
@@ -18,6 +20,8 @@ const indexRoutes 	 = require("./routes/index"),
 	  productRoutes  = require("./routes/products"),
 	  config 		 = require("./configuration/passport");
 
+app.use(cookieParser());
+app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
 app.use("/",express.static(__dirname + "/public"));
@@ -26,14 +30,15 @@ app.use(methodOverride("_method"));
 app.use(flash());
 app.set("view engine","ejs");
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
 seedDB(); //seed the database with products
 
 
 app.use(require("express-session")({
-	secret: "testing the authentication",
+	secret: require("./configuration/index").SESSION_SECRET,
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
