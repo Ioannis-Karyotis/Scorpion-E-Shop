@@ -26,7 +26,6 @@ router.get("/",  function(req, res){
 	res.render("landing");
 });
 
-
 //======================
 // AUTHENTICATION ROUTES
 //======================
@@ -150,5 +149,13 @@ router.get('/auth/google/callback',
 	    	res.redirect('/');
 	  	}
 );	  	
+
+//===============
+//CART ROUTE
+//===============
+
+router.get("/cart", function(req, res){
+	res.render("cart");
+});
 
 module.exports = router;
