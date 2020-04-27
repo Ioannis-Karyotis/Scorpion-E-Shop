@@ -24,7 +24,7 @@ hr{
 
 #content-wrap {
   position: relative;
-  padding-bottom: 5rem;   
+  padding-bottom: 5rem;
 }
 
 /*==============*/
@@ -223,7 +223,7 @@ hr{
         transform: scale(1)
     }
 }
-#modal-carousel img{
+.modal-carousel img{
   border-radius: 10px;
   height: 30em;
 }

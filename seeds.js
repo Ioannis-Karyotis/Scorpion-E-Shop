@@ -5,26 +5,26 @@ var data = [
     {
         name: "Example 1",
         type: "isothermika" ,
-        price: "15.00 $",
+        price: 15,
         images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit" 
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
     },
     {
         name: "Example 2",
         type: "isothermika" ,
-        price: "10.00 $", 
+        price: 10,
         images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
     },
     {
         name: "Example 3",
         type: "isothermika" ,
-        price: "22.00 $",
+        price: 20,
         images: [{url: "http://localhost:3000/images/tshirt/example2.jpg"}, {url:"http://localhost:3000/images/tshirt/example1.jpg"}],
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
     }
 ]
- 
+
 function seedDB(){
    //Remove all campgrounds
    Product.remove({}, function(err){
@@ -44,5 +44,5 @@ function seedDB(){
         });
     });
 }
- 
+
 module.exports = seedDB;
