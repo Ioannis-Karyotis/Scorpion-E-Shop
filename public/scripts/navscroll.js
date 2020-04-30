@@ -42,7 +42,7 @@ var myNavBar = {
 myNavBar.init(  [
     "menu-nav",
     "header-container",
-    "main" 
+    "main"
 ]);
 
 /**
@@ -76,4 +76,15 @@ window.onscroll = function(e) {
  * could be load with scroll down set.
  */
 offSetManager();
+
+
+
+// When there is a flash
+var flash = function (){
+        document.getElementById(this.elements[2]).className =
+        document.getElementById(this.elements[2]).className.replace( /(?:^|\s)fixed-theme(?!\S)/g , '' );
+    this.flagAdd = true;
+}
+
+
 });

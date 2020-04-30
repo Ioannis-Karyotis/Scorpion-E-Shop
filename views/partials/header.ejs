@@ -12,6 +12,17 @@
 <body>
 <div id="page-container">
 	<div id="content-wrap">
+<% if(genError&& genError.length > 0){ %>
+	<div class="alert alert-danger" role="alert">
+		<%= genError %>
+	</div>
+
+<% }else if(genSuccess && genSuccess.length > 0) {%>
+	<div class="al alert-suc" role="alert">
+		<%= genSuccess %>
+	</div>
+
+<% } %>
 
 	<nav class="navbar navbar-expand navbar-light bg-light py-0 ">
 		<div class="container-fluid">
@@ -133,16 +144,4 @@
 		</div>
 	</nav>
 
-<% if(genSuccess && genError.length > 0){ %>
-<div class="container">
-	<div class="alert alert-danger" role="alert">
-		<%= genError %>
-	</div>
-</div>
-<% }else if(genSuccess && genSuccess.length > 0) {%>
-<div class="container">
-	<div class="alert alert-success" role="alert">
-		<%= genSuccess %>
-	</div>
-</div>
-<% } %>
+
