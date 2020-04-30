@@ -35,4 +35,20 @@ module.exports = function Cart(previousCart){
     }
     return pL;
   }
+
+  this.updateQuantity = function(id, qty){
+    let prevPrice = this.products[id].price;
+    let prevQty = this.products[id].quantity;
+    this.products[id].quantity = qty;
+    this.products[id].price = this.products[id].product.price * qty;
+    this.totalPrice += this.products[id].price - prevPrice;
+    this.totalQuantity += this.products[id].quantity - prevQty;
+  }
+
+  this.removeProduct = function(id){
+    let product = this.products[id];
+    delete this.products[id];
+    this.totalPrice -= product.price;
+    this.totalQuantity -= product.quantity;
+  }
 }

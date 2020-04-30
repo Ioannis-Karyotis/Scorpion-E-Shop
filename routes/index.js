@@ -5,7 +5,10 @@ const JWT 		= require('jsonwebtoken');
 const { JWT_SECRET } = require('../configuration');
 var User 		= require("../models/user");
 var Product = require("../models/product");
+var Cart = require("../models/cart");
 var middleware  = require("../middleware/index.js");
+var bodyParser = require("body-parser");
+
 
 
 signToken = function(user) {
@@ -61,7 +64,7 @@ router.post("/register",middleware.namesur , middleware.email , middleware.passw
     	res.cookie('access_token', token, {
       		httpOnly: true
     	});
-    	
+
 		passport.authenticate("local")(req, res, function(){
 			req.flash("genSuccess","You Successfully Signed Up");
 			res.redirect("/");
@@ -87,7 +90,7 @@ router.post('/login',passport.authenticate('local', { failWithError: true }),
 	  		httpOnly: true
 		});
 		req.flash("genSuccess","You Successfully Logged In");
-		return res.redirect("/"); 
+		return res.redirect("/");
 	},
 	function(err, req, res, next) {
 		// handle error
@@ -103,7 +106,7 @@ router.post('/login',passport.authenticate('local', { failWithError: true }),
 //===============
 
 router.get("/logout",function(req,res){
-	
+
 	req.logout();
 	req.flash("genSuccess","You Logged Out");
 	res.clearCookie('access_token');
@@ -121,10 +124,10 @@ router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']
 	}
 );
 
-router.get('/auth/facebook/callback', 
+router.get('/auth/facebook/callback',
   	passport.authenticate('facebook', { failureRedirect: '/login' }),
 	  	function(req, res) {
-	  		const token = signToken(req.user);   
+	  		const token = signToken(req.user);
 	    	res.cookie('access_token', token, {
 	      		httpOnly: true
 	    	});
@@ -139,23 +142,49 @@ router.get('/auth/facebook/callback',
 
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
-router.get('/auth/google/callback', 
+router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	  	function(req, res) {
-	  		const token = signToken(req.user);   
+	  		const token = signToken(req.user);
 	    	res.cookie('access_token', token, {
 	      		httpOnly: true
 	    	});
 	    	res.redirect('/');
 	  	}
-);	  	
+);
 
 //===============
 //CART ROUTE
 //===============
+router.get("/cart", express.json(), function(req, res){
+  //console.log(JSON.stringify(req.body));
+  res.render("cart");
+});
 
-router.get("/cart", function(req, res){
-	res.render("cart");
+//quantity update
+router.post("/cart/update", function(req, res){
+  console.log(JSON.stringify(req.body));
+  let cart = new Cart(req.session.cart);
+  let id = req.body.id;
+  let qty = req.body.qty;
+  cart.updateQuantity(id,qty);
+  req.session.cart = cart;
+  req.session.productList = cart.productList();
+  console.log(req.session.cart);
+  res.render('cart');
+});
+
+//remove product
+router.post("/cart/remove", function(req,res){
+  console.log(JSON.stringify(req.body));
+  let cart = new Cart(req.session.cart);
+  let id = req.body.id;
+  cart.removeProduct(id);
+  req.session.cart = cart;
+  req.session.productList = cart.productList();
+  console.log(req.session.cart);
+  console.log(req.session.productList);
+  res.render('cart');
 });
 
 module.exports = router;

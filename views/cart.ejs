@@ -1,6 +1,6 @@
 <%- include("partials/header")%>
-<div class="container main cart-container">
-  <%if(session.productList){ %>
+<div id="cart-id" class="container main cart-container">
+  <%if(session.productList && session.productList.length > 0){ %>
     <div class="shopping-cart">
     <% session.productList.forEach(function(item){ %>
       <div class="product">
@@ -19,10 +19,11 @@
           <%=item.product.price%>
         </div>
         <div class="product-quantity">
-          <input type="number" value="<%=item.quantity%>" min="1">
+          <% var id = item.product._id%>
+          <input id="<%=id%>" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
         </div>
         <div class="product-removal">
-          <button class="remove-product">
+          <button id="<%=id%>" class="remove-product" onclick="removeProduct()">
             Remove
           </button>
         </div>
