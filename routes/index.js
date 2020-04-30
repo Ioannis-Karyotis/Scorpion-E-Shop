@@ -171,7 +171,7 @@ router.post("/cart/update", function(req, res){
   req.session.cart = cart;
   req.session.productList = cart.productList();
   console.log(req.session.cart);
-  res.render('cart');
+  res.send({price:cart.products[id].price, totalPrice:cart.totalPrice});
 });
 
 //remove product
@@ -184,7 +184,7 @@ router.post("/cart/remove", function(req,res){
   req.session.productList = cart.productList();
   console.log(req.session.cart);
   console.log(req.session.productList);
-  res.render('cart');
+  res.redirect('back');
 });
 
 module.exports = router;

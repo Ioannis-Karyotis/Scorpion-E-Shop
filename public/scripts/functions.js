@@ -21,7 +21,9 @@ function qtyUpdate(){
 
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
-			document.getElementById('page-container').innerHTML = this.responseText;
+			let data = JSON.parse(this.responseText);
+			document.getElementById('itm-prc').innerHTML = data.price;
+			document.getElementById('cart-total').innerHTML = data.totalPrice;
 			//to page-container einai ena div sto header
 			//to responseText einai olh selida (mazi me header kai footer) kai toy lew na
 			//fortwsei to response sto div. prakrikta kanei reload xwris na kanei reload
@@ -43,7 +45,7 @@ function removeProduct(){
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
 			//window.location.assign('/cart');
-			document.getElementById('page-container').innerHTML = this.responseText;
+			document.getElementById('response-container').innerHTML = this.responseText;
 			//to page-container einai ena div sto header
 			//to responseText einai olh selida (mazi me header kai footer) kai toy lew na
 			//fortwsei to response sto div. prakrikta kanei reload xwris na kanei reload
