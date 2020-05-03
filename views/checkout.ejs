@@ -1,0 +1,56 @@
+<%- include("partials/header")%>
+
+
+
+<div id="main" class="container main">
+    <div class="row">
+		<form id="payment-form" class="chkout">
+			<div class="chk-group">
+				<label>
+					<span>Κάρτα</span>
+					<div id="card-element" class="chk-field"></div>
+				</label>
+			</div>
+			<div class="chk-group">
+				<label>
+					<span>Όνομα</span>
+					<input id="first-name" name="first-name" class="chk-field" placeholder="Jane" />
+				</label>
+				<label>
+					<span>Επίθετο</span>
+					<input id="last-name" name="last-name" class="chk-field" placeholder="Doe" />
+				</label>
+			</div>
+			<div class="chk-group">
+				<label>
+					<span>Διέυθυνση</span>
+					<input id="address-line1" name="address_line1" class="chk-field" placeholder="77 Winchester Lane" />
+				</label>
+				<label>
+					<span>Πόλη</span>
+					<input id="address-city" name="address_city" class="chk-field" placeholder="Coachella" />
+				</label>
+				<label>
+					<span>Νομός</span>
+					<input id="address-state" name="address_state" class="chk-field" placeholder="CA" />
+				</label>
+				<label>
+					<span>Ταχ. Κώδικας</span>
+					<input id="address-zip" name="address_zip" class="chk-field" placeholder="92236" />
+				</label>
+					<label>
+					<span>Χώρα</span>
+				<input id="address-country" name="address_country" class="chk-field" placeholder="United States" />
+				</label>
+			</div>
+			<button type="submit" id="submit">Πλήρωσε $25</button>
+			<div class="chk-outcome">
+				<div class="ckh-error" id="card-errors" role="alert"></div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="/scripts/checkout.js"></script>
+<%- include("partials/footer")%>

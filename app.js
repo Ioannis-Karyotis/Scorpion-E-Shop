@@ -15,15 +15,45 @@ const express 		= require("express"),
 	User 	    	= require("./models/user"),
 	Product			= require("./models/product"),
 	seedDB			= require("./seeds"),
-	session			=	require("express-session"),
-	mongoStore	= require('connect-mongo')(session);
+	session			= require("express-session"),
+	mongoStore		= require('connect-mongo')(session);
+	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv");
+
 
 const indexRoutes 	 = require("./routes/index"),
 	  productRoutes  = require("./routes/products"),
+	  stripeRoutes 	 = require("./routes/stripe"),
 	  config 		 = require("./configuration/passport");
 
+
+const paymentIntent = function(){ 
+	try{
+	 stripe.paymentIntents.create({
+	  amount: 1099,
+	  currency: 'usd',
+	  // Verify your integration in this guide by including this parameter
+	  metadata: {integration_check: 'accept_a_payment'},
+		})
+	} 
+	catch(err){
+
+	}
+}
+
+
+
 app.use(cookieParser());
-app.use(express.json());
+app.use(
+  express.json({
+    // We need the raw body to verify webhook signatures.
+    // Let's compute it only when hitting the Stripe webhook endpoint.
+    verify: function(req, res, buf) {
+      if (req.originalUrl.startsWith("/webhook")) {
+        req.rawBody = buf.toString();
+      }
+    }
+  })
+);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
 app.use("/",express.static(__dirname + "/public"));
@@ -66,5 +96,6 @@ app.use(function(req, res, next){
 
 app.use(indexRoutes);
 app.use(productRoutes);
+app.use(stripeRoutes);
 
 module.exports = app;

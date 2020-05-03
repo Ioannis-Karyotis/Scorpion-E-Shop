@@ -66,9 +66,15 @@
          </div>
        </div>
      </div>
-     <button class="checkout">
-       Checkout
-     </button>
+ <form id='payment-form'>
+  <label>
+    Card details
+    <!-- placeholder for Elements -->
+    <div id="card-element"></div>
+  </label>
+  <button type="submit">Submit Payment</button>
+</form>
+
    </div>
   <%}else{ %>
     Το καλάθι σας είναι άδειο
