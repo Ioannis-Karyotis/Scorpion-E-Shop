@@ -9,7 +9,7 @@ var checkPassword = function (){
 function qtyUpdate(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/update";
-	let id = event.target.id;
+	var id = event.target.id;
 	let qty = document.getElementById(id).value;
 	let params = {};
 	params.id = id;
@@ -22,11 +22,9 @@ function qtyUpdate(){
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
 			let data = JSON.parse(this.responseText);
-			document.getElementById('itm-prc').innerHTML = data.price;
+			document.getElementById("itm-prc"+id).innerHTML = data.price;
 			document.getElementById('cart-total').innerHTML = data.totalPrice;
-			//to page-container einai ena div sto header
-			//to responseText einai olh selida (mazi me header kai footer) kai toy lew na
-			//fortwsei to response sto div. prakrikta kanei reload xwris na kanei reload
+			document.getElementById('cart-glyphicon').innerHTML = data.totalQuantity;
 		}
 	}
 }
@@ -44,11 +42,13 @@ function removeProduct(){
 
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
-			//window.location.assign('/cart');
-			document.getElementById('response-container').innerHTML = this.responseText;
-			//to page-container einai ena div sto header
-			//to responseText einai olh selida (mazi me header kai footer) kai toy lew na
-			//fortwsei to response sto div. prakrikta kanei reload xwris na kanei reload
+			// var resp = request.responseText;
+	    // var parser = new DOMParser();
+	    // var xmlDoc = parser.parseFromString(resp,"text/html");
+	    // var tds = xmlDoc.getElementById("cart-id");
+	    // console.log(xmlDoc);
+	    // document.getElementById('cart-id').innerHTML = tds.innerHTML;
+			window.location.assign('cart');
 		}
 	}
 }
