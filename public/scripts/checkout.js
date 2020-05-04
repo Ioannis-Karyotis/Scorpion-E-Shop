@@ -5,12 +5,11 @@ var stripe;
 
 var orderData = {
   items: [{ id: "photo-subscription" }],
-  currency: "usd"
-};
+  currency: "usd"};
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector("button").disabled = true;
-
+console.log(document.getElementById("first-name").value);
 fetch("/create-payment-intent", {
   method: "POST",
   headers: {
@@ -30,7 +29,7 @@ fetch("/create-payment-intent", {
     // Handle form submission.
     var form = document.getElementById("payment-form");
     form.addEventListener("submit", function(event) {
-      event.preventDefault();
+      	event.preventDefault();
       // Initiate payment when the submit button is clicked
       pay(stripe, card, clientSecret);
     });
@@ -81,7 +80,10 @@ var pay = function(stripe, card, clientSecret) {
   stripe
     .confirmCardPayment(clientSecret, {
       payment_method: {
-        card: card
+        card: card,
+        billing_details: {
+        	name: document.getElementById("first-name").value
+      	}
       }
     })
     .then(function(result) {
@@ -104,7 +106,7 @@ var orderComplete = function(clientSecret) {
     var paymentIntent = result.paymentIntent;
     var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
 
-    document.querySelector(".sr-payment-form").classList.add("hidden");
+    document.querySelector(".chkout").classList.add("hidden");
     document.querySelector("pre").textContent = paymentIntentJson;
 
     document.querySelector(".sr-result").classList.remove("hidden");
