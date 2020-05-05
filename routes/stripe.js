@@ -1,26 +1,41 @@
 const express 			= require("express"),
  	  router    		= express.Router(),
+ 	  Product 			= require("../models/product"),
 	{ SECRET_STRIPE } 	= require('../configuration'),
 	{ PUBLIC_STRIPE }	= require('../configuration'),
 	{ WEBHOOK_SECRET}	= require('../configuration'),
 		stripesk 		= require("stripe")(SECRET_STRIPE);
  		stripepk 		= require('stripe')(PUBLIC_STRIPE);
 
+const calculateDatabasePrice = async function(cart) {	
+	try {
+		var products= cart.products;
+		var total = 0
+		var product_ids = await Object.keys(products);
+		for(i=0; i<product_ids.length; i++){
+			var quantity = products[product_ids[i]].quantity;
+			var err,product = await Product.findById(product_ids[i]); 
+			var add = quantity * product.price;
+			total = total + add;
+		}
+		if(total === cart.totalPrice){
+			return total * 100;
+		}else{
+			console.log("Total prices do not match with each other");
+		}
+	}catch(err){
+		console.log(err);
+	}
+}			
 
-
-
-const calculateOrderAmount = function(items) {
-  // Replace this constant with a calculation of the order's amount
-  // You should always calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
 
 router.post("/create-payment-intent", async (req, res) => {
-  const { items, currency } = req.body;
+  const { currency } = req.body;
+  const cart = req.session.cart;
+  const total =await calculateDatabasePrice(cart);
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripesk.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: total,
     currency: currency
   });
   // Send publishable key and PaymentIntent details to client

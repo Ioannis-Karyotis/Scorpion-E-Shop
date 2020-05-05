@@ -4,8 +4,8 @@ window.onload = function(){ alert("Hi there")};
 var stripe;
 
 var orderData = {
-  items: [{ id: "photo-subscription" }],
-  currency: "usd"};
+  currency: "eur"
+};
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector("button").disabled = true;
@@ -82,7 +82,12 @@ var pay = function(stripe, card, clientSecret) {
       payment_method: {
         card: card,
         billing_details: {
-        	name: document.getElementById("first-name").value
+        	name: document.getElementById("first-name").value + " " + document.getElementById("last-name").value,
+        	email: document.getElementById("e-mail").value,
+        	address : document.getElementById("address-line").value + ", " + document.getElementById("address-city").value + ", " +
+        			document.getElementById("address-zip").value +", Νομός: "+ document.getElementById("address-state").value + ", Χώρα: " +
+        			document.getElementById("address-country").value,
+        	phone : document.getElementById("phone").value		
       	}
       }
     })
