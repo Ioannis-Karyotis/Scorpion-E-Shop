@@ -1,12 +1,12 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="container">
+<div id="main-show" class="container main pb-1">
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                <% Object.keys(images).forEach(function(key) { %>    
-                    <div class="carousel-item 
+                <% Object.keys(images).forEach(function(key) { %>
+                    <div class="carousel-item
                     <% if(key == 0){ %>
                         active">
                     <% } else{ %>
@@ -26,10 +26,10 @@
                 </a>
             </div>
         </div>
-        <div id="desc" class="col-md-6 mx-auto">
+        <div id="desc" class="col-md-6 mx-auto mt-3">
             <div class="container-fluid">
                 <h1>lorem Ipsum</h1>
-                <hr>    
+                <hr>
                 <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -39,7 +39,136 @@
                 </div>
         </div>
     </div>
-</div>
+    <hr class="pic mx-5 mt-5">
+    <div class="row mx-auto my-2" style="text-align:center">
+      <div class="mx-auto">
+        <h3>
+        Αξιολογήσεις
+        </h3>
+      </div>
+    </div>
 
+  <%if(product.reviews.length <= 0){ %>
+    <div class="row mx-auto mt-2" style="text-align:center">
+      <div class="mx-auto">
+        <h5>
+        Δεν υπάρχουν αξιολογήσεις! Προσθέστε μία τώρα!
+        </h5>
+      </div>
+    </div>
+  <%}%>
 
+    <div class="py-4"style="background:#F5F5F5;">
+      <form id="review-form" action="/products/<%=product.type%>/<%=product.id%>/review" method="POST">
+        <input type="hidden" name="productType" value="<%=product.type%>">
+        <input type="hidden" name="productId" value="<%=product._id%>">
+        <div class="form-row">
+  <%if(!currentUser){%>
+            <div class="form-group col-md-6 px-4">
+              <label for="nameRating">Ονoματεπώνυμο</label>
+              <input type="text" class="form-control" name="author" id="nameRating">
+            </div>
+            <div class="form-group col-md-6 px-4">
+              <div class="row">
+                <label for="starRating" class="mx-auto">Βαθμολογία</label>
+              </div>
+              <div class="row">
+                <fieldset class="rate mx-auto" id="starRating" >
+                  <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
+                  <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                  <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                  <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                  <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                  <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                  <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                  <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                  <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                  <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
+                  <!-- <input type="radio" id="rating0" name="rating" value="0" /><label for="rating0" title="No star"></label> -->
+                </fieldset>
+              </div>
+            </div>
+    <%}else{%>
+            <div class="form-group col-md-6 px-4">
+              <div class="row">
+                <label for="starRating" class="ml-3">Βαθμολογία</label>
+              </div>
+              <div class="row">
+                <fieldset class="rate ml-3" id="starRating" >
+                  <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
+                  <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                  <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                  <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                  <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                  <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                  <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                  <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                  <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                  <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
+                  <!-- <input type="radio" id="rating0" name="rating" value="0" /><label for="rating0" title="No star"></label> -->
+                </fieldset>
+              </div>
+            </div>
+    <%}%>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12 px-4">
+            <label for="newReviewTextArea">Σχόλια</label>
+            <textarea class="form-control" name="description" id="newReviewTextArea" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12 px-4">
+              <button type="submit" class="btn">Υποβολή Αξιολόγησης</button>
+          </div>
+        </div>
+      </form>
+    </div>
+<%if(product.reviews.length >= 0){ %>
+    <div class="row">
+      <div class="col-12" style="text-align:center;">
+        <h3 id="rating<%=product._id%>"><%=product.rating.toPrecision(2)%><h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" style="text-align:center;">
+        <div class="star-ratings">
+          <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
+            <div>★★★★★</div>
+          </div>
+          <div class="empty-ratings">
+            <div>★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+<%product.reviews.forEach(function(review){%>
+    <div class="px-4 py-1 mx-3 my-2 review-container">
+    <div class="row px-4 py-1">
+      <img class="pic" src="https://i.pinimg.com/736x/af/53/55/af5355d2e928deb428fd3961a317cca4.jpg" height="100" width="80"></img>
+      <div class="pt-2 pl-2 mb-2">
+        <div>
+          <h4><%=review.author%></h4>
+        </div>
+        <div >
+          <%=review.date%>
+        </div>
+      </div>
+      <div class="star-ratings ml-1">
+        <div id="<%=review._id%>" class="fill-ratings" style="width: <%=review.rating.toPrecision(2)*10%>%">
+          <div>★★★★★</div>
+        </div>
+        <div class="empty-ratings ">
+          <div>★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="row px-4 py-2 mt-2">
+        <%=review.description%>
+    </div>
+    </div>
+
+    <%});%>
+  <%}%>
+  </div>
 <%- include("./../partials/footer")%>

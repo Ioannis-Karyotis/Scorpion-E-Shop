@@ -114,7 +114,6 @@ router.get("/logout",function(req,res){
 
 })
 
-
 //===============
 //FACEBOOK ROUTE
 //===============
@@ -134,7 +133,6 @@ router.get('/auth/facebook/callback',
 	    	res.redirect('/');
 	  	}
 );
-
 
 //===============
 //GOOGLE ROUTE
