@@ -41,8 +41,13 @@ router.post("/products/:type/:id/review", function(req,res){
 			console.log(err);
 		} else {
 		    if(foundProduct!= null){
-					var name = req.body.author || req.user[req.user.methods].name || req.user[req.user.methods].name || req.user[req.user.methods].name
-					var surname =  req.user[req.user.methods].surname || req.user[req.user.methods].surname || req.user[req.user.methods].surname
+		    		if(req.user){
+		    			var name =  req.user[req.user.methods].name ;
+						var surname =  req.user[req.user.methods].surname; 
+		    		}else{
+		    			var name = req.body.author;
+						var surname =  "";
+		    		}
 					var today = new Date();
 					var dd = String(today.getDate()).padStart(2, '0');
 					var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
