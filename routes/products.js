@@ -1,6 +1,7 @@
 var express 		= require("express");
 var router     	= express.Router();
 var Product     = require("../models/product");
+var Review 			= require("../models/review");
 var middleware  = require("../middleware/index.js");
 var Cart				= require("../models/cart");
 //===================
@@ -19,7 +20,7 @@ router.get("/products/:type", function(req, res){
 });
 
 router.get("/products/:type/:id", function(req ,res){
-	Product.findById(req.params.id ,function(err, foundProduct){
+	Product.findById(req.params.id).populate("reviews").exec(function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
@@ -27,6 +28,45 @@ router.get("/products/:type/:id", function(req ,res){
 			    var images = foundProduct.images;
 			    console.log(images);
 			    res.render("products/show", {product: foundProduct, images :images});
+		    } else{
+		        res.redirect("back");
+		    }
+		}
+	});
+});
+
+router.post("/products/:type/:id/review", function(req,res){
+	Product.findById(req.body.productId, function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+		    if(foundProduct!= null){
+					var name = req.body.author || res.locals.currentUser.name || res.locals.currentUser.google.name || res.locals.currentUser.facebook.name;
+					var today = new Date();
+					var dd = String(today.getDate()).padStart(2, '0');
+					var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+					var yyyy = today.getFullYear();
+					today = dd + '-' + mm + '-' + yyyy;
+
+					Review.create(
+						{
+							author: name,
+							description: req.body.description,
+							date: today,
+							rating: req.body.rating
+						}, function(err, review){
+							if(err){
+								console.log(err);
+							}else{
+								foundProduct.reviews.push(review);
+								foundProduct.reviewCount = foundProduct.reviewCount + 1;
+								foundProduct.rating = ((foundProduct.rating * (foundProduct.reviewCount - 1)) + 	(review.rating / 2)) / foundProduct.reviewCount;
+								foundProduct.save();
+								console.log("created a review  fdgfdgfd");
+								res.redirect('back');
+							}
+						}
+					);
 		    } else{
 		        res.redirect("back");
 		    }
