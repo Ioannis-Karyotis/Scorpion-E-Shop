@@ -56,8 +56,10 @@ passport.use("facebook" , new FacebookStrategy({
           else {
             var newUser = new User();
             newUser.facebook.id = profile.id;
-            newUser.facebook.name = profile.name.givenName + " " + profile.name.familyName;
+            newUser.facebook.name = profile.name.givenName;
+            newUser.facebook.surname= profile.name.familyName;
             newUser.facebook.email = profile.emails[0].value;
+            newUser.methods = 'facebook';
             newUser.save(function(err){
               if(err)
                 throw err;
@@ -83,10 +85,14 @@ passport.use("google" , new GoogleStrategy({
           if(user)
             return done(null, user);
           else {
+            var fullname = profile.displayName.split(" ");
+
             var newUser = new User();
             newUser.google.id = profile.id;
-            newUser.google.name = profile.displayName;
+            newUser.google.name = fullname[0];
+            newUser.google.surname = fullname[1];
             newUser.google.email = profile.emails[0].value;
+            newUser.methods = 'google';
             newUser.save(function(err){
               if(err)
                 throw err;

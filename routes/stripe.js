@@ -4,8 +4,9 @@ const express 			= require("express"),
 	{ SECRET_STRIPE } 	= require('../configuration'),
 	{ PUBLIC_STRIPE }	= require('../configuration'),
 	{ WEBHOOK_SECRET}	= require('../configuration'),
-		stripesk 		= require("stripe")(SECRET_STRIPE);
- 		stripepk 		= require('stripe')(PUBLIC_STRIPE);
+		stripesk 		= require("stripe")(SECRET_STRIPE),
+ 		stripepk 		= require('stripe')(PUBLIC_STRIPE),
+    middleware  = require("../middleware/index.js");
 
 const calculateDatabasePrice = async function(cart) {	
 	try {
@@ -27,6 +28,13 @@ const calculateDatabasePrice = async function(cart) {
 		console.log(err);
 	}
 }			
+
+
+
+router.post("/create-order",middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
+    console.log("passed all middleware");
+    res.send({result:"success"});
+})
 
 
 router.post("/create-payment-intent", async (req, res) => {
@@ -88,7 +96,22 @@ router.post("/webhook", async (req, res) => {
 
 
 router.get('/checkout', function (req, res){
-  res.render('checkout');
+  console.log("eisai malakas 1");
+  console.log(req.app.locals.specialContext);
+  console.log("eisai malakas 2");
+  if(req.app.locals.specialContext!= null){
+    var validated = req.app.locals.specialContext;
+    req.flash(validated.error.type,validated.error.message);
+    res.render("checkout",{user: null , method : null, validated : validated});
+  }else{
+    var validated = {};
+    req.app.locals.specialContext = null;
+    if(req.user){
+      res.render('checkout',{user: req.user, method : req.user.methods,validated : validated});
+    }else{
+      res.render('checkout',{user: null , method : null, validated : validated});
+    }
+  }
 });
 
 

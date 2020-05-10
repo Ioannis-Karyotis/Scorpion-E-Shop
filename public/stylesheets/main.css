@@ -30,6 +30,9 @@ hr{
 /*==============*/
 /*    NavBar    */
 /*==============*/
+.navbar{
+  background-color: white;
+}
 .nav-link span{
 	color: #3A3A3A;
 	display: inline-block;

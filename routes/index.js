@@ -34,12 +34,12 @@ router.get("/",  function(req, res){
 //======================
 router.get("/register",function(req,res){
 	if(req.app.locals.specialContext!= null){
-		var rest = req.app.locals.specialContext;
+		var validated = req.app.locals.specialContext;
 		req.app.locals.specialContext = null;
-		res.render("register",{rest : rest});
+		res.render("register",{validated : validated});
 	}else{
-		var rest = {};
-		res.render("register",{rest : rest});
+		var validated = {};
+		res.render("register",{validated : validated});
 	}
 })
 

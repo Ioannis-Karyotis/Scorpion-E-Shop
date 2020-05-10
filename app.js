@@ -26,21 +26,6 @@ const indexRoutes 	 = require("./routes/index"),
 	  config 		 = require("./configuration/passport");
 
 
-const paymentIntent = function(){ 
-	try{
-	 stripe.paymentIntents.create({
-	  amount: 1099,
-	  currency: 'usd',
-	  // Verify your integration in this guide by including this parameter
-	  metadata: {integration_check: 'accept_a_payment'},
-		})
-	} 
-	catch(err){
-
-	}
-}
-
-
 
 app.use(cookieParser());
 app.use(
@@ -54,6 +39,8 @@ app.use(
     }
   })
 );
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
 app.use("/",express.static(__dirname + "/public"));
@@ -86,7 +73,7 @@ app.use(passport.session());
 
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
-	res.locals.session 		 = req.session; //so I can access session from all the views
+	res.locals.session 	   = req.session; //so I can access session from all the views
 	res.locals.error       = req.flash("error");
 	res.locals.regError    = req.flash("regError");
 	res.locals.genError    = req.flash("genError");

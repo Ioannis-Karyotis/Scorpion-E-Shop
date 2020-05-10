@@ -4,112 +4,49 @@
     <div class="row d-flex justify-content-around ">
 	    <form action="/register" class="col-lg-6" method="post">
 	        <div class="desc py-5">
-	        	<% if(regError && regError.length > 0){ %>
-					
-					<h1 class="pb-5">Φόρμα Εγγραφής</h1>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input
-			                	<%if(rest.name == ""){ %>
-			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="name" placeholder="Ονοματεπώνυμο" value="<%= regError %>"
-			                	<% }else { %>
-			                 		type="text" name="name" placeholder="Ονοματεπώνυμο" value="<%= rest.name %>"
-			                 	<%} %> 
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το όνομά σας </div>
-			                	</i>
-			            </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input
-			                	<%if(rest.email == ""){ %>
-			                		class="wrninput" onfocus="this.value=''"
-			                		type="text" name="email" placeholder="E-mail" value="<%= regError %>"
-			                	<% } %>
-			                 		type="text" name="email" placeholder="E-mail" value="<%= rest.email %>" 
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-			                	</i>
-	                	</span>
-		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input 
-								<%if(rest.password == "" && rest.password2!=""){ %>
-			                		id="pass" class="wrninput" 
-			                		type="text" name="password" placeholder="Κωδικός" value="<%= regError %>" onfocus="checkPassword()"
-			                	<% }else { %>	
-			                		type="password" name="password" placeholder="Κωδικός" Κωδικός value="<%= rest.password %>" 
-			                	<% }%>
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
-			                	</i>
-			            </span>
-		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-			                <input 
-								<%if(rest.password2 == "" && rest.password==""){ %>
-			                		id="pass" class="wrninput" 
-			                		type="text" placeholder="Επιβεβαίωση κωδικού" name="password2" value="<%= regError %>" onfocus="checkPassword()"
-			                	<% }else { %>	
-			                		type="password" placeholder="Επιβεβαίωση κωδικού" name="password2" value="<%= rest.password2 %>" 
-			                	<% }%>
-			                required>
-			                	<i class="fas fa-info-circle fa-lg px-2">
-			                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
-			                	</i>
-	                	</span>
-		            </div>
-		            <div class="form-group">
-		                <button class="btn btn-success" type="submit">Sign Up</button>
-		            </div>
-				<% }else { %>
+				<h1 class="pb-5">Φόρμα Εγγραφής</h1>
+	            <div class="form-group pl-2">
+	                <span class="d-flex align-items-center">
+	                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= validated.name %>" required>
+	                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= validated.surname %>" required>
+	                	<i class="fas fa-info-circle fa-lg mr-3">
+	                		<div class="tooltiptext">Σε αυτά τα πεδία εισάγετε το Ονοματεπώνυμό σας</div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group pl-2">
+	                <span class="d-flex align-items-center">	
+	                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= validated.email %>" required>
+	                	<i class="fas fa-info-circle fa-lg ">
+	                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group pl-2">
+	            	<span class="d-flex align-items-center">
+	                	<input type="password" name="password" class="form-control  mr-3" placeholder="Κωδικός" required>
+	                	<i class="fas fa-info-circle fa-lg ">
+	                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group pl-2">
+	                <span class="d-flex align-items-center">	
+	                	<input type="password" name="password2" class="form-control mr-3" placeholder="Επιβεβαίωση κωδικού" required>
+	                	<i class="fas fa-info-circle fa-lg ">
+	                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group">
+	                <button class="btn btn-success" type="submit">Εγγραφή</button>
+	            </div>
+	            <% if(regError&& regError.length > 0){ %>
+					<div class="alert alert-danger" role="alert">
+						<%= regError %>
+					</div>
+				<%}%>
 
-
-					<h1 class="pb-5">Φόρμα Εγγραφής</h1>
-		            <div class="form-group pl-2">
-		                <span class="d-flex align-items-center">
-		                	<input type="text" name="name" placeholder="Ονοματεπώνυμο" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το όνομά σας</div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		                <span class="d-flex align-items-center">	
-		                	<input type="text" name="email" placeholder="E-mail" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		            	<span class="d-flex align-items-center">
-		                	<input type="password" name="password" placeholder="Κωδικός" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group pl-2">
-		                <span class="d-flex align-items-center">	
-		                	<input type="password" name="password2" placeholder="Επιβεβαίωση κωδικού" required>
-		                	<i class="fas fa-info-circle fa-lg px-2">
-		                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
-		                	</i>
-		                </span>	
-		            </div>
-		            <div class="form-group">
-		                <button class="btn btn-success" type="submit">Εγγραφή</button>
-		            </div>
-
-	            <% } %>
 	            <hr>
 	            <div class='desc'>
                     <h5>Κάνε εγγραφή μέσω</h5>

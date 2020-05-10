@@ -3,11 +3,15 @@ const crypto = require('crypto');
 
 var UserSchema = new mongoose.Schema({
 	methods: {
-    type: [String],
+    type: String,
     required: true
   	},
    	local: {
 		name: {
+			type: String,
+			lowercase: true
+		},
+		surname:{
 			type: String,
 			lowercase: true
 		},
@@ -26,6 +30,10 @@ var UserSchema = new mongoose.Schema({
 			type: String,
 			lowercase: true
 		},
+		surname:{
+			type: String,
+			lowercase: true
+		},
 	    email: {
         	type: String,
         	lowercase: true
@@ -36,6 +44,10 @@ var UserSchema = new mongoose.Schema({
 			type: String
 		},
 		name: {
+			type: String,
+			lowercase: true
+		},
+		surname:{
 			type: String,
 			lowercase: true
 		},
