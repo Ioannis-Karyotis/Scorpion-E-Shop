@@ -1,5 +1,3 @@
-window.onload = function(){ alert("Hi there")};
-
 // A reference to Stripe.js
 var stripe;
 
@@ -77,10 +75,6 @@ fetch("/create-payment-intent", {
     })
     .then(function(data){
 
-      //check if middlewares were successfull
-      console.log("eisai malakas");
-      console.log(data.result);
-
       // Initiate payment when the submit button is clicked
       pay(stripe, card, clientSecret);
     })
@@ -128,9 +122,10 @@ var setupElements = function(data) {
  * prompt the user to enter extra authentication details without leaving your page
  */
 var pay = function(stripe, card, clientSecret) {
-  	changeLoadingState(true);
-  // Initiate the payment.
-  // If authentication is required, confirmCardPayment will automatically display a modal
+  changeLoadingState(true);
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
   stripe
     .confirmCardPayment(clientSecret, {
       	payment_method: {
@@ -161,10 +156,21 @@ var pay = function(stripe, card, clientSecret) {
     })
     .then(function(result) {
       if (result.error) {
-        console.log(result.error.message);
+        changeLoadingState(false);
+        modal.style.display = "none";
       } else {
+        
         // The payment has been processed!
-        orderComplete(clientSecret);
+        fetch("/post_order", {
+          method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(result)
+          })
+          .then(function(result) {   
+            orderComplete(clientSecret);
+          })  
       }
     });
 };
@@ -175,16 +181,19 @@ var pay = function(stripe, card, clientSecret) {
 var orderComplete = function(clientSecret) {
   // Just for the purpose of the sample, show the PaymentIntent response object
   stripe.retrievePaymentIntent(clientSecret).then(function(result) {
-    var paymentIntent = result.paymentIntent;
-    var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
-
     document.querySelector(".chkout").classList.add("hidden");
-    document.querySelector("pre").textContent = paymentIntentJson;
+    // var paymentIntent = result.paymentIntent;
+    // var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
+    $('.circle-loader').toggleClass('load-complete');
+    $('.checkmark').toggle();
+    document.querySelector(".result").classList.remove("hidden");
+    
+    // document.querySelector("pre").textContent = paymentIntentJson;
 
-    document.querySelector(".sr-result").classList.remove("hidden");
+    
     setTimeout(function() {
-      document.querySelector(".sr-result").classList.add("expand");
-    }, 200);
+      window.location.replace("http://localhost:3000/");
+    }, 3000);
 
     changeLoadingState(false);
   });
@@ -195,10 +204,10 @@ var changeLoadingState = function(isLoading) {
   if (isLoading) {
     document.querySelector("button").disabled = true;
     document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
+    document.querySelector(".payment").classList.add("hidden");
   } else {
     document.querySelector("button").disabled = false;
     document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
+    document.querySelector(".payment").classList.remove("hidden");
   }
 };

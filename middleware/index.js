@@ -40,6 +40,12 @@ const middlewareObj = {};
 // 		res.redirect("back");
 // 	}	
 // }
+middlewareObj.cart = function (req , res ,  next){
+  cart = req.session.cart;
+  console.log(cart);
+  body = req.body
+  res.send({cart : cart , body : body });
+}
 
 
 middlewareObj.namesur = function (req , res ,  next){
@@ -59,7 +65,8 @@ middlewareObj.namesur = function (req , res ,  next){
             line1 : req.body.line1,
             city : req.body.city,
             zip : req.body.zip,
-            state : req.body.state
+            state : req.body.state,
+            error: {type : "regError" , message : "To Επίθετο δεν έχει τη σωστή μορφή" }
           }
         req.flash("regError","Το Επίθετο δεν έχει τη σωστή μορφή");
         res.redirect("back");  
@@ -73,7 +80,8 @@ middlewareObj.namesur = function (req , res ,  next){
           line1 : req.body.line1,
           city : req.body.city,
           zip : req.body.zip,
-          state : req.body.state
+          state : req.body.state,
+          error: {type : "regError" , message : "To Όνομα δεν έχει τη σωστή μορφή" }
         }
       req.flash("regError","Το Όνομα δεν έχει τη σωστή μορφή");
       res.redirect("back");   
@@ -125,7 +133,8 @@ middlewareObj.email = function (req , res ,  next){
           line1 : req.body.line1,
           city : req.body.city,
           zip : req.body.zip,
-          state : req.body.state
+          state : req.body.state,
+          error: {type : "regError" , message : "To e-mail δεν έχει τη σωστή μορφή" }
       }
   		req.flash("regError","To e-mail δεν έχει τη σωστή μορφή");
 		  res.redirect("back");   
@@ -151,7 +160,6 @@ middlewareObj.phone = function (req , res ,  next){
           zip : req.body.zip,
           state : req.body.state,
           error: {type : "regError" , message : "To τηλέφωνο δεν έχει τη σωστή μορφή" }
-
       }
       console.log(res.app.locals.specialContext);
       req.flash("regError","To τηλέφωνο δεν έχει τη σωστή μορφή");
@@ -177,7 +185,8 @@ middlewareObj.address = function (req , res ,  next){
           name : req.body.name,
           surname : req.body.surname,
           email : req.body.email,
-          phone: req.body.phone
+          phone: req.body.phone,
+          error: {type : "regError" , message : "Η Διεύθυνση σας είναι ελλιπής" }
       }
       req.flash("regError","Η Διεύθυνση σας είναι ελλιπής");
       res.redirect("back");   

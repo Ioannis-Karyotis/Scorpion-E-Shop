@@ -1,6 +1,7 @@
 const express 			= require("express"),
  	  router    		= express.Router(),
  	  Product 			= require("../models/product"),
+    Order         = require("../models/order"),
 	{ SECRET_STRIPE } 	= require('../configuration'),
 	{ PUBLIC_STRIPE }	= require('../configuration'),
 	{ WEBHOOK_SECRET}	= require('../configuration'),
@@ -28,7 +29,48 @@ const calculateDatabasePrice = async function(cart) {
 		console.log(err);
 	}
 }			
-
+router.post("/post_order", function(req,res){
+  cart = req.session.cart;
+  Order.create(
+      { 
+        paymentIntent: req.body.paymentIntent.id,
+        method : "Card",
+        details :{
+          name : req.body.paymentIntent.shipping.name,
+          email : req.body.paymentIntent.receipt_email,
+          phone : req.body.paymentIntent.shipping.phone,
+          address: {
+            line1 : req.body.paymentIntent.shipping.address.line1,
+            city : req.body.paymentIntent.shipping.address.city,
+            zip : req.body.paymentIntent.shipping.address.postal_code,
+            state : req.body.paymentIntent.shipping.address.state
+          }
+        }, 
+        extraFee : 4,
+        totalPrice :  (req.body.paymentIntent.amount / 100) + 4
+      },
+      async function(err, order){
+        if(err){
+          console.log(err)
+        } else {
+          var products= cart.products;
+          console.log(products);
+          var product_ids = await Object.keys(products);
+          for(i=0; i<product_ids.length; i++){
+            var product = {
+             product : products[product_ids[i]].product,
+             quantity :  products[product_ids[i]].quantity
+            }
+            order.productList.push(product);
+            order.save();
+          }  
+        }
+      });
+  req.session.cart = null;
+  req.session.productList = null
+  req.app.locals.specialContext = null;
+  res.send({result : "succeeded"});
+})
 
 
 router.post("/create-order",middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
@@ -57,48 +99,43 @@ router.post("/create-payment-intent", async (req, res) => {
 // Configure your webhook in the stripe developer dashboard
 // https://dashboard.stripe.com/test/webhooks
 router.post("/webhook", async (req, res) => {
-  let data, eventType;
-
-  // Check if webhook signing is configured.
   if (WEBHOOK_SECRET) {
-    // Retrieve the event by verifying the signature using the raw body and secret.
-    let event;
-    let signature = req.headers["stripe-signature"];
-    try {
-      event = stripe.webhooks.constructEvent(
-        req.rawBody,
-        signature,
-        WEBHOOK_SECRET
-      );
-    } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`);
-      return res.sendStatus(400);
+      // Retrieve the event by verifying the signature using the raw body and secret.
+      let event;
+      let signature = req.headers["stripe-signature"];
+      try {
+        event = stripe.webhooks.constructEvent(
+          req.rawBody,
+          signature,
+          WEBHOOK_SECRET
+        );
+      } catch (err) {
+        console.log(`⚠️  Webhook signature verification failed.`);
+        return res.sendStatus(400);
+      }
+      data = event.data;
+      eventType = event.type;
+    } else {
+      // Webhook signing is recommended, but if the secret is not configured in `config.js`,
+      // we can retrieve the event data directly from the request body.
+      data = req.body.data;
+      eventType = req.body.type;
     }
-    data = event.data;
-    eventType = event.type;
-  } else {
-    // Webhook signing is recommended, but if the secret is not configured in `config.js`,
-    // we can retrieve the event data directly from the request body.
-    data = req.body.data;
-    eventType = req.body.type;
-  }
 
-  if (eventType === "payment_intent.succeeded") {
-    // Funds have been captured
-    // Fulfill any orders, e-mail receipts, etc
-    // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
-    console.log("💰 Payment captured!");
-  } else if (eventType === "payment_intent.payment_failed") {
-    console.log("❌ Payment failed.");
-  }
-  res.sendStatus(200);
+    if (eventType === "payment_intent.succeeded") {
+      
+      console.log("💰 Payment captured!");
+    } else if (eventType === "payment_intent.payment_failed") {
+      Order.findOneAndRemove({paymentIntent : req.body.data.object.id }, function(err , found){});
+      console.log("❌ Payment failed.");
+    }
+    res.sendStatus(200);
+  // })
+  // .catch(function(err) { console.log(err.message); }); 
 });
 
 
 router.get('/checkout', function (req, res){
-  console.log("eisai malakas 1");
-  console.log(req.app.locals.specialContext);
-  console.log("eisai malakas 2");
   if(req.app.locals.specialContext!= null){
     var validated = req.app.locals.specialContext;
     req.flash(validated.error.type,validated.error.message);

@@ -27,21 +27,17 @@ const indexRoutes 	 = require("./routes/index"),
 
 
 
-app.use(cookieParser());
-app.use(
-  express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
-    verify: function(req, res, buf) {
-      if (req.originalUrl.startsWith("/webhook")) {
-        req.rawBody = buf.toString();
-      }
-    }
-  })
-);
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  verify: (req, res, buf) => {
+    if (req.originalUrl.startsWith('/webhook')) {
+      req.rawBody = buf.toString()
+    }
+  }
+}))
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+
 app.use(expressSanitizer());
 app.use("/",express.static(__dirname + "/public"));
 app.use(express.static('files'));
