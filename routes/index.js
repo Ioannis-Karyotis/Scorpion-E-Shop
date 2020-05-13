@@ -46,7 +46,7 @@ router.get("/register",function(req,res){
 
 router.post("/register",middleware.namesur , middleware.email , middleware.password ,function(req,res){
 	var newUser = new User({
-	methods: ['local'],
+	methods: 'local',
 	local:{
 		name    : req.body.name,
 		surname : req.body.surname,

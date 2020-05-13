@@ -1,33 +1,38 @@
-// A reference to Stripe.js
-var stripe;
+var stripe; // A reference to Stripe.js
 
-var orderData = {
+var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
 };
 
-var buttonSelect = function(type){
+var buttonSelect = function(type){ //Change the input form shape regarding the pressed radio button
 
 	if(type==2 || type==3){
-		document.querySelector(".tosend").classList.remove("hidden");
-		document.querySelector(".payment").classList.add("hidden");
-
+		document.getElementById("button-text-send").classList.remove("hidden");
+		document.getElementById("button-text-pay").classList.add("hidden");
+    document.getElementById("submit").value = "Αποστολή";
     document.querySelector(".card-element").classList.add("hidden");
+    document.querySelector(".address").classList.remove("hidden");
+    document.getElementById("method").value = "2";
+    if(type==3){
+      document.querySelector(".address").classList.add("hidden");
+      document.getElementById("method").value = "3";                                
+    }
 
 	}else if(type==1){
-		document.querySelector(".tosend").classList.add("hidden");
-		document.querySelector(".payment").classList.remove("hidden");
-
+		document.getElementById("button-text-send").classList.add("hidden");
+    document.getElementById("button-text-pay").classList.remove("hidden");
+    document.getElementById("submit").value = "Πληρωμή";
     document.querySelector(".card-element").classList.remove("hidden");
-
+    document.querySelector(".address").classList.remove("hidden");
 
 
 	}
 
 }
 
-  // Disable the button until we have Stripe set up on the page
-document.querySelector("button").disabled = true;
-fetch("/create-payment-intent", {
+  
+document.querySelector("button").disabled = true; // Disable the button until we have Stripe set up on the page
+fetch("/create-payment-intent", { // Make Post http request for creating the Payment Intent
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -38,17 +43,16 @@ fetch("/create-payment-intent", {
   return result.json();
 })
 .then(function(data) {
-  return setupElements(data);
+  return setupElements(data); //Setup the the card element along with the order data that were sent to the server
 })
 .then(function({ stripe, card, clientSecret }) {
   document.querySelector("button").disabled = false;
   var form = document.getElementById("payment-form");
-  form.addEventListener("submit", function(event) {
-    // Handle form submission.
-    event.preventDefault(); 
+  form.addEventListener("submit", function(event) { //Trigger the following event when the form button is pressed
+    event.preventDefault();  // prevent the default form submit event ,which is redirecting the page
     console.log("when pressing button");
-    // check parameters through middleware;
-    var formData= {
+   
+    var formData= {  //collecting the values from the form
       name: document.getElementById("name").value,
       surname: document.getElementById("surname").value,
       email: document.getElementById("email").value,
@@ -56,10 +60,11 @@ fetch("/create-payment-intent", {
       line1: document.getElementById("line1").value,
       city: document.getElementById("city").value,
       zip: document.getElementById("postal_code").value,
-      state: document.getElementById("state").value
+      state: document.getElementById("state").value,
+      method : document.getElementById("method").value
     };
     
-    fetch('/create-order', {
+    fetch('/create-order', { // check parameters through middleware that exist in this create-order post route;
       method: "POST",
       headers : { 
         'Content-Type': 'application/json'
@@ -69,14 +74,30 @@ fetch("/create-payment-intent", {
     .then(function(response) {
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-       throw new TypeError("Oops, we haven't got JSON!");
+       throw new TypeError("Oops, we haven't got JSON!");//If the respnse is empty ,means not all middleware were passed .
       }
       return response.json();       
     })
     .then(function(data){
+      if(document.getElementById("submit").value === "Αποστολή"){//make post dta to database without card payment
+        changeLoadingState(true);
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
 
-      // Initiate payment when the submit button is clicked
-      pay(stripe, card, clientSecret);
+        fetch("/post_order_sent", {
+          method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(function(result) {   
+            clientSecret =null;
+            orderComplete(clientSecret);
+          }) 
+      }else{
+        pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
+      }
     })
     .catch(function(error){ 
       console.error(error);
@@ -84,8 +105,8 @@ fetch("/create-payment-intent", {
     });  
   });
 });
-// Set up Stripe.js and Elements to use in checkout form
-var setupElements = function(data) {
+
+var setupElements = function(data) { // Set up Stripe.js and Elements to use in checkout form
   stripe = Stripe(data.publishableKey);
   var elements = stripe.elements();
   var style = {
@@ -117,10 +138,6 @@ var setupElements = function(data) {
   };
 };
 
-/*
- * Calls stripe.confirmCardPayment which creates a pop-up modal to
- * prompt the user to enter extra authentication details without leaving your page
- */
 var pay = function(stripe, card, clientSecret) {
   changeLoadingState(true);
   var modal = document.getElementById("myModal");
@@ -177,26 +194,37 @@ var pay = function(stripe, card, clientSecret) {
 
 /* ------- Post-payment helpers ------- */
 
-/* Shows a success / error message when the payment is complete */
+/* Shows a success message when the payment is complete */
+
 var orderComplete = function(clientSecret) {
-  // Just for the purpose of the sample, show the PaymentIntent response object
-  stripe.retrievePaymentIntent(clientSecret).then(function(result) {
+  if(!clientSecret){ //when the user just post data to the database
     document.querySelector(".chkout").classList.add("hidden");
-    // var paymentIntent = result.paymentIntent;
-    // var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
     $('.circle-loader').toggleClass('load-complete');
     $('.checkmark').toggle();
     document.querySelector(".result").classList.remove("hidden");
-    
-    // document.querySelector("pre").textContent = paymentIntentJson;
-
-    
+       
     setTimeout(function() {
       window.location.replace("http://localhost:3000/");
     }, 3000);
 
     changeLoadingState(false);
-  });
+
+  }else{ //when the user pays with card
+
+    stripe.retrievePaymentIntent(clientSecret).then(function(result) {
+      document.querySelector(".chkout").classList.add("hidden");
+      
+      $('.circle-loader').toggleClass('load-complete');
+      $('.checkmark').toggle();
+      document.querySelector(".result").classList.remove("hidden");
+
+      setTimeout(function() {
+        window.location.replace("http://localhost:3000/");
+      }, 3000);
+
+      changeLoadingState(false);
+    });
+  }
 };
 
 // Show a spinner on payment submission

@@ -158,14 +158,17 @@ hr{
 /*=========*/
 /*  Modals */
 /*=========*/
-
-.cancelbtn i{
-    color: #f44336;
+#Xbutton{
+  position: absolute;
+  right: 4px;
+  z-index: 2;
 }
 
 .cancelbtn i:hover{
     opacity:0.8;
+    color: #f44336;
 }
+
 
 .modal {
     display: none;
@@ -174,26 +177,38 @@ hr{
     -ms-overflow-style: none;
     background-color: rgba(0, 0, 0, 0.4);
     padding-top: 60px;
+    -webkit-perspective: 1300px;
+  -moz-perspective: 1300px;
+  perspective: 1300px;
 }
 
 .modal::-webkit-scrollbar {
   display: none;
 }
 
+.modal-content {
+  border-radius: 0px;
+  overflow: hidden;
+  background-color: #fefefe;
+  margin: auto;
+  /* border: 2px solid #888; */
+  width: 60%;
+  height: 60%;
+  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+}
 
-@media screen and (min-width:1000px){
+@media screen and (min-width:1200px){
   .mt-n2{
     margin-top: -1.2rem !important;
   }
 
   .modal-content {
-	  font-family: 'Vollkorn', serif;
 	  border-radius: 0px;
 	  overflow: hidden;
 	  background-color: #fefefe;
 	  margin: auto;
 	  /* border: 2px solid #888; */
-	  width: 50%;
+	  width: 40%;
 	  height: 60%;
 	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
@@ -208,29 +223,56 @@ hr{
 }
 
 .animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s
+    -webkit-animation: animatezoom 0.3s;
+    animation: animatezoom 0.3s
 }
 
 @-webkit-keyframes animatezoom {
     from {
-        -webkit-transform: scale(0)
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      -webkit-transform: rotateY(-70deg);
+      -moz-transform: rotateY(-70deg);
+      -ms-transform: rotateY(-70deg);
+      transform: rotateY(-70deg);
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      transition: all 0.3s;
+      opacity: 0;
     }
     to {
-        -webkit-transform: scale(1)
+      -webkit-transform: rotateY(0deg);
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+      opacity: 1;
     }
 }
 
 @keyframes animatezoom {
     from {
-        transform: scale(0)
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      -webkit-transform: rotateY(-70deg);
+      -moz-transform: rotateY(-70deg);
+      -ms-transform: rotateY(-70deg);
+      transform: rotateY(-70deg);
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      transition: all 0.3s;
+      opacity: 0;
     }
     to {
-        transform: scale(1)
+      -webkit-transform: rotateY(0deg);
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+      opacity: 1;
     }
 }
 .modal-carousel img{
-  border-radius: 10px;
   height: 30em;
 }
 

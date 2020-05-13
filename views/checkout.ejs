@@ -1,8 +1,9 @@
 <%- include("partials/header")%>
+
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal" class="modal-chk">
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content-chk">
   	<div class="container">
   		<div class="row d-flex justify-content-center">
   			<div class="circle-loader">
@@ -11,6 +12,7 @@
   		</div>
 	  	<div class="row d-flex justify-content-center">
 			<h2 class="result hidden">Η πληρωμή ολοκληρώθηκε</h2>
+			<h2 class="result2 hidden">Η πληρωμή δεν ολοκληρώθηκε</h2>
 		</div>	
 	</div>
   </div>
@@ -20,6 +22,7 @@
 
 <div id="main" class="container main">
     <div class="row  mx-auto pt-3 pb-3" >
+    <%if(session.productList && session.productList.length > 0){ %>	
     	<div class="col-lg-6 mx-auto">
 			<form id="payment-form" class="chkout">
 				<%if(user) {%>
@@ -63,22 +66,22 @@
 						<input id="phone" name="phone" class="chk-field" placeholder="+30 XXXXXXXXXX"  value="<%= validated.phone %>"required/>
 					</label>
 				</div>
-				<div class="chk-group">
+				<div class="chk-group address">
 					<label>
 						<span>Διέυθυνση</span>
-						<input id="line1" name="line1" class="chk-field" placeholder="77 Winchester Lane" value="<%= validated.line1 %>"  required/>
+						<input id="line1" name="line1" class="chk-field" placeholder="77 Winchester Lane" value="<%= validated.line1 %>"  />
 					</label>
 					<label>
 						<span>Πόλη</span>
-						<input id="city" name="city" class="chk-field" placeholder="Coachella" value="<%= validated.city %>" required/>
+						<input id="city" name="city" class="chk-field" placeholder="Coachella" value="<%= validated.city %>" />
 					</label>
 					<label>
 						<span>Ταχ. Κώδικας</span>
-						<input id="postal_code" name="zip" class="chk-field" placeholder="92236" value="<%= validated.zip %>" equired/>
+						<input id="postal_code" name="zip" class="chk-field" placeholder="92236" value="<%= validated.zip %>" />
 					</label>
 					<label>
 						<span>Νομός</span>
-						<input id="state" name="state" class="chk-field" placeholder="CA" value="<%= validated.state %>" required/>
+						<input id="state" name="state" class="chk-field" placeholder="CA" value="<%= validated.state %>" />
 					</label>
 				</div>
 				<div class="chk-group card-element">
@@ -93,16 +96,18 @@
 				</div>
 				<%}%>	
 				<div class="payment ">
-					<button id="submit">
+					<button id="submit" value="Πληρωμή">
 	            		<div class="spinner" id="spinner"></div>
-	            		<span id="button-text">Πληρωμή</span><span id="order-amount"></span>
+	            		<span id="button-text-pay">Πληρωμή</span><span id="order-amount"></span>
+	            		<span id="button-text-send" class="hidden" >Αποστολή</span><span id="order-amount"></span>
+	            		<span id="method" class="hidden" value="2"></span>
 	          		</button>
 	          	</div>
-	          	<div class="tosend hidden">
+	          	<!-- <div class="tosend hidden">
 		          	<button>
-		            	<span id="button-text" onclick="payWithoutCard()">Αποστολή</span>
+		            	<span id="button-text">Αποστολή</span>
 		          	</button>
-				</div>
+				</div> -->
 						
 			</form>
 				
@@ -114,7 +119,6 @@
 	        </div>
         </div>
         <div class="col-lg-6 mx-auto">
-        	<%if(session.productList && session.productList.length > 0){ %>
 		    <div class="shopping-cart">
 			    <% session.productList.forEach(function(item){ %>
 			      	<div class="product product-micro">
@@ -183,10 +187,10 @@
 					</label>
 				</div>
 			</div>	
-  			<%}else{ %>
-    			Το καλάθι σας είναι άδειο
-  			<%}%>
         </div>
+        <%}else{ %>
+    			Το καλάθι σας είναι άδειο
+  		<%}%>
 	</div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

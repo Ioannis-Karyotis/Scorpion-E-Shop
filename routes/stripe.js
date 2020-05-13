@@ -34,7 +34,7 @@ router.post("/post_order", function(req,res){
   Order.create(
       { 
         paymentIntent: req.body.paymentIntent.id,
-        method : "Card",
+        method : "Πληρωμή με κάρτα",
         details :{
           name : req.body.paymentIntent.shipping.name,
           email : req.body.paymentIntent.receipt_email,
@@ -54,7 +54,6 @@ router.post("/post_order", function(req,res){
           console.log(err)
         } else {
           var products= cart.products;
-          console.log(products);
           var product_ids = await Object.keys(products);
           for(i=0; i<product_ids.length; i++){
             var product = {
@@ -71,6 +70,57 @@ router.post("/post_order", function(req,res){
   req.app.locals.specialContext = null;
   res.send({result : "succeeded"});
 })
+
+router.post("/post_order_sent", function(req,res){
+  var method = "";
+  if(req.body.method==="3"){
+    method = "Παραλαβή από το κατάστημα"
+  }else{
+    method = "Αποστολή με αντικαταβολή"
+  }
+  cart = req.session.cart;
+  Order.create(
+      { 
+        method : method,
+        details :{
+          name : req.body.name + " " + req.body.surname,
+          email : req.body.email,
+          phone : req.body.phone,
+          address: {
+            line1 : req.body.line1,
+            city : req.body.city,
+            zip : req.body.zip,
+            state : req.body.state
+          }
+        }, 
+        extraFee : 4
+      },
+      async function(err, order){
+        if(err){
+          console.log(err)
+        } else {
+          var products= cart.products;
+          var totalPrice = 0;
+          var product_ids = await Object.keys(products);
+          for(i=0; i<product_ids.length; i++){
+            var product = {
+             product : products[product_ids[i]].product,
+             quantity :  products[product_ids[i]].quantity
+            }
+            totalPrice =+ product.quantity * products[product_ids[i]].price;
+            order.productList.push(product);
+            order.save();
+          }
+          order.totalPrice = (totalPrice) + 4;
+          order.save();  
+        }
+      });
+  req.session.cart = null;
+  req.session.productList = null
+  req.app.locals.specialContext = null;
+  res.send({result : "succeeded"});
+})
+
 
 
 router.post("/create-order",middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
