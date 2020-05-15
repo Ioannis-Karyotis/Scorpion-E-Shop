@@ -3,6 +3,7 @@ var router 		= express.Router();
 var passport 	= require("passport");
 const JWT 		= require('jsonwebtoken');
 const { JWT_SECRET } = require('../configuration');
+const {JWT_SECRET_ADMIN} = require('../configuration');
 var User 		= require("../models/user");
 var Product = require("../models/product");
 var Cart = require("../models/cart");
@@ -20,7 +21,21 @@ signToken = function(user) {
   }, JWT_SECRET);
 }
 
+signAdminToken = function(admin) {
+  return JWT.sign({
+    iss: 'Scorpion',
+    sub: admin,
+    iat: new Date().getTime(), // current time
+    exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
+  }, JWT_SECRET_ADMIN);
+}
+
 router.get("/secret" ,passport.authenticate('jwt', { session: false }), function(req, res){
+	res.redirect("/");
+});
+
+router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+	req.flash("genSuccess","Admin Successfully Signed Up");
 	res.redirect("/");
 });
 
@@ -84,7 +99,14 @@ router.get("/login",function(req,res){
 router.post('/login',passport.authenticate('local', { failWithError: true }),
 	function(req, res, next) {
 		// handle success
-		console.log(req.user);
+		if(req.user.local.priviledge == "Admin"){
+			console.log("inside");
+			const token = signAdminToken(req.user);
+			res.cookie('admin_token', token, {
+	  			httpOnly: true
+			});
+			return res.redirect("/admin");
+		}
 		const token = signToken(req.user);
 		res.cookie('access_token', token, {
 	  		httpOnly: true
@@ -110,6 +132,7 @@ router.get("/logout",function(req,res){
 	req.logout();
 	req.flash("genSuccess","You Logged Out");
 	res.clearCookie('access_token');
+	res.clearCookie('admin_token');
 	res.redirect("back");
 
 })

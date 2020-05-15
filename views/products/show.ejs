@@ -125,9 +125,14 @@
       </form>
     </div>
 <%if(product.reviews.length >= 0){ %>
+  <%if(!product.rating){ %>
+    <div>
+      <h1>Δεν υπάρχουν αξιολογήσεις</h1>
+    </div>
+  <%}else { %>
     <div class="row">
       <div class="col-12" style="text-align:center;">
-        <h3 id="rating<%=product._id%>"><%=product.rating.toPrecision(2)%><h3>
+        <h3 id="rating<%=product._id%>"><%=product.rating.toPrecision(2) %><h3>
       </div>
     </div>
     <div class="row">
@@ -169,6 +174,7 @@
     </div>
 
     <%});%>
+  <%}%>  
   <%}%>
   </div>
 <%- include("./../partials/footer")%>

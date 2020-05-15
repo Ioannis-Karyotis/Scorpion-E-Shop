@@ -1,5 +1,5 @@
 <%- include("./../partials/header")%>
-<%var modals = [] %>
+
 <div id="main" class="container product">
 
   <div class="row mx-auto my-2" style="text-align:center">
@@ -79,6 +79,16 @@
     </div>
   </div>
 <% }) %>
+    <% if(admin === 'admin') { %>
+    <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
+      <div class="card" style="border-radius:0px;">
+        <a href="http://localhost:3000/products/<%= type %>/add">
+          <img  src="http://localhost:3000/images/add.png">
+        </a>
+      </div>
+    </div>
+      <% } %>
+    </div>
   </div>
   </div>
 </div>

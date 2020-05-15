@@ -1,5 +1,7 @@
 module.exports = {
   JWT_SECRET: 'scorpionauthentication',
+  JWT_SECRET_ADMIN :'scorpioneshopADMIN',
+  ADMIN_PASS : 'administrator',
   SESSION_SECRET : 'scorpioneshop',
   PUBLIC_STRIPE: 'pk_test_ukUnozz4Gh9b2hqg2rG1hDg200cvX20EWL',
   SECRET_STRIPE: 'sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv',

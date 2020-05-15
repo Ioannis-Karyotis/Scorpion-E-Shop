@@ -1,24 +1,96 @@
-var express 		= require("express");
+var express 	= require("express");
 var router     	= express.Router();
 var Product     = require("../models/product");
-var Review 			= require("../models/review");
+var Review 		= require("../models/review");
 var middleware  = require("../middleware/index.js");
-var Cart				= require("../models/cart");
+var Cart		= require("../models/cart");
+var passport 	= require("passport");
+const multer 	= require('multer');
+const path 		= require('path');
+
+
+
 //===================
 // Product ROUTES
 //===================
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "./public/images/");
+    },
 
-router.get("/products/:type", function(req, res){
-	var wantedType = req.params.type;
-  Product.find({ type : wantedType }, function(err , foundProducts ){
-      if(err){
-          console.log(err)
-      } else{
-          res.render("products", {products : foundProducts});
-        }
-    });
+    // By default, multer removes file extensions so let's add them back
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
 });
 
+const imageFilter = function(req, file, cb) {
+    // Accept images only
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+        req.fileValidationError = 'Only image files are allowed!';
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+
+
+router.get("/products/:type", function(req, res, next){
+	var wantedType = req.params.type;
+  	Product.find({ type : wantedType }, function(err , foundProducts ){
+      	if(err){
+          	console.log(err)
+      	}else{
+	      	passport.authenticate('jwtAdmin', function(err, admin, info) {
+		    	if (err) { return next(err); }
+		    	if (!admin) { 
+		    		console.log("passed to user");
+		    	return	res.render("products", {products : foundProducts , admin :{}});
+		    	}
+		    	console.log("passed to admin");
+		        return res.render("products", {products : foundProducts , admin : "admin" , type: req.params.type});
+	    	})(req , res, next)
+	    }
+	});
+});	
+
+router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+	res.render("products/add",{type: req.params.type});
+});
+
+router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storage, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
+
+		var newProduct = new Product({
+			name    : req.body.name,
+			price : req.body.price,
+			description : req.body.description,
+			type : req.params.type,
+			reviews: [],
+        	rating: 0,
+        	reviewCount: 0
+		});
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.files) {
+            return res.send('Please select an image to upload');
+        }
+        req.files.forEach(function(file){
+        	var str = file.path
+			var str2 = str.replace("public", "");
+  			var final = str2.replace(/\\/g,"/");
+  			image={url : "http://localhost:3000" + final };
+			newProduct.images.push(image);
+        });
+        
+		newProduct.save(function(err){
+			if(err){
+				console.log(err.message);
+			}
+			res.redirect("/products/"+ req.params.type);
+		});	
+})				
+      
 router.get("/products/:type/:id", function(req ,res){
 	Product.findById(req.params.id).populate("reviews").exec(function(err, foundProduct){
 		if(err){
@@ -26,8 +98,7 @@ router.get("/products/:type/:id", function(req ,res){
 		} else {
 		    if(foundProduct!= null){
 			    var images = foundProduct.images;
-			    console.log(images);
-			    res.render("products/show", {product: foundProduct, images :images});
+			    res.render("products/show", {product: foundProduct, images :images});							
 		    } else{
 		        res.redirect("back");
 		    }
@@ -79,7 +150,7 @@ router.post("/products/:type/:id/review", function(req,res){
 		}
 	});
 });
-
+//Ενδεχεται να μεταφερθει
 router.get("/products/:type/:id/add", function(req, res){
 	Product.findById(req.params.id, function(err, foundProduct){
 		if(err){

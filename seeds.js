@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var Product = require("./models/product");
 var Review = require("./models/review");
+var Admin = require("./models/admin");
 
 var data = [
     {
@@ -36,6 +37,31 @@ var data = [
 ]
 
 function seedDB(){
+  Admin.remove({}, function(err){
+    if(err){
+      console.log(err)
+    }
+    console.log("removed admin");
+    Admin.create(
+      { 
+        methods: "local",
+        local: {
+          name: "Admin",
+          email: "scorpion.storethess@gmail.com",
+          priviledge : "Admin"
+        }
+      },function(err , admin){
+        admin.setAdminPassword("administrator");
+        admin.setPassword("Winston_100!");
+        admin.save();
+      }
+    )
+    console.log("Admin Created");
+  })
+
+
+
+
    //Remove all campgrounds
    Product.remove({}, function(err){
         if(err){

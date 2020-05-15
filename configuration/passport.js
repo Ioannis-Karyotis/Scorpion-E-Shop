@@ -6,7 +6,40 @@ const mongoose = require('mongoose'),
       GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
       {ExtractJwt } = require('passport-jwt'),
       User    = require("../models/user"),
+      Admin    = require("../models/admin"),
       config = require('./index');
+
+
+      
+const cookieAdminExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['admin_token'];
+  }
+  return token;
+}
+
+// JSON WEB TOKENS STRATEGY
+passport.use('jwtAdmin', new JwtStrategy({
+  jwtFromRequest: cookieAdminExtractor,
+  secretOrKey: config.JWT_SECRET_ADMIN,
+  passReqToCallback: true
+}, function(req, payload, done){
+    process.nextTick(function(){
+      Admin.findById(payload.sub._id , function(err,admin){
+        if(err){
+          done(error, false);
+        }
+        if (!admin || !admin.validateAdminPassword(config.ADMIN_PASS)) {
+          console.log("admin doens't exist");
+          req.user = {};
+          return done(null, false);
+        }
+        req.user = admin;
+        done(null, admin);
+    });  
+  });
+}));    
       
       
 const cookieExtractor = function(req) {
@@ -111,16 +144,22 @@ passport.use('local', new LocalStrategy({
   passwordField: 'password',
 }, function (email, password, done){
   process.nextTick(function(){
-    User.findOne({ "local.email" : email }, function(err,user){
-        if(!user || !user.validatePassword(password)) {
-          user={};
-          return done(null, false);
-        }
-        return done(null, user);
-      });
-    });
-  })
-);
+    Admin.findOne({"local.email" : email}, function(err,admin){
+      if(!admin || !admin.validatePassword(password)){
+        User.findOne({ "local.email" : email }, function(err,user){
+          if(!user || !user.validatePassword(password)) {
+            user={};
+            return done(null, false);
+          }
+          return done(null, user);
+        });
+      }else{
+        return done(null,admin);
+      }
+    });      
+  });
+}));  
+
 
 
 

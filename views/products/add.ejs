@@ -1,0 +1,46 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="main container">
+    <div class="row d-flex justify-content-around ">
+	    <form action="/products/<%=type%>/add" class="col-lg-6" method="post" enctype="multipart/form-data">
+	        <div class="desc py-5">
+				<h1 class="pb-5">Εισαγωγή προϊόντος</h1>
+	            <div class="form-group pl-2">
+	                <span class="d-flex align-items-center">	
+	                	<input type="text" name="name" class="form-control  mr-3" placeholder="Όνομα προϊόντος" required>
+	                	<i class="fas fa-info-circle fa-lg ">
+	                		<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το όνομα το προϊόντος</div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group pl-2">
+	            	<span class="d-flex align-items-center">
+	                	<input type="text" name="price" class="form-control  mr-3" placeholder="Τιμή" required>
+	                	<i class="fas fa-info-circle fa-lg ">
+	                		<div class="tooltiptext">Στο πεδίο αυτό , ορίζετε τη τιμή του προϊόντος σε Ευρώ €</div>
+	                	</i>
+	                </span>	
+	            </div>
+	            <div class="form-group pl-2">
+	                <span class="d-flex align-items-center">	
+	                	<textarea name="description" class="form-control mr-4" placeholder="Περιγραφή" required></textarea> 
+	                	<i class="fas fa-info-circle fa-lg mr-2 pr-1">
+	                		<div class="tooltiptext">Ορίστε τη περιγραφη του προϊόντος</div>
+	                	</i>
+	                </span>	
+	            </div>
+            	<div class="form-group px-2">
+				    <div>
+				        <label>Select multiple images:</label>
+				        <input type="file" name="profile_pic" multiple />
+				    </div>
+	            </div>
+	            <div class="form-group">
+	                <button class="btn btn-success" type="submit">Υποβολή</button>
+	            </div>
+	        </div>
+		</form>
+	</div>
+</div>
+
+<%- include("./../partials/footer")%>

@@ -12,6 +12,7 @@ const express 		= require("express"),
 	methodOverride  = require("method-override"),
 	flash			= require("connect-flash"),
 	jquery 			= require('jquery'),
+	multer 			= require('multer'),
 	User 	    	= require("./models/user"),
 	Product			= require("./models/product"),
 	seedDB			= require("./seeds"),
@@ -24,8 +25,6 @@ const indexRoutes 	 = require("./routes/index"),
 	  productRoutes  = require("./routes/products"),
 	  stripeRoutes 	 = require("./routes/stripe"),
 	  config 		 = require("./configuration/passport");
-
-
 
 
 app.use(bodyParser.json({
