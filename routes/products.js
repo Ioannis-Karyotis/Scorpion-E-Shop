@@ -9,7 +9,6 @@ const multer 	= require('multer');
 const path 		= require('path');
 
 
-
 //===================
 // Product ROUTES
 //===================
@@ -43,10 +42,8 @@ router.get("/products/:type", function(req, res, next){
 	      	passport.authenticate('jwtAdmin', function(err, admin, info) {
 		    	if (err) { return next(err); }
 		    	if (!admin) { 
-		    		console.log("passed to user");
-		    	return	res.render("products", {products : foundProducts , admin :{}});
+		    		return	res.render("products", {products : foundProducts , admin :null});
 		    	}
-		    	console.log("passed to admin");
 		        return res.render("products", {products : foundProducts , admin : "admin" , type: req.params.type});
 	    	})(req , res, next)
 	    }
@@ -66,7 +63,8 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			type : req.params.type,
 			reviews: [],
         	rating: 0,
-        	reviewCount: 0
+        	reviewCount: 0,
+        	status : "active"
 		});
 
         if (req.fileValidationError) {
@@ -105,6 +103,36 @@ router.get("/products/:type/:id", function(req ,res){
 		}
 	});
 });
+
+
+router.delete("/products/:type/:id/delete" ,  function(req, res){
+	Product.findByIdAndRemove(req.params.id, function(err){
+		if(err){
+			res.redirect("/products/"+ req.params.type);
+		} else{
+			res.redirect("/products/"+ req.params.type);
+		}
+	});
+});
+
+
+router.post("/products/:type/:id/hide" ,  function(req, res){
+	Product.findById(req.params.id,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+			if(foundProduct.status == "active"){	
+				foundProduct.status = "hidden";
+				foundProduct.save();
+			}else{
+				foundProduct.status = "active";
+				foundProduct.save();
+			}
+			res.redirect('products/'+ req.params.type)
+		}
+	});
+});
+
 
 router.post("/products/:type/:id/review", function(req,res){
 	Product.findById(req.body.productId, function(err, foundProduct){

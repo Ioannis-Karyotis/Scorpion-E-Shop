@@ -12,7 +12,8 @@ var data = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
         reviews: [],
         rating: 0,
-        reviewCount: 0
+        reviewCount: 0,
+        status : "active"
     },
     {
         name: "Example 2",
@@ -22,7 +23,8 @@ var data = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
         reviews: [],
         rating: 0,
-        reviewCount: 0
+        reviewCount: 0,
+        status : "active"
     },
     {
         name: "Example 3",
@@ -32,7 +34,8 @@ var data = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
         reviews: [],
         rating: 0,
-        reviewCount: 0
+        reviewCount: 0,
+        status : "active"
     }
 ]
 

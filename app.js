@@ -67,6 +67,7 @@ app.use(passport.session());
 
 
 app.use(function(req, res, next){
+
 	res.locals.currentUser = req.user;
 	res.locals.session 	   = req.session; //so I can access session from all the views
 	res.locals.error       = req.flash("error");

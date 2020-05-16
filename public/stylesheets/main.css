@@ -311,6 +311,12 @@ hr{
   position: relative;
   margin-bottom:2em;
 }
+.opac {
+  opacity : 0.5;
+}
+.hidden{
+  display: none;
+}
 
 /*=============*/
 /*Footer*/

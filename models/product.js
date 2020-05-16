@@ -13,7 +13,8 @@ var ProductSchema = new mongoose.Schema({
      }
    ],
    rating: Number,
-   reviewCount: Number
+   reviewCount: Number,
+   status : String
 });
 
 module.exports = mongoose.model("Product", ProductSchema);
