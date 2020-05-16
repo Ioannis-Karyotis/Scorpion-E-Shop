@@ -4,7 +4,7 @@ const express 		= require("express"),
 	bodyParser 		= require("body-parser"),
 	cors 			= require("cors"),
 	cookieParser 	= require("cookie-parser"),
-	expressSanitizer= require("express-sanitizer"),
+	sanitization	= require('express-autosanitizer'),
 	mongoose 		= require("mongoose"),
 	passport 		= require("passport"),
 	LocalStrategy   = require("passport-local"),
@@ -35,9 +35,10 @@ app.use(bodyParser.json({
   }
 }))
 app.use(bodyParser.urlencoded({extended: true}));
+// app.use(expressSanitizer());
 app.use(cookieParser());
 
-app.use(expressSanitizer());
+
 app.use("/",express.static(__dirname + "/public"));
 app.use(express.static('files'));
 app.use(methodOverride("_method"));

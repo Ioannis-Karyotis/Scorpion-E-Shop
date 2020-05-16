@@ -7,6 +7,7 @@ var Cart		= require("../models/cart");
 var passport 	= require("passport");
 const multer 	= require('multer');
 const path 		= require('path');
+const sanitization	= require('express-autosanitizer');
 
 
 //===================
@@ -134,7 +135,8 @@ router.post("/products/:type/:id/hide" ,  function(req, res){
 });
 
 
-router.post("/products/:type/:id/review", function(req,res){
+router.post("/products/:type/:id/review",sanitization.route, function(req,res){
+	
 	Product.findById(req.body.productId, function(err, foundProduct){
 		if(err){
 			console.log(err);
@@ -144,7 +146,7 @@ router.post("/products/:type/:id/review", function(req,res){
 		    			var name =  req.user[req.user.methods].name ;
 						var surname =  req.user[req.user.methods].surname; 
 		    		}else{
-		    			var name = req.body.author;
+		    			var name = req.autosan.body.author;
 						var surname =  "";
 		    		}
 					var today = new Date();
@@ -156,9 +158,9 @@ router.post("/products/:type/:id/review", function(req,res){
 					Review.create(
 						{
 							author: name + " " + surname,
-							description: req.body.description,
+							description: req.autosan.body.description,
 							date: today,
-							rating: req.body.rating
+							rating: req.autosan.body.rating
 						}, function(err, review){
 							if(err){
 								console.log(err);

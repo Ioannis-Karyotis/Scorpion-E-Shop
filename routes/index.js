@@ -9,6 +9,7 @@ var Product = require("../models/product");
 var Cart = require("../models/cart");
 var middleware  = require("../middleware/index.js");
 var bodyParser = require("body-parser");
+const sanitization	= require('express-autosanitizer');
 
 
 
@@ -59,16 +60,16 @@ router.get("/register",function(req,res){
 })
 
 
-router.post("/register",middleware.namesur , middleware.email , middleware.password ,function(req,res){
+router.post("/register",sanitization.route, middleware.namesur , middleware.email , middleware.password ,function(req,res){
 	var newUser = new User({
 	methods: 'local',
 	local:{
-		name    : req.body.name,
-		surname : req.body.surname,
-		email : req.body.email
+		name    : req.autosan.body.name,
+		surname : req.autosan.body.surname,
+		email : req.autosan.body.email
 		}
 	});
-	newUser.setPassword(req.body.password);
+	newUser.setPassword(req.autosan.body.password);
 	newUser.save(function(err){
 		if(err){
 			console.log(err.message);
@@ -96,7 +97,7 @@ router.get("/login",function(req,res){
 });
 
 
-router.post('/login',passport.authenticate('local', { failWithError: true }),
+router.post('/login',sanitization.route, passport.authenticate('local', { failWithError: true }),
 	function(req, res, next) {
 		// handle success
 		if(req.user.local.priviledge == "Admin"){
