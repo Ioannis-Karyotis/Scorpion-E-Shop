@@ -106,7 +106,7 @@ router.get("/products/:type/:id", function(req ,res){
 });
 
 
-router.delete("/products/:type/:id/delete" ,  function(req, res){
+router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.findByIdAndRemove(req.params.id, function(err){
 		if(err){
 			res.redirect("/products/"+ req.params.type);
@@ -117,7 +117,7 @@ router.delete("/products/:type/:id/delete" ,  function(req, res){
 });
 
 
-router.post("/products/:type/:id/hide" ,  function(req, res){
+router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			console.log(err);
