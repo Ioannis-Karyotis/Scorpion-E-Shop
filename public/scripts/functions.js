@@ -19,7 +19,12 @@ function qtyUpdate(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/update";
 	var id = event.target.id;
-	let qty = document.getElementById(id).value;
+	var qty = document.getElementById(id).value;
+  if(qty <= 0){
+    //reset the value to 1
+    qty = 1;
+    document.getElementById(id).value = 1;
+  }
 	let params = {};
 	params.id = id;
 	params.qty = qty;
@@ -34,6 +39,13 @@ function qtyUpdate(){
 			document.getElementById("itm-prc"+id).innerHTML = data.price;
 			document.getElementById('cart-total').innerHTML = data.totalPrice;
 			document.getElementById('cart-glyphicon').innerHTML = data.totalQuantity;
+      //quick view
+      document.getElementById("quick_qty"+id).innerHTML = qty;
+      document.getElementById("quick_product_total"+id).innerHTML = data.price;
+      document.getElementById("quick_total").innerHTML = data.totalPrice;
+      document.getElementById("quick_total_qty").innerHTML =
+        data.totalQuantity>1 ? "Το καλάθι σας έχει "+data.totalQuantity+" προϊόντα"
+                             : "Το καλάθι σας έχει "+data.totalQuantity+" προϊόν";
 		}
 	}
 }
@@ -42,8 +54,9 @@ function removeProduct(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/remove";
 	let temp = event.currentTarget.id;
+  let id = temp.substring(5,temp.length);
 	let params = {};
-	params.id = temp;
+	params.id = id;
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");
@@ -57,8 +70,7 @@ function removeProduct(){
 	    // var tds = xmlDoc.getElementById("cart-id");
 	    // console.log(xmlDoc);
 	    // document.getElementById('cart-id').innerHTML = tds.innerHTML;
-			window.location.assign('cart');
+			window.location.reload();
 		}
 	}
 }
-

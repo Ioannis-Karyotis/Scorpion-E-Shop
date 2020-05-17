@@ -1,0 +1,31 @@
+.dropdown-menu {
+  width:25rem;
+  padding: 0rem;
+  margin:0rem;
+  font-size: 1.15rem;
+}
+.quick-cart-container{
+  padding: 0.5rem;
+  style
+}
+.quick-cart-img{
+  text-align: center;
+  width:70%;
+}
+
+/* .quick-cart-spinner{
+  width: 2.5rem;
+  padding-right: 0rem;
+} */
+
+.total-quantity-info{
+  background:#F5F5F5;
+}
+
+.align-center{
+  text-align: center;
+}
+
+.align-right{
+  text-align: right;
+}

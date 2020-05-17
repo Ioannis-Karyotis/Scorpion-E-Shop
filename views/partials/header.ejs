@@ -4,13 +4,15 @@
 		<title>Scorpion</title>
 		<link href="/stylesheets/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/cart.css">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/cart_quick_view.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/reviews.css">
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
 	</head>
 <body>
 
@@ -75,19 +77,67 @@
 									</span>
 									<div class="dropdown-menu dropdown-menu-right">
 								    <%if(session.productList && session.productList.length > 0){ %>
-											 <% session.productList.forEach(function(item){ %>
-												 <div class="dropdown-item" type="button">
-													<img src=" <%=	item.product.images[0].url %> " height="42" width="42"></img>,
-													<%= item.product.name %>,
-													<%=	item.quantity %>,
-													<%= item.price %>
+											<div class="align-center pb-2" >
+												<div id="quick_total_qty" class="col-12 total-quantity-info" >
+													Το καλάθι σας έχει <%=session.cart.totalQuantity%>
+													<%if(session.cart.totalQuantity > 1){ %>
+														προϊόντα
+													<%}else{%>
+														προϊόν
+													<%}%>
 												</div>
+											</div>
+											<div class="container quick-cart-container " >
+											 <% session.productList.forEach(function(item){ %>
+												 <!-- <div class="dropdown-item"> -->
+
+													 <div class="row my-2 ">
+														 <div class="col-4 align-center" > <!--picture -->
+															 <div>
+															 	<img class="quick-cart-img" src="<%=item.product.images[0].url %>"></img>
+															</div>
+														 </div>
+														 <div class="col-8">
+															 <div class="row mx-auto mb-2">
+																 <div class="col-8" ><!--name -->
+																	 <%= item.product.name %>
+																 </div>
+																 <div class="col-4 px-1 align-center"><!--remove -->
+																	 <p>
+																		 <i id="rmvq_<%= item.product._id%>" class="fas fa-times fa-lg" onclick="removeProduct()"></i>
+																	 </p>
+																 </div>
+															 </div>
+															 <div class="row mx-auto my-auto">
+																 <div class="col-4"><!--price -->
+																	 <%= item.product.price %>€
+																 </div>
+																 <div id="quick_qty<%= item.product._id%>" class="col-4 align-center"><!--qty -->
+																	 x<%=item.quantity%>
+																 </div>
+																 <div id="quick_product_total<%=item.product._id%>" class="col-4  align-right"><!--total price -->
+																	 <%= item.price %>€
+																 </div>
+															 </div>
+														 </div>
+													 </div>
+													 <hr class="quick-cart-line">
+												<!-- </div> -->
 											 <%});%>
-											 <a class="dropdown-item" href="/cart">
-												 Μετάβαση στο καλάθι
-											 </a>
+											 	<div class="row my-2 mx-1">
+													<div class="col-6">
+														Σύνολο
+													</div>
+													<div id="quick_total" class="col-6 align-right">
+														<%=session.cart.totalPrice%>€
+													</div>
+												</div>
+												 <a class="align-center btn btn-dark btn-lg btn-block" style="border-radius:0px;" href="/cart">
+													 Μετάβαση στο καλάθι
+												 </a>
+										 </div>
 										<%}else{ %>
-												<div>
+												<div class="align-center">
 													Δεν υπάρχουν προϊόντα στο καλάθι σας!
 												</div>
 										<%}%>
