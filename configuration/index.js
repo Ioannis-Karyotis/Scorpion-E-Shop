@@ -1,19 +1,21 @@
+const dotenv = require('dotenv');
+dotenv.config();
 module.exports = {
-  JWT_SECRET: 'scorpionauthentication',
-  JWT_SECRET_ADMIN :'scorpioneshopADMIN',
-  ADMIN_PASS : 'administrator',
-  SESSION_SECRET : 'scorpioneshop',
-  PUBLIC_STRIPE: 'pk_test_ukUnozz4Gh9b2hqg2rG1hDg200cvX20EWL',
-  SECRET_STRIPE: 'sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv',
-  WEBHOOK_SECRET :'whsec_8cyW6s8curmIiyN6AsKb2wnvY67lkcnW',
+  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_SECRET_ADMIN :process.env.JWT_SECRET_ADMIN,
+  ADMIN_PASS : process.env.ADMIN_PASS,
+  SESSION_SECRET : process.env.JWT_SECRET_ADMIN,
+  PUBLIC_STRIPE: process.env.PUBLIC_STRIPE,
+  SECRET_STRIPE: process.env.SECRET_STRIPE,
+  WEBHOOK_SECRET : process.env.WEBHOOK_SECRET,
   oauth: {
     google: {
-      clientID: '229507214379-mrtf9capk1rnmjgj4ishpk5iiratqrrb.apps.googleusercontent.com',
-      clientSecret: 'IXRP_OKPQ21BShrtW47KAuyx',
+      clientID: process.env.GOOGLE_CID,
+      clientSecret: process.env.GOOGLE_CSECRET,
     },
     facebook: {
-      clientID: 537686946939757,
-      clientSecret: 'c47aa3886774d13942417cf5d95305b1',
+      clientID: process.env.FACEBOOK_CID,
+      clientSecret: process.env.FACEBOOK_CSECRET,
     },
   },
 };
