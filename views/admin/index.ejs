@@ -1,0 +1,96 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="main container">
+
+	<% orders.forEach(function(order){ %>
+		<div class="row ">
+			<% if(order.confirm==true && order.complete==true){%>
+				<div  class="container mt-2 px-2 card stripes">
+			<%}else{ %>
+				<div  class="container mt-2 px-2 card">
+			<% }%>
+				<div class="row justify-content-around ">
+					<div class="col-7">
+						<h4>ID παραγγελίας: <%=order._id %></h4>
+						<!-- <h4 class="px-3">Μέθοδος: <%=order.method %></h3> -->
+						<%if(order.paymentIntent){%>
+							<h5>Stripe ID: <%= order.paymentIntent %></h5>
+						<%}%>
+					</div>
+					<div class="col-5">	
+						<div class="row pr-3 d-flex justify-content-end">	
+							<span style="font-size: 14px;">Ημερομηνία: <%=order.date %></span>
+						</div>	
+						<div class="row pt-3 pr-3 d-flex justify-content-end ">
+							<h5 >Μέθοδος: <%=order.method %></h5>
+						</div>
+					</div>
+				</div>	
+				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
+				<div class="row d-flex justify-content-around">
+					
+					<div class="col-6">
+						<h5>Όνομα: <%= order.details.name %></h5>
+						<h5>Επίθετο: <%= order.details.surname %></h5>	
+						<h5>E-mail: <%= order.details.email %></h5>
+						<h5>Τηλέφωνο : <%= order.details.phone %></h5>
+					</div>
+					<div class="col-6">
+						<h5>Διεύθυνση: <%= order.details.address.line1%></h5>
+						<h5>Πόλη: <%= order.details.address.city%></h5>	
+						<h5>Ταχ. Κώδικας: <%= order.details.address.zip%></h5>
+						<h5>Νομός: <%= order.details.address.state%></h5>
+					</div>
+				</div>
+				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
+				<div class="row d-flex justify-content-start">
+					<%order.productList.forEach(function(productlist){%>
+						<div class="col-12 col-sm-6 col-md-4 col-lg-3  mb-2 d-flex justify-content-start">
+							<div>
+							<h5>Προϊόν: <%= productlist.product.name%></h5>
+							<h5>Ποσότητα: <%= productlist.quantity%></h5>
+							</div>
+						</div>	
+					<%}) %>				
+				</div>
+				<% if(order.confirm==true && order.complete==true){%>
+				<img src="http://localhost:3000/images/check.png" style="width:2em; height: 2em; position:absolute; right:2px; top:45%;">
+			<%}%>
+			</div>
+			
+		</div>
+
+		<div class="row">
+			<div class="container mb-2 button-div d-flex justify-content-end">
+				<% if(order.confirm==true){%>
+					<button class="btn btn-success order-btn mr-2" disabled>
+			          <i class="fas fa-share "></i> Email Επιβεβαίωσης 
+			        </button>
+				<%}else{%>
+					<button class="btn btn-secondary order-btn mr-2" onclick="verifyOrder(<%= JSON.stringify(order) %>)">
+			          <i class="fas fa-share "></i> Email Επιβεβαίωσης 
+			        </button>
+				<%}%>
+				<% if(order.confirm==true && order.complete==true){%>
+					<button class="btn btn-success order-btn" disabled>
+		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+	       			</button>	
+				<%}else if(order.confirm==true && order.complete==false){%>
+					<button class="btn btn-secondary order-btn" onclick="completeOrder(<%= JSON.stringify(order) %>)">
+		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+		        	</button>
+		        <%}else{%>
+		        	<button class="btn btn-secondary order-btn" disabled>
+		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+		        	</button>
+				<%}%>      
+			</div>
+		</div>
+		<hr style="border: 1px solid rgba(0, 0, 0, 0.1); ">
+	<%})%>
+</div>
+
+
+<script type="text/javascript" src="/scripts/admin.js"></script>
+
+<%- include("./../partials/footer")%>

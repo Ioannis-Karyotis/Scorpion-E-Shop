@@ -7,6 +7,7 @@ const {JWT_SECRET_ADMIN} = require('../configuration');
 var User 		= require("../models/user");
 var Product = require("../models/product");
 var Cart = require("../models/cart");
+var Order = require("../models/order");
 var middleware  = require("../middleware/index.js");
 var bodyParser = require("body-parser");
 const sanitization	= require('express-autosanitizer');
@@ -32,11 +33,6 @@ signAdminToken = function(admin) {
 }
 
 router.get("/secret" ,passport.authenticate('jwt', { session: false }), function(req, res){
-	res.redirect("/");
-});
-
-router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	req.flash("genSuccess","Admin Successfully Signed Up");
 	res.redirect("/");
 });
 

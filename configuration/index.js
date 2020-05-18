@@ -8,6 +8,8 @@ module.exports = {
   PUBLIC_STRIPE: process.env.PUBLIC_STRIPE,
   SECRET_STRIPE: process.env.SECRET_STRIPE,
   WEBHOOK_SECRET : process.env.WEBHOOK_SECRET,
+  EMAIL : process.env.EMAIL,
+  EMAIL_PASSWORD : process.env.EMAIL_PASSWORD,
   oauth: {
     google: {
       clientID: process.env.GOOGLE_CID,

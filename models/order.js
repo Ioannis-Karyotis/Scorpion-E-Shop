@@ -3,6 +3,9 @@ var mongoose = require("mongoose");
 var OrderSchema = new mongoose.Schema({
     paymentIntent: String ,
     method: String,
+    date : String,
+    confirm: Boolean,
+    complete : Boolean,
     details :{
       name : String,
       surname : String,

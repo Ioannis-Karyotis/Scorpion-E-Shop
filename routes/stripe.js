@@ -31,13 +31,25 @@ const calculateDatabasePrice = async function(cart) {
 	}
 }			
 router.post("/post_order",sanitization.route, function(req,res){
+  var fullname = req.autosan.body.paymentIntent.shipping.name;
+  var result = fullname.split(" ");
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
   Order.create(
       { 
         paymentIntent: req.autosan.body.paymentIntent.id,
         method : "Πληρωμή με κάρτα",
+        date : today,
+        confirm: false,
+        complete: false,
         details :{
-          name : req.autosan.body.paymentIntent.shipping.name,
+          name : result[0],
+          surname: result[1],
           email : req.autosan.body.paymentIntent.receipt_email,
           phone : req.autosan.body.paymentIntent.shipping.phone,
           address: {
@@ -62,8 +74,8 @@ router.post("/post_order",sanitization.route, function(req,res){
              quantity :  products[product_ids[i]].quantity
             }
             order.productList.push(product);
-            order.save();
-          }  
+          }
+        order.save();  
         }
       });
   req.session.cart = null;
@@ -79,12 +91,21 @@ router.post("/post_order_sent",sanitization.route, function(req,res){
   }else{
     method = "Αποστολή με αντικαταβολή"
   }
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
   Order.create(
       { 
         method : method,
+        date : today,
+        confirm: false,
+        complete: false,
         details :{
-          name : req.autosan.body.name + " " + req.autosan.body.surname,
+          name : req.autosan.body.name,
+          surname: req.autosan.body.surname,
           email : req.autosan.body.email,
           phone : req.autosan.body.phone,
           address: {

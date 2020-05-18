@@ -96,6 +96,7 @@ router.get("/products/:type/:id", function(req ,res){
 			console.log(err);
 		} else {
 		    if(foundProduct!= null){
+		    	console.log(foundProduct.reviews);
 			    var images = foundProduct.images;
 			    res.render("products/show", {product: foundProduct, images :images});							
 		    } else{
