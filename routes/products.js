@@ -42,14 +42,14 @@ router.get("/products/:type", function(req, res, next){
       	}else{
 	      	passport.authenticate('jwtAdmin', function(err, admin, info) {
 		    	if (err) { return next(err); }
-		    	if (!admin) { 
+		    	if (!admin) {
 		    		return	res.render("products", {products : foundProducts , admin :null});
 		    	}
 		        return res.render("products", {products : foundProducts , admin : "admin" , type: req.params.type});
 	    	})(req , res, next)
 	    }
 	});
-});	
+});
 
 router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
 	res.render("products/add",{type: req.params.type});
@@ -75,21 +75,21 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
             return res.send('Please select an image to upload');
         }
         req.files.forEach(function(file){
-        	var str = file.path
-			var str2 = str.replace("public", "");
-  			var final = str2.replace(/\\/g,"/");
-  			image={url : "http://localhost:3000" + final };
-			newProduct.images.push(image);
+          var str = file.path;
+  			  var str2 = str.replace("public", "");
+    			var final = str2.replace(/\\/g,"/");
+    			image={url : "http://localhost:3000" + final };
+  			  newProduct.images.push(image);
         });
-        
+
 		newProduct.save(function(err){
 			if(err){
 				console.log(err.message);
 			}
 			res.redirect("/products/"+ req.params.type);
-		});	
-})				
-      
+		});
+})
+
 router.get("/products/:type/:id", function(req ,res){
 	Product.findById(req.params.id).populate("reviews").exec(function(err, foundProduct){
 		if(err){
@@ -97,7 +97,7 @@ router.get("/products/:type/:id", function(req ,res){
 		} else {
 		    if(foundProduct!= null){
 			    var images = foundProduct.images;
-			    res.render("products/show", {product: foundProduct, images :images});							
+			    res.render("products/show", {product: foundProduct, images :images});
 		    } else{
 		        res.redirect("back");
 		    }
@@ -122,7 +122,7 @@ router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { sess
 		if(err){
 			console.log(err);
 		} else {
-			if(foundProduct.status == "active"){	
+			if(foundProduct.status == "active"){
 				foundProduct.status = "hidden";
 				foundProduct.save();
 			}else{
@@ -136,7 +136,7 @@ router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { sess
 
 
 router.post("/products/:type/:id/review",sanitization.route, function(req,res){
-	
+
 	Product.findById(req.body.productId, function(err, foundProduct){
 		if(err){
 			console.log(err);
@@ -144,7 +144,7 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 		    if(foundProduct!= null){
 		    		if(req.user){
 		    			var name =  req.user[req.user.methods].name ;
-						var surname =  req.user[req.user.methods].surname; 
+						var surname =  req.user[req.user.methods].surname;
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
@@ -181,14 +181,17 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 	});
 });
 //Ενδεχεται να μεταφερθει
-router.get("/products/:type/:id/add", function(req, res){
+router.post("/products/:type/:id/add", function(req, res){
 	Product.findById(req.params.id, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
 				if(foundProduct!=null){
 					var cart = new Cart(req.session.cart ? req.session.cart : {});
-					cart.add(foundProduct);
+          var quantity = req.body.qty ? req.body.qty : 1;
+          let qty = quantity < 10 ? quantity % 10 : quantity % 100;
+          console.log(qty);
+					cart.add(foundProduct, qty);
 					req.session.cart = cart;
 					req.session.productList = cart.productList();
 
@@ -201,6 +204,50 @@ router.get("/products/:type/:id/add", function(req, res){
 				}
 		}
 	});
+});
+
+//Custom T-Shirt//
+router.get("/custom", function(req,res){
+  res.render("custom");
+});
+
+router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter }).single('image'), function(req, res, next){
+
+		var newProduct = new Product({
+			name    : "Custom T-Shirt",
+			price : req.body.price,
+      description : "Custom μπλουζάκι με στάμπα",
+			type : "custom",
+      size : req.body.size,
+      color : req.body.color
+		});
+
+    if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+    }else if (!req.file) {
+      return res.send('Please select an image to upload');
+    }
+    console.log(req.file.path);
+      var str = req.file.path;
+			var str2 = str.replace("public", "");
+  		var final = str2.replace(/\\/g,"/");
+  		image={url : "http://localhost:3000" + final };
+			newProduct.images.push(image);
+
+
+		newProduct.save(function(err){
+			if(err){
+				console.log(err.message);
+			}
+
+      //add it to the cart
+      var cart = new Cart(req.session.cart ? req.session.cart : {});
+      cart.add(newProduct, 1);
+      req.session.cart = cart;
+      req.session.productList = cart.productList();
+
+			res.redirect("back");
+		});
 });
 
 module.exports = router;

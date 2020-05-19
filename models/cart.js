@@ -4,7 +4,7 @@ module.exports = function Cart(previousCart){
   this.totalQuantity = previousCart.totalQuantity || 0; //if there's no previousCart,  set the value to 0
   this.productList = previousCart.productList || [];
 
-  this.add = function(productToAdd){
+  this.add = function(productToAdd, qty){
     let id = productToAdd.id; //get the id of the product to be added
     let product = this.products[id];  //get the product from the porducts object with the specified id
     if(!product){                     //if that object does not exist (new item to be added)
@@ -22,10 +22,10 @@ module.exports = function Cart(previousCart){
       //this way I end up with a key-value pair where the id=key and the object=value implicitly
       //without having to deal with hash maps
     }
-    product.price += productToAdd.price; //update the price for either the new product or an already existing one
-    product.quantity ++; ////update the quantity for either the new product or an already existing one
-    this.totalPrice += productToAdd.price;  //update the total price
-    this.totalQuantity ++; //update the total quantity
+    product.price += productToAdd.price * qty; //update the price for either the new product or an already existing one
+    product.quantity += qty; ////update the quantity for either the new product or an already existing one
+    this.totalPrice += productToAdd.price * qty;  //update the total price
+    this.totalQuantity += qty; //update the total quantity
   }
 
   this.productList = function(){
