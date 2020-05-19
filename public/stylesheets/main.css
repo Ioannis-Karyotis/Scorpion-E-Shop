@@ -17,6 +17,11 @@ hr{
 	border:2px solid #9AAF5E;
 }
 
+hr.thin{
+	border-radius: 10px;
+	border:1px solid grey;
+}
+
 #page-container {
   position: relative;
   min-height: 100%;
@@ -192,12 +197,12 @@ hr{
   background-color: #fefefe;
   margin: auto;
   /* border: 2px solid #888; */
-  width: 60%;
+  width: 50%;
   height: 60%;
   /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
 }
 
-@media screen and (min-width:1200px){
+@media screen and (max-width:2560px){
   .mt-n2{
     margin-top: -1.2rem !important;
   }
@@ -208,8 +213,127 @@ hr{
 	  background-color: #fefefe;
 	  margin: auto;
 	  /* border: 2px solid #888; */
-	  width: 40%;
+	  width: 35%;
 	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:1920px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 45%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:1400px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 60%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:1280px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 60%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:1140px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 68%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:960px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 85%;
+	  height: 80%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:767px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 60%;
+	  height: 60%;
+	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+  }
+}
+
+@media screen and (max-width:576px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+
+  .modal-content {
+	  border-radius: 0px;
+	  overflow: hidden;
+	  background-color: #fefefe;
+	  margin: auto;
+	  /* border: 2px solid #888; */
+	  width: 80%;
+	  height: 80%;
 	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
 }
@@ -279,6 +403,8 @@ hr{
 /*=============*/
 /*Product view */
 /*=============*/
+
+
 .card{
   width:80%;
 }
@@ -523,4 +649,61 @@ hr{
 .ui-sortable-helper {
     width: 90px !important;
     height: 90px !important;
+}
+
+/* Custom T-Shirt Images*/
+.bottomImage{
+	position:relative;
+	top:0;
+	left:0;
+}
+
+/* .topImage{
+	position:absolute;
+	top:135px;
+	left:215px;
+} */
+@media screen and (min-width:1201px){
+	.topImage{
+		position:absolute;
+		top:132px;
+		left:235px;
+		width:30%;
+	}
+}
+
+@media screen and (max-width:1200px){
+	.topImage{
+		position:absolute;
+		top:132px;
+		left:195px;
+		width:32%;
+	}
+}
+
+@media screen and (max-width:992px){
+	.topImage{
+		position:absolute;
+		top:140px;
+		left:282px;
+		width:25%;
+	}
+}
+
+@media screen and (max-width:768px){
+	.topImage{
+		position:absolute;
+		top:130px;
+		left:190px;
+		width:32%;
+	}
+}
+
+@media screen and (max-width:576px){
+	.topImage{
+		position:absolute;
+		top:100px;
+		left:155px;
+		width:31%;
+	}
 }

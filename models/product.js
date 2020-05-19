@@ -2,9 +2,9 @@ var mongoose = require("mongoose");
 
 var ProductSchema = new mongoose.Schema({
    name: String,
-   type: String,
+   type: String, //custom t-shirt type = custom
    price: Number,
-   images: [{}],
+   images: [{}],  //stamp for custom t-shirts placed here
    description: String,
    reviews: [
      {
@@ -14,7 +14,9 @@ var ProductSchema = new mongoose.Schema({
    ],
    rating: Number,
    reviewCount: Number,
-   status : String
+   status : String,
+   size : String,
+   color : String //custom t-shirts have color
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

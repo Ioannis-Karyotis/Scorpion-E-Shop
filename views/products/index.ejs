@@ -14,17 +14,17 @@
   <div  class="container">
   <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
 <% products.forEach(function(product){ %>
-    
+
       <% if(product.status=="hidden" && admin=="admin"){ %>
       <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-        <div class="card opac" style="border-radius:0px;"> 
+        <div class="card opac" style="border-radius:0px;">
       <%}else if(product.status=="hidden" && !admin){%>
       <div class="px-0 col-0">
-        <div class="card hidden" style="border-radius:0px;"> 
+        <div class="card hidden" style="border-radius:0px;">
       <%}else{%>
       <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-        <div class="card" style="border-radius:0px;"> 
-      <%} %> 
+        <div class="card" style="border-radius:0px;">
+      <%} %>
         <img src="<%=product.images[0].url %>" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'" class="card-img-top" alt="" style="border-radius:0px;">
         <div class="card-footer py-0 px-0">
           <div class="row px-4 pt-2 d-flex justify-content-start">
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div>
-      <% if(admin=="admin"){ %>  
+      <% if(admin=="admin"){ %>
         <button class="btn btn-danger mx-0" style="height:2.5em; width:3em;" onclick="deleteProduct('<%=product._id%>','<%=product.type%>')">
           <i class="fas fa-times fa-lg"></i>
         </button>
@@ -52,10 +52,10 @@
           <i class="fas fa-eye-slash"></i>
           </button>
         <%}%>
-      <%}%>    
-       </div> 
+      <%}%>
+       </div>
     </div>
-    
+
 
 
 <div class="modal" id="product_modal_<%= product._id %>">
@@ -67,7 +67,7 @@
                   </a>
         </div>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-7  pr-0 mr-0">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 <% Object.keys(product.images).forEach(function(key) { %>
@@ -91,13 +91,31 @@
               </a>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card-body">
-              <h5 class="card-title"><%=product.name %></h5>
-              <p class="card-text"><%=product.description %></p>
-              <a href="/products/<%=product.type%>/<%=product._id%>/add" type="button" class="btn btn-primary">
-                Add to Cart
-              </a>
+          <div class="col-md-5 pl-0 ml-0">
+            <div class="container px-0 ">
+              <div class="row">
+                <div class="col-12 pt-2 mt-4 align-center"> <!--name -->
+                  <h4><%=product.name %></h4>
+                </div>
+              </div>
+              <hr class="thin mx-5">
+              <div class="row mx-1">
+                <div class="col-12 align-center">
+                  <h4><%=product.price%>€</h4>
+                </div>
+              </div>
+              <div class="row mx-1">
+                <div class="col-md-12 align-center">
+                  <h6><%=product.description%></h6>
+                </div>
+              </div>
+              <div class="px-2 mt-5 mb-2 align-center">
+                <form action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
+                  <button class="btn btn-dark btn-lg" style="border-radius:0px" type="submit">
+                    Προσθήκη στο καλάθι
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
