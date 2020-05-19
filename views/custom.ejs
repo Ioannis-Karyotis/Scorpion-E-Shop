@@ -1,8 +1,8 @@
 <%- include("partials/header")%>
 
-<div class="container main">
+<div id="main" class="container main">
   <div class="row">
-    <div class="col-lg-7 d-flex justify-content-center">
+    <div class="col-lg-7 py-2 d-flex justify-content-center">
       <img id="selectedColor" class="bottomImage" src="http://localhost:3000/images/black_t_shirt.png" style="max-width:100%;max-height:100%;display:block;"></img>
       <img class="topImage" id="uploadedImage" >
     </div>
@@ -10,7 +10,7 @@
       <form method="POST" action="/custom/new" enctype="multipart/form-data">
         <div class="form-row">
           <div class="col ml-4">
-            <label ">Χρώμα</label>
+            <label >Χρώμα</label>
           </div>
         </div>
         <div class="form-row">
@@ -65,5 +65,6 @@
     </div>
   </div>
 </div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/scripts/customShirt.js"></script>
 <%- include("partials/footer")%>

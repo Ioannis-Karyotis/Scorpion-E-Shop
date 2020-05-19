@@ -1,7 +1,6 @@
 <%- include("./../partials/header")%>
 
 <div id="main" class="main container">
-
 	<% orders.forEach(function(order){ %>
 		<div class="row ">
 			<% if(order.confirm==true && order.complete==true){%>
@@ -49,6 +48,7 @@
 							<div>
 							<h5>Προϊόν: <%= productlist.product.name%></h5>
 							<h5>Ποσότητα: <%= productlist.quantity%></h5>
+							<img src="<%=productlist.product.images[0].url %>" >
 							</div>
 						</div>	
 					<%}) %>				

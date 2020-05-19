@@ -90,15 +90,20 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		});
 })
 
-router.get("/products/:type/:id", function(req ,res){
+router.get("/products/:type/:id", function(req ,res,next){
 	Product.findById(req.params.id).populate("reviews").exec(function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
 		    if(foundProduct!= null){
-		    	console.log(foundProduct.reviews);
 			    var images = foundProduct.images;
-			    res.render("products/show", {product: foundProduct, images :images});
+				    passport.authenticate('jwtAdmin', function(err, admin, info) {
+			    	if (err) { return next(err); }
+			    	if (!admin) {
+			    		return	res.render("products/show", {product: foundProduct, images :images,admin:null});
+			    	}
+			        return res.render("products/show", {product: foundProduct, images :images ,admin:"admin"});
+		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");
 		    }
@@ -116,6 +121,17 @@ router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { 
 		}
 	});
 });
+
+router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	Product.findByIdAndUpdate(req.params.id, req.autosan.body, function(err , updateProduct){
+		if(err){
+			res.redirect("back");
+		}else{
+			res.redirect("/products/"+ req.params.type );
+		}
+	});
+});
+
 
 
 router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){

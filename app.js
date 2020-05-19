@@ -25,6 +25,7 @@ const indexRoutes 	 = require("./routes/index"),
 	  productRoutes  = require("./routes/products"),
 	  stripeRoutes 	 = require("./routes/stripe"),
 	  adminRoutes    = require("./routes/admin"),
+	  contactRoutes  = require("./routes/contact"),
 	  config 		 = require("./configuration/passport");
 
 
@@ -83,5 +84,6 @@ app.use(indexRoutes);
 app.use(productRoutes);
 app.use(stripeRoutes);
 app.use(adminRoutes);
+app.use(contactRoutes);
 
 module.exports = app;

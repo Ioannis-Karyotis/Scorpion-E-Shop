@@ -21,6 +21,10 @@ hr.thin{
 	border-radius: 10px;
 	border:1px solid grey;
 }
+hr.thick{
+  border-radius: 20px;
+  border:1.2px solid rgba(0, 0, 0, 0.4);
+}
 
 #page-container {
   position: relative;
@@ -153,7 +157,7 @@ hr.thin{
 	height: 100%;
 	margin-top:2em;
   position: relative;
-	margin-bottom:2em;
+	margin-bottom:5em;
 }
 
 .desc{
@@ -203,9 +207,6 @@ hr.thin{
 }
 
 @media screen and (max-width:2560px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
 
   .modal-content {
 	  border-radius: 0px;
@@ -220,10 +221,6 @@ hr.thin{
 }
 
 @media screen and (max-width:1920px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -237,10 +234,6 @@ hr.thin{
 }
 
 @media screen and (max-width:1400px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -254,11 +247,7 @@ hr.thin{
 }
 
 @media screen and (max-width:1280px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
-  .modal-content {
+ .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
 	  background-color: #fefefe;
@@ -271,10 +260,6 @@ hr.thin{
 }
 
 @media screen and (max-width:1140px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -288,10 +273,6 @@ hr.thin{
 }
 
 @media screen and (max-width:960px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -305,10 +286,6 @@ hr.thin{
 }
 
 @media screen and (max-width:767px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -322,10 +299,6 @@ hr.thin{
 }
 
 @media screen and (max-width:576px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
-  }
-
   .modal-content {
 	  border-radius: 0px;
 	  overflow: hidden;
@@ -337,6 +310,12 @@ hr.thin{
 	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
 }
+
+@media screen and (min-width:1000px){
+  .mt-n2{
+    margin-top: -1.2rem !important;
+  }
+}  
 
 .form-group input{
 	 width:90%;
