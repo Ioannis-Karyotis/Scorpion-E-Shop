@@ -5,18 +5,23 @@
 		<link href="/stylesheets/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/cart.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/reviews.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/cart_quick_view.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/admin.css">
+
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
 	</head>
 <body>
-	<nav class="navbar navbar-expand navbar-light  py-0 ">
+	<nav class="navbar navbar-expand navbar-light bg-light  py-0 ">
 		<div class="container-fluid">
 			<div class="row">
 				<ul id="f-nav" class="navbar-nav ml-auto ">
@@ -77,7 +82,7 @@
 											 <% session.productList.forEach(function(item){ %>
 												 <!-- <div class="dropdown-item"> -->
 
-													 <div class="row my-2 ">
+													 <div class="row my-2 jumbotron-mini">
 														 <div class="col-4 align-center" > <!--picture -->
 															 <div>
 															 	<img class="quick-cart-img" src="<%=item.product.images[0].url %>"></img>
@@ -85,12 +90,14 @@
 														 </div>
 														 <div class="col-8">
 															 <div class="row mx-auto mb-2">
-																 <div class="col-8" ><!--name -->
+																 <div class="col-10" ><!--name -->
 																	 <%= item.product.name %>
 																 </div>
-																 <div class="col-4 px-1 align-center"><!--remove -->
+																 <div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	 <p>
-																		 <i id="rmvq_<%= item.product._id%>" class="fas fa-times fa-lg" onclick="removeProduct()"></i>
+																	 	<a class="cancelbtn" >
+																		 	<i id="rmvq_<%= item.product._id%>" class="fas fa-times fa-lg " onclick="removeProduct()"></i>
+																		 </a>
 																	 </p>
 																 </div>
 															 </div>
@@ -107,7 +114,7 @@
 															 </div>
 														 </div>
 													 </div>
-													 <hr class="thin">
+													 
 												<!-- </div> -->
 											 <%});%>
 											 	<div class="row my-2 mx-1">
@@ -119,12 +126,12 @@
 													</div>
 												</div>
 												 <a class="align-center btn btn-dark btn-lg btn-block" style="border-radius:0px;" href="/cart">
-													 Μετάβαση στο καλάθι
+													 Μεταβαση στο καλαθι
 												 </a>
 										 </div>
 										<%}else{ %>
-												<div class="align-center">
-													Δεν υπάρχουν προϊόντα στο καλάθι σας!
+												<div class="align-center total-quantity-info">
+													<p>Δεν υπάρχουν προϊόντα στο καλάθι σας!</p>
 												</div>
 										<%}%>
 							  	</div>
@@ -136,46 +143,40 @@
 	</nav>
 
 
-	<nav id="logo-nav" class="navbar navbar-expand-md navbar-light pt-0 pb-1 mt-n2">
+	<nav id="logo-nav" class="navbar navbar-expand-md navbar-light bg-light pt-0 pb-1 mt-n2">
 		<div class="container-fluid center-content">
 			<div class="row">
 				<div id="smth" class="my-auto mx-auto px-auto">
 					<a id="logo-bck" class="mt-n2 mx-auto my-auto d-flex justify-content-center" href="/">
-						<img src="http://localhost:3000/images/alt.png">
+						<img src="http://localhost:3000/images/logo4.png" style="width: :350px; height:79px; ">
 					</a>
 				</div>
 			</div>
 		</div>
 	</nav>
 
-	<nav id="menu-nav" class="navbar navbar-fixed-top navbar-expand-md navbar-dark bg-dark mb-2 pt-0 pb-1">
+	<nav id="menu-nav" class="navbar navbar-fixed-top navbar-expand-md navbar-dark bg-dark mb-4 pt-0 pb-1">
 		<div id="header-container"  class="container">
 			<div class="row">
 				<div class="col-xs-12 collapse navbar-collapse " id="navbarSupportedContent">
 					<ul class="navbar-nav mb-n2 mx-auto my-auto ">
 						<li class="nav-item">
-				      		<a class="nav-link" href="/products/isothermika"><span>Ισοθερμικά</span></a>
+				      		<a class="nav-link" href="/products/isothermika"><span class="nav-span">Ισοθερμικά</span></a>
 				      	</li>
 				       	<li class="nav-item">
-				     		<a class="nav-link .nav-link-ltr" href="#"><span>Στρατιωτικά</span></a>
+				     		<a class="nav-link .nav-link-ltr" href="#"><span class="nav-span">Παραλλαγές/Φούτερ</span></a>
 				      	</li>
 					    <li class="nav-item">
-					    	<a class="nav-link" href="#"><span>Φούτερ</span></a>
-				     	</li>
-					    <li class="nav-item">
-					    	<a class="nav-link" href="#"><span>Μπατίκ</span></a>
+					    	<a class="nav-link" href="#"><span class="nav-span">Tie Dye</span></a>
 				      	</li>
 				      	<li class="nav-item ">
-					     	<a class="nav-link" href="#"><span>Έξτρα</span></a>
+					     	<a class="nav-link" href="#"><span class="nav-span">Έξτρα</span></a>
 					    </li>
 					    <li class="nav-item ">
-					    	<a class="nav-link" href="/custom"><span>Custom</span></a>
+					    	<a class="nav-link" href="/custom"><span class="nav-span">Στάμπες</span></a>
 					    </li>
 					    <li class="nav-item ">
-					    	<a class="nav-link" href="#"><span>About</span></a>
-					    </li>
-					    <li class="nav-item ">
-					    	<a class="nav-link" href="/contact"><span>Contact us</span></a>
+					    	<a class="nav-link" href="/contact"><span class="nav-span">Επικοινωνία</span></a>
 					    </li>
 					</ul>
 				</div>

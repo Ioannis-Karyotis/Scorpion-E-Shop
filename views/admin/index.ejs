@@ -1,6 +1,6 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container">
+<div id="main" class="main container mb-5">
 	<% orders.forEach(function(order){ %>
 		<div class="row ">
 			<% if(order.confirm==true && order.complete==true){%>
@@ -64,24 +64,24 @@
 			<div class="container mb-2 button-div d-flex justify-content-end">
 				<% if(order.confirm==true){%>
 					<button class="btn btn-success order-btn mr-2" disabled>
-			          <i class="fas fa-share "></i> Email Επιβεβαίωσης 
+			          <i class="fas fa-share "></i> Email Επιβεβαιωσης 
 			        </button>
 				<%}else{%>
 					<button class="btn btn-secondary order-btn mr-2" onclick="verifyOrder(<%= JSON.stringify(order) %>)">
-			          <i class="fas fa-share "></i> Email Επιβεβαίωσης 
+			          <i class="fas fa-share "></i> Email Επιβεβαιωσης 
 			        </button>
 				<%}%>
 				<% if(order.confirm==true && order.complete==true){%>
 					<button class="btn btn-success order-btn" disabled>
-		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+		          		<i class="far fa-check-circle"></i> Ολοκληρωση
 	       			</button>	
 				<%}else if(order.confirm==true && order.complete==false){%>
 					<button class="btn btn-secondary order-btn" onclick="completeOrder(<%= JSON.stringify(order) %>)">
-		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+		          		<i class="far fa-check-circle"></i> Ολοκληρωση
 		        	</button>
 		        <%}else{%>
 		        	<button class="btn btn-secondary order-btn" disabled>
-		          		<i class="far fa-check-circle"></i> Ολοκλήρωση
+		          		<i class="far fa-check-circle"></i> Ολοκληρωση
 		        	</button>
 				<%}%>      
 			</div>

@@ -1,6 +1,6 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container main pb-1">
+<div id="main" class="main container main mb-5">
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -101,14 +101,14 @@
                     <div class="col-8">
                       <div class="pt-3 align-left">
                         <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
-                          Προσθήκη στο καλάθι
+                          Προσθηκη στο καλαθι
                         </button>
                       </div>
                     </div>
                     <%if(admin=="admin") {%>
                     <div class="col-4">
                       <div class="pt-3 align-left">
-                        <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγή</button>
+                        <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγη</button>
                       </div>
                     </div>
                     <%}%>
@@ -127,7 +127,7 @@
     </div>
 
   <%if(product.reviews.length <= 0){ %>
-    <div class="row mx-auto mt-2" style="text-align:center">
+    <div class="row mx-auto my-2" style="text-align:center">
       <div class="mx-auto">
         <h5>
         Δεν υπάρχουν αξιολογήσεις! Προσθέστε μία τώρα!
@@ -197,14 +197,14 @@
         </div>
         <div class="form-row">
           <div class="form-group col-12 px-4">
-              <button type="submit" class="btn">Υποβολή Αξιολόγησης</button>
+              <button type="submit" class="btn btn-primary">Υποβολη Αξιολογησης</button>
           </div>
         </div>
       </form>
     </div>
 <%product.reviews.forEach(function(review){%>
-    <div class="px-4 py-1 mx-3 my-2 review-container">
-    <div class="row px-4 py-1">
+    <div class="px-4 py-1 mx-3 mb-2 review-container">
+    <div class="row px-4  py-1">
       <img class="pic" src="https://i.pinimg.com/736x/af/53/55/af5355d2e928deb428fd3961a317cca4.jpg" height="100" width="80"></img>
       <div class="pt-2 pl-2 mb-2">
         <div>
@@ -214,7 +214,7 @@
           <%=review.date%>
         </div>
       </div>
-      <div class="star-ratings ml-1">
+      <div class="star-ratings ml-1 mb-2">
         <div id="<%=review._id%>" class="fill-ratings" style="width: <%=review.rating.toPrecision(2)*10%>%">
           <div>★★★★★</div>
         </div>
@@ -230,4 +230,5 @@
 
     <%});%>
   </div>
+
 <%- include("./../partials/footer")%>

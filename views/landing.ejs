@@ -1,49 +1,196 @@
 <%- include("partials/header")%>
 
 <div id="main" class="container main">
-    <div class="row">
-        <div class="col-md-6">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img class="d-block w-100" src="http://localhost:3000/images/main1.jpg" alt="First slide">
+    <section class="projects-section bg-light" id="projects">
+        <div class="row justify-content-center no-gutters px-2">
+            <div class="col-lg-5 order-lg-first">
+                <div id="carouselExampleIndicators"  class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100 h-75" src="http://localhost:3000/images/landing/main1.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 h-75 " src="http://localhost:3000/images/landing/main2.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 h-75 " src="http://localhost:3000/images/landing/main3.jpg" alt="Third slide">
+                    </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="http://localhost:3000/images/main2.jpg" alt="Second slide">
+            </div>
+            <div class="col-lg-7 mx-auto my-auto ">
+                <div class="bg-white text-center h-100 project">
+                    <div class="d-flex h-100">
+                        <div class="project-text w-100 my-auto text-center text-lg-left">
+                            <h4 class="text-black">Ειδίκευση σε: </h4>
+                            <p class="mb-0 text-black-50">Ισοθερμικά και Στρατιωτικά εσωτερικής ένδυσης, Σκελέες και Φούτερ , κατασκευασμένα από 100% βαμβάκι</p>
+                            <a href="#" class="btn btn-primary mt-2" style="width:14em;">Αγορα</a>
+                            <hr class="d-none d-lg-block mb-0 ml-0" style="border-color: #65a07b;" />
+                        </div>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="http://localhost:3000/images/main3.jpg" alt="Third slide">
-                </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-                </a>
             </div>
         </div>
-        <div class="col-md-6 mx-auto my-auto desc">
-            <div class="container-fluid">
-                <h1>lorem Ipsum</h1>
-                <hr class="thick">
-                <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+         <div class="bg-white" style="height:1.5em;" >
+            <hr class="thick mt-4" style="width:80%">
+        </div>
+        <div class="row justify-content-center no-gutters ">
+            <div class="col-lg-5">
+                <div id="carouselExampleIndicators2"  class="carousel slide desc" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner d-flex">
+                    <div class="carousel-item active">
+                      <img class="d-block" style="height:33em; width:80%; margin-left: 10%" src="http://localhost:3000/images/landing/batik1.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block" style="height:33em; width:80%; margin-left: 10%" src="http://localhost:3000/images/landing/batik2.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block" style="height:33em; width:80%; margin-left: 10%" src="http://localhost:3000/images/landing/batik3.jpg" alt="Third slide">
+                    </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                    </a>
                 </div>
+            </div>
+            <div class="col-lg-7 order-lg-first">
+                <div class="bg-white text-center h-100 project">
+                    <div class="d-flex h-100">
+                        <div class="project-text w-100 my-auto text-center text-lg-right">
+                            <h4 class="text-black">Ρούχα με προσωπικότητα:</h4>
+                            <p class="mb-0 text-black-50">Μοναδικές Tie Dye Μπλούζες και Κολάν βαμμένα και ραμμένα στο χέρι</p>
+                            <a href="#" class="btn btn-primary mt-2" style="width:14em;">Αγορα</a>
+                            <hr class="d-none d-lg-block mb-0 mr-0" style="border-color: #65a07b;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white" style="height:1.5em;" >
+            <hr class="thick mt-4" style="width:80%">
+        </div>
+        <div class="row justify-content-center no-gutters mb-5 mb-lg-0 px-2">
+            <div class="col-lg-6">
+                <div id="carouselExampleIndicators3"  class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100" style="height:25em;" src="http://localhost:3000/images/landing/preview1.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 " style="height:25em;" src="http://localhost:3000/images/landing/preview2.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100" style="height:25em;" src="http://localhost:3000/images/landing/preview3.jpg" alt="Third slide">
+                    </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-white text-center h-100 project">
+                    <div class="d-flex h-100">
+                        <div class="project-text w-100 my-auto text-center text-lg-left">
+                            <h4 class="text-black">Ποιότητα:</h4>
+                            <p class="mb-0 text-black-50">απο το 1986</p>
+                            <hr class="d-none d-lg-block mb-0 ml-0"style="border-color: #65a07b;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white" style="height:1.5em;" >
+            <hr class="thick mt-4" style="width:80%">
+        </div>
+        <div class="row justify-content-center no-gutters px-2">
+            <div class="col-lg-7">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12109.816079340462!2d22.9468551!3d40.6419212!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb95aaab570b5d30a!2zzprOkc6hzqXOqc6kzpfOoyDOo86kzpXOps6Rzp3On86j!5e0!3m2!1sel!2sgr!4v1590061718860!5m2!1sel!2sgr"  frameborder="0" style="border:0; width:100%;height:30em;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+            <div class="col-lg-5 order-lg-first">
+                <div class="bg-white text-center h-100 project">
+                    <div class="d-flex h-100">
+                        <div class="project-text w-100 my-auto text-center text-lg-right">
+                            <h4 class="text-black">Τοποθεσία:</h4>
+                            <p class="mb-0 text-black-50">Θα μας βρείτε στη Θεσσαλονίκη</p>
+                            <hr class="d-none d-lg-block mb-0 mr-0" style="border-color: #65a07b;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white" style="height:1.5em;" >
+            <hr class="thick mt-4" style="width:80%">
+        </div>
+        
+        <div class="row pl-3 mt-2">
+            <div class="col-lg-8 mx-auto jumbotron">
+                <hr class="d-none d-lg-block mb-0 mr-0 mb-3" />
+                <h2 class="text-black mb-4">Φτιάξτο Μόνος σου</h2>
+                <p class="text-black-50">Τώρα πλέον έχεις τη δυνατότητα να παραγγείλεις Τ-shirts με στάμπες της επιθυμίας σου τυπωμένες επάνω</p>
+                <p class="text-black-50">Απλά ανέβασε την εικόνα που σου ταιριάζει και εμείς θα κάνουμε τα υπόλοιπα</p>
+                <a href="/custom" class="btn btn-primary mt-2" style="width:14em;">Τυπωσε τωρα</a>
+                <img class="img-fluid mt-3" src="http://localhost:3000/images/landing/custom.png" alt="" />
+            </div>
+        </div>
+        <div class="bg-white" style="height:3em;" >
+            <hr class="thick " style="width:80%">
+        </div>
+        <div class="row mx-auto justify-content-center desc">
+            <div class="col-lg-8 mz-auto jumbotron ">
+                <h2 class="text-black mb-4">Παραγγελίες Χονδρικής</h2>
+                <p class="text-black-100">Για παραγγελίες Χονδρικής επικοινωνήστε μαζι μας </p>
+                <a href="/contact" class="btn btn-primary mt-2" style="width:14em;">Επικοινωνια</a>
+                <hr class="d-none d-lg-block mb-0 mr-0" style="border-color:#65A07B;"/>
+            </div>
+        </div>        
+    </section>
+</div>
+<!-- Signup-->
+<section class="signup-section" id="signup">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto text-center  ">
+                <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                <h2 class="text-white mb-5">Κάνε εγγραφή ΤΩΡΑ</h2>
+                <a href="/register" class="btn btn-primary mx-auto" type="submit">εγγραφη</a>
+                <hr class="d-none d-lg-block mb-0 mr-0" style="border-color: #65A07B;"/>
+            </div>
         </div>
     </div>
-</div>
-
+</section>
 
 <%- include("partials/footer")%>

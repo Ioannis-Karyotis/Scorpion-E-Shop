@@ -1,57 +1,41 @@
 <%- include("partials/header")%>
-<div id="cart-id" class="container main cart-container">
+<div id="cart-id" class="container main mb-5 cart-container">
   <%if(session.productList && session.productList.length > 0){ %>
     <div class="shopping-cart">
     <% session.productList.forEach(function(item){ %>
-      <div class="product">
+      <div class="product jumbotron-mini">
         <div class="product-image">
           <img src="<%=	item.product.images[0].url %>"></img>
         </div>
         <div class="product-details">
-          <div class="product-title">
+          <div class="product-title mt-1">
             <%=item.product.name%>
           </div>
           <p class="product-description">
             <%=item.product.description%>
           </p>
         </div>
-        <div class="product-price">
-          <%=item.product.price%>
+        <div class="product-price" style="margin-top: 0.3em;">
+          Τιμή: <%=item.product.price%>
         </div>
         <div class="product-quantity">
           <% var id = item.product._id%>
           <input id="<%=id%>" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
         </div>
-        <div class="product-removal">
-          <button id="rmvc_<%=id%>" class="remove-product" onclick="removeProduct()">
+        <div class="product-removal" style="margin-top: 0.15em;">
+          <button id="rmvc_<%=id%>" class="remove-product btn-danger" onclick="removeProduct()">
             Remove
           </button>
         </div>
-        <div id="itm-prc<%=id%>" class="product-line-price">
-          <%=item.price%>
+        <div id="itm-prc<%=id%>" class="product-line-price" style="margin-top: 0.15em;">
+         Τελ. Τιμή: <%=item.price%>
         </div>
       </div>
      <%});%>
      <div class="totals">
        <div class="totals-item">
          <label>
-           Subtotal
-         </label>
-         <div class="totals-value" id="cart-subtotal">
-           0.0
-         </div>
-       </div>
-       <div class="totals-item">
-         <label>
-           Tax (5%)
-         </label>
-         <div class="totals-value" id="cart-tax">
-           0.0
-         </div>
-       </div>
-       <div class="totals-item">
-         <label>
-           Shipping
+           Έξοδα Αποστολής
          </label>
          <div class="totals-value" id="cart-shipping">
            0.0
@@ -59,23 +43,25 @@
        </div>
        <div class="totals-item totals-item-total">
          <label>
-           Grand Total
+            Τελική Τιμή
          </label>
          <div class="totals-value" id="cart-total">
            <%=session.cart.totalPrice%>
          </div>
        </div>
      </div>
- <form id='payment-form'>
-  <label>
-    Card details
-    <!-- placeholder for Elements -->
-    <div id="card-element"></div>
-  </label>
-  <button type="submit">Submit Payment</button>
-</form>
 
-   </div>
+
+ 
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-5">
+      <hr class="mr-auto">
+    </div>
+  </div>
+  <div class="row d-flex justify-content-end mr-2">
+    <a href="/checkout" class="btn btn-primary">πληρωμη</a>
+  </div>
   <%}else{ %>
     Το καλάθι σας είναι άδειο
   <%}%>

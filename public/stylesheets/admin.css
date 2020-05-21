@@ -1,5 +1,6 @@
 .order-btn{
-	width: 15em;
+	width: 18em;
+	height:3em;
 	padding: 0em;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
@@ -7,7 +8,7 @@
 
 }
 .button-div{
-	margin-right: 5.8em; 
+	margin-right: 6.5em; 
 }
 .stripes{
 	border :10px solid #B9E1C2 ;

@@ -37,7 +37,7 @@ function qtyUpdate(){
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
 			let data = JSON.parse(this.responseText);
-			document.getElementById("itm-prc"+id).innerHTML = data.price;
+			document.getElementById("itm-prc"+id).innerHTML = "τελ. τιμή: "+data.price;
 			document.getElementById('cart-total').innerHTML = data.totalPrice;
 			document.getElementById('cart-glyphicon').innerHTML = data.totalQuantity;
       //quick view

@@ -20,7 +20,7 @@
 
 
 
-<div id="main" class="container main">
+<div id="main" class="container main mb-5">
     <div class="row  mx-auto pt-3 pb-3" >
     <%if(session.productList && session.productList.length > 0){ %>	
     	<div class="col-lg-6 mx-auto">
@@ -96,9 +96,9 @@
 				</div>
 				<%}%>	
 				<div class="payment ">
-					<button id="submit" value="Πληρωμή">
-	            		<div class="spinner" id="spinner"></div>
-	            		<span id="button-text-pay">Πληρωμή</span><span id="order-amount"></span>
+					<button id="submit" class="btn btn-primary" value="Πληρωμή">
+	            		<div id="spinner"></div>
+	            		<span id="button-text-pay">Πληρωμη</span><span id="order-amount"></span>
 	            		<span id="button-text-send" class="hidden" >Αποστολή</span><span id="order-amount"></span>
 	            		<span id="method" class="hidden" value="2"></span>
 	          		</button>
