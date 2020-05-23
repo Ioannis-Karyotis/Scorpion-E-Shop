@@ -10,6 +10,12 @@ const sanitization	= require('express-autosanitizer');
 var nodemailer = require('nodemailer');
 var smtpTransport = 	require('nodemailer-smtp-transport');
 
+
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
+
 var transporter = nodemailer.createTransport(smtpTransport({
   host: "smtp.gmail.com",
   port: 465,

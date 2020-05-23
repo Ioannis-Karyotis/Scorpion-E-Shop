@@ -12,7 +12,10 @@ var middleware  = require("../middleware/index.js");
 var bodyParser = require("body-parser");
 const sanitization	= require('express-autosanitizer');
 
-
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
 
 signToken = function(user) {
   return JWT.sign({
@@ -62,7 +65,8 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 	local:{
 		name    : req.autosan.body.name,
 		surname : req.autosan.body.surname,
-		email : req.autosan.body.email
+		email : req.autosan.body.email,
+		profile : null
 		}
 	});
 	newUser.setPassword(req.autosan.body.password);
@@ -79,7 +83,7 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 
 		passport.authenticate("local")(req, res, function(){
 			req.flash("genSuccess","You Successfully Signed Up");
-			res.redirect("/");
+			res.redirect("/user/"+ req.user._id);
 		});
 	})
 });
@@ -109,7 +113,7 @@ router.post('/login',sanitization.route, passport.authenticate('local', { failWi
 	  		httpOnly: true
 		});
 		req.flash("genSuccess","You Successfully Logged In");
-		return res.redirect("/");
+		return res.redirect("/user/"+ req.user._id);
 	},
 	function(err, req, res, next) {
 		// handle error
@@ -130,7 +134,7 @@ router.get("/logout",function(req,res){
 	req.flash("genSuccess","You Logged Out");
 	res.clearCookie('access_token');
 	res.clearCookie('admin_token');
-	res.redirect("back");
+	res.redirect("/");
 
 })
 
@@ -184,7 +188,7 @@ router.post("/cart/update", function(req, res){
   console.log(JSON.stringify(req.body));
   let cart = new Cart(req.session.cart);
   let id = req.body.id;
-  let qty = req.body.qty;
+  let qty = parseInt(req.body.qty);
   cart.updateQuantity(id,qty);
   req.session.cart = cart;
   req.session.productList = cart.productList();

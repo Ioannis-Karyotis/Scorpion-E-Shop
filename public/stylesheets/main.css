@@ -446,7 +446,12 @@ hr.thick{
 	color: #3A3A3A;
 	display: inline-block;
 }
-
+.nav-link img:hover{
+  opacity: 0.8;
+}
+.nav-link img:active{
+  opacity: 1;
+}
 .nav-link{
 	text-align: center;
 }
@@ -472,12 +477,14 @@ hr.thick{
 }
 
 .mt-n2{
-	margin-top: -0.3rem !important;
+	margin-top: -1.2rem !important;
+}
+.mt-n2-icon{
+  margin-top: -2.5rem !important;
 }
 .mb-n2{
 	margin-bottom: -0.5rem !important;
 }
-
 #menu-nav{
   opacity: 0.8;
 }
@@ -530,6 +537,12 @@ hr.thick{
 #main.fixed-theme{
   position: relative;
   margin-top: 4em;
+}
+.blank-mini{
+  border:1px solid rgba(0,0,0,0.2);
+  width:3.8em;
+  height:3.8em;
+  border-radius: 50%;
 }
 
 /*==============*/
@@ -677,6 +690,24 @@ hr.thick{
 }
 
 @media screen and (max-width:960px){
+  .mt-n2{
+    margin-top: -0rem !important;
+  }
+  .mt-n2-icon{
+    margin-top: -0rem !important;
+  }
+  .go-left-first{
+    position: absolute; 
+    left:0.5em;
+  }
+  .go-left-second{
+    position: absolute;
+    left:7em;
+  }
+  .go-left-second-logged{
+    position: absolute;
+    left:9em;
+  }
   .should-hide{
     background-color: white;
   }
@@ -717,11 +748,11 @@ hr.thick{
 	  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
 }
- 
-@media screen and (min-width:1000px){
-  .mt-n2{
-    margin-top: -1.2rem !important;
+ .go-left{
+  
   }
+@media screen and (min-width:1000px){
+  
 }  
 
 .form-group input{

@@ -19,6 +19,7 @@ var UserSchema = new mongoose.Schema({
 			type: String,
 			lowercase: true
 		},
+		profile:String,
 		hash: String,
 		salt: String
 	},
@@ -37,7 +38,8 @@ var UserSchema = new mongoose.Schema({
 	    email: {
         	type: String,
         	lowercase: true
-	    }
+	    },
+	    profile:String
   	},
 	facebook: {
 		id: {
@@ -54,7 +56,8 @@ var UserSchema = new mongoose.Schema({
 		email: {
 			type: String,
 			lowercase: true
-		}
+		},
+		profile:String
 	}
 });
 

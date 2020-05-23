@@ -1,0 +1,72 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="container main mb-5">
+	<div class="container-fluid">
+		<% if(!currentUser){ %>
+			<div class="jumbotron">
+				<h1>Η περίοδος σύνδεσης σας έχει λήξει</h1>
+				<script type="text/javascript" src="/scripts/relocate.js"></script>
+			</div>
+		<% }else {%>
+		    <div class="row  d-flex justify-content-around ">
+				<div class="col-md-3 side-menu desc">
+					<h5 class="my-0">
+						<a href="/user/<%= currentUser._id %>" class="btn btn-primary side-btn">πληροφοριες</a>
+					</h5>
+					<h5 class="my-0">
+						<a href="/user/<%= currentUser._id %>/orders" class="btn btn-primary side-btn">παραγγελιες</a>
+					</h5>
+				</div>
+				<div class="col-md-9">
+					<% orders.forEach(function(order){ %>
+						<div class="container-sm"  style="background-color: white;">
+						<div class="container-sm">
+							<div class="row pr-3 d-flex justify-content-end">	
+								<span style="font-size: 14px;">Ημερομηνία: <%=order.date %></span>
+							</div>	
+							<div class="row justify-content-start">
+								<h4 style="display: inline-block;">ID παραγγελίας: <b><%=order._id %></b></h4>
+							</div>
+							<div class="row d-flex justify-content-end">
+							<span style="float:right;" >Μέθοδος: <%=order.method %></span>
+							</div>	
+						</div>	
+						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
+						<div class="row d-flex justify-content-around">
+							
+							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+								<h5>Όνομα: <%= order.details.name %></h5>
+								<h5>Επίθετο: <%= order.details.surname %></h5>	
+								<h5><b>E-mail: </b><%= order.details.email %></h5>
+								<h5>Τηλέφωνο : <%= order.details.phone %></h5>
+							</div>
+							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+								<h5>Διεύθυνση: <%= order.details.address.line1%></h5>
+								<h5>Πόλη: <%= order.details.address.city%></h5>	
+								<h5>Ταχ. Κώδικας: <%= order.details.address.zip%></h5>
+								<h5>Νομός: <%= order.details.address.state%></h5>
+							</div>
+						</div>
+						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
+						<div class="row">
+							<%order.productList.forEach(function(productlist){%>
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4  mb-2 d-flex justify-content-center">
+									<div>
+									<h5>Προϊόν: <%= productlist.product.name%></h5>
+									<h5>Ποσότητα: <%= productlist.quantity%></h5>
+									<img style="width:10em; height:14em;" src="<%=productlist.product.images[0].url %>" >
+									</div>
+								</div>	
+							<%}) %>				
+						</div>
+						</div>
+						<hr>	
+					<%});%>
+				</div>
+			</div>
+		<%}%>	
+	</div>
+</div> 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>   	
+<script type="text/javascript" src="/scripts/user.js"></script>
+<%- include("./../partials/footer")%>

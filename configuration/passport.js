@@ -66,7 +66,6 @@ passport.use('jwt', new JwtStrategy({
           console.log("user doens't exist");
           return done(null, false);
         }
-        console.log("trololo 2");
         req.user = user;
         done(null, user);
     });  
@@ -77,7 +76,7 @@ passport.use("facebook" , new FacebookStrategy({
       clientID: config.oauth.facebook.clientID,
       clientSecret: config.oauth.facebook.clientSecret,
       callbackURL: "http://localhost:3000/auth/facebook/callback",
-      profileFields: ['id', 'emails', 'name']
+      profileFields: ['id', 'emails', 'name' , 'picture.type(large)']
     },
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
@@ -92,6 +91,7 @@ passport.use("facebook" , new FacebookStrategy({
             newUser.facebook.name = profile.name.givenName;
             newUser.facebook.surname= profile.name.familyName;
             newUser.facebook.email = profile.emails[0].value;
+            newUser.facebook.profile = profile.photos[0].value;
             newUser.methods = 'facebook';
             newUser.save(function(err){
               if(err)
@@ -126,6 +126,7 @@ passport.use("google" , new GoogleStrategy({
             newUser.google.surname = fullname[1];
             newUser.google.email = profile.emails[0].value;
             newUser.methods = 'google';
+            newUser.google.profile = profile.photos[0].value;
             newUser.save(function(err){
               if(err)
                 throw err;

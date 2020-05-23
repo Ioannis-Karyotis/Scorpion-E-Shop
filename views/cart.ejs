@@ -1,69 +1,71 @@
 <%- include("partials/header")%>
-<div id="cart-id" class="container main mb-5 cart-container">
-  <%if(session.productList && session.productList.length > 0){ %>
-    <div class="shopping-cart">
-    <% session.productList.forEach(function(item){ %>
-      <div class="product jumbotron-mini">
-        <div class="product-image">
-          <img src="<%=	item.product.images[0].url %>"></img>
-        </div>
-        <div class="product-details">
-          <div class="product-title mt-1">
-            <%=item.product.name%>
+<div id="main" class="main container">
+  <div id="cart-id" class="container main mb-5 cart-container">
+    <%if(session.productList && session.productList.length > 0){ %>
+      <div class="shopping-cart">
+      <% session.productList.forEach(function(item){ %>
+        <div class="product jumbotron-mini">
+          <div class="product-image">
+            <img src="<%=	item.product.images[0].url %>"></img>
           </div>
-          <p class="product-description">
-            <%=item.product.description%>
-          </p>
+          <div class="product-details">
+            <div class="product-title mt-1">
+              <%=item.product.name%>
+            </div>
+            <p class="product-description">
+              <%=item.product.description%>
+            </p>
+          </div>
+          <div class="product-price" style="margin-top: 0.3em;">
+            Τιμή: <%=item.product.price%>
+          </div>
+          <div class="product-quantity">
+            <% var id = item.product._id%>
+            <input id="<%=id%>" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
+          </div>
+          <div class="product-removal" style="margin-top: 0.15em;">
+            <button id="rmvc_<%=id%>" class="remove-product btn-danger" onclick="removeProduct()">
+              Remove
+            </button>
+          </div>
+          <div id="itm-prc<%=id%>" class="product-line-price" style="margin-top: 0.15em;">
+           Τελ. Τιμή: <%=item.price%>
+          </div>
         </div>
-        <div class="product-price" style="margin-top: 0.3em;">
-          Τιμή: <%=item.product.price%>
-        </div>
-        <div class="product-quantity">
-          <% var id = item.product._id%>
-          <input id="<%=id%>" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
-        </div>
-        <div class="product-removal" style="margin-top: 0.15em;">
-          <button id="rmvc_<%=id%>" class="remove-product btn-danger" onclick="removeProduct()">
-            Remove
-          </button>
-        </div>
-        <div id="itm-prc<%=id%>" class="product-line-price" style="margin-top: 0.15em;">
-         Τελ. Τιμή: <%=item.price%>
-        </div>
-      </div>
-     <%});%>
-     <div class="totals">
-       <div class="totals-item">
-         <label>
-           Έξοδα Αποστολής
-         </label>
-         <div class="totals-value" id="cart-shipping">
-           0.0
+       <%});%>
+       <div class="totals">
+         <div class="totals-item">
+           <label>
+             Έξοδα Αποστολής
+           </label>
+           <div class="totals-value" id="cart-shipping">
+             0.0
+           </div>
+         </div>
+         <div class="totals-item totals-item-total">
+           <label>
+              Τελική Τιμή
+           </label>
+           <div class="totals-value" id="cart-total">
+             <%=session.cart.totalPrice%>
+           </div>
          </div>
        </div>
-       <div class="totals-item totals-item-total">
-         <label>
-            Τελική Τιμή
-         </label>
-         <div class="totals-value" id="cart-total">
-           <%=session.cart.totalPrice%>
-         </div>
-       </div>
-     </div>
 
 
- 
-  </div>
-  <div class="row justify-content-end">
-    <div class="col-5">
-      <hr class="mr-auto">
+   
     </div>
+    <div class="row justify-content-end">
+      <div class="col-5">
+        <hr class="mr-auto">
+      </div>
+    </div>
+    <div class="row d-flex justify-content-end mr-2">
+      <a href="/checkout" class="btn btn-primary">πληρωμη</a>
+    </div>
+    <%}else{ %>
+      Το καλάθι σας είναι άδειο
+    <%}%>
   </div>
-  <div class="row d-flex justify-content-end mr-2">
-    <a href="/checkout" class="btn btn-primary">πληρωμη</a>
-  </div>
-  <%}else{ %>
-    Το καλάθι σας είναι άδειο
-  <%}%>
-</div>
+</div>  
 <%- include("partials/footer")%>

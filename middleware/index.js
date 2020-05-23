@@ -114,7 +114,6 @@ middlewareObj.password = function (req , res ,  next){
 }
 
 
-
 middlewareObj.email = function (req , res ,  next){
 
 

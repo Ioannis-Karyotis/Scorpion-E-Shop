@@ -1,0 +1,108 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="container main mb-5">
+	<div class="container-fluid">
+		<% if(!currentUser){ %>
+			<div class="jumbotron">
+				<h1>Η περίοδος σύνδεσης σας έχει λήξει</h1>
+				<script type="text/javascript" src="/scripts/relocate.js"></script>
+			</div>
+		<% }else {%>	
+		    <div class="row  d-flex justify-content-around ">
+				<div class="col-md-3 side-menu desc">
+					<h5 class="my-0">
+						<a href="/user/<%= currentUser._id %>" class="btn btn-primary side-btn">πληροφοριες</a>
+					</h5>
+					<h5 class="my-0">
+						<a href="/user/<%= currentUser._id %>/orders" class="btn btn-primary side-btn">παραγγελιες</a>
+					</h5>
+				</div>
+				<div class="col-md-9">
+					<div class="jumbotron">
+						<% if(regError&& regError.length > 0){ %>
+							<div class="alert alert-danger mr-3" role="alert">
+								<%= regError %>
+							</div>
+						<%}%>
+						<div class="form-group px-2">
+					   		<div class="row d-flex desc">
+					   			<div class="col-12 mx-auto">
+					   				<h3 class="mx-auto">Επιλέξτε Εικόνα Προφίλ: </h3>
+					   			</div>
+					    		<div class="col-12 justify-content-center">
+					    			<% if(!currentUser[currentUser.methods].profile) {%>
+										<img src="http://localhost:3000/images/blank.png" id="blah" alt="" class="blank mr-1" >
+									<% }else{ %>
+										<img src="<%=currentUser[currentUser.methods].profile%>" id="blah" alt="" class="blank mr-1" >
+									<%}%>
+					        	</div>
+					        	
+					    	</div>
+					    	<form action="/user/<%= currentUser._id %>/changeImage?_method=PUT" method="POST" enctype="multipart/form-data">
+					        	<div class="col-12 justify-content-center">
+					        		<input id="imgInp" type="file" name="profile_pic" style="margin-left: 10em; margin-top:1em; "required/>
+					    		</div>
+					    		<div class="row d-flex justify-content-end">
+					    			<button class="btn btn-primary imgbutton mt-4 hidden">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
+					    		</div>
+					    	</form>
+		            	</div>
+						
+						<% if(currentUser.methods === "local"){ %>
+							<form id="changeFirst" action="/user/<%= currentUser._id %>/changeInitials?_method=PUT" method="POST"></form>
+							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
+							<button class="btn btn-primary mt-4 firstp" onclick="showInputs1()"style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
+							<button class="btn btn-primary mt-4  firsti hidden" form="changeFirst" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
+							<!-- NAME -->
+							<h4 class="text-black pt-5">Όνομα</h4>
+			                <p class="mb-0 text-black-75 firstp"><%= currentUser[currentUser.methods].name %></p>
+			                <input type="text" name="name" class="form-control w-50 firsti hidden"  placeholder="Όνομα"  form="changeFirst" value="<%= currentUser[currentUser.methods].name %>">
+			                <hr class=" thick w-50 mb-2" style="margin-left: -1em;">
+			                <!-- SURNAME -->
+			                <h4 class="text-black pt-2">Επίθετο</h4>
+			                <p class="mb-0 text-black-75 firstp"><%= currentUser[currentUser.methods].surname %></p>
+			                <input type="text" name="surname" class="form-control w-50 firsti hidden"  placeholder="Επίθετο"  form="changeFirst" value="<%= currentUser[currentUser.methods].surname %>">
+			                <hr class="thick w-50 mb-2" style="margin-left: -1em;">
+			                <!-- EMAIL -->
+			                <h4 class="text-black pt-2">E-mail</h4>
+			                <p class="mb-0 text-black-75 firstp"><%= currentUser[currentUser.methods].email %></p>
+			                <input type="text" name="email" class="form-control w-50 firsti hidden" form="changeFirst"  placeholder="E-mail" value="<%= currentUser[currentUser.methods].email %>">
+			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
+			                <!-- PASSWORD -->
+			                <form id="changeSecond" action="/user/<%= currentUser._id %>/changePassword?_method=PUT" method="POST"></form>
+			                <button class="btn btn-primary mt-4 secondp" onclick="showInputs2()" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
+			                <button class="btn btn-primary mt-4 secondi hidden" form="changeSecond" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
+			                <h4 class="text-black pt-5">Κωδικός</h4>
+			                <p class="mb-0 text-black-75 secondp">***********</p>
+			                <input type="password" name="password" form="changeSecond" placeholder="Παλιός Κωδικός" class="form-control w-50 mb-2 secondi hidden">
+			                <input type="password" name="password2" form="changeSecond" placeholder="Επιβεβαίωση Παλιού Κωδικού" class="form-control mb-2 w-50 secondi hidden">
+			                <input type="password" name="passwordnew" form="changeSecond" placeholder="Καινούργιος Κωδικός" class="form-control mb-2 w-50 secondi hidden">
+			                
+			            <%}else{%>
+							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
+			            
+							<!-- NAME -->
+							<h4 class="text-black pt-5">Όνομα</h4>
+			                <p class="mb-0 text-black-75"><%= currentUser[currentUser.methods].name %></p>
+			                <hr class=" thick w-50 mb-2" style="margin-left: -1em;">
+			                <!-- SURNAME -->
+			                <h4 class="text-black pt-2">Επίθετο</h4>
+			                <p class="mb-0 text-black-75"><%= currentUser[currentUser.methods].surname %></p>
+			                <hr class="thick w-50 mb-2" style="margin-left: -1em;">
+			                <!-- EMAIL -->
+			                <h4 class="text-black pt-2">E-mail</h4>
+			                <p class="mb-0 text-black-75"><%= currentUser[currentUser.methods].email %></p>
+			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
+			                <!-- PASSWORD -->
+			                <h4 class="text-black pt-5">Κωδικός</h4>
+			                <p class="mb-0 text-black-75">***********</p>
+			            <% } %>    	
+					</div>
+				</div>
+			</div>
+		<%}%>	
+	</div>
+</div> 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>   	
+<script type="text/javascript" src="/scripts/user.js"></script>
+<%- include("./../partials/footer")%>

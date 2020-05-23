@@ -1,6 +1,6 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container main mb-5">
+<div id="main" class="main container main pb-2 mb-5">
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -32,7 +32,7 @@
             <form id="edit_form" action="/products/<%= product.type %>/<%=product._id %>/edit?_method=PUT" method="POST">
               <div class="row">
                 <div class="col-12 pt-3 align-left">
-                  <h2><input type="text" name="name" value="<%=product.name%>"></h2>
+                  <h2><input type="text" class="form-control w-50" name="name" value="<%=product.name%>"></h2>
                 </div>
               </div>
               <div class="row">
@@ -50,13 +50,13 @@
               </div>
               <div class="row">
                 <div class="col-12 pt-2 align-left">
-                  <h4><input type="number" min="1" style="width:2em;" name="price" value="<%=product.price%>">€</h4>
+                  <h4 style="display:inline-block;"><input type="number" min="1" class="form-control pb-2" style="width:4em;display:inline-block;" name="price" value="<%=product.price%>"> €</h4>
                 </div>
               </div>
               <hr class="thin">
               <div class="row">
                 <div class="col-12 mt-2 align-left">
-                  <h5><textarea name="description" rows="10" cols="40"><%=product.description %></textarea></h5>
+                  <h5><textarea name="description" class="form-control w-75" rows="10" cols="40"><%=product.description %></textarea></h5>
                 </div>
               </div>
             </form>  
@@ -94,7 +94,7 @@
                 <form action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
                   <div class="row">
                     <div class="col-12 pt-5 align-left" >
-                      <input type="number" name="qty" value="1" min="1" max="99" style="width:3rem">
+                      <input type="number"  class="form-control" style="width:4em;"  name="qty" value="1" min="1" max="99" style="width:3rem">
                     </div>
                   </div>
                   <div class="row">
@@ -201,11 +201,11 @@
           </div>
         </div>
       </form>
-    </div>
+    </div>  
 <%product.reviews.forEach(function(review){%>
-    <div class="px-4 py-1 mx-3 mb-2 review-container">
+  <div class="px-4 py-1 mx-3 mb-2 review-container">
     <div class="row px-4  py-1">
-      <img class="pic" src="https://i.pinimg.com/736x/af/53/55/af5355d2e928deb428fd3961a317cca4.jpg" height="100" width="80"></img>
+      <img class="pic" src="<%= review.photo %>"  height="100" width="80"></img>  
       <div class="pt-2 pl-2 mb-2">
         <div>
           <h4><%=review.author%></h4>

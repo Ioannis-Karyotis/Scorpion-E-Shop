@@ -1,0 +1,20 @@
+.side-menu{
+  background-color: #2D2B30;
+  color:white;
+  box-shadow: 13px 3px 5px -10px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+  padding: 0px 0px;
+  margin: 0px 0px
+}
+.side-btn{
+  border-radius: 0px;
+    /*display: block;*/
+    width: 100%;
+}
+
+.blank{
+  border:1px solid rgba(0,0,0,0.2);
+  width:15em;
+  height:15em;
+  border-radius: 50%;
+}

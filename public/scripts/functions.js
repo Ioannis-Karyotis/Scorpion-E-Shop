@@ -41,7 +41,7 @@ function qtyUpdate(){
 			document.getElementById('cart-total').innerHTML = data.totalPrice;
 			document.getElementById('cart-glyphicon').innerHTML = data.totalQuantity;
       //quick view
-      document.getElementById("quick_qty"+id).innerHTML = qty;
+      document.getElementById("quick_qty"+id).innerHTML = parseInt(document.getElementById("quick_qty"+id).innerHTML) + qty;
       document.getElementById("quick_product_total"+id).innerHTML = data.price;
       document.getElementById("quick_total").innerHTML = data.totalPrice;
       document.getElementById("quick_total_qty").innerHTML =

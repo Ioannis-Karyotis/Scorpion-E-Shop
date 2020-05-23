@@ -22,6 +22,7 @@ const express 		= require("express"),
 
 
 const indexRoutes 	 = require("./routes/index"),
+	  userRoutes	 = require("./routes/user"),
 	  productRoutes  = require("./routes/products"),
 	  stripeRoutes 	 = require("./routes/stripe"),
 	  adminRoutes    = require("./routes/admin"),
@@ -77,10 +78,11 @@ app.use(function(req, res, next){
 	res.locals.regError    = req.flash("regError");
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
+	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
-
 app.use(indexRoutes);
+app.use(userRoutes);
 app.use(productRoutes);
 app.use(stripeRoutes);
 app.use(adminRoutes);

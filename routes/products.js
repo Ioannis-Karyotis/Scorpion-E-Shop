@@ -9,7 +9,10 @@ const multer 	= require('multer');
 const path 		= require('path');
 const sanitization	= require('express-autosanitizer');
 
-
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
 //===================
 // Product ROUTES
 //===================
@@ -159,12 +162,14 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 			console.log(err);
 		} else {
 		    if(foundProduct!= null){
-		    		if(req.user){
+		    		if(req.user && req.user[req.user.methods].profile != null){
 		    			var name =  req.user[req.user.methods].name ;
 						var surname =  req.user[req.user.methods].surname;
+						var photo = req.user[req.user.methods].profile;
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
+						var photo = "http://localhost:3000/images/blank.png"
 		    		}
 					var today = new Date();
 					var dd = String(today.getDate()).padStart(2, '0');
@@ -177,6 +182,7 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 							author: name + " " + surname,
 							description: req.autosan.body.description,
 							date: today,
+							photo : photo,
 							rating: req.autosan.body.rating
 						}, function(err, review){
 							if(err){
