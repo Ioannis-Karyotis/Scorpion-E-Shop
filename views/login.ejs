@@ -3,6 +3,7 @@
 <div id="main" class="main container mb-5">
     <div class="row">
         <div class="col-12  d-flex justify-content-around py-5">
+            
             <form action="/login" class="col-lg-6" method="post">
                 <div class="desc">
                     <h1 class='pb-3'>Είσοδος</h1>
@@ -30,6 +31,11 @@
                 <% if(error&& error.length > 0){ %>
                     <div class="alert alert-danger mr-3" role="alert">
                         <%= error %>
+                    </div>
+                <%}%>
+                <% if(genSuccess&& genSuccess.length > 0){ %>
+                    <div class="alert alert-success mr-3" role="alert">
+                        <%= genSuccess %>
                     </div>
                 <%}%>
 

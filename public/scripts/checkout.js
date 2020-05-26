@@ -1,4 +1,4 @@
-var stripe; // A reference to Stripe.js
+var stripe
 
 var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
@@ -45,7 +45,7 @@ fetch("/create-payment-intent", { // Make Post http request for creating the Pay
 .then(function(data) {
   return setupElements(data); //Setup the the card element along with the order data that were sent to the server
 })
-.then(function({ stripe, card, clientSecret }) {
+.then(function({ stripe, card, clientSecret,id }) {
   document.querySelector("button").disabled = false;
   var form = document.getElementById("payment-form");
   form.addEventListener("submit", function(event) { //Trigger the following event when the form button is pressed
@@ -61,7 +61,8 @@ fetch("/create-payment-intent", { // Make Post http request for creating the Pay
       city: document.getElementById("city").value,
       zip: document.getElementById("postal_code").value,
       state: document.getElementById("state").value,
-      method : document.getElementById("method").value
+      method : document.getElementById("method").value,
+      payment_id : id
     };
     
     fetch('/create-order', { // check parameters through middleware that exist in this create-order post route;
@@ -134,14 +135,16 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
   return {
     stripe: stripe,
     card: card,
-    clientSecret: data.clientSecret
+    clientSecret: data.clientSecret,
+    id : data.id
   };
 };
 
-var pay = function(stripe, card, clientSecret) {
+var pay =async function(stripe, card, clientSecret) {
   changeLoadingState(true);
   var modal = document.getElementById("myModal");
   modal.style.display = "block";
+
 
   stripe
     .confirmCardPayment(clientSecret, {
@@ -185,7 +188,7 @@ var pay = function(stripe, card, clientSecret) {
             },
             body: JSON.stringify(result)
           })
-          .then(function(result) {   
+          .then(function(result) { 
             orderComplete(clientSecret);
           })  
       }
@@ -201,11 +204,11 @@ var orderComplete = function(clientSecret) {
     document.querySelector(".chkout").classList.add("hidden");
     $('.circle-loader').toggleClass('load-complete');
     $('.checkmark').toggle();
-    document.querySelector(".result").classList.remove("hidden");
+    document.querySelector(".result2").classList.remove("hidden");
        
-    setTimeout(function() {
-      window.location.replace("http://localhost:3000/");
-    }, 3000);
+    // setTimeout(function() {
+    //   window.location.replace("http://localhost:3000/");
+    // }, 3000);
 
     changeLoadingState(false);
 
@@ -218,9 +221,9 @@ var orderComplete = function(clientSecret) {
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
 
-      setTimeout(function() {
-        window.location.replace("http://localhost:3000/");
-      }, 3000);
+      // setTimeout(function() {
+      //   window.location.replace("http://localhost:3000/");
+      // }, 3000);
 
       changeLoadingState(false);
     });
@@ -239,3 +242,8 @@ var changeLoadingState = function(isLoading) {
     document.querySelector(".payment").classList.remove("hidden");
   }
 };
+
+function relocate(){
+
+  window.location.replace("http://localhost:3000/");
+}

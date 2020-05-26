@@ -35,9 +35,11 @@ const calculateDatabasePrice = async function(cart) {
 		console.log(err);
 	}
 }			
-router.post("/post_order",sanitization.route, function(req,res){
+router.post("/post_order",sanitization.route,async function(req,res){
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
+
+  const lol = await  stripesk.paymentIntents.update(req.autosan.body.paymentIntent.id,{receipt_email: req.autosan.body.paymentIntent.receipt_email });
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -89,13 +91,17 @@ router.post("/post_order",sanitization.route, function(req,res){
   res.send({result : "succeeded"});
 })
 
-router.post("/post_order_sent",sanitization.route, function(req,res){
+router.post("/post_order_sent",sanitization.route,async function(req,res){
   var method = "";
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
     method = "Αποστολή με αντικαταβολή"
   }
+  console.log(req.autosan.body.payment_id);
+  lol = await stripesk.paymentIntents.cancel(req.autosan.body.payment_id);
+
+
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -164,10 +170,12 @@ router.post("/create-payment-intent",sanitization.route, async (req, res) => {
     amount: total,
     currency: currency
   });
+  console.log(paymentIntent.id);
   // Send publishable key and PaymentIntent details to client
   res.send({
     publishableKey: PUBLIC_STRIPE,
-    clientSecret: paymentIntent.client_secret
+    clientSecret: paymentIntent.client_secret,
+    id : paymentIntent.id,
   });
 });
 

@@ -166,10 +166,10 @@ middlewareObj.address = function (req , res ,  next){
     return next();
   }
 
-  var line1 = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(req.autosan.body.line1);
-  var city = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(req.autosan.body.city);
-  var zip = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(req.autosan.body.zip);
-  var state = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(req.autosan.body.state);
+  var line1 = /^[a-zA-Z0-9Ά-ωΑ-ώ\s,.'-]{3,}$/.test(req.autosan.body.line1);
+  var city = /^[a-zA-Z0-9Ά-ωΑ-ώ\s,.'-]{3,}$/.test(req.autosan.body.city);
+  var zip = /^[a-zA-Z0-9Ά-ωΑ-ώ\s,.'-]{3,}$/.test(req.autosan.body.zip);
+  var state = /^[a-zA-Z0-9Ά-ωΑ-ώ\s,.'-]{3,}$/.test(req.autosan.body.state);
 
   if (line1 && city && zip && state)
     {

@@ -12,9 +12,18 @@
   		</div>
 	  	<div class="row  ">
 	  		<div class="col-12 d-flex justify-content-center">
-				<h3 class="result hidden" style="display: inline-block;">Η πληρωμή ολοκληρώθηκε</h2>
-<!-- 				<h2 class="result2 hidden" style="display: inline-block;">Η πληρωμή δεν ολοκληρώθηκε</h2>
- -->			</div>
+	  			<div class="desc result hidden">
+	  				<h3 style="display: inline-block;">Η πληρωμή ολοκληρώθηκε</h2>
+					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς. Θα λάβετε σχετικό <b>e-mail</b> κατά τη λήψη της και την ολοκλήρωσή της</h5>
+					<h3 class="mt-5"  style="display: inline-block;">Σας ευχαριστούμε</h3><br>
+					<button style="float: right" class="btn btn-primary"onclick="relocate()">Ενταξει</button>	
+	  			</div>
+				<div class="desc result2 hidden">
+					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς. Θα λάβετε σχετικό <b>e-mail</b> κατά τη λήψη της και την ολοκλήρωσή της</h5>
+					<h3 class="mt-5"  style="display: inline-block;">Σας ευχαριστούμε</h3><br>
+					<button style="float: right"class="btn btn-primary"onclick="relocate()">Ενταξει</button>	
+	  			</div>
+			</div>
 		</div>	
 	</div>
   </div>
@@ -31,22 +40,22 @@
 				<div class="chk-group">
 					<label>
 						<span>Όνομα</span>
-						<input id="name" name="name" class="chk-field" value="<%= user[method].name%>"required/>
+						<input id="name" name="name" placeholder="Όνομα" class="chk-field" value="<%= user[method].name%>"required/>
 					</label>
 					<label>
 						<span>Επίθετο</span>
-						<input id="surname" name="surname" class="chk-field" value="<%= user[method].surname%>"required/>
+						<input id="surname" name="surname" placeholder="Επίθετο" class="chk-field" value="<%= user[method].surname%>"required/>
 					</label>
 				</div>
 				<% }else{ %>
 				<div class="chk-group">
 					<label>
 						<span>Όνομα</span>
-						<input id="name" name="name" class="chk-field" placeholder="Jane"  value="<%= validated.name %>"required/>
+						<input id="name" name="name" class="chk-field" placeholder="Όνομα"  value="<%= validated.name %>"required/>
 					</label>
 					<label>
 						<span>Επίθετο</span>
-						<input id="surname" name="surname" class="chk-field" placeholder="Winchester"  value="<%= validated.surname %>" required/>
+						<input id="surname" name="surname" class="chk-field" placeholder="Επίθετο"  value="<%= validated.surname %>" required/>
 					</label>
 				</div>
 				<% } %>	
@@ -55,7 +64,7 @@
 					<%if(user) {%>
 					<label>
 						<span>E-mail</span>
-						<input id="email" name="email" class="chk-field" value="<%= user[method].email %>" />
+						<input id="email" name="email" class="chk-field"  placeholder="example@gmail.com" value="<%= user[method].email %>" />
 					</label>
 					<% }else{ %>
 					<label>
@@ -65,25 +74,25 @@
 					<% } %>
 					<label>
 						<span>Τηλ.επικοινωνίας</span>
-						<input id="phone" name="phone" class="chk-field" placeholder="+30 XXXXXXXXXX"  value="<%= validated.phone %>"required/>
+						<input id="phone" name="phone" class="chk-field" placeholder="+30 xxxxxxxxxx"  value="<%= validated.phone %>"required/>
 					</label>
 				</div>
 				<div class="chk-group address">
 					<label>
 						<span>Διέυθυνση</span>
-						<input id="line1" name="line1" class="chk-field" placeholder="77 Winchester Lane" value="<%= validated.line1 %>"  />
+						<input id="line1" name="line1" class="chk-field" placeholder="Ολυμπιάδος 39" value="<%= validated.line1 %>"  />
 					</label>
 					<label>
 						<span>Πόλη</span>
-						<input id="city" name="city" class="chk-field" placeholder="Coachella" value="<%= validated.city %>" />
+						<input id="city" name="city" class="chk-field" placeholder="Θεσσαλονίκη" value="<%= validated.city %>" />
 					</label>
 					<label>
 						<span>Ταχ. Κώδικας</span>
-						<input id="postal_code" name="zip" class="chk-field" placeholder="92236" value="<%= validated.zip %>" />
+						<input id="postal_code" name="zip" class="chk-field" placeholder="546 33" value="<%= validated.zip %>" />
 					</label>
 					<label>
 						<span>Νομός</span>
-						<input id="state" name="state" class="chk-field" placeholder="CA" value="<%= validated.state %>" />
+						<input id="state" name="state" class="chk-field" placeholder="Μακεδονία" value="<%= validated.state %>" />
 					</label>
 				</div>
 				<div class="chk-group card-element">
@@ -101,7 +110,7 @@
 					<button id="submit" class="btn btn-primary" value="Πληρωμή">
 	            		<div id="spinner"></div>
 	            		<span id="button-text-pay">Πληρωμη</span><span id="order-amount"></span>
-	            		<span id="button-text-send" class="hidden" >Αποστολή</span><span id="order-amount"></span>
+	            		<span id="button-text-send" class="hidden" >Αποστολη</span><span id="order-amount"></span>
 	            		<span id="method" class="hidden" value="2"></span>
 	          		</button>
 	          	</div>

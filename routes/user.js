@@ -52,6 +52,7 @@ router.get("/user/:id" ,passport.authenticate('jwt', { session: false }), functi
 		if(req.user){
 			res.render("user");
 		}else{
+			req.flash("genSuccess","Παρακαλώ συνδεθείτε ξανα , για να ισχύσουν οι αλλαγές");
 			redirect("login");
 		}		
 });
@@ -94,22 +95,8 @@ router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur ,
 			foundUser.local.surname = req.autosan.body.surname;
 			foundUser.local.email = req.autosan.body.email;
 			foundUser.save();
+			req.flash("genSuccess","Παρακαλώ συνδεθείτε ξανα , για να δείτε τις αλλαγές");
 			res.redirect("/login");
-			// 	function(err){
-			// 	if(err){
-			// 		console.log(err.message);
-			// 	}
-			// 	//Generate the token
-		 //    	const token = signToken(foundUser);
-		 //    	// Send a cookie containing JWT
-		 //    	res.cookie('access_token', token, {
-		 //      		httpOnly: true
-		 //    	});
-			// 	passport.authenticate("local")(req, res, function(){
-			// 		req.flash("genSuccess","You Successfully Signed Up");
-			// 		res.redirect("/user/"+ req.user._id);
-			// 	});
-			// })
 		}
 	});
 });
@@ -124,6 +111,7 @@ router.put("/user/:id/changePassword" ,sanitization.route,middleware.password, p
 			res.clearCookie('access_token');
 			foundUser.setPassword(req.autosan.body.passwordnew);
 			foundUser.save();
+			req.flash("genSuccess","Παρακαλώ συνδεθείτε ξανα , για να δείτε τις αλλαγές");
 			res.redirect("/login");
 		}
 	});
@@ -151,6 +139,7 @@ router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storag
 			res.clearCookie('access_token');
 			foundUser[foundUser.methods].profile = image;
 			foundUser.save();
+			req.flash("genSuccess","Παρακαλώ συνδεθείτε ξανα , για να δείτε τις αλλαγές");
 			res.redirect("/login");
 		}
 	});
