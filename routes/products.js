@@ -4,6 +4,7 @@ var Product     = require("../models/product");
 var Review 		= require("../models/review");
 var middleware  = require("../middleware/index.js");
 var Cart		= require("../models/cart");
+var Order		= require("../models/order");
 var passport 	= require("passport");
 const multer 	= require('multer');
 const path 		= require('path');
@@ -59,7 +60,8 @@ router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: fa
 });
 
 router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storage, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
-
+	var sizes= ["S","M","L","XL","XXL"];
+	for (i = 0; i < sizes.length; i++) {
 		var newProduct = new Product({
 			name    : req.body.name,
 			price : req.body.price,
@@ -67,6 +69,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			type : req.params.type,
 			reviews: [],
         	rating: 0,
+        	size : sizes[i],
         	reviewCount: 0,
         	status : "active"
 		});
@@ -84,28 +87,24 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
     			image={url : "http://localhost:3000" + final };
   			  newProduct.images.push(image);
         });
-
-		newProduct.save(function(err){
-			if(err){
-				console.log(err.message);
-			}
-			res.redirect("/products/"+ req.params.type);
-		});
+		newProduct.save();
+	}
+	res.redirect("/products/"+ req.params.type);
 })
 
-router.get("/products/:type/:id", function(req ,res,next){
-	Product.findById(req.params.id).populate("reviews").exec(function(err, foundProduct){
+router.get("/products/:type/:name", function(req ,res,next){
+	Product.find({name : req.params.name, size : "S" }).populate("reviews").exec(function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
-		    if(foundProduct!= null){
-			    var images = foundProduct.images;
+		    if(foundProduct[0]!= null){
+			    var images = foundProduct[0].images;
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProduct, images :images,admin:null});
+			    		return	res.render("products/show", {product: foundProduct[0], images :images,admin:null});
 			    	}
-			        return res.render("products/show", {product: foundProduct, images :images ,admin:"admin"});
+			        return res.render("products/show", {product: foundProduct[0], images :images ,admin:"admin"});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");
@@ -115,18 +114,33 @@ router.get("/products/:type/:id", function(req ,res,next){
 });
 
 
-router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	Product.findByIdAndRemove(req.params.id, function(err){
-		if(err){
-			res.redirect("/products/"+ req.params.type);
-		} else{
-			res.redirect("/products/"+ req.params.type);
-		}
-	});
+router.delete("/products/:type/:name/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+	var orders = await Order.find({}).populate("productList.product").exec();
+	var count = 0;
+	orders.forEach(function(order){
+		console.log(order);
+		order.productList.forEach(function(productlist){
+			if(productlist.product.name == req.params.name && productlist.product.type == req.params.type){
+				count = count + 1;
+			}
+		})	
+	})	
+	if(count == 0){
+		Product.deleteMany({type: req.params.type, name : req.params.name}, function(err){
+			if(err){
+				res.redirect("/products/"+ req.params.type);
+			} else{
+				res.redirect("/products/"+ req.params.type);
+			}
+		});
+	}else{
+		req.flash("genError","You Successfully Signed Up");
+		res.redirect("/products/"+ req.params.type);
+	}	
 });
 
-router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	Product.findByIdAndUpdate(req.params.id, req.autosan.body, function(err , updateProduct){
+router.put("/products/:type/:name/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	Product.updateMany({type: req.params.type, name : req.params.name}, req.autosan.body, function(err , updateProduct){
 		if(err){
 			res.redirect("back");
 		}else{
@@ -161,7 +175,7 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 		if(err){
 			console.log(err);
 		} else {
-		    if(foundProduct!= null){
+		    if(foundProduct[0]!= null){
 		    		if(req.user && req.user[req.user.methods].profile != null){
 		    			var name =  req.user[req.user.methods].name ;
 						var surname =  req.user[req.user.methods].surname;
@@ -188,10 +202,10 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 							if(err){
 								console.log(err);
 							}else{
-								foundProduct.reviews.push(review);
-								foundProduct.reviewCount = foundProduct.reviewCount + 1;
-								foundProduct.rating = ((foundProduct.rating * (foundProduct.reviewCount - 1)) + 	(review.rating / 2)) / foundProduct.reviewCount;
-								foundProduct.save();
+								foundProduct[0].reviews.push(review);
+								foundProduct[0].reviewCount = foundProduct[0].reviewCount + 1;
+								foundProduct[0].rating = ((foundProduct[0].rating * (foundProduct[0].reviewCount - 1)) + 	(review.rating / 2)) / foundProduct[0].reviewCount;
+								foundProduct[0].save();
 								console.log("created a review  fdgfdgfd");
 								res.redirect('back');
 							}
@@ -203,18 +217,18 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 		}
 	});
 });
-//Ενδεχεται να μεταφερθει
-router.post("/products/:type/:id/add", function(req, res){
-	Product.findById(req.params.id, function(err, foundProduct){
+
+router.post("/products/:type/:name/add", function(req, res){
+	Product.find({name : req.params.name, size : req.body.size}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
-				if(foundProduct!=null){
+			if(foundProduct[0]!=null){
 					var cart = new Cart(req.session.cart ? req.session.cart : {});
           var quantity = req.body.qty ? req.body.qty : 1;
           let qty = quantity < 10 ? quantity % 10 : quantity % 100;
           console.log(qty);
-					cart.add(foundProduct, qty);
+					cart.add(foundProduct[0], qty);
 					req.session.cart = cart;
 					req.session.productList = cart.productList();
 
@@ -224,53 +238,10 @@ router.post("/products/:type/:id/add", function(req, res){
 					console.log(req.session.productList);
 
 					res.redirect("back");
-				}
+			}
 		}
 	});
 });
 
-//Custom T-Shirt//
-router.get("/custom", function(req,res){
-  res.render("custom");
-});
-
-router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter }).single('image'), function(req, res, next){
-
-		var newProduct = new Product({
-			name    : "Custom T-Shirt",
-			price : req.body.price,
-      description : "Custom μπλουζάκι με στάμπα",
-			type : "custom",
-      size : req.body.size,
-      color : req.body.color
-		});
-
-    if (req.fileValidationError) {
-        return res.send(req.fileValidationError);
-    }else if (!req.file) {
-      return res.send('Please select an image to upload');
-    }
-    console.log(req.file.path);
-      var str = req.file.path;
-			var str2 = str.replace("public", "");
-  		var final = str2.replace(/\\/g,"/");
-  		image={url : "http://localhost:3000" + final };
-			newProduct.images.push(image);
-
-
-		newProduct.save(function(err){
-			if(err){
-				console.log(err.message);
-			}
-
-      //add it to the cart
-      var cart = new Cart(req.session.cart ? req.session.cart : {});
-      cart.add(newProduct, 1);
-      req.session.cart = cart;
-      req.session.productList = cart.productList();
-
-			res.redirect("back");
-		});
-});
 
 module.exports = router;

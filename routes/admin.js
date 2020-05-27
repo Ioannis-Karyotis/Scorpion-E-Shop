@@ -146,5 +146,16 @@ router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jw
 	})
 });
 
+router.delete("/admin/deleteOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+	console.log(req.autosan.body._id);
+	Order.remove({ _id: req.autosan.body._id }, function(err) {
+	    if (err) {
+	        console.log(err.message);
+	    }
+	    else {
+	        res.redirect("/admin");
+	    }
+	});
+});
 
 module.exports = router;

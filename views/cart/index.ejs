@@ -1,4 +1,4 @@
-<%- include("partials/header")%>
+<%- include("../partials/header")%>
 <div id="main" class="main container">
   <div id="cart-id" class="container main mb-5 cart-container">
     <%if(session.productList && session.productList.length > 0){ %>
@@ -11,6 +11,7 @@
           <div class="product-details">
             <div class="product-title mt-1">
               <%=item.product.name%>
+              <i><span class="ml-5"> Μέγεθος: '<%=item.product.size%>' </span></i>
             </div>
             <p class="product-description">
               <%=item.product.description%>
@@ -68,4 +69,4 @@
     <%}%>
   </div>
 </div>  
-<%- include("partials/footer")%>
+<%- include("../partials/footer")%>

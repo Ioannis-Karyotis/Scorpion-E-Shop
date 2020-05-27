@@ -1,4 +1,4 @@
-<%- include("partials/header")%>
+<%- include("./../partials/header")%>
 
 <!-- The Modal -->
 <div id="myModal" class="modal-chk">
@@ -138,6 +138,7 @@
 			        	</div>	
 		          		<div class="product-title">
 		            		<%=item.product.name%>
+		            		<i><span class="ml-5"> Μέγεθος: '<%=item.product.size%>' </span></i>
 		          		</div>
 		          		<div  style="float: right;" class="mx-3">
 			          		τελ.τιμή: <%=item.price%> €
@@ -207,4 +208,4 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript" src="/scripts/checkout.js"></script>
-<%- include("partials/footer")%>
+<%- include("./../partials/footer")%>

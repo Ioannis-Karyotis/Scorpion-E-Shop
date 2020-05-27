@@ -1,8 +1,8 @@
-var deleteProduct = function(id,type){
+var deleteProduct = function(name,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type +"/"+id+"/delete", {
+  		fetch("/products/"+ type +"/"+ name+ "/delete", {
           method: "DELETE"  
          })
         .then(function() {   
@@ -15,7 +15,7 @@ var hideProduct = function(id,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type +"/"+id+"/hide", {
+  		fetch("/products/"+ type  +"/"+ id +"/hide", {
           method: "post"  
          })
         .then(function() {   

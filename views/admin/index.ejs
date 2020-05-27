@@ -72,6 +72,7 @@
 						<div class="col-12 col-sm-6 col-md-4 col-lg-3  mb-2 d-flex justify-content-start">
 							<div>
 							<h5>Προϊόν: <%= productlist.product.name%></h5>
+							<h5>Μέγεθος: '<%=productlist.product.size%>' </h5>
 							<h5>Ποσότητα: <%= productlist.quantity%></h5>
 							<img src="<%=productlist.product.images[0].url %>" >
 							</div>
@@ -79,13 +80,18 @@
 					<%}) %>				
 				</div>
 				<% if(order.confirm==true && order.complete==true){%>
-				<img src="http://localhost:3000/images/check.png" style="width:2em; height: 2em; position:absolute; right:2px; top:45%;">
-			<%}%>
+				    <img src="http://localhost:3000/images/check.png" style="width:2em; height: 2em; position:absolute; right:8px; top:45%;">
+				<%}%>
+				<button class="btn btn-secondary order-btn mr-2" style="position:absolute; width:10em; height: 3em; right:0px; top:50%;" onclick="deleteOrder(<%= JSON.stringify(order) %>)">
+				       <i class="fas fa-trash-alt"></i> Διαγραφή  
+				</button>
 			</div>
 			
 		</div>
 
 		<div class="row">
+
+			
 			<div class="container mb-2 button-div d-flex justify-content-end">
 				<% if(order.confirm==true){%>
 					<button class="btn btn-success order-btn mr-2" disabled>

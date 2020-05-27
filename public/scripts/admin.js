@@ -55,3 +55,21 @@ var completeOrder = function(order){
 	    })
 	}
 }
+
+
+var deleteOrder = function(order){
+    var txt;
+  var r = confirm("Are you sure");
+  if (r == true) {
+      fetch("/admin/deleteOrder", {
+          method: "DELETE",
+          headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(order)
+      })
+      .then(function() {   
+        window.location.reload();
+    })
+  }
+}

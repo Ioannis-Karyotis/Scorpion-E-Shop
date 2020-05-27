@@ -24,9 +24,11 @@ const express 		= require("express"),
 const indexRoutes 	 = require("./routes/index"),
 	  userRoutes	 = require("./routes/user"),
 	  productRoutes  = require("./routes/products"),
-	  stripeRoutes 	 = require("./routes/stripe"),
+	  stripeRoutes 	 = require("./routes/checkout"),
 	  adminRoutes    = require("./routes/admin"),
 	  contactRoutes  = require("./routes/contact"),
+	  cartRoutes	 = require("./routes/cart"),
+	  customRoutes	 = require("./routes/custom"),	  
 	  config 		 = require("./configuration/passport");
 
 
@@ -51,7 +53,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-seedDB(); //seed the database with products
+//seedDB(); //seed the database with products
 
 
 
@@ -86,6 +88,8 @@ app.use(userRoutes);
 app.use(productRoutes);
 app.use(stripeRoutes);
 app.use(adminRoutes);
+app.use(cartRoutes);
+app.use(customRoutes);
 app.use(contactRoutes);
 
 module.exports = app;
