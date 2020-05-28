@@ -44,12 +44,18 @@ router.get("/products/:type", function(req, res, next){
       	if(err){
           	console.log(err)
       	}else{
+      		var products = [];
+      		foundProducts.forEach(function(match){
+      			if(match.size == "S"){
+      				products.push(match);
+      			}
+      		})
 	      	passport.authenticate('jwtAdmin', function(err, admin, info) {
 		    	if (err) { return next(err); }
 		    	if (!admin) {
-		    		return	res.render("products", {products : foundProducts , admin :null});
+		    		return	res.render("products", {products : products , allProducts: foundProducts, admin :null});
 		    	}
-		        return res.render("products", {products : foundProducts , admin : "admin" , type: req.params.type});
+		        return res.render("products", {products : products , allProducts: foundProducts , admin : "admin" , type: req.params.type});
 	    	})(req , res, next)
 	    }
 	});
@@ -70,6 +76,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			reviews: [],
         	rating: 0,
         	size : sizes[i],
+        	sizeStatus: "active",
         	reviewCount: 0,
         	status : "active"
 		});
@@ -93,18 +100,18 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 })
 
 router.get("/products/:type/:name", function(req ,res,next){
-	Product.find({name : req.params.name, size : "S" }).populate("reviews").exec(function(err, foundProduct){
+	Product.find({name : req.params.name }).populate("reviews").exec(function(err, foundProducts){
 		if(err){
 			console.log(err);
 		} else {
-		    if(foundProduct[0]!= null){
-			    var images = foundProduct[0].images;
+		    if(foundProducts[0]!= null){
+			    var images = foundProducts[0].images;
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProduct[0], images :images,admin:null});
+			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, images :images,admin:null});
 			    	}
-			        return res.render("products/show", {product: foundProduct[0], images :images ,admin:"admin"});
+			        return res.render("products/show", {product: foundProducts[0],products: foundProducts, images :images ,admin:"admin"});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");
@@ -118,7 +125,6 @@ router.delete("/products/:type/:name/delete" ,passport.authenticate('jwtAdmin', 
 	var orders = await Order.find({}).populate("productList.product").exec();
 	var count = 0;
 	orders.forEach(function(order){
-		console.log(order);
 		order.productList.forEach(function(productlist){
 			if(productlist.product.name == req.params.name && productlist.product.type == req.params.type){
 				count = count + 1;
@@ -169,6 +175,24 @@ router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { sess
 });
 
 
+router.post("/products/:type/:id/hideSize" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	Product.findById(req.params.id,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+			if(foundProduct.sizeStatus == "active"){
+				foundProduct.sizeStatus = "hidden";
+				foundProduct.save();
+			}else{
+				foundProduct.sizeStatus = "active";
+				foundProduct.save();
+			}
+			res.redirect('products/'+ req.params.type + '/' + foundProduct.name);
+		}
+	});
+});
+
+
 router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 
 	Product.findById(req.body.productId, function(err, foundProduct){
@@ -206,7 +230,6 @@ router.post("/products/:type/:id/review",sanitization.route, function(req,res){
 								foundProduct[0].reviewCount = foundProduct[0].reviewCount + 1;
 								foundProduct[0].rating = ((foundProduct[0].rating * (foundProduct[0].reviewCount - 1)) + 	(review.rating / 2)) / foundProduct[0].reviewCount;
 								foundProduct[0].save();
-								console.log("created a review  fdgfdgfd");
 								res.redirect('back');
 							}
 						}
@@ -227,7 +250,6 @@ router.post("/products/:type/:name/add", function(req, res){
 					var cart = new Cart(req.session.cart ? req.session.cart : {});
           var quantity = req.body.qty ? req.body.qty : 1;
           let qty = quantity < 10 ? quantity % 10 : quantity % 100;
-          console.log(qty);
 					cart.add(foundProduct[0], qty);
 					req.session.cart = cart;
 					req.session.productList = cart.productList();

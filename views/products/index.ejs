@@ -13,7 +13,6 @@
   <div  class="container">
   <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
 <% products.forEach(function(product){ %>
-    <% if(product.size=== "S") { %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
       <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
         <div class="card opac" style="border-radius:0px;">
@@ -112,11 +111,10 @@
                 <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
                   <div class="row mx-2 pb-4 d-flex align-items-center">
                     Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="ml-2 form-control">
-                      <option selected>S</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
-                      <option>XXL</option>
+                      <% allProducts.forEach(function(match){ %>
+                        <% if(match.name == product.name && match.sizeStatus!="hidden"){ %>
+                        <option> <%= match.size %></option>
+                      <% }}) %>
                     </select>
                   </div>   
                   <button class="btn btn-dark btn-lg" style="border-radius:0px" type="submit">
@@ -130,7 +128,6 @@
       </div>
     </div>
   </div>
-  <% } %>
 <% }) %>
     <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
     <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">

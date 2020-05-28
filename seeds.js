@@ -15,6 +15,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "S",
+        sizeStatus: "active",
         reviewCount: 0,
         status : "active"
     },
@@ -28,6 +29,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "M",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -41,6 +43,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "L",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -54,6 +57,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -67,6 +71,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XXL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -80,6 +85,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "S",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -93,6 +99,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "M",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -106,6 +113,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "L",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -119,6 +127,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -132,6 +141,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XXL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -145,6 +155,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "S",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -158,6 +169,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "M",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -171,6 +183,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "L",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -184,6 +197,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     },
@@ -197,6 +211,7 @@ var data = [
         reviews: [],
         rating: 0,
         size: "XXL",
+        sizeStatus : "active",
         reviewCount: 0,
         status : "active"
     }

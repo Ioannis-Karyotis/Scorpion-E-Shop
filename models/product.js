@@ -16,6 +16,7 @@ var ProductSchema = new mongoose.Schema({
    reviewCount: Number,
    status : String,
    size : String,
+   sizeStatus: String,
    color : String //custom t-shirts have color
 });
 

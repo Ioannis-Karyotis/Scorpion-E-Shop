@@ -56,7 +56,7 @@
               <hr class="thin">
               <div class="row">
                 <div class="col-12 mt-2 align-left">
-                  <h5><textarea name="description" class="form-control w-75" rows="10" cols="40"><%=product.description %></textarea></h5>
+                  <h5><textarea name="description" class="form-control w-75" rows="5" cols="40"><%=product.description %></textarea></h5>
                 </div>
               </div>
             </form>  
@@ -92,20 +92,20 @@
               </div>
             <%}%>
                 <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row py-4 d-flex justify-content-start">
+                  <div class="row py-4 d-flex justify-content-start"> 
                     <div class="col-6 col-lg-4 align-left">
                       Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class=" form-control">
-                        <option selected>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
-                        <option>XXL</option>
+                        <% products.forEach(function(match) { %>
+                            <% if(match.sizeStatus!="hidden"){ %>
+                              <option> <%=match.size%> </option>
+                            <%}%>  
+                        <%});%>
                       </select>
                     </div>
                     <div class="col-5 col-lg-4 align-left" >
                      Ποσότητα: <input type="number"  class="form-control" style="width:4em; display: inline-block;"  name="qty" value="1" min="1" max="99">
                     </div>
-                  </div>
+                  </div>      
                   <div class="row">
                     <div class="col-8">
                       <div class="pt-3 align-left">
@@ -123,6 +123,17 @@
                     <%}%>
                   </div>
                 </form>
+                <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%> 
+                    <div class="row mt-5 d-flex justify-content-around">
+                      <% products.forEach(function(match) { %>
+                          <% if(match.sizeStatus=="hidden"){ %>
+                            <label style="opacity: 0.8;"> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=match._id%>','<%=product.type%>')"> <i class="fas fa-eye"></i></button></label>
+                          <%} else if(match.sizeStatus=="active") { %>
+                            <label> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=match._id%>','<%=product.type%>')"> <i class="fas fa-eye-slash"></i></button> </label> 
+                          <% } %>  
+                      <%});%>
+                    </div>
+                  <%}%>
               </div>
         </div>
     </div>
@@ -239,5 +250,5 @@
 
     <%});%>
   </div>
-
+<script type="text/javascript" src="/scripts/products.js"></script>
 <%- include("./../partials/footer")%>

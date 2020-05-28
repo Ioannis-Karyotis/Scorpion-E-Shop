@@ -23,5 +23,18 @@ var hideProduct = function(id,type){
 	    })
 	}
 }
+
+var hideSize = function(id,type){
+    var txt;
+  var r = confirm("Are you sure");
+  if (r == true) {
+      fetch("/products/"+ type  +"/"+ id +"/hideSize", {
+          method: "post"  
+         })
+        .then(function() {   
+          window.location.reload();
+      })
+  }
+}
   
       // <form action="/products/<%= product.type %>/<%= product._id %>/delete?_method=DELETE" method="post">
