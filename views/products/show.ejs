@@ -157,7 +157,7 @@
   <%}%>
 
     <div class="py-4"style="background:#F5F5F5;">
-      <form id="review-form" action="/products/<%=product.type%>/<%=product.id%>/review" method="POST">
+      <form id="review-form" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
         <input type="hidden" name="productId" value="<%=product._id%>">
         <div class="form-row">

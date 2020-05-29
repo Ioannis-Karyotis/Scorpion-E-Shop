@@ -193,9 +193,9 @@ router.post("/products/:type/:id/hideSize" ,passport.authenticate('jwtAdmin', { 
 });
 
 
-router.post("/products/:type/:id/review",sanitization.route, function(req,res){
+router.post("/products/:type/:name/review",sanitization.route, function(req,res){
 
-	Product.findById(req.body.productId, function(err, foundProduct){
+	Product.find({name : req.params.name}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
