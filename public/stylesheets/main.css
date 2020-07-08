@@ -413,12 +413,12 @@ hr.thick{
 #page-container {
 
   position: relative;
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 #content-wrap {
   position: relative;
-  padding-bottom: 5rem;
+  padding-bottom: 13rem;
 }
 
 /*==============*/
@@ -587,7 +587,7 @@ hr.thick{
 #Xbutton{
   position: absolute;
   right: 4px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .cancelbtn i:hover{
@@ -597,13 +597,20 @@ hr.thick{
 
 
 .modal {
-    display: none;
-    position: fixed;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-    -webkit-perspective: 1300px;
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10 !important; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+  padding-bottom: 20px;
+  -webkit-perspective: 1300px;
   -moz-perspective: 1300px;
   perspective: 1300px;
 }
@@ -865,16 +872,43 @@ hr.thick{
 /*=============*/
 
 .page-footer{
+  z-index: 0;
   background-color: #2D2B30;
 	font-family: sans-serif;
   font-weight: 500;
   font-size: 0.7rem;
 	color: white;
-	position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  height: 13rem;
+  padding-top: 1rem;
+	position: absolute;
+  bottom: 0;
+  width: 100%;
 }
+
+@media screen and (max-width:768px){
+  
+  #content-wrap {
+    position: relative;
+    padding-bottom: 34rem;
+  }
+
+
+  .page-footer{
+    background-color: #2D2B30;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 0.7rem;
+    color: white;
+    height: 34rem;
+    padding-top: 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+}
+
+
 
 .page-footer a{
 

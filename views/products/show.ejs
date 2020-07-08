@@ -1,6 +1,11 @@
 <%- include("./../partials/header")%>
 
 <div id="main" class="main container main pb-2 mb-5">
+  <% if(genError && genError.length > 0){ %>
+    <div class=" alert-danger px-3 py-3 mx-auto" role="alert">
+        <%= genError %>
+    </div>
+  <%}%>
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -12,7 +17,7 @@
                     <% } else{ %>
                         ">
                     <% } %>
-                        <img class="d-block w-100" style="height:40em;" src="<%=images[key].url%>" alt="">
+                        <img class="d-block w-100 ml-1" style="height:40em;" src="<%=images[key].url%>" alt="">
                     </div>
                 <% }) %>
                 </div>
@@ -27,7 +32,7 @@
             </div>
         </div>
         <div id="desc" class="col-md-6 mx-auto mt-3">
-          <div class="container-fluid">
+          <div class="container">
           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
             <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
               <div class="row">
@@ -134,7 +139,9 @@
                       <%});%>
                     </div>
                   <%}%>
-              </div>
+           
+
+            </div>
         </div>
     </div>
     <hr class="pic thick mx-5 mt-5">
@@ -168,20 +175,20 @@
             </div>
             <div class="form-group col-md-6 px-4">
               <div class="row">
-                <label for="starRating" class="mx-auto">Βαθμολογία</label>
+                <label for="starRating" class="stars">Βαθμολογία</label>
               </div>
               <div class="row">
-                <fieldset class="rate mx-auto" id="starRating" >
-                  <input type="radio" id="rating10" name="rating" value="10" required /><label for="rating10" title="5 stars"></label>
-                  <input type="radio" id="rating9" name="rating" value="9" required/><label class="half" for="rating9" title="4 1/2 stars"></label>
-                  <input type="radio" id="rating8" name="rating" value="8" required/><label for="rating8" title="4 stars"></label>
-                  <input type="radio" id="rating7" name="rating" value="7" required/><label class="half" for="rating7" title="3 1/2 stars"></label>
-                  <input type="radio" id="rating6" name="rating" value="6" required/><label for="rating6" title="3 stars"></label>
-                  <input type="radio" id="rating5" name="rating" value="5" required/><label class="half" for="rating5" title="2 1/2 stars"></label>
-                  <input type="radio" id="rating4" name="rating" value="4" required/><label for="rating4" title="2 stars"></label>
-                  <input type="radio" id="rating3" name="rating" value="3" required/><label class="half" for="rating3" title="1 1/2 stars"></label>
-                  <input type="radio" id="rating2" name="rating" value="2" required/><label for="rating2" title="1 star"></label>
-                  <input type="radio" id="rating1" name="rating" value="1" required/><label class="half" for="rating1" title="1/2 star"></label>
+                <fieldset class="rate stars" id="starRating" >
+                  <input type="radio" id="rating10" name="rating" value="10"  /><label for="rating10" title="5 stars"></label>
+                  <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                  <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                  <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                  <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                  <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                  <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                  <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                  <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                  <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
                   <!-- <input type="radio" id="rating0" name="rating" value="0" /><label for="rating0" title="No star"></label> -->
                 </fieldset>
               </div>
@@ -193,16 +200,16 @@
               </div>
               <div class="row">
                 <fieldset class="rate ml-3" id="starRating" >
-                  <input type="radio" id="rating10" name="rating" value="10" required/><label for="rating10" title="5 stars"></label>
-                  <input type="radio" id="rating9" name="rating" value="9" required/><label class="half" for="rating9" title="4 1/2 stars"></label>
-                  <input type="radio" id="rating8" name="rating" value="8" required/><label for="rating8" title="4 stars"></label>
-                  <input type="radio" id="rating7" name="rating" value="7" required/><label class="half" for="rating7" title="3 1/2 stars"></label>
-                  <input type="radio" id="rating6" name="rating" value="6" required/><label for="rating6" title="3 stars"></label>
-                  <input type="radio" id="rating5" name="rating" value="5" required/><label class="half" for="rating5" title="2 1/2 stars"></label>
-                  <input type="radio" id="rating4" name="rating" value="4" required/><label for="rating4" title="2 stars"></label>
-                  <input type="radio" id="rating3" name="rating" value="3" required/><label class="half" for="rating3" title="1 1/2 stars"></label>
-                  <input type="radio" id="rating2" name="rating" value="2" required/><label for="rating2" title="1 star"></label>
-                  <input type="radio" id="rating1" name="rating" value="1" required/><label class="half" for="rating1" title="1/2 star"></label>
+                  <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
+                  <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                  <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                  <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                  <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                  <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                  <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                  <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                  <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                  <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
                   <!-- <input type="radio" id="rating0" name="rating" value="0" /><label for="rating0" title="No star"></label> -->
                 </fieldset>
               </div>
@@ -212,7 +219,7 @@
         <div class="form-row">
           <div class="form-group col-12 px-4">
             <label for="newReviewTextArea">Σχόλια</label>
-            <textarea class="form-control" name="description" id="newReviewTextArea" rows="2" required></textarea>
+            <textarea class="form-control" name="description" id="newReviewTextArea" rows="2"></textarea>
           </div>
         </div>
         <div class="form-row">

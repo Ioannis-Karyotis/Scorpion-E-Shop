@@ -29,12 +29,122 @@
   </div>
 </div>
 
+<div id="StripeModal" class="modal-chk">
+  <!-- Modal content -->
+  <div class="modal-content-chk chkout" style="border-radius: 5px;">
+  	<div class="container">
+  		<div class="row d-flex justify-content-end " style="margin-top: -10px; margin-right: -22px;">
+			<a onclick="document.getElementById('StripeModal').style.display='none'" class="cancelbtn">
+				<i class="fas fa-times fa-lg"></i>
+			</a>
+  		</div>
+  		<div class="row d-flex justify-content-center pb-3 desc">
+  			<h3>Παρακαλώ εισάγετε τα στοιχεία της κάρτας</h3>
+  		</div>
+	  	<div class="row d-flex justify-content-center ">
+	  		<form id="payment-form2" class="chkout">	
+	  			<div class="chk-group card-element">
+					<label>
+						<div id="card-element" class="chk-field"></div>
+					</label>
+				</div>
+				<div class="payment ">
+					<button id="submit" class="btn btn-primary" value="Πληρωμή">
+	            		<div id="spinner"></div>
+	            		<span id="button-text-pay">Πληρωμη</span><span id="order-amount"></span>
+	          		</button>
+	          	</div>
+	        </form>  					
+		</div>	
+	</div>
+  </div>
+</div>
+
 
 
 <div id="main" class="container main mb-5">
-    <div class="row  mx-auto pt-3 pb-3" >
-    <%if(session.productList && session.productList.length > 0){ %>	
-    	<div class="col-lg-6 mx-auto">
+    <div class="row pt-3 pb-3 mx-auto" >
+    <%if(session.productList && session.productList.length > 0){ %>
+    	<div class="col-lg-6 order-lg-2 mx-auto pb-5">
+		    <div class="shopping-cart container-fluid">
+			    <% session.productList.forEach(function(item){ %>
+			      	<div class="product product-micro">
+			        	<div class="product-image">
+			          		<img src="<%=item.product.images[0].url %>"style="width:4em; height:6em"></img>
+			        	</div>	
+		          		<div class="product-title">
+		            		<%=item.product.name%>
+		            		<i><span class="ml-5" style="float: right;"> Μέγεθος: '<%=item.product.size%>' </span></i>
+		          		</div>
+		          		<div class="row d-flex justify-content-start mt-2">
+		          			<div>
+				          		Τιμή: <%=item.product.price%> €
+				        	</div>
+				        	<span class="ml-4" style="opacity: 0.5;">|</span>  
+				        	<div class="ml-4">
+				          		Ποσότητα: <%=item.quantity%>
+				        	</div>
+		          		</div>
+		          		<div class="row d-flex justify-content-start mt-2">
+		          			<div>
+				          		Τελ.τιμή: <%=item.price%> €
+				        	</div>	
+		          		</div>
+		          				        		
+			      	</div>
+		     	<%});%>
+		     	<hr>
+		     	<div class="totals mt-4 mr-5">
+					<div class="totals-item">
+						<label>
+							Tax :
+						</label>
+						<div class="totals-value" id="cart-tax">
+							<%tax = (session.cart.totalPrice * 1.4 / 100)+ 0.25 %>
+							<%=tax.toFixed(2) %>
+						</div>
+					</div>
+					<div class="totals-item">
+						<label>
+							Shipping :
+						</label>
+						<div class="totals-value" id="cart-shipping">
+							<% shipping = 2;  %>
+							<%= shipping.toFixed(2) %>
+						</div>
+					</div>
+					<div class="totals-item totals-item-total">
+						<label>
+							Grand Total :
+						</label>
+						<div class="totals-value" id="cart-total">
+							<%=session.cart.totalPrice + tax + shipping%>
+						</div>
+					</div>
+				</div>
+				<div class="row"></div>
+				<hr>
+		     	<div class="container">
+
+			     	<div class="form-check">
+						<label class="form-check-label">
+							<input id="pay" type="radio" class="form-check-input" name="optradio" onclick="buttonSelect(1)" checked>Πληρωμή με κάρτα
+						</label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+							<input id="send" type="radio" class="form-check-input" onclick="buttonSelect(2)" name="optradio">Πληρωμή με αντικαταβολή
+						</label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+							<input id="sent" type="radio" class="form-check-input" onclick="buttonSelect(3)" name="optradio" >Παραλαβη απο το κατάστημα
+						</label>
+					</div>
+				</div>
+			</div>	
+        </div>	
+    	<div class="col-lg-6 order-lg-1 mx-auto d-flex justify-content-center pb-3">
 			<form id="payment-form" class="chkout">
 				<%if(user) {%>
 				<div class="chk-group">
@@ -95,111 +205,23 @@
 						<input id="state" name="state" class="chk-field" placeholder="Μακεδονία" value="<%= validated.state %>" />
 					</label>
 				</div>
-				<div class="chk-group card-element">
-					<label>
-						<span>Κάρτα</span>
-						<div id="card-element" class="chk-field"></div>
-					</label>
-				</div>				
+				
 				<% if(regError&& regError.length > 0){ %>
 				<div class="wrninput d-flex justify-content-center align-items-center" role="alert">
 					<span><%= regError %> </span>
 				</div>
 				<%}%>	
-				<div class="payment ">
-					<button id="submit" class="btn btn-primary" value="Πληρωμή">
+				<div class="payment">
+					<button id="submit" class="btn btn-primary">
 	            		<div id="spinner"></div>
-	            		<span id="button-text-pay">Πληρωμη</span><span id="order-amount"></span>
+	            		<span id="button-text-pay" class="">Πληρωμη</span><span id="order-amount"></span>
 	            		<span id="button-text-send" class="hidden" >Αποστολη</span><span id="order-amount"></span>
 	            		<span id="method" class="hidden" value="2"></span>
 	          		</button>
-	          	</div>
-	          	<!-- <div class="tosend hidden">
-		          	<button>
-		            	<span id="button-text">Αποστολή</span>
-		          	</button>
-				</div> -->
-						
+	          	</div>	
 			</form>
-				
-			<div class="sr-result hidden">
-	          <p>Payment completed<br /></p>
-	          <pre>
-	            <code></code>
-	          </pre>
-	        </div>
         </div>
-        <div class="col-lg-6 mx-auto">
-		    <div class="shopping-cart">
-			    <% session.productList.forEach(function(item){ %>
-			      	<div class="product product-micro">
-			        	<div class="product-image">
-			          		<img src="<%=	item.product.images[0].url %>"style="width:3em; height:4em"></img>
-			        	</div>	
-		          		<div class="product-title">
-		            		<%=item.product.name%>
-		            		<i><span class="ml-5"> Μέγεθος: '<%=item.product.size%>' </span></i>
-		          		</div>
-		          		<div  style="float: right;" class="mx-3">
-			          		τελ.τιμή: <%=item.price%> €
-			        	</div>
-			        	<div style="float: right;"  class="mx-3">
-			          		ποσότητα: <%=item.quantity%>
-			        	</div>
-			        	<div style="float: right;" class="mx-3">
-			          		τιμή: <%=item.product.price%> €
-			        	</div>  	
-			      	</div>
-		     	<%});%>
-		     				<hr>
-		     	<div class="totals mt-4 mr-5">
-					<div class="totals-item">
-						<label>
-							Tax :
-						</label>
-						<div class="totals-value" id="cart-tax">
-							<%tax = (session.cart.totalPrice * 1.4 / 100)+ 0.25 %>
-							<%=tax.toFixed(2) %>
-						</div>
-					</div>
-					<div class="totals-item">
-						<label>
-							Shipping :
-						</label>
-						<div class="totals-value" id="cart-shipping">
-							<% shipping = 2;  %>
-							<%= shipping.toFixed(2) %>
-						</div>
-					</div>
-					<div class="totals-item totals-item-total">
-						<label>
-							Grand Total :
-						</label>
-						<div class="totals-value" id="cart-total">
-							<%=session.cart.totalPrice + tax + shipping%>
-						</div>
-					</div>
-				</div>
-	     	</div>
-	     	<hr>
-	     	<div class="container">
-		     	<div class="form-check">
-					<label class="form-check-label">
-						<input id="pay" type="radio" class="form-check-input" name="optradio" onclick="buttonSelect(1)" checked>Πληρωμή με κάρτα
-					</label>
-				</div>
-				<div class="form-check">
-					<label class="form-check-label">
-						<input id="send" type="radio" class="form-check-input" onclick="buttonSelect(2)" name="optradio">Πληρωμή με αντικαταβολή
-					</label>
-				</div>
-				<div class="form-check">
-					<label class="form-check-label">
-						<input id="sent" type="radio" class="form-check-input" onclick="buttonSelect(3)" name="optradio" >Παραλαβη απο το κατάστημα
-					</label>
-				</div>
-			</div>	
-        </div>
+        
         <%}else{ %>
     			Το καλάθι σας είναι άδειο
   		<%}%>

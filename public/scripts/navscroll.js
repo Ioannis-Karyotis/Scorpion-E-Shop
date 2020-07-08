@@ -68,14 +68,21 @@ function offSetManager(){
  * bind to the document scroll detection
  */
 window.onscroll = function(e) {
-    offSetManager();
+    
+    if(window.innerWidth > 756 && window.pageYOffset != 0){
+        offSetManager();
+    }else{
+        myNavBar.remove();
+    }
+
+    
 }
 
 /**
  * We have to do a first detectation of offset because the page
  * could be load with scroll down set.
  */
-offSetManager();
+// offSetManager();
 
 
 

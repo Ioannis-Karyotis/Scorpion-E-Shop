@@ -38,8 +38,7 @@ const calculateDatabasePrice = async function(cart) {
 router.post("/post_order",sanitization.route,async function(req,res){
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
-
-  const lol = await  stripesk.paymentIntents.update(req.autosan.body.paymentIntent.id,{receipt_email: req.autosan.body.paymentIntent.receipt_email });
+  //const lol = await  stripesk.paymentIntents.update(req.autosan.body.paymentIntent.id,{receipt_email: req.autosan.body.paymentIntent.receipt_email });
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -99,7 +98,7 @@ router.post("/post_order_sent",sanitization.route,async function(req,res){
     method = "Αποστολή με αντικαταβολή"
   }
   console.log(req.autosan.body.payment_id);
-  lol = await stripesk.paymentIntents.cancel(req.autosan.body.payment_id);
+  //lol = await stripesk.paymentIntents.cancel(req.autosan.body.payment_id);
 
 
   var today = new Date();

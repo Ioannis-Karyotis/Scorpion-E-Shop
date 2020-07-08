@@ -1,7 +1,17 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css); */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 /*For when the user rates a product*/
+@media screen and (max-width:1280px){
+  
+  .stars{
+    float:left;
+    margin-left: 1em;
+  }
 
+}
+.stars{
+    margin-right:auto;
+  }
 /* Ratings widget */
 .rate {
     display: inline-block;

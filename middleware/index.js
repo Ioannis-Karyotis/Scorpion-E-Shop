@@ -188,6 +188,32 @@ middlewareObj.address = function (req , res ,  next){
     }     
 }
 
+middlewareObj.rating = function (req , res ,  next){
+
+  if (req.autosan.body.rating != null)
+    {
+      return next();
+    }else{
+      res.app.locals.specialContext = 
+      {
+          name : req.autosan.body.name,
+          description : req.autosan.body.surname,
+      }
+      req.flash("genError","Παρακαλώ εισάγετε μία έγκυρη βαθμολογία");
+      res.redirect("back");   
+    }
+
+}
+
+middlewareObj.session = function (req , res ,  next){
+
+  if (req.session.authenticated ) {
+        res.redirect("/");
+    } else {
+        next();
+    }
+}
+
 
 
 
