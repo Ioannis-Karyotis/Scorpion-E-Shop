@@ -33,29 +33,37 @@
   <!-- Modal content -->
   <div class="modal-content-chk chkout" style="border-radius: 5px;">
   	<div class="container">
-  		<div class="row d-flex justify-content-end " style="margin-top: -10px; margin-right: -22px;">
-			<a onclick="document.getElementById('StripeModal').style.display='none'" class="cancelbtn">
-				<i class="fas fa-times fa-lg"></i>
-			</a>
-  		</div>
-  		<div class="row d-flex justify-content-center pb-3 desc">
-  			<h3>Παρακαλώ εισάγετε τα στοιχεία της κάρτας</h3>
-  		</div>
-	  	<div class="row d-flex justify-content-center ">
-	  		<form id="payment-form2" class="chkout">	
-	  			<div class="chk-group card-element">
-					<label>
-						<div id="card-element" class="chk-field"></div>
-					</label>
+  		<div class="loading hidden">
+  			<div class="row d-flex justify-content-center">
+  				<div class="circle-loader">
+	  				<div class="checkmark draw"></div>
 				</div>
-				<div class="payment ">
-					<button id="submit" class="btn btn-primary" value="Πληρωμή">
-	            		<div id="spinner"></div>
-	            		<span id="button-text-pay">Πληρωμη</span><span id="order-amount"></span>
-	          		</button>
-	          	</div>
-	        </form>  					
-		</div>	
+  			</div>
+  		</div>
+  		<div class="content">
+	  		<div class="row d-flex justify-content-end" style="margin-top: -10px; margin-right: -22px;">
+				<a onclick="document.getElementById('StripeModal').style.display='none'" class="cancelbtn">
+					<i class="fas fa-times fa-lg"></i>
+				</a>
+	  		</div>
+	  		<div class="row d-flex justify-content-center pb-3 desc">
+	  			<h3>Παρακαλώ εισάγετε τα στοιχεία της κάρτας</h3>
+	  		</div>
+		  	<div class="row d-flex justify-content-center ">
+		  		<form id="payment-form2" class="chkout">	
+		  			<div class="chk-group card-element">
+						<label>
+							<div id="card-element" class="chk-field"></div>
+						</label>
+					</div>
+					<div class="payment ">
+						<button type="submit" id="finalPay" class="btn btn-primary">
+		            		<span id="button-text-pay">Πληρωμη</span>
+		          		</button>
+		          	</div>
+		        </form>  					
+			</div>
+		</div>		
 	</div>
   </div>
 </div>
@@ -213,10 +221,8 @@
 				<%}%>	
 				<div class="payment">
 					<button id="submit" class="btn btn-primary">
-	            		<div id="spinner"></div>
-	            		<span id="button-text-pay" class="">Πληρωμη</span><span id="order-amount"></span>
-	            		<span id="button-text-send" class="hidden" >Αποστολη</span><span id="order-amount"></span>
-	            		<span id="method" class="hidden" value="2"></span>
+	            		<span id="button-text-pay" class="">Υποβολη</span>
+	            		<span id="method" class="hidden" value="1"></span>
 	          		</button>
 	          	</div>	
 			</form>

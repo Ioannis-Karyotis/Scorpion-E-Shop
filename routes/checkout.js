@@ -87,6 +87,7 @@ router.post("/post_order",sanitization.route,async function(req,res){
   req.session.cart = null;
   req.session.productList = null
   req.app.locals.specialContext = null;
+  res.clearCookie('Payment_Intent');
   res.send({result : "succeeded"});
 })
 
@@ -149,6 +150,7 @@ router.post("/post_order_sent",sanitization.route,async function(req,res){
   req.session.cart = null;
   req.session.productList = null
   req.app.locals.specialContext = null;
+  res.clearCookie('Payment_Intent');
   res.send({result : "succeeded"});
 })
 
@@ -164,12 +166,28 @@ router.post("/create-payment-intent",sanitization.route, async (req, res) => {
   const { currency } = req.autosan.body;
   const cart = req.session.cart;
   const total =await calculateDatabasePrice(cart);
+  var paymentIntent = null;
   // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripesk.paymentIntents.create({
+  if(req.cookies["Payment_Intent"] === undefined || req.cookies["Payment_Intent"].amount != total ){
+
+    if(req.cookies["Payment_Intent"] && req.cookies["Payment_Intent"].amount != total){
+      await stripesk.paymentIntents.cancel(req.cookies["Payment_Intent"].id);
+    }
+
+    paymentIntent = await stripesk.paymentIntents.create({
     amount: total,
     currency: currency
-  });
-  console.log(paymentIntent.id);
+    });
+    console.log(paymentIntent.id);
+
+    res.cookie('Payment_Intent', paymentIntent , {
+        httpOnly: true
+    });
+  }else{
+    paymentIntent = req.cookies["Payment_Intent"];
+  }
+  console.log(req.cookies);
+
   // Send publishable key and PaymentIntent details to client
   res.send({
     publishableKey: PUBLIC_STRIPE,

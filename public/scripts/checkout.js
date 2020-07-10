@@ -7,8 +7,8 @@ var orderData = { //orderData are being used for creating the Payment Intent
 var buttonSelect = function(type){ //Change the input form shape regarding the pressed radio button
 
   if(type==2 || type==3){
-    document.getElementById("button-text-send").classList.remove("hidden");
-    document.getElementById("button-text-pay").classList.add("hidden");
+    // document.getElementById("button-text-send").classList.remove("hidden");
+    // document.getElementById("button-text-pay").classList.add("hidden");
     document.querySelector(".address").classList.remove("hidden");
     document.getElementById("method").value = "2";
     if(type==3){
@@ -17,10 +17,11 @@ var buttonSelect = function(type){ //Change the input form shape regarding the p
     }
 
   }else if(type==1){
-    document.getElementById("button-text-send").classList.add("hidden");
-    document.getElementById("button-text-pay").classList.remove("hidden");
+    // document.getElementById("button-text-send").classList.add("hidden");
+    // document.getElementById("button-text-pay").classList.remove("hidden");
     document.querySelector(".card-element").classList.remove("hidden");
     document.querySelector(".address").classList.remove("hidden");
+    document.getElementById("method").value = "1";  
   }
 
 }
@@ -39,8 +40,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
     line1: document.getElementById("line1").value,
     city: document.getElementById("city").value,
     zip: document.getElementById("postal_code").value,
-    state: document.getElementById("state").value
-    // method : document.getElementById("method").value
+    state: document.getElementById("state").value,
+    method : document.getElementById("method").value
   };
   
   fetch('/create-order', { // check parameters through middleware that exist in this create-order post route;
@@ -59,8 +60,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
     return response.json();       
   })
   .then(function(data){
-    if(document.getElementById("submit").value === "Αποστολή"){//make post dta to database without card payment
-      changeLoadingState(true);
+    if(document.getElementById("method").value == "2" || document.getElementById("method").value == "3"){//make post dta to database without card payment
+      
       var modal = document.getElementById("myModal");
       modal.style.display = "block";
 
@@ -78,6 +79,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
       }else{
         console.log("Got into stripe");
 
+        changeLoadingState(true);
         var modal2 = document.getElementById("StripeModal");
         modal2.style.display = "block";
 
@@ -97,10 +99,10 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             return setupElements(data); //Setup the the card element along with the order data that were sent to the server
           })
           .then(function({ stripe, card, clientSecret, id }) {
+            changeLoadingState(false);
             var form = document.getElementById("payment-form2");
-            form.addEventListener("submit", function(event) { 
-              event.preventDefault();
-              modal2.style.display = "none";
+            form.addEventListener("submit", function(event2) { 
+              event2.preventDefault();
               pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
           })
         })  
@@ -147,9 +149,9 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
 
 var pay =async function(stripe, card, clientSecret) {
   changeLoadingState(true);
-  var modal = document.getElementById("myModal");
-  modal.style.display = "block";
 
+  document.querySelector(".content").classList.add("hidden");
+  document.querySelector(".loading").classList.remove("hidden");
 
   stripe
     .confirmCardPayment(clientSecret, {
@@ -182,9 +184,16 @@ var pay =async function(stripe, card, clientSecret) {
     .then(function(result) {
       if (result.error) {
         changeLoadingState(false);
-        modal.style.display = "none";
+        document.querySelector(".loading").classList.add("hidden");
+        document.querySelector(".content").classList.remove("hidden");
       } else {
+
+        var modal2 = document.getElementById("StripeModal");
+        modal2.style.display = "none";
         
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
         // The payment has been processed!
         fetch("/post_order", {
           method: "POST",
@@ -238,13 +247,10 @@ var orderComplete = function(clientSecret) {
 // Show a spinner on payment submission
 var changeLoadingState = function(isLoading) {
   if (isLoading) {
-    document.querySelector("button").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector(".payment").classList.add("hidden");
+    document.getElementById("finalPay").disabled = true;
+  
   } else {
-    document.querySelector("button").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector(".payment").classList.remove("hidden");
+    document.getElementById("finalPay").disabled = false;
   }
 };
 

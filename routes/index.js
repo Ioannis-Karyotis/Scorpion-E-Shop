@@ -154,6 +154,7 @@ router.get('/auth/facebook/callback',
 	    	res.cookie('access_token', token, {
 	      		httpOnly: true
 	    	});
+	    	console.log(req.cookies);
 	    	res.redirect('/');
 	  	}
 );

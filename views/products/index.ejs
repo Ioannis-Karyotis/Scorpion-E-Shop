@@ -11,7 +11,7 @@
   <hr class="pic thick  mx-5">
     
   <div  class="container">
-  <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
+    <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
       <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
@@ -53,9 +53,33 @@
       <%}%>
        </div>
     </div>
+<% }) %>
 
 
 
+    <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
+    <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
+      <div class="card" style="margin-right:5em; height:20em;" style="border-radius:0px;">
+        <a href="http://localhost:3000/products/<%= type %>/add">
+          <img  src="http://localhost:3000/images/add.png">
+        </a>
+      </div>
+    </div>
+      <% } %>
+    </div>
+  </div>
+  <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
+        <div class="alert alert-danger mx-auto d-flex justify-content-center" role="alert">
+          ΠΡΟΣΟΧΗ!!! Δε μπορείς να διαγράψεις προϊόντα που βρίσκονται σε υπάρχουσα παραγγελία.
+        </div>
+      <%}%>
+</div>
+<!--   </div>
+</div> -->
+<script type="text/javascript" src="/scripts/products.js"></script>
+<%- include("./../partials/footer")%>
+
+<% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
   <div class="container-fluid">
     <div class="modal-content animate ">
@@ -129,24 +153,3 @@
     </div>
   </div>
 <% }) %>
-    <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
-    <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-      <div class="card" style="margin-right:5em; height:20em;" style="border-radius:0px;">
-        <a href="http://localhost:3000/products/<%= type %>/add">
-          <img  src="http://localhost:3000/images/add.png">
-        </a>
-      </div>
-    </div>
-      <% } %>
-    </div>
-  </div>
-  <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
-        <div class="alert alert-danger mx-auto d-flex justify-content-center" role="alert">
-          ΠΡΟΣΟΧΗ!!! Δε μπορείς να διαγράψεις προϊόντα που βρίσκονται σε υπάρχουσα παραγγελία.
-        </div>
-      <%}%>
-</div>
-<!--   </div>
-</div> -->
-<script type="text/javascript" src="/scripts/products.js"></script>
-<%- include("./../partials/footer")%>

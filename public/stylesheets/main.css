@@ -601,6 +601,7 @@ hr.thick{
   position: fixed; /* Stay in place */
   z-index: 10 !important; /* Sit on top */
   padding-top: 100px; /* Location of the box */
+  padding-bottom: 20px;
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -608,8 +609,6 @@ hr.thick{
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  padding-top: 60px;
-  padding-bottom: 20px;
   -webkit-perspective: 1300px;
   -moz-perspective: 1300px;
   perspective: 1300px;
@@ -621,7 +620,7 @@ hr.thick{
 
 .modal-content {
   border-radius: 0px;
-  overflow: hidden;
+  /*overflow: hidden;*/
   background-color: #fefefe;
   margin: auto;
   /* border: 2px solid #888; */
