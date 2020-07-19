@@ -53,7 +53,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-seedDB(); //seed the database with products
+//seedDB(); //seed the database with products
 
 
 
@@ -73,7 +73,15 @@ app.use(passport.session());
 
 
 app.use(function(req, res, next){
-
+	if(req.user == undefined){
+		if(req.cookies['access_token'])	{
+			res.clearCookie('access_token');
+		}
+		else if(req.cookies['admin_token']){
+			res.clearCookie('admin_token');
+		}
+	}
+	
 	res.locals.currentUser = req.user;
 	res.locals.session 	   = req.session; //so I can access session from all the views
 	res.locals.error       = req.flash("error");

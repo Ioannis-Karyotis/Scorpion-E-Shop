@@ -8,7 +8,17 @@ var Order		= require("../models/order");
 var passport 	= require("passport");
 const multer 	= require('multer');
 const path 		= require('path');
+const paginate 		= require('express-paginate');
 const sanitization	= require('express-autosanitizer');
+const productsNames = {
+	isothermika : 'Ισοθερμικά',
+	parallages : "Παραλλαγές / Φούτερ",
+	tiedye : "Tie Dye",
+	extra : "Έξτρα"
+}
+const sizes= ["S","M","L","XL","XXL"];
+
+
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -40,22 +50,43 @@ const imageFilter = function(req, file, cb) {
 
 router.get("/products/:type", function(req, res, next){
 	var wantedType = req.params.type;
-  	Product.find({ type : wantedType }, function(err , foundProducts ){
+	Product.find({ type : wantedType}, function(err , foundProducts ){
       	if(err){
           	console.log(err)
       	}else{
-      		var products = [];
-      		foundProducts.forEach(function(match){
-      			if(match.size == "S"){
-      				products.push(match);
-      			}
-      		})
-	      	passport.authenticate('jwtAdmin', function(err, admin, info) {
+	      	passport.authenticate('jwtAdmin',async function(err, admin, info) {
 		    	if (err) { return next(err); }
-		    	if (!admin) {
-		    		return	res.render("products", {products : products , allProducts: foundProducts, admin :null});
+
+		    	if(!admin){
+		    		foundProducts = await Product.find({ type : wantedType, status : 'active'}).exec();
 		    	}
-		        return res.render("products", {products : products , allProducts: foundProducts , admin : "admin" , type: req.params.type});
+
+		    	var products = [];
+	      		foundProducts.forEach(function(match){
+	      			if(match.size == "S"){
+	      				products.push(match);
+		      			}
+		      		})
+		      		var itemCount = products.length;
+		      		var showing = [];
+		      		var div = (itemCount / 6);
+		      		var pages = 0;
+		      		if(div != 1 && div > 1){
+		      			pages = parseInt(div) + 1;
+		      		}      		
+		      		console.log(pages);
+		      		for (i = (req.query.page * 6) ; i < (req.query.page * 6) + 6; i++) {
+		      			if(products[i] == undefined){
+		      				break;
+		      			}else{
+		      				showing.push(products[i]);	
+		      			}
+					}
+
+		    	if (!admin) {
+		    		return	res.render("products", {products : showing , allProducts: foundProducts, pages : pages, page : req.query.page, name : productsNames[wantedType], admin :null,type: req.params.type });
+		    	}
+		        return res.render("products", {products : showing , allProducts: foundProducts ,pages : pages, page : req.query.page, name : productsNames[wantedType], admin : "admin" , type: req.params.type});
 	    	})(req , res, next)
 	    }
 	});
@@ -66,7 +97,6 @@ router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: fa
 });
 
 router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storage, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
-	var sizes= ["S","M","L","XL","XXL"];
 	for (i = 0; i < sizes.length; i++) {
 		var newProduct = new Product({
 			name    : req.body.name,
@@ -96,22 +126,25 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
         });
 		newProduct.save();
 	}
-	res.redirect("/products/"+ req.params.type);
+	res.redirect("/products/"+ req.params.type+"?page=0");
 })
 
 router.get("/products/:type/:name", function(req ,res,next){
-	Product.find({name : req.params.name }).populate("reviews").exec(function(err, foundProducts){
+	Product.find({name : req.params.name }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
 			console.log(err);
 		} else {
 		    if(foundProducts[0]!= null){
+		    	var lastReviews = await Review.find().sort({'date': -1}).limit(3).exec();
+		    	var countReviews = await Review.count().exec();
+
 			    var images = foundProducts[0].images;
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, images :images,admin:null});
+			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images,admin:null});
 			    	}
-			        return res.render("products/show", {product: foundProducts[0],products: foundProducts, images :images ,admin:"admin"});
+			        return res.render("products/show", {product: foundProducts[0], products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin"});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");
@@ -211,16 +244,18 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 						var photo = "http://localhost:3000/images/blank.png"
 		    		}
 					var today = new Date();
+
 					var dd = String(today.getDate()).padStart(2, '0');
 					var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 					var yyyy = today.getFullYear();
-					today = dd + '-' + mm + '-' + yyyy;
+					var strToday = dd + '-' + mm + '-' + yyyy;
 
 					Review.create(
 						{
 							author: name + " " + surname,
 							description: req.autosan.body.description,
 							date: today,
+							showDate : strToday,
 							photo : photo,
 							rating: req.autosan.body.rating
 						}, function(err, review){

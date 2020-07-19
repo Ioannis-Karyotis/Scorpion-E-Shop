@@ -121,10 +121,10 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
     base: {
       iconColor: '#666EE8',
       color: '#313231',
-      lineHeight: '40px',
-      fontWeight: 300,
+      lineHeight: '60px',
+      fontWeight: 500,
       fontFamily: 'Helvetica Neue',
-      fontSize: '15px',
+      fontSize: '18px',
 
       '::placeholder': {
         color: '#CFD7E0',

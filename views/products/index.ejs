@@ -4,7 +4,7 @@
   <div class="row mx-auto my-2" style="text-align:center">
     <div class="mx-auto">
       <h1>
-      Προϊόντα
+      <%= name %>
       </h1>
     </div>
   </div>
@@ -14,14 +14,14 @@
     <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
-      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-        <div class="card opac" style="border-radius:0px;">
+      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
+        <div class="card opac mb-5" style="border-radius:0px;">
       <%}else if(product.status=="hidden" && !admin){%>
       <div class="px-0 col-0">
         <div class="card hidden" style="border-radius:0px;">
       <%}else{%>
-      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-        <div class="card" style="border-radius:0px;">
+      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-5 d-flex justify-content-center">
+        <div class="card mb-5" style="border-radius:0px;">
       <%} %>
         <img src="<%=product.images[0].url %>" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'" class="card-img-top" alt="" style="border-radius:0px;">
         <div class="card-footer py-0 px-0">
@@ -65,30 +65,41 @@
         </a>
       </div>
     </div>
-      <% } %>
+    <% } %>
     </div>
   </div>
   <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
-        <div class="alert alert-danger mx-auto d-flex justify-content-center" role="alert">
-          ΠΡΟΣΟΧΗ!!! Δε μπορείς να διαγράψεις προϊόντα που βρίσκονται σε υπάρχουσα παραγγελία.
-        </div>
-      <%}%>
+    <div class="alert alert-danger mx-auto d-flex justify-content-center" role="alert">
+      ΠΡΟΣΟΧΗ!!! Δε μπορείς να διαγράψεις προϊόντα που βρίσκονται σε υπάρχουσα παραγγελία.
+    </div>
+  <%}%>
+<div class="row container d-flex justify-content-end">
+  <% for (i = 0 ; i < pages ; i++) { %>
+    <% if( page == i) {%>
+        <a class="pbtn btn-primary mr-1" style="border-radius: 5px; color:white; background-color:#659e7a" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+    <%}else{%>
+        <a class="pbtn btn-primary mr-1" style="border-radius: 5px;" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+    <%}%>
+  <%}%>
 </div>
-<!--   </div>
-</div> -->
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript" src="/scripts/products.js"></script>
 <%- include("./../partials/footer")%>
 
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
   <div class="container-fluid">
-    <div class="modal-content animate ">
+    <div class="modal-content animate " >
       <div id="Xbutton">
           <a onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
               <i class="fas fa-times fa-lg"></i>
           </a>
         </div>
-        <div class="row">
+        <div id="inside_modal" class="row">
           <div class="col-md-7  pr-0 mr-0">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
@@ -153,3 +164,6 @@
     </div>
   </div>
 <% }) %>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript" src="/scripts/products.js"></script>

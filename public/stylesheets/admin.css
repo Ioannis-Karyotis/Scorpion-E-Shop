@@ -13,3 +13,9 @@
 .stripes{
 	border :10px solid #B9E1C2 ;
 }
+
+@media screen and (max-width:960px){
+ .order-btn{
+ 	font-size: 8px;
+	}
+}

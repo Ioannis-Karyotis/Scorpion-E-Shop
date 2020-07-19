@@ -205,9 +205,9 @@ middlewareObj.rating = function (req , res ,  next){
 
 }
 
-middlewareObj.session = function (req , res ,  next){
+middlewareObj.user = function (req , res ,  next){
 
-  if (req.session.authenticated ) {
+  if (req.user ) {
         res.redirect("/");
     } else {
         next();

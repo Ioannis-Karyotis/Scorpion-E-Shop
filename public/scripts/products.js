@@ -36,5 +36,9 @@ var hideSize = function(id,type){
       })
   }
 }
-  
-      // <form action="/products/<%= product.type %>/<%= product._id %>/delete?_method=DELETE" method="post">
+
+$( ".modal" ).click(function(e) {
+  if($(event.target).attr('class') == "container-fluid" || $(event.target).attr('class') == "modal"){
+    this.style.display= "none";
+  }
+});

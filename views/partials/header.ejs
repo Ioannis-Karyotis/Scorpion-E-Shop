@@ -46,7 +46,7 @@
 								</span>
 							</a>
 						</li>
-					<%} else if (currentUser[currentUser.methods].priviledge=="Admin"){%>	
+					<%} else if (currentUser && currentUser[currentUser.methods].priviledge=="Admin"){%>	
 						<li  class="nav-item go-left-first" >
 							<a class="nav-link" href="/admin">
 								<span>
@@ -61,7 +61,7 @@
 								</span>
 							</a>
 						</li>
-				    <% } else { %>
+				    <% } else if(currentUser) { %>
 						<li class="nav-item go-left-first">
 							<a class="nav-link d-flex align-items-start justify-content-around" href="/user/<%= currentUser._id%>">
 								<% if(!currentUser[currentUser.methods].profile) {%>
@@ -204,16 +204,16 @@
 				<div class="col-xs-12 collapse navbar-collapse " id="navbarSupportedContent">
 					<ul class="navbar-nav mb-n2 mx-auto my-auto ">
 						<li class="nav-item">
-				      		<a class="nav-link" href="/products/isothermika"><span class="nav-span">Ισοθερμικά</span></a>
+				      		<a class="nav-link" href="/products/isothermika?page=0"><span class="nav-span">Ισοθερμικά</span></a>
 				      	</li>
 				       	<li class="nav-item">
-				     		<a class="nav-link .nav-link-ltr" href="#"><span class="nav-span">Παραλλαγές/Φούτερ</span></a>
+				     		<a class="nav-link .nav-link-ltr" href="/products/parallages?page=0"><span class="nav-span">Παραλλαγές/Φούτερ</span></a>
 				      	</li>
 					    <li class="nav-item">
-					    	<a class="nav-link" href="#"><span class="nav-span">Tie Dye</span></a>
+					    	<a class="nav-link" href="/products/tiedye?page=0"><span class="nav-span">Tie Dye</span></a>
 				      	</li>
 				      	<li class="nav-item ">
-					     	<a class="nav-link" href="#"><span class="nav-span">Έξτρα</span></a>
+					     	<a class="nav-link" href="/products/extra?page=0"><span class="nav-span">Έξτρα</span></a>
 					    </li>
 					    <li class="nav-item ">
 					    	<a class="nav-link" href="/custom"><span class="nav-span">Στάμπες</span></a>

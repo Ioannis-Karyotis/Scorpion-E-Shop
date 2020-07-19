@@ -22,42 +22,43 @@
 						<div class="container-sm"  style="background-color: white;">
 						<div class="container-sm">
 							<div class="row pr-3 d-flex justify-content-end">	
-								<span style="font-size: 14px;">Ημερομηνία: <%=order.date %></span>
+								<span style="font-size: 14px;"><b>Ημερομηνία: </b><%=order.date %></span>
 							</div>	
 							<div class="row justify-content-start">
-								<h4 style="display: inline-block;">ID παραγγελίας: <b><%=order._id %></b></h4>
+								<h5 style="display: inline-block;"><b>ID παραγγελίας: </b><%=order._id %></h5>
 							</div>
 							<div class="row d-flex justify-content-end">
-							<span style="float:right;" >Μέθοδος: <%=order.method %></span>
+							<span style="float:right;" ><b>Μέθοδος: </b><%=order.method %></span>
 							</div>	
 						</div>	
 						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
 						<div class="row d-flex justify-content-around">
 							
 							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-								<h5>Όνομα: <%= order.details.name %></h5>
-								<h5>Επίθετο: <%= order.details.surname %></h5>	
-								<h5><b>E-mail: </b><%= order.details.email %></h5>
-								<h5>Τηλέφωνο : <%= order.details.phone %></h5>
+								<p><b>Όνομα: </b><%= order.details.name %></p>
+								<p><b>Επίθετο: </b><%= order.details.surname %></p>	
+								<p><b>E-mail: </b><%= order.details.email %></p>
+								<p><b>Τηλέφωνο : </b><%= order.details.phone %></p>
 							</div>
 							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-								<h5>Διεύθυνση: <%= order.details.address.line1%></h5>
-								<h5>Πόλη: <%= order.details.address.city%></h5>	
-								<h5>Ταχ. Κώδικας: <%= order.details.address.zip%></h5>
-								<h5>Νομός: <%= order.details.address.state%></h5>
+								<p><b>Διεύθυνση: </b><%= order.details.address.line1%></p>
+								<p><b>Πόλη: </b><%= order.details.address.city%></p>	
+								<p><b>Ταχ. Κώδικας: </b><%= order.details.address.zip%></p>
+								<p><b>Νομός: </b><%= order.details.address.state%></p>
 							</div>
 						</div>
 						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
-						<div class="row">
+						<div class="row mb-2 d-flex justify-content-start">
 							<%order.productList.forEach(function(productlist){%>
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4  mb-2 d-flex justify-content-center">
-									<div>
-									<h5>Προϊόν: <%= productlist.product.name%></h5>
-									<h5>Μέγεθος: '<%=productlist.product.size%>' </h5>
-									<h5>Ποσότητα: <%= productlist.quantity%></h5>
-									<img style="width:10em; height:14em;" src="<%=productlist.product.images[0].url %>" >
-									</div>
-								</div>	
+							<div class="col-12 col-sm-12 col-md-6 col-lg-4  mb-2 d-flex justify-content-center">
+								<div class="mr-2" style="border-left: 1px solid grey; height: 110px;"></div>	
+								<img class="mr-2" style="width:5em; height:7em;" src="<%=productlist.product.images[0].url %>" >
+								<div >
+									<p><b>Προϊόν: </b><%= productlist.product.name%></p>
+									<p><b>Μέγεθος: </b>'<%=productlist.product.size%>' </p>
+									<p><b>Ποσότητα: </b><%= productlist.quantity%></p>
+								</div>
+							</div>
 							<%}) %>				
 						</div>
 						</div>

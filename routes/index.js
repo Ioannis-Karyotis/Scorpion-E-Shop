@@ -47,7 +47,8 @@ router.get("/",  function(req, res){
 //======================
 // AUTHENTICATION ROUTES
 //======================
-router.get("/register",function(req,res){
+
+router.get("/register",middleware.user,function(req,res){
 	if(req.app.locals.specialContext!= null){
 		var validated = req.app.locals.specialContext;
 		req.app.locals.specialContext = null;
@@ -92,7 +93,7 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 //	LOGIN ROUTE
 //===============
 
-router.get("/login",function(req,res){
+router.get("/login",middleware.user ,function(req,res){
 	res.render("login");
 });
 
@@ -132,8 +133,14 @@ router.get("/logout",function(req,res){
 
 	req.logout();
 	req.flash("genSuccess","You Logged Out");
-	res.clearCookie('access_token');
-	res.clearCookie('admin_token');
+	req.user = undefined;
+	cookie = req.cookies;
+    for (var prop in cookie) {
+        if (!cookie.hasOwnProperty(prop)) {
+            continue;
+        }    
+        res.cookie(prop, '', {expires: new Date(0)});
+    }
 	res.redirect("/");
 
 })
@@ -152,6 +159,7 @@ router.get('/auth/facebook/callback',
 	  	function(req, res) {
 	  		const token = signToken(req.user);
 	    	res.cookie('access_token', token, {
+	    		// expires: new Date(Date.now() + 10),
 	      		httpOnly: true
 	    	});
 	    	console.log(req.cookies);

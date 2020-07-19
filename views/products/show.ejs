@@ -81,7 +81,7 @@
                       <div>★★★★★</div>
                     </div>
                   </div>
-                  <span style="font-size:1.4rem;">(<%=product.rating.toPrecision(2) %>)</span>
+                  <span style="font-size:1.4rem;">(<%=revCount %> Αξιολογήσεις)</span>
                 </div>
               </div>
               <div class="row">
@@ -229,16 +229,16 @@
         </div>
       </form>
     </div>  
-<%product.reviews.forEach(function(review){%>
+<%reviews.forEach(function(review){%>
   <div class="px-4 py-1 mx-3 mb-2 review-container">
     <div class="row px-4  py-1">
-      <img class="pic" src="<%= review.photo %>"  height="100" width="80"></img>  
+      <img class="pic mr-2" src="<%= review.photo %>"  height="80" width="80"></img>  
       <div class="pt-2 pl-2 mb-2">
         <div>
           <h4><%=review.author%></h4>
         </div>
         <div >
-          <%=review.date%>
+          <%=review.showDate%>
         </div>
       </div>
       <div class="star-ratings ml-1 mb-2">
@@ -257,5 +257,6 @@
 
     <%});%>
   </div>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript" src="/scripts/products.js"></script>
 <%- include("./../partials/footer")%>
