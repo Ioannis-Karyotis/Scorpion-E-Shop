@@ -60,7 +60,8 @@ router.get("/register",middleware.user,function(req,res){
 })
 
 
-router.post("/register",sanitization.route, middleware.namesur , middleware.email , middleware.password ,function(req,res){
+router.post("/register",sanitization.route, middleware.namesur ,  middleware.emailExists, middleware.email , middleware.password ,function(req,res){
+	
 	var newUser = new User({
 	methods: 'local',
 	local:{

@@ -80,26 +80,42 @@ passport.use("facebook" , new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
-        User.findOne({'facebook.id': profile.id}, function(err, user){
+        User.findOne({'facebook.id': profile.id},async function(err, user){
           if(err)
             return done(err);
           if(user)
             return done(null, user);
           else {
-            var newUser = new User();
-            newUser.facebook.id = profile.id;
-            newUser.facebook.name = profile.name.givenName;
-            newUser.facebook.surname= profile.name.familyName;
-            newUser.facebook.email = profile.emails[0].value;
-            newUser.facebook.profile = profile.photos[0].value;
-            newUser.methods = 'facebook';
-            newUser.save(function(err){
-              if(err)
-                throw err;
+            existingUser = await User.findOne({ "local.email": profile.emails[0].value });
+            if (existingUser) {
+              // We want to merge google's data with local auth
+              existingUser.methods = 'facebook';
+              existingUser.facebook = {
+                id: profile.id,
+                email: profile.emails[0].value,
+                name : profile.name.givenName,
+                surname : profile.name.familyName,
+                profile : profile.photos[0].value
+              }
+              await existingUser.save();
+              return done(null, existingUser);
+            }else{
+              var newUser = new User();
+              newUser.facebook.id = profile.id;
+              newUser.facebook.name = profile.name.givenName;
+              newUser.facebook.surname= profile.name.familyName;
+              newUser.facebook.email = profile.emails[0].value;
+              newUser.facebook.profile = profile.photos[0].value;
+              newUser.methods = 'facebook';
+              newUser.save(function(err){
+                if(err){
+                  throw err;
+                }
 
-              return done(null, newUser);
-            })
-          }
+                return done(null, newUser);
+              })
+            }
+          }  
         });
       });  
   }));
@@ -112,27 +128,44 @@ passport.use("google" , new GoogleStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
-        User.findOne({'google.id': profile.id}, function(err, user){
+        User.findOne({'google.id': profile.id}, async function(err, user){
           if(err)
             return done(err);
           if(user)
             return done(null, user);
           else {
+
             var fullname = profile.displayName.split(" ");
 
-            var newUser = new User();
-            newUser.google.id = profile.id;
-            newUser.google.name = fullname[0];
-            newUser.google.surname = fullname[1];
-            newUser.google.email = profile.emails[0].value;
-            newUser.methods = 'google';
-            newUser.google.profile = profile.photos[0].value;
-            newUser.save(function(err){
-              if(err)
-                throw err;
+            existingUser = await User.findOne({ "local.email": profile.emails[0].value });
+            if (existingUser) {
+              // We want to merge google's data with local auth
+              existingUser.methods = 'google';
+              existingUser.google = {
+                id: profile.id,
+                email: profile.emails[0].value,
+                name : fullname[0],
+                surname : fullname[1],
+                profile : profile.photos[0].value
+              }
+              await existingUser.save();
+              return done(null, existingUser);
+            }else{
+              var newUser = new User();
+              newUser.google.id = profile.id;
+              newUser.google.name = fullname[0];
+              newUser.google.surname = fullname[1];
+              newUser.google.email = profile.emails[0].value;
+              newUser.methods = 'google';
+              newUser.google.profile = profile.photos[0].value;
+              newUser.save(function(err){
+                if(err){
+                  throw err;
+                }
 
-              return done(null, newUser);
-            })
+                return done(null, newUser);
+              })
+            }
           }
         });
       });  
@@ -148,6 +181,7 @@ passport.use('local', new LocalStrategy({
     Admin.findOne({"local.email" : email}, function(err,admin){
       if(!admin || !admin.validatePassword(password)){
         User.findOne({ "local.email" : email }, function(err,user){
+          console.log(user);
           if(!user || !user.validatePassword(password)) {
             user={};
             return done(null, false);
