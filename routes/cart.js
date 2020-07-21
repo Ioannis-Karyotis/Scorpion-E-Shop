@@ -1,6 +1,7 @@
-var express 	= require("express");
-var router 		= express.Router();
-var Cart = require("../models/cart");
+const express 	= require("express"),
+      router 		= express.Router(),
+      Cart = require("../models/cart"),
+      middleware  = require("../middleware/index.js");
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -11,7 +12,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 //===============
 //CART ROUTE
 //===============
-router.get("/cart", express.json(), function(req, res){
+router.get("/cart",middleware.validateCart, express.json(), function(req, res){
   //console.log(JSON.stringify(req.body));
   res.render("cart");
 });

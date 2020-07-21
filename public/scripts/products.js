@@ -11,11 +11,11 @@ var deleteProduct = function(name,type){
 	}
 }
 
-var hideProduct = function(id,type){
+var hideProduct = function(name,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type  +"/"+ id +"/hide", {
+  		fetch("/products/"+ type  +"/"+ name +"/hide", {
           method: "post"  
          })
         .then(function() {   

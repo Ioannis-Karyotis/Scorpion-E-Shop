@@ -183,25 +183,30 @@ router.put("/products/:type/:name/edit" ,sanitization.route, passport.authentica
 		if(err){
 			res.redirect("back");
 		}else{
-			res.redirect("/products/"+ req.params.type );
+			res.redirect("/products/"+ req.params.type+"?page=0");
 		}
 	});
 });
 
 
 
-router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	Product.findById(req.params.id,function(err, foundProduct){
+router.post("/products/:type/:name/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	console.log(req.params.name);
+	console.log(req.params.type);
+	Product.find({type: req.params.type, name : req.params.name}, function(err, products){
 		if(err){
 			console.log(err);
 		} else {
-			if(foundProduct.status == "active"){
-				foundProduct.status = "hidden";
-				foundProduct.save();
-			}else{
-				foundProduct.status = "active";
-				foundProduct.save();
-			}
+			console.log(products);
+			products.forEach(function(foundProduct){
+				if(foundProduct.status == "active"){
+					foundProduct.status = "hidden";
+					foundProduct.save();
+				}else{
+					foundProduct.status = "active";
+					foundProduct.save();
+				}
+			})
 			res.redirect('products/'+ req.params.type)
 		}
 	});

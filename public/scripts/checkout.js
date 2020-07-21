@@ -51,8 +51,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
     },
     body: JSON.stringify(formData)
   })
-  .then(function(response) {
-    console.log("lol");
+  .then(function(response) {        
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
      throw new TypeError("Oops, we haven't got JSON!");//If the respnse is empty ,means not all middleware were passed .
@@ -96,6 +95,15 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             return result.json();
           })
           .then(function(data) {
+            
+            if(data.CartDoesNotMatchError || data.CartDoesNotMatchError == "error"){
+              modal2.style.display = "none";
+              var modal4 = document.getElementById("CartDoesNotMatchModal");
+              modal4.style.display = "block";
+              setTimeout(function () {    
+                  window.location.replace("http://localhost:3000/");
+              }, 3000);
+            }
             return setupElements(data); //Setup the the card element along with the order data that were sent to the server
           })
           .then(function({ stripe, card, clientSecret, id }) {

@@ -1,5 +1,7 @@
-const middlewareObj = {};
-const User          = require("../models/user");
+const middlewareObj = {},
+      User          = require("../models/user"),
+      Cart          = require("../models/cart"),
+      Product       = require("../models/product");
 
 // middlewareObj.checkCommentOwnership = function(req, res , next){
 // 	if(req.isAuthenticated()){
@@ -40,6 +42,7 @@ const User          = require("../models/user");
 // 		res.redirect("back");
 // 	}	
 // }
+
 middlewareObj.cart = function (req , res ,  next){
   cart = req.session.cart;
   console.log(cart);
@@ -241,6 +244,64 @@ middlewareObj.user = function (req , res ,  next){
     }
 }
 
+middlewareObj.validateCart = async function (req , res ,  next){
+
+  var cart = req.session.cart;
+  var products = cart.products;
+  var product_ids = await Object.keys(products);
+  console.log("product_ids"); 
+  console.log(product_ids);
+  var notExist = [];
+  for(i=0; i<product_ids.length; i++){
+    
+    var err,product = await Product.findById(product_ids[i]);
+    console.log("product" + i); 
+    console.log(product);
+    if(product == null || product.status == "hidden"){
+      notExist.push(product_ids[i]);
+    }
+  }
+  if(notExist.length == 0){
+    next();
+  }else{
+    notExist.forEach( function(id){
+      let vcart = new Cart(cart);
+      vcart.removeProduct(id);
+      req.session.cart = vcart;
+      req.session.productList = vcart.productList();
+    })
+    console.log("notExist"); 
+    console.log(notExist);
+    next();
+  }
+}
+
+middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
+
+  var products= req.session.cart.products;
+  var total = 0;
+  var product_ids = await Object.keys(products);
+  for(i=0; i<product_ids.length; i++){
+    var quantity = products[product_ids[i]].quantity;
+    var err,product = await Product.findById(product_ids[i]);
+    if(product == null){
+      total = total + 0;
+    }else{
+      var add = quantity * product.price;
+      total = total + add;
+    } 
+  }
+  if(total === req.session.cart.totalPrice){
+    next();
+  }else{
+    console.log("Total prices do not match with each other");
+    req.session.cart = null;
+    req.session.productList= null;
+    res.send({
+      CartDoesNotMatchError : "error"
+    });
+  }
+}
 
 
 

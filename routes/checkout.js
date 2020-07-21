@@ -2,6 +2,7 @@ const express 			= require("express"),
  	  router    		= express.Router(),
  	  Product 			= require("../models/product"),
     Order         = require("../models/order"),
+    Cart          = require("../models/cart"),
 	{ SECRET_STRIPE } 	= require('../configuration'),
 	{ PUBLIC_STRIPE }	= require('../configuration'),
 	{ WEBHOOK_SECRET}	= require('../configuration'),
@@ -15,27 +16,8 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
-const calculateDatabasePrice = async function(cart) {	
-	try {
-		var products= cart.products;
-		var total = 0
-		var product_ids = await Object.keys(products);
-		for(i=0; i<product_ids.length; i++){
-			var quantity = products[product_ids[i]].quantity;
-			var err,product = await Product.findById(product_ids[i]); 
-			var add = quantity * product.price;
-			total = total + add;
-		}
-		if(total === cart.totalPrice){
-			return total * 100;
-		}else{
-			console.log("Total prices do not match with each other");
-		}
-	}catch(err){
-		console.log(err);
-	}
-}			
-router.post("/post_order",sanitization.route,async function(req,res){
+
+router.post("/post_order",sanitization.route, async function(req,res){
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   //const lol = await  stripesk.paymentIntents.update(req.autosan.body.paymentIntent.id,{receipt_email: req.autosan.body.paymentIntent.receipt_email });
@@ -162,10 +144,9 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 })
 
 
-router.post("/create-payment-intent",sanitization.route, async (req, res) => {
+router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice, async (req, res) => {
   const { currency } = req.autosan.body;
-  const cart = req.session.cart;
-  const total =await calculateDatabasePrice(cart);
+  const total = req.session.cart.totalPrice * 100;
   var paymentIntent = null;
   // Create a PaymentIntent with the order amount and currency
   if(req.cookies["Payment_Intent"] === undefined || req.cookies["Payment_Intent"].amount != total ){
@@ -178,15 +159,13 @@ router.post("/create-payment-intent",sanitization.route, async (req, res) => {
     amount: total,
     currency: currency
     });
-    console.log(paymentIntent.id);
-
+    
     res.cookie('Payment_Intent', paymentIntent , {
         httpOnly: true
     });
   }else{
     paymentIntent = req.cookies["Payment_Intent"];
   }
-  console.log(req.cookies);
 
   // Send publishable key and PaymentIntent details to client
   res.send({
@@ -194,6 +173,7 @@ router.post("/create-payment-intent",sanitization.route, async (req, res) => {
     clientSecret: paymentIntent.client_secret,
     id : paymentIntent.id,
   });
+
 });
 
 // Expose a endpoint as a webhook handler for asynchronous events.
@@ -236,7 +216,7 @@ router.post("/webhook", async (req, res) => {
 });
 
 
-router.get('/checkout', function (req, res){
+router.get('/checkout', middleware.validateCart , function (req, res){
   if(req.app.locals.specialContext!= null){
     var validated = req.app.locals.specialContext;
     req.flash(validated.error.type,validated.error.message);
