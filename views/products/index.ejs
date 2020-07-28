@@ -4,36 +4,50 @@
   <div class="row mx-auto my-2" style="text-align:center">
     <div class="mx-auto">
       <h1>
+        <b>
+          <i>
       <%= name %>
+          </i>
+        </b>
       </h1>
     </div>
   </div>
-  <hr class="pic thick  mx-5">
+  <hr class="pic thick mx-5">
     
   <div  class="container">
-    <div class="row my-5 mx-5 d-flex justify-content-lg-start justify-content-around">
+    <div class="row products-row d-flex justify-content-lg-start justify-content-around align-items-start">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
-      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
+      <div class="col-12 col-sm-9 col-md-6 col-lg-4 mb-5  d-flex justify-content-center">
         <div class="card opac mb-5" style="border-radius:0px;">
       <%}else if(product.status=="hidden" && !admin){%>
-      <div class="px-0 col-0">
+      <div>
         <div class="card hidden" style="border-radius:0px;">
       <%}else{%>
-      <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-5 d-flex justify-content-center">
-        <div class="card mb-5" style="border-radius:0px;">
+      <div class="col-12 col-sm-9 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
+        <div class="card" style="border-radius:0px;">
       <%} %>
-        <img src="<%=product.images[0].url %>" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'" class="card-img-top" alt="" style="border-radius:0px;">
-        <div class="card-footer py-0 px-0">
-          <div class="row px-4 pt-2 d-flex justify-content-start">
-              <h4><%=product.name %></h4>
+        <div class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
+          <img src="<%=product.images[0].url %>" class="card-img-top" alt="" style="border-radius:0px;">
+          <div class="middle">
+            <div class="text">Προβολή</div>
           </div>
-          <div class="row px-4 pb-1 d-flex justify-content-end" style="margin-top: -0.5em" >
-              <h4 ><%=product.price %>€</h4>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-8 d-flex justify-content-start">
+              <p><%=product.name %></p>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+              <p><%=product.price %>€</p>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+              <a class="btn btn-dark btn-lg" style="border-radius:0px;" href="/products/<%=product.type %>/<%=product.name%>">
+                Λεπτομερειες
+              </a>
+            </div>
           </div>
-          <a class="btn btn-dark btn-lg btn-block" style="border-radius:0px; " href="/products/<%=product.type %>/<%=product.name%>">
-            Λεπτομερειες
-          </a>
+          
         </div>
       </div>
       <div>
@@ -59,7 +73,7 @@
 
     <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
     <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
-      <div class="card" style="margin-right:5em; height:20em;" style="border-radius:0px;">
+      <div class="card" style="height:20em; width:17em; margin-right:5em;">
         <a href="http://localhost:3000/products/<%= type %>/add">
           <img  src="http://localhost:3000/images/add.png">
         </a>
@@ -92,7 +106,6 @@
 
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
-  <div class="container-fluid">
     <div class="modal-content animate " >
       <div id="Xbutton">
           <a onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
@@ -100,7 +113,7 @@
           </a>
         </div>
         <div id="inside_modal" class="row">
-          <div class="col-md-7  pr-0 mr-0">
+          <div class="col-md-6 py-auto product-col">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 <% Object.keys(product.images).forEach(function(key) { %>
@@ -124,10 +137,9 @@
               </a>
             </div>
           </div>
-          <div class="col-md-5 pl-0 ml-0">
-            <div class="container px-0 ">
+          <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-5 pb-sm-5 py-auto mx-auto modal-desc">
               <div class="row">
-                <div class="col-12 pt-2 mt-4 align-center"> <!--name -->
+                <div class="col-12 align-center"> <!--name -->
                   <h4><%=product.name %></h4>
                 </div>
               </div>
@@ -145,21 +157,27 @@
               <div class="px-2 mt-3 mb-2 align-center d-flex justify-content-center">
                 <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
                   <div class="row mx-2 pb-4 d-flex align-items-center">
-                    Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="ml-2 form-control">
-                      <% allProducts.forEach(function(match){ %>
-                        <% if(match.name == product.name && match.sizeStatus!="hidden"){ %>
-                        <option> <%= match.size %></option>
-                      <% }}) %>
-                    </select>
-                  </div>   
-                  <button class="btn btn-dark btn-lg" style="border-radius:0px" type="submit">
-                    Προσθηκη στο καλαθι
-                  </button>
+                    <div class="col-12 align-center">
+                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="ml-2 form-control">
+                        <% allProducts.forEach(function(match){ %>
+                          <% if(match.name == product.name && match.sizeStatus!="hidden"){ %>
+                          <option> <%= match.size %></option>
+                        <% }}) %>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                      <button class="btn btn-dark btn-lg" style="border-radius:0px" type="submit">
+                        Προσθηκη στο καλαθι
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
-            </div>
+            
           </div>
-        </div>
+      
       </div>
     </div>
   </div>

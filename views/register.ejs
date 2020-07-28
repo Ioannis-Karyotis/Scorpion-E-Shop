@@ -1,61 +1,71 @@
 <%- include("partials/header")%>
 
 <div id="main" class="main container mb-5">
-    <div class="row d-flex justify-content-around ">
-	    <form action="/register" class="col-lg-6" method="post">
-	        <div class="desc py-5">
-				<h1 class="pb-5">Φόρμα Εγγραφής</h1>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= validated.name %>" required>
-	                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= validated.surname %>" required>
-	                	<i class="fas fa-info-circle fa-lg mr-3">
-	                		<div class="tooltiptext">Σε αυτά τα πεδία εισάγετε το Ονοματεπώνυμό σας</div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">	
-	                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= validated.email %>" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	            	<span class="d-flex align-items-center">
-	                	<input type="password" name="password" class="form-control  mr-3" placeholder="Κωδικός" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">	
-	                	<input type="password" name="password2" class="form-control mr-3" placeholder="Επιβεβαίωση κωδικού" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	                <button class="btn btn-primary mr-5" type="submit">Εγγραφη</button>
-	            </div>
-	            <% if(regError&& regError.length > 0){ %>
-					<div class="alert alert-danger mr-3" role="alert">
-						<%= regError %>
-					</div>
-				<%}%>
+    <div class="row">
+    	<div class="col-12 d-flex justify-content-around py-5">
+		    <form action="/register" class="col-lg-6" method="post">
+		        <div class="desc">
+					<h1 class="pb-5">Φόρμα Εγγραφής</h1>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= validated.name %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το Όνομά σας</div>
+		                	</i>
+		                </span>
+		            </div>    
+		           <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= validated.surname %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό τα πεδίο εισάγετε το Επώνυμό σας</div>
+		                	</i>
+		                </span>		
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">	
+		                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= validated.email %>" required>
+		                	<i class="fas fa-info-circle fa-lg ">
+		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		            	<span class="d-flex align-items-center">
+		                	<input type="password" name="password" class="form-control  mr-3" placeholder="Κωδικός" required>
+		                	<i class="fas fa-info-circle fa-lg ">
+		                		<div class="tooltiptext">Ο κωδικός πρέπει να έχει το λιγότερο 8 χαρακτήρες, με τουλάχιστον ένα κεφαλαίο, έναν ειδικό " !@#$%^&*)(+=._-  " και έναν αριθμό </div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">	
+		                	<input type="password" name="password2" class="form-control mr-3" placeholder="Επιβεβαίωση κωδικού" required>
+		                	<i class="fas fa-info-circle fa-lg ">
+		                		<div class="tooltiptext">Το πεδίο αυτό, πρέπει να ταυτίζεται με το προηγούμενο</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group desc">
 
-	            <hr class="thick mr-3">
-	            <div class='desc mr-5'>
-                    <h5>Κάνε εγγραφή μέσω</h5>
-                    <a href="/auth/facebook" class="btn btn-primary facebook"><span><i class="fab fa-facebook-f fa-lg pr-2"></i></span>  Facebook</a>
-                    <span  class="px-2">ή</span>
-                    <a href="/auth/google" class="btn btn-danger google"><span><i class="fab fa-google fa-lg pr-2"></i></span> Google</a>
-                </div>  
-	        </div>
-		</form>
+		                <button class="btn btn-primary" type="submit">Εγγραφη</button>
+		            </div>
+		            <% if(regError&& regError.length > 0){ %>
+						<div class="alert alert-danger mr-3" role="alert">
+							<%= regError %>
+						</div>
+					<%}%>
+
+		            <hr class="thick mr-3">
+		            <div class='desc '>
+	                    <h5>Κάνε εγγραφή μέσω</h5>
+	                    <a href="/auth/facebook" class="btn btn-primary facebook"><span><i class="fab fa-facebook-f fa-lg pr-2"></i></span>  Facebook</a>
+	                    <span  class="px-2 or">ή</span>
+	                    <a href="/auth/google" class="btn btn-danger google"><span><i class="fab fa-google fa-lg pr-2"></i></span> Google</a>
+	                </div>  
+		        </div>
+			</form>
+		</div>	
 	</div>
 </div>
 

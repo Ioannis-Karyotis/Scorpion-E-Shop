@@ -28,7 +28,8 @@ const indexRoutes 	 = require("./routes/index"),
 	  adminRoutes    = require("./routes/admin"),
 	  contactRoutes  = require("./routes/contact"),
 	  cartRoutes	 = require("./routes/cart"),
-	  customRoutes	 = require("./routes/custom"),	  
+	  customRoutes	 = require("./routes/custom"),
+	  fpassRoutes 	 = require("./routes/fpass"),	  
 	  config 		 = require("./configuration/passport");
 
 
@@ -53,7 +54,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-seedDB(); //seed the database with products
+//seedDB(); //seed the database with products
 
 
 
@@ -91,6 +92,7 @@ app.use(function(req, res, next){
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
+
 app.use(indexRoutes);
 app.use(userRoutes);
 app.use(productRoutes);
@@ -99,5 +101,6 @@ app.use(adminRoutes);
 app.use(cartRoutes);
 app.use(customRoutes);
 app.use(contactRoutes);
+app.use(fpassRoutes);
 
 module.exports = app;

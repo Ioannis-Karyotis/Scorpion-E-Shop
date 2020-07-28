@@ -99,7 +99,7 @@
 									<div class="dropdown-menu dropdown-menu-right cart-fonts">
 								    <%if(session.productList && session.productList.length > 0){ %>
 											<div class="align-center pb-2" >
-												<div id="quick_total_qty" class="col-12 total-quantity-info" >
+												<div id="quick_total_qty" class="col-12 total-quantity-info px-1" >
 													Το καλάθι σας έχει <%=session.cart.totalQuantity%>
 													<%if(session.cart.totalQuantity > 1){ %>
 														προϊόντα
@@ -119,9 +119,9 @@
 															</div>
 														 </div>
 														 <div class="col-8">
-															<div class="row mx-auto mb-2">
-																<div class="col-10" ><!--name -->
-																	<%= item.product.name %>
+															<div class="row mb-2 d-flex justify-content-start">
+																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
+																	<label style="white-space: initial; word-wrap: break-word"><%= item.product.name %></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
@@ -131,7 +131,7 @@
 																	</p>
 																</div>
 															 </div>
-															 <div class="row mx-auto my-auto">
+															 <div class="row">
 																<div class="col-4"><!--price -->
 																	<%= item.product.price %>€
 																</div>
@@ -163,8 +163,8 @@
 												 </a>
 										 </div>
 										<%}else{ %>
-												<div class="align-center total-quantity-info">
-													<p>Δεν υπάρχουν προϊόντα στο καλάθι σας!</p>
+												<div class="align-center total-quantity-info px-1">
+													<p class="desc">Δεν υπάρχουν προϊόντα στο καλάθι σας!</p>
 												</div>
 										<%}%>
 							  	</div>
@@ -182,15 +182,15 @@
 				<div id="smth" class="my-auto mx-auto px-auto">
 					<% if(!currentUser){ %>
 	      				<a id="logo-bck" class="mt-n2 mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="http://localhost:3000/images/logo4.png" style="width: :350px; height:79px; ">
+							<img src="http://localhost:3000/images/logo4.png" >
 						</a>
 					<%} else if (currentUser[currentUser.methods].priviledge=="Admin"){%>	
 						<a id="logo-bck" class="mt-n2 pt-2 mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="http://localhost:3000/images/logo4.png" style="width: :350px; height:79px; ">
+							<img src="http://localhost:3000/images/logo4.png" >
 						</a>	
 	      			<% } else { %>
 						<a id="logo-bck" class="mt-n2-icon mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="http://localhost:3000/images/logo4.png" style="width: :350px; height:79px; ">
+							<img src="http://localhost:3000/images/logo4.png">
 						</a>
 	      			<%}%>
 				</div>

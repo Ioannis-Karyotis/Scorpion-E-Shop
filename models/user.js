@@ -21,7 +21,9 @@ var UserSchema = new mongoose.Schema({
 		},
 		profile:String,
 		hash: String,
-		salt: String
+		salt: String,
+		forgotPassHash: String,
+		forgotPassSalt: String
 	},
 	google: {
 	    id: {

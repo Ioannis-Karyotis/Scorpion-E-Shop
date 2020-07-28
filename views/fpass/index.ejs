@@ -1,0 +1,41 @@
+<%- include("../partials/header")%>
+
+<div id="main" class="main container mb-5">
+    <div class="row">
+        <div class="col-12  d-flex justify-content-center py-5">          
+            <form action="/fpass" class="col-lg-6" method="post">
+                <div class="desc">
+                    <h1 class='pb-3'>Παρακαλώ εισάγετε το e-mail σας</h1>
+
+                    <div class="form-group mx-1">
+                        <span class="d-flex align-items-center">    
+                            <input type="email" name="email" class="form-control mr-3" placeholder="E-mail" required>
+                            <i class="fas fa-info-circle fa-lg ">
+                                <div class="tooltiptext">Εισάγετε το ήδη υπάρχον E-mail σας</div>
+                            </i>
+                        </span> 
+                    </div>
+                    <div class="form-group mx-1">
+                        <span class="d-flex align-items-center">    
+                            <input type="email" name="email2" class="form-control mr-3" placeholder="Επιβεβαίωση E-mail" required>
+                            <i class="fas fa-info-circle fa-lg ">
+                                <div class="tooltiptext">Επιβεβαίωση E-mail</div>
+                            </i>
+                        </span> 
+                    </div>                    
+                    <div class="form-group">
+                        <button class="btn btn-primary mr-3" type="submit">Αποστολή</button>
+                    </div>
+                </div>
+                <% if(regError&& regError.length > 0){ %>
+                    <div class="alert alert-danger mr-3 d-flex justify-content-center" role="alert">
+                        <%= regError %>
+                    </div>
+                <%}%>           
+            </form>
+        </div>
+    </div>            
+</div>
+
+<%- include("../partials/footer")%>
+

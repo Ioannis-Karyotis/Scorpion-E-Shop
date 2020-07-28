@@ -1,73 +1,89 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="container main mb-5">
-    <div class="row d-flex justify-content-around ">
-		<form id="contact-form" action="/contact" method="POST">
-			<div class="desc py-5">
-				<h1 class="pb-5 mr-2">Φόρμα Επικοινωνίας</h1>
-				<%if(user) {%>
-				<div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= user[method].name %>" required>
-	                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= user[method].surname %>" required>
-	                	<i class="fas fa-info-circle fa-lg mr-2">
-	                		<div class="tooltiptext">Σε αυτά τα πεδία εισάγετε το Ονοματεπώνυμό σας</div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">	
-	                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= user[method].email %>" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-	                	</i>
-	                </span>	
-	            </div>
-				<% }else{ %>
-				<div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= validated.name %>" required>
-	                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= validated.surname %>" required>
-	                	<i class="fas fa-info-circle fa-lg mr-2">
-	                		<div class="tooltiptext">Σε αυτά τα πεδία εισάγετε το Ονοματεπώνυμό σας</div>
-	                	</i>
-	                </span>	
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">	
-	                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= validated.email %>" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
-	                	</i>
-	                </span>	
-	            </div>
-				<% } %>
-				<div class="form-group pl-2">
-	                <span class="d-flex align-items-center">	
-						<textarea name="description" rows="4" class="form-control mr-5" cols="50" placeholder="Το κείμενό σας"></textarea>
-					</span>
-				</div>
-				<div class="form-group">
-	                <button class="btn btn-primary mr-3" style="width:15em;" type="submit">Αποστολη</button>
-	            </div>
-	            <% if(regError&& regError.length > 0){ %>
-					<div class="alert alert-danger mr-3" role="alert">
-						<%= regError %>
+<div id="main" class="main container mb-5">
+    <div class="row">
+    	<div class="col-12 d-flex justify-content-around py-5">
+			<form id="contact-form" class="col-lg-6" action="/contact" method="POST">
+				<div class="desc">
+					<h1 class="pb-5">Φόρμα Επικοινωνίας</h1>
+					<%if(user) {%>
+					<div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= user[method].name %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το Όνομά σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= user[method].surname %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό τα πεδίο εισάγετε το Επώνυμό σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">	
+		                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= user[method].email %>" required>
+		                	<i class="fas fa-info-circle fa-lg ">
+		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+		                	</i>
+		                </span>	
+		            </div>
+					<% }else{ %>
+					<div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="name" class="form-control mr-3" placeholder="Όνομα" value="<%= validated.name %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το Όνομά σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">
+		                	<input type="text" name="surname" class="form-control mr-3" placeholder="Επίθετο"  value="<%= validated.surname %>" required>
+		                	<i class="fas fa-info-circle fa-lg">
+		                		<div class="tooltiptext">Σε αυτό τα πεδίο εισάγετε το Επώνυμό σας</div>
+		                	</i>
+		                </span>	
+		            </div>
+		            <div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">	
+		                	<input type="text" name="email" class="form-control  mr-3" placeholder="E-mail" value="<%= validated.email %>" required>
+		                	<i class="fas fa-info-circle fa-lg ">
+		                		<div class="tooltiptext">Το πεδίο αυτό πρέπει να έχει τη μορφή " example@gmail.com "</div>
+		                	</i>
+		                </span>	
+		            </div>
+					<% } %>
+					<div class="form-group pr-3 mx-1">
+		                <span class="d-flex align-items-center">	
+							<textarea name="description" rows="4" class="form-control mr-2" cols="60" placeholder="Το κείμενό σας"></textarea>
+						</span>
 					</div>
-				<%}%>
-				<% if(genSuccess&& genSuccess.length > 0){ %>
-					<div class="alert alert-success mr-3" role="alert">
-						<%= genSuccess %>
-					</div>
-				<%}%>
-				<hr class="thick mr-3">
-		        <div class='desc mr-3'>
-		            <h5 class="pb-2">Αλλιώς βρείτε μας στα:</h5>
-		            <h5><i class="fas fa-phone mr-3"></i>2310-281-363</p></h5>
-		            <h5><i class="fas fa-envelope mr-3"></i>scorpion.storethess@gmail.com</h5>
-		        </div>
-			</div>  
-		</form>
+					<div class="form-group">
+		                <button class="btn btn-primary mr-3" style="width:15em;" type="submit">Αποστολη</button>
+		            </div>
+		            <% if(regError&& regError.length > 0){ %>
+						<div class="alert alert-danger mr-3" role="alert">
+							<%= regError %>
+						</div>
+					<%}%>
+					<% if(genSuccess&& genSuccess.length > 0){ %>
+						<div class="alert alert-success mr-3" role="alert">
+							<%= genSuccess %>
+						</div>
+					<%}%>
+					<hr class="thick mr-3">
+			        <div class='desc mr-3'>
+			            <h5 class="pb-2">Αλλιώς βρείτε μας στα:</h5>
+			            <h5 class="info"><i class="fas fa-phone mr-3"></i>2310-281-363</p></h5>
+			            <h5 class="info"><i class="fas fa-envelope mr-3"></i>scorpion.storethess@gmail.com</h5>
+			        </div>
+				</div>  
+			</form>
+		</div>	
 	</div>	
 </div>				
 

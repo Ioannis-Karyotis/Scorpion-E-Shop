@@ -145,6 +145,9 @@ router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storag
 	});
 });
 
+router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { session: false }), function(req, res){
+		
+});
 
 
 module.exports = router;

@@ -9,12 +9,26 @@ const mongoose = require('mongoose'),
       Admin    = require("../models/admin"),
       config = require('./index');
 
-
+const cookieExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['access_token'];
+  }
+  return token;
+}
       
 const cookieAdminExtractor = function(req) {
   let token = null;
   if (req && req.cookies) {
     token = req.cookies['admin_token'];
+  }
+  return token;
+}
+
+const cookieForgotPExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['Change_Pass'];
   }
   return token;
 }
@@ -41,14 +55,6 @@ passport.use('jwtAdmin', new JwtStrategy({
   });
 }));    
       
-      
-const cookieExtractor = function(req) {
-  let token = null;
-  if (req && req.cookies) {
-    token = req.cookies['access_token'];
-  }
-  return token;
-}
 
 // JSON WEB TOKENS STRATEGY
 passport.use('jwt', new JwtStrategy({
@@ -70,7 +76,28 @@ passport.use('jwt', new JwtStrategy({
         done(null, user);
     });  
   });
-}));    
+}));
+
+// JSON WEB TOKENS STRATEGY
+passport.use('forgot_pass', new JwtStrategy({
+  jwtFromRequest: cookieForgotPExtractor,
+  secretOrKey: config.JWT_SECRET,
+  passReqToCallback: true
+}, function(req, payload, done){
+    process.nextTick(function(){
+      const user = User.findOne({"local.email": payload.sub }, function(err,user){
+        if(err){
+          done(error, false);
+        }
+      
+        if (!user) {
+          console.log("user doens't exist");
+          return done(null, false);
+        }
+        done(null, user);
+    });  
+  });
+}));        
 
 passport.use("facebook" , new FacebookStrategy({
       clientID: config.oauth.facebook.clientID,

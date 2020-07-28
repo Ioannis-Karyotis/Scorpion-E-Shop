@@ -7,7 +7,7 @@
     </div>
   <%}%>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                 <% Object.keys(images).forEach(function(key) { %>
@@ -17,7 +17,7 @@
                     <% } else{ %>
                         ">
                     <% } %>
-                        <img class="d-block w-100 ml-1" style="height:40em;" src="<%=images[key].url%>" alt="">
+                        <img class="d-block w-100 h-75 ml-1" src="<%=images[key].url%>" alt="">
                     </div>
                 <% }) %>
                 </div>
@@ -31,7 +31,7 @@
                 </a>
             </div>
         </div>
-        <div id="desc" class="col-md-6 mx-auto mt-3">
+        <div id="desc" class="col-md-7 mx-auto mt-3">
           <div class="container">
           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
             <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
@@ -64,15 +64,20 @@
                   <h5><textarea name="description" class="form-control w-75" rows="5" cols="40"><%=product.description %></textarea></h5>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-12 mt-2 align-left">
+                  <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγη</button>
+                </div>
+              </div>
             </form>  
           <%}else{%>
               <div class="row">
-                <div class="col-12 pt-3 align-left">
-                  <h2><%=product.name%></h2>
+                <div class="col-12 pt-3 d-flex justify-content-md-start justify-content-center ">
+                  <h4><%=product.name%></h4>
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 mt-1 align-left">
+                <div class="col-12 mt-1 d-flex justify-content-md-start  justify-content-center">
                   <div class="star-ratings">
                     <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
                       <div>★★★★★</div>
@@ -81,25 +86,25 @@
                       <div>★★★★★</div>
                     </div>
                   </div>
-                  <span style="font-size:1.4rem;">(<%=revCount %> Αξιολογήσεις)</span>
+                  <span class="pt-2 px-2 lol"style="font-size:1.4rem;">(<%=revCount %> Αξιολογήσεις)</span>
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 pt-2 align-left">
+                <div class="col-12 pt-2 pr-4 d-flex justify-content-md-start justify-content-end">
                   <h4><%=product.price%>€</h4>
                 </div>
               </div>
               <hr class="thin">
               <div class="row">
-                <div class="col-12 mt-2 align-left">
+                <div class="col-12 mt-2 d-flex align-left">
                   <h5><%= product.description%></h5>
                 </div>
               </div>
             <%}%>
                 <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
                   <div class="row py-4 d-flex justify-content-start"> 
-                    <div class="col-6 col-lg-4 align-left">
-                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class=" form-control">
+                    <div class="col-6 col-lg-4 align-center">
+                      Μέγεθος: <select id="tshirtSize" name="size" style="width:4em;display: inline-block;" class=" form-control">
                         <% products.forEach(function(match) { %>
                             <% if(match.sizeStatus!="hidden"){ %>
                               <option> <%=match.size%> </option>
@@ -107,25 +112,18 @@
                         <%});%>
                       </select>
                     </div>
-                    <div class="col-5 col-lg-4 align-left" >
+                    <div class="col-5 col-lg-4 align-center" >
                      Ποσότητα: <input type="number"  class="form-control" style="width:4em; display: inline-block;"  name="qty" value="1" min="1" max="99">
                     </div>
                   </div>      
                   <div class="row">
-                    <div class="col-8">
-                      <div class="pt-3 align-left">
+                    <div class="col-12 d-flex justify-content-center justify-content-md-start">
+                      <div class="pt-3">
                         <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
                           Προσθηκη στο καλαθι
                         </button>
                       </div>
                     </div>
-                    <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
-                    <div class="col-4">
-                      <div class="pt-3 align-left">
-                        <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγη</button>
-                      </div>
-                    </div>
-                    <%}%>
                   </div>
                 </form>
                 <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%> 
@@ -163,7 +161,7 @@
     </div>
   <%}%>
 
-    <div class="py-4"style="background:#F5F5F5;">
+    <!-- <div class="py-4"style="background:#F5F5F5;"> -->
       <form id="review-form" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
         <input type="hidden" name="productId" value="<%=product._id%>">
@@ -223,12 +221,12 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-12 px-4">
+          <div class="form-group col-12 px-4 d-flex justify-content-center justify-content-md-start">
               <button type="submit" class="btn btn-primary">Υποβολη Αξιολογησης</button>
           </div>
         </div>
       </form>
-    </div>  
+    <!-- </div>   -->
 <%reviews.forEach(function(review){%>
   <div class="px-4 py-1 mx-3 mb-2 review-container">
     <div class="row px-4  py-1">

@@ -167,6 +167,31 @@ middlewareObj.emailExists = async function (req , res ,  next){
   }     
 }
 
+middlewareObj.emailExistsLocal = async function (req , res ,  next){
+
+  var google = await User.findOne({ "google.email": req.autosan.body.email});
+  var facebook = await User.findOne({ "facebook.email": req.autosan.body.email});
+  var local = await User.findOne({ "local.email": req.autosan.body.email});
+  if(!google && !facebook && local){
+     return next();
+  }
+  else{
+    res.app.locals.specialContext = 
+    {
+        name : req.autosan.body.name,
+        surname : req.autosan.body.surname,
+        phone: req.autosan.body.phone,
+        line1 : req.autosan.body.line1,
+        city : req.autosan.body.city,
+        zip : req.autosan.body.zip,
+        state : req.autosan.body.state,
+        error: {type : "regError" , message : "To e-mail δε χρησιμοποιήται από κάποιο χρήστη" }
+    }
+    req.flash("regError","To e-mail δε χρησιμοποιήται από κάποιο χρήστη");
+    res.redirect("back");   
+  }     
+}
+
 middlewareObj.phone = function (req , res ,  next){
 
   if (/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(req.autosan.body.phone))
@@ -303,6 +328,17 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
   }
 }
 
+
+middlewareObj.sameEmail = async function (req , res ,  next){
+
+  if(req.autosan.body.email === req.autosan.body.email2){
+    next();
+  }
+  else{
+    req.flash("regError","Τα e-mail δεν ταιριάζουν μεταξύ τους");
+    res.redirect("back");
+  }
+}
 
 
 module.exports = middlewareObj;
