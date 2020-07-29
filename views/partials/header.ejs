@@ -19,7 +19,13 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
+		<% const sizes = {
+		  S : "Small",
+		  M : "Medium",
+		  L : "Large",
+		  XL : "Extra Large",
+		  XXL : "2 Extra Large"
+		} %>
 	</head>
 <body>
 	<nav class="navbar navbar-expand navbar-light bg-light  py-0 ">
@@ -88,17 +94,17 @@
 							
 								<span class="nav-link" href=""> <!-- span instead of a so that the links inside work-->
 									<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i id="cart-glyphicon" class="fas fa-shopping-cart badge-pill pl-1 ml-1">
+										<i  class="fas fa-shopping-cart badge-pill pl-1 ml-1">
 												<%if(session.cart){%>
 													<%if(session.cart.totalQuantity > 0){%>
-														<%=session.cart.totalQuantity%>
+														<div class="redIndicator desc"><p id="cart-glyphicon"><%=session.cart.totalQuantity%></p></div>
 													<%}%>
 												<%}%>
 										</i>
 									</span>
 									<div class="dropdown-menu dropdown-menu-right cart-fonts">
 								    <%if(session.productList && session.productList.length > 0){ %>
-											<div class="align-center pb-2" >
+											<div class="align-center" >
 												<div id="quick_total_qty" class="col-12 total-quantity-info px-1" >
 													Το καλάθι σας έχει <%=session.cart.totalQuantity%>
 													<%if(session.cart.totalQuantity > 1){ %>
@@ -121,16 +127,17 @@
 														 <div class="col-8">
 															<div class="row mb-2 d-flex justify-content-start">
 																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
-																	<label style="white-space: initial; word-wrap: break-word"><%= item.product.name %></label>
+																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;"><i><%= item.product.name %></i></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
-																	 	<a class="cancelbtn" >
-																		 	<i id="rmvq_<%= item.product._id%>" class="fas fa-times fa-lg " onclick="removeProduct()"></i>
-																		</a>
+																	 	<button class="btn-danger Xbutton" >
+																		 	<i id="rmvq_<%= item.product._id%>" class="fa fa-trash-alt" onclick="removeProduct()"></i>
+																		</button>
 																	</p>
 																</div>
 															 </div>
+															 <hr class="thin" style="margin-top: -3px;">
 															 <div class="row">
 																<div class="col-4"><!--price -->
 																	<%= item.product.price %>€
@@ -143,7 +150,7 @@
 																</div>
 															 </div>
 															 <div class="mt-4 pr-2 row justify-content-end">
-																<i>Μέγεθος: <span class="ml-2">'<%=item.product.size%>' </span></i>
+																<i><span class="ml-2">"<%=sizes[item.product.size]%>" </span></i>
 															 </div>
 														 </div>
 													</div>
@@ -152,7 +159,7 @@
 											 <%});%>
 											 	<div class="row my-2 mx-1">
 													<div class="col-6">
-														Σύνολο
+														<b><i>Σύνολο:</i></b>
 													</div>
 													<div id="quick_total" class="col-6 align-right">
 														<%=session.cart.totalPrice%>€

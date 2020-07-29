@@ -19,8 +19,10 @@ var checkPassword = function(){
 function qtyUpdate(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/update";
-	var id = event.target.id;
+	var id = event.target.parentNode.querySelector('input[type=number]').id;
 	var qty = document.getElementById(id).value;
+	console.log(qty);
+	console.log(id);
   if(qty <= 0){
     //reset the value to 1
     qty = 1;
@@ -37,7 +39,7 @@ function qtyUpdate(){
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
 			let data = JSON.parse(this.responseText);
-			document.getElementById("itm-prc"+id).innerHTML = "τελ. τιμή: "+data.price;
+			document.getElementById("itm-prc"+id).innerHTML = data.price;
 			document.getElementById('cart-total').innerHTML = data.totalPrice;
 			document.getElementById('cart-glyphicon').innerHTML = " " + data.totalQuantity;
       //quick view
@@ -55,7 +57,8 @@ function removeProduct(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/remove";
 	let temp = event.currentTarget.id;
-  let id = temp.substring(5,temp.length);
+    let id = temp.substring(5,temp.length);
+    console.log(id);
 	let params = {};
 	params.id = id;
 	let data = JSON.stringify(params);

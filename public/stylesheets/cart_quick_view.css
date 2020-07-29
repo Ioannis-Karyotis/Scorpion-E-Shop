@@ -6,7 +6,7 @@
 }
 .quick-cart-container{
   padding: 0.5rem;
-  style
+  background-color: #f8f9fa;
 }
 .quick-cart-img{
   text-align: center;
@@ -19,10 +19,10 @@
 } */
 
 .total-quantity-info{
-    background:#F5F5F5;
+    background:#F8F9FA;
     font-family: sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 .align-center{
@@ -52,9 +52,9 @@
       width:90%;
     }
   .total-quantity-info{
-    background:#F5F5F5;
+    background:#F8F9FA;
     font-family: sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.8rem;
   }
 }
@@ -77,9 +77,9 @@
       width:90%;
     }
     .total-quantity-info{
-      background:#F5F5F5;
+      background:#F8F9FA;
       font-family: sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
+      font-weight: 600;
+      font-size: 0.75rem;
     }
 }

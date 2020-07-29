@@ -107,24 +107,23 @@
 		    <div class="shopping-cart container-fluid">
 			    <% session.productList.forEach(function(item){ %>
 			      	<div class="product product-micro">
-			        	<div class="product-image">
+			        	<div class="col-4 product-image">
 			          		<img src="<%=item.product.images[0].url %>"style="width:4em; height:6em"></img>
 			        	</div>	
-		          		<div class="product-title">
+		          		<div class="col-8">
 		            		<%=item.product.name%>
-		            		<i><span class="ml-5" style="float: right;"> Μέγεθος: '<%=item.product.size%>' </span></i>
+		            		<i><span class="ml-5"> Μέγεθος: '<%=item.product.size%>' </span></i>
 		          		</div>
 		          		<div class="row d-flex justify-content-start mt-2">
-		          			<div>
+		          			<div class="col-5">
 				          		Τιμή: <%=item.product.price%> €
 				        	</div>
-				        	<span class="ml-4" style="opacity: 0.5;">|</span>  
-				        	<div class="ml-4">
+				        	<div class="col-7">
 				          		Ποσότητα: <%=item.quantity%>
 				        	</div>
 		          		</div>
 		          		<div class="row d-flex justify-content-start mt-2">
-		          			<div>
+		          			<div class="col-12">
 				          		Τελ.τιμή: <%=item.price%> €
 				        	</div>	
 		          		</div>

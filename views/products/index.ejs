@@ -35,10 +35,10 @@
         </div>
         <div class="card-footer">
           <div class="row">
-            <div class="col-8 d-flex justify-content-start">
+            <div class="col-10 d-flex justify-content-start">
               <p><%=product.name %></p>
             </div>
-            <div class="col-4 d-flex justify-content-end">
+            <div class="col-2 d-flex justify-content-end">
               <p><%=product.price %>€</p>
             </div>
             <div class="col-12 d-flex justify-content-center">
@@ -107,11 +107,9 @@
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
     <div class="modal-content animate " >
-      <div id="Xbutton">
-          <a onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
-              <i class="fas fa-times fa-lg"></i>
-          </a>
-        </div>
+        <button class="btn-danger Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
+            <i class="fas fa-times"></i>
+        </button>
         <div id="inside_modal" class="row">
           <div class="col-md-6 py-auto product-col">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">

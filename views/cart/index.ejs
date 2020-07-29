@@ -1,4 +1,99 @@
 <%- include("../partials/header")%>
+<% const sizes = {
+  S : "Small",
+  M : "Medium",
+  L : "Large",
+  XL : "Extra Large",
+  XXL : "2 Extra Large"
+} %>
+
+<div id="main" class="main container mb-5">
+  <div class="container py-2">
+  <%if(session.productList && session.productList.length > 0){ %>
+    <h3 class="pb-4"><i><u>Το καλάθι σου</u></i></h3>
+    <% session.productList.forEach(function(item){ %>
+    <% var id = item.product._id%>
+    <div class="row d-flex justify-content-start mt-2 mb-4 mx-2">
+      <div class="col-md-10 col-12 jumbotron-mini align-left">
+        <div class="container">
+          <button id="rmvc_<%=id%>" class="btn-danger Xbutton" onclick="removeProduct()">
+            <i class="fa fa-trash-alt"></i>
+          </button>
+          <div class="row d-flex justify-content-start">
+            <div class="col-11 align-left">
+              <b style="font-size: 20px; font-weight:600; "><i><%=item.product.name%></i></b>
+              <span class="ml-3">"<i><%=sizes[item.product.size]%></i>"</span>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center mt-3">
+            <div class="col-sm-2 col-12" align="center" >
+              <div>
+                <img src="<%= item.product.images[0].url %>" style="width:5em; height:7em;"></img>
+              </div>
+            </div>
+            <div class="col-12 col-sm-10">
+              <hr class="thin">
+              <div class="row d-flex justify-content-center">
+
+                <div class="col-3 col-sm-3" align="center">
+                  <div> <i><b>Τιμή:</b></i> </div>
+                  <div class="mt-2"> <%=item.product.price%> €</div>
+                </div>    
+                <div class="col-9 col-sm-6 pb-2" align="center">  
+                  <div>
+                    <i><B>Ποσότητα:</B></i>
+                  </div>
+                  <div class="def-number-input number-input safari_only bg-white">
+                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();qtyUpdate()" class="minus"></button>
+                    <input id="<%=id%>" class="quantity" name="quantity" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
+                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();qtyUpdate()" class="plus"></button>
+                  </div>  
+                </div>
+                <div class="col-12 col-sm-3" align="center">
+                  <hr class="thin nothidden">
+                  <div>
+                    <i><B>Σύνολο:</B></i>
+                  </div>  
+                  <div class="mt-2">
+                    <span id="itm-prc<%=id%>"><%=item.price%> </span> <span> €</span> 
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div> 
+        </div>
+      </div>
+    </div>
+
+    <%});%>
+    <div class="container-fluid py-3">
+      <div class="row d-flex justify-content-end">
+      <div class="col-sm-6 col-12 align-right">
+        <div class="row d-flex justify-content-end mr-2">
+          <label class="mr-5">
+            <B><i>Τελική Τιμή:</i></B>
+          </label>
+          <span class="totals-value" id="cart-total">
+            <%=session.cart.totalPrice%>
+          </span>        
+        </div>
+        <hr class="thin">
+        <div class="row d-flex justify-content-end mr-2">
+           <a href="/checkout" class="btn btn-primary">πληρωμη</a>
+        </div>
+      </div>
+    </div>
+    </div>  
+  
+    
+    
+  <%}else{ %>
+    Το καλάθι σας είναι άδειο
+  <%}%>
+  </div>
+</div>
+
+<!-- 
 <div id="main" class="main container">
   <div id="cart-id" class="container main mb-5 cart-container">
     <%if(session.productList && session.productList.length > 0){ %>
@@ -68,5 +163,5 @@
       Το καλάθι σας είναι άδειο
     <%}%>
   </div>
-</div>  
+</div>   -->
 <%- include("../partials/footer")%>

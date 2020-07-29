@@ -427,6 +427,19 @@ hr.thick{
 /*==============*/
 /*    NavBar    */
 /*==============*/
+.redIndicator{
+  position: absolute;
+  top:2px;
+  right: 5px;
+  border-radius: 50%;
+  width:20px;
+  height:20px;
+  background-color: red;
+  color: white;
+  text-align: center;
+  vertical-align: baseline;
+  padding:2px 2px;
+}
 .navbar{
   background-color: white;
 	font-family: sans-serif;
@@ -552,8 +565,10 @@ hr.thick{
   background-color: rgba(231, 234, 236, 0.3);
 }
 .jumbotron-mini{
-  background-color: rgba(231, 234, 236, 0.3);
-  padding: 0.3em 0.3em;
+  background-color: white;
+  padding: 0.5em 0.5em;
+  border-radius: 1.5px;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
 }
 .carousel-item img{
 	/* border-radius: 10px; */
@@ -584,10 +599,14 @@ hr.thick{
 /*=========*/
 /*  Modals */
 /*=========*/
-#Xbutton{
+.Xbutton{
   position: absolute;
-  right: 4px;
+  right: 0px;
+  top:0px;
+  width:2.2em;
+  height:2.2em;
   z-index: 3;
+  border-radius: 3px;
 }
 
 .cancelbtn i:hover{
@@ -1209,7 +1228,16 @@ hr.thick{
     opacity: 0.0;
     transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
+  .nothidden{
+      display: none;
+  }
 
+}
+
+@media screen and (min-width:574px){
+  .nothidden{
+      display: none;
+  }
 }
 
 .onep {
