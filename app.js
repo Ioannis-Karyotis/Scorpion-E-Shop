@@ -53,7 +53,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 
-const MONGODB_URI = process.env.MONGODB_URL
+const MONGODB_URI = process.env.MONGODB_URI
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -61,7 +61,7 @@ const options = {
   useUnifiedTopology: true,
   family: 4 // Use IPv4, skip trying IPv6
 };
-mongoose.connect(MONGODB_URI,options)
+mongoose.connect(toString(MONGODB_URI),options)
 //seedDB(); //seed the database with products
 
 
