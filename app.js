@@ -61,7 +61,7 @@ const options = {
   useUnifiedTopology: true,
   family: 4 // Use IPv4, skip trying IPv6
 };
-mongoose.connect(toString(MONGODB_URI),options)
+mongoose.connect(MONGODB_URI,options)
 //seedDB(); //seed the database with products
 
 
