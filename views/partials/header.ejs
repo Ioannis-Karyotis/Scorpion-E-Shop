@@ -71,7 +71,7 @@
 						<li class="nav-item go-left-first">
 							<a class="nav-link d-flex align-items-start justify-content-around" href="/user/<%= currentUser._id%>">
 								<% if(!currentUser[currentUser.methods].profile) {%>
-									<img src="./../../public/images/blank.png" alt="Avatar" class="blank-mini mr-1" >  <span> Προφίλ</span>
+									<img src="https://scorpion-store.herokuapp.com/images/blank.PNG" alt="Avatar" class="blank-mini mr-1" >  <span> Προφίλ</span>
 								<% }else{ %>
 									<img src="<%=currentUser[currentUser.methods].profile%>" alt="Avatar" class="blank-mini mr-1" >  <span> Προφίλ</span>
 								<%}%>	
@@ -189,15 +189,15 @@
 				<div id="smth" class="my-auto mx-auto px-auto">
 					<% if(!currentUser){ %>
 	      				<a id="logo-bck" class="mt-n2 mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="./../../public/images/logo4.png" >
+							<img src="https://scorpion-store.herokuapp.com/images/logo4.PNG" >
 						</a>
 					<%} else if (currentUser[currentUser.methods].priviledge=="Admin"){%>	
 						<a id="logo-bck" class="mt-n2 pt-2 mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="./../../public/images/logo4.png" >
+							<img src="https://scorpion-store.herokuapp.com/images/logo4.PNG" >
 						</a>	
 	      			<% } else { %>
 						<a id="logo-bck" class="mt-n2-icon mx-auto my-auto d-flex justify-content-center" href="/">
-							<img src="./../../public/images/logo4.png">
+							<img src="https://scorpion-store.herokuapp.com/images/logo4.PNG">
 						</a>
 	      			<%}%>
 				</div>
