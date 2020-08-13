@@ -53,7 +53,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 
-const MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/Scorpion";
+const MONGODB_URI = process.env.MONGODB_URL
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
