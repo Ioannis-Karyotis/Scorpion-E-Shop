@@ -19,7 +19,12 @@ var myNavBar = {
     add : function() {
         if(this.flagAdd) {
             for(var i=0; i < this.elements.length; i++) {
-                document.getElementById(this.elements[i]).className += " fixed-theme";
+                if (window.location.pathname == "/" || window.location.pathname == "/contact") {
+                    document.getElementById(this.elements[i]).className += " fixed-theme";
+                }else{
+                    document.getElementById(this.elements[i]).className += " fixed-theme2";
+                }
+               
             }
             this.flagAdd = false;
         }
@@ -27,8 +32,13 @@ var myNavBar = {
 
     remove: function() {
         for(var i=0; i < this.elements.length; i++) {
-            document.getElementById(this.elements[i]).className =
+            if (window.location.pathname == "/" || window.location.pathname == "/contact") {
+                    document.getElementById(this.elements[i]).className =
                     document.getElementById(this.elements[i]).className.replace( /(?:^|\s)fixed-theme(?!\S)/g , '' );
+                }else{
+                    document.getElementById(this.elements[i]).className =
+                    document.getElementById(this.elements[i]).className.replace( /(?:^|\s)fixed-theme2(?!\S)/g , '' );
+                }            
         }
         this.flagAdd = true;
     }

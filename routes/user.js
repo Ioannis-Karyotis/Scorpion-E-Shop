@@ -1,41 +1,22 @@
-var express 	= require("express");
-var router 		= express.Router();
-var passport 	= require("passport");
-var User 		= require("../models/user");
-var Order = require("../models/order");
-var middleware  = require("../middleware/index.js");
-const sanitization	= require('express-autosanitizer');
-const JWT 		= require('jsonwebtoken');
-const { JWT_SECRET } = require('../configuration');
-const multer 	= require('multer');
-const path 		= require('path');
-
-
-router.use(function(req, res, next) {
-res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-        next();
-})
-
-signToken = function(user) {
-  return JWT.sign({
-    iss: 'Scorpion',
-    sub: user.id,
-    iat: new Date().getTime(), // current time
-    exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
-  }, JWT_SECRET);
-}
-
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "./public/images/");
-    },
-
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, req.user._id+".jpg");
-    }
-});
+const express 		= require("express"),
+	  router 		= express.Router(),
+	  passport 		= require("passport"),
+	  User 			= require("../models/user"),
+      Order 		= require("../models/order"),
+	  middleware  	= require("../middleware/index.js"),
+	  sanitization	= require('express-autosanitizer'),
+	  JWT 			= require('jsonwebtoken'),
+	  {JWT_SECRET} 	= require('../configuration'),
+	  multer 		= require('multer'),
+	  path 			= require('path'),
+	  storage 		= multer.diskStorage({
+						destination: function(req, file, cb) {
+							cb(null, "./public/images/");
+						},
+						filename: function(req, file, cb) {
+							cb(null, req.user._id+".jpg");
+						}
+					});
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -46,6 +27,19 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
+const signToken = function(user) {
+  return JWT.sign({
+    iss: 'Scorpion',
+    sub: user.id,
+    iat: new Date().getTime(), // current time
+    exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
+  }, JWT_SECRET);
+}
+
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
 
 // passport.authenticate('jwt', { session: false })
 router.get("/user/:id" ,passport.authenticate('jwt', { session: false }), function(req, res){
@@ -79,8 +73,6 @@ router.get("/user/:id/orders" ,passport.authenticate('jwt', { session: false }),
 		redirect("login");
 	}	
 });
-
-
 
 
 router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur , middleware.email ,passport.authenticate('jwt', { session: false }), function(req, res){

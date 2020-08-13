@@ -1,15 +1,5 @@
-@charset "UTF-8";
-/*!
-* Start Bootstrap - Grayscale v6.0.0 (https://startbootstrap.com/themes/grayscale)
-* Copyright 2013-2020 Start Bootstrap
-* Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-grayscale/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap v4.4.1 (https://getbootstrap.com/)
- * Copyright 2011-2019 The Bootstrap Authors
- * Copyright 2011-2019 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+/*@charset "UTF-8";
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -10231,9 +10221,7 @@ body {
   margin-bottom: 5rem;
 }
 
-/*.projects-section {
-  padding: 10rem 0;
-}*/
+
 .projects-section .featured-text {
   padding: 2rem;
 }
@@ -10258,13 +10246,6 @@ body {
   }
 }
 
-.signup-section {
-  padding: 10rem 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 0%, rgba(0, 0, 0, 0.5) 80%, #2D2B30 100%);
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-}
 .signup-section .form-inline input {
   box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   padding: 1.25rem 2rem;
@@ -10315,4 +10296,4 @@ body {
 
 .footer {
   padding: 5rem 0;
-}
+}*/

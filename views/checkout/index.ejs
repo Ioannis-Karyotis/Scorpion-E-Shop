@@ -1,5 +1,13 @@
 <%- include("./../partials/header")%>
 
+<% const sizes = {
+  S : "Small",
+  M : "Medium",
+  L : "Large",
+  XL : "Extra Large",
+  XXL : "2 Extra Large"
+} %>
+
 <!-- The Modal -->
 <div id="myModal" class="modal-chk">
   <!-- Modal content -->
@@ -70,7 +78,7 @@
 				</div>
   			</div>
   		</div>
-  		<div class="content">
+  		<div class="content-chk">
 	  		<div class="row d-flex justify-content-end" style="margin-top: -10px; margin-right: -22px;">
 				<a onclick="document.getElementById('StripeModal').style.display='none'" class="cancelbtn">
 					<i class="fas fa-times fa-lg"></i>
@@ -101,81 +109,88 @@
 
 
 <div id="main" class="container main mb-5">
-    <div class="row pt-3 pb-3 mx-auto" >
+    <div class="row pt-3 pb-3 mx-auto my-4" >
     <%if(session.productList && session.productList.length > 0){ %>
-    	<div class="col-lg-6 order-lg-2 mx-auto pb-5">
+    	<div class="col-lg-6 order-lg-2 mx-auto pb-5" align="center">
 		    <div class="shopping-cart container-fluid">
 			    <% session.productList.forEach(function(item){ %>
-			      	<div class="product product-micro">
-			        	<div class="col-4 product-image">
-			          		<img src="<%=item.product.images[0].url %>"style="width:4em; height:6em"></img>
-			        	</div>	
-		          		<div class="col-8">
-		            		<%=item.product.name%>
-		            		<i><span class="ml-5"> Μέγεθος: '<%=item.product.size%>' </span></i>
-		          		</div>
-		          		<div class="row d-flex justify-content-start mt-2">
-		          			<div class="col-5">
-				          		Τιμή: <%=item.product.price%> €
+			      	<div class="jumbotron-mini product-micro mb-1">
+			      		<div class="row d-flex justify-content-around">
+				        	<div class="col-3 product-image" align="left">
+				          		<img  src="<%=item.product.images[0].url %>"></img>
 				        	</div>
-				        	<div class="col-7">
-				          		Ποσότητα: <%=item.quantity%>
-				        	</div>
-		          		</div>
-		          		<div class="row d-flex justify-content-start mt-2">
-		          			<div class="col-12">
-				          		Τελ.τιμή: <%=item.price%> €
-				        	</div>	
-		          		</div>
-		          				        		
+
+			          		<div class="col-9">
+			          			<div class="row d-flex justify-content-start">
+			          				<div class="col-12" align="left">
+				            			<b><%=item.product.name%></b>
+				            			<i><span class="ml-5"> <%=sizes[item.product.size]%> </span></i>
+			            			</div>
+			            		</div>
+			            		<hr class="thin" align="right">
+			            		<div class="row d-flex justify-content-start mt-2">
+				          			<div class="col-6" align="left">
+						          		<b>Τελ.τιμή: </b><%=item.price%> €
+						        	</div>
+						        	<div class="col-6" align="left">
+						          		<b>Ποσότητα: </b><%=item.quantity%>
+						        	</div>
+				          		</div>
+				          		<!-- <div class="row d-flex justify-content-center mt-2">
+				          			<div class="col-6">
+						          		Τελ.τιμή: <%=item.price%> €
+						        	</div>	
+				          		</div> -->
+			          		</div>
+		          		</div>		          				          				        		
 			      	</div>
-		     	<%});%>
-		     	<hr>
-		     	<div class="totals mt-4 mr-5">
-					<div class="totals-item">
-						<label>
-							Tax :
-						</label>
-						<div class="totals-value" id="cart-tax">
+		     	<%});%> 
+		     	<hr class="thin">
+		     	<div class="jumbotron-mini prices-content" align="right">
+					<div class="row d-flex justify-content-end">
+						<div class="col-7" align="right">								
+								<B>Φόρος :</B> 	
+						</div>
+						<div class="col-5"  align="right">
 							<%tax = (session.cart.totalPrice * 1.4 / 100)+ 0.25 %>
-							<%=tax.toFixed(2) %>
+							<span class="mx-4"> <%=tax.toFixed(2)%> €</span>
 						</div>
 					</div>
-					<div class="totals-item">
-						<label>
-							Shipping :
-						</label>
-						<div class="totals-value" id="cart-shipping">
+					<div class="row d-flex justify-content-end">
+						<div class="col-7" align="right">
+							<B>Έξοδα Αποστολής :</B>
+						</div>
+						<div class="col-5" align="right">
 							<% shipping = 2;  %>
-							<%= shipping.toFixed(2) %>
+							<span class="mx-4"> <%= shipping.toFixed(2) %> €</span>
 						</div>
 					</div>
-					<div class="totals-item totals-item-total">
-						<label>
-							Grand Total :
-						</label>
-						<div class="totals-value" id="cart-total">
-							<%=session.cart.totalPrice + tax + shipping%>
+					<hr class="thin" align="right" style="width:40%;">
+					<div class="row d-flex justify-content-end">
+						<div class="col-7" align="right">
+							<B>Τελικό Σύνολο :</B>	
+						</div>
+						<div class="col-5" align="right">
+							<%tax = (session.cart.totalPrice * 1.4 / 100)+ 0.25 %>
+							<span class="mx-4"> <%=session.cart.totalPrice + tax + shipping%> €</span>
 						</div>
 					</div>
 				</div>
-				<div class="row"></div>
-				<hr>
+				<hr class="thin">
 		     	<div class="container">
-
-			     	<div class="form-check">
+			     	<div class="form-check" align="left">
 						<label class="form-check-label">
 							<input id="pay" type="radio" class="form-check-input" name="optradio" onclick="buttonSelect(1)" checked>Πληρωμή με κάρτα
 						</label>
 					</div>
-					<div class="form-check">
+					<div class="form-check"  align="left">
 						<label class="form-check-label">
 							<input id="send" type="radio" class="form-check-input" onclick="buttonSelect(2)" name="optradio">Πληρωμή με αντικαταβολή
 						</label>
 					</div>
-					<div class="form-check">
+					<div class="form-check"  align="left">
 						<label class="form-check-label">
-							<input id="sent" type="radio" class="form-check-input" onclick="buttonSelect(3)" name="optradio" >Παραλαβη απο το κατάστημα
+							<input id="sent" type="radio" class="form-check-input" onclick="buttonSelect(3)" name="optradio" >Παραλαβή απο το κατάστημα
 						</label>
 					</div>
 				</div>
@@ -258,7 +273,9 @@
         </div>
         
         <%}else{ %>
-    			Το καλάθι σας είναι άδειο
+	        <div class="row d-flex justify-content-center">
+	    		Το καλάθι σας είναι άδειο
+	  		</div>
   		<%}%>
 	</div>
 </div>

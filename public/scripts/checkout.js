@@ -158,7 +158,7 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
 var pay =async function(stripe, card, clientSecret) {
   changeLoadingState(true);
 
-  document.querySelector(".content").classList.add("hidden");
+  document.querySelector(".content-chk").classList.add("hidden");
   document.querySelector(".loading").classList.remove("hidden");
 
   stripe
@@ -193,7 +193,7 @@ var pay =async function(stripe, card, clientSecret) {
       if (result.error) {
         changeLoadingState(false);
         document.querySelector(".loading").classList.add("hidden");
-        document.querySelector(".content").classList.remove("hidden");
+        document.querySelector(".content-chk").classList.remove("hidden");
       } else {
 
         var modal2 = document.getElementById("StripeModal");

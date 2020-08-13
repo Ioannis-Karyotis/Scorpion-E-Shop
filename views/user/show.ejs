@@ -1,10 +1,10 @@
 <%- include("./../partials/header")%>
 
 <div id="main" class="container main mb-5">
-	<div class="container-fluid">
+	<div class="container-fluid my-4">
 		<% if(!currentUser){ %>
-			<div class="jumbotron">
-				<h1>Η περίοδος σύνδεσης σας έχει λήξει</h1>
+			<div class="desc">
+				Η περίοδος σύνδεσης σας έχει λήξει
 				<script type="text/javascript" src="/scripts/relocate.js"></script>
 			</div>
 		<% }else {%>

@@ -1,30 +1,29 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container product mb-5">
-  <div class="row mx-auto my-2" style="text-align:center">
-    <div class="mx-auto">
-      <h1>
+<div id="main" class="main container-fluid product">
+  <div class="row my-4 d-flex justify-content-start">
+    <div class="mx-auto mt-2" style="align-items: center;">
+      <h3>
         <b>
-          <i>
-      <%= name %>
-          </i>
+          <div><%= name %><hr class="normal"align="center" /></div>
+      
         </b>
       </h1>
     </div>
   </div>
-  <hr class="pic thick mx-5">
+  <!-- <hr class="pic thick mx-5"> -->
     
-  <div  class="container">
+  <div  class="container-fluid">
     <div class="row products-row d-flex justify-content-lg-start justify-content-around align-items-start">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
-      <div class="col-12 col-sm-9 col-md-6 col-lg-4 mb-5  d-flex justify-content-center">
+      <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mb-5  d-flex justify-content-center">
         <div class="card opac mb-5" style="border-radius:0px;">
       <%}else if(product.status=="hidden" && !admin){%>
       <div>
         <div class="card hidden" style="border-radius:0px;">
       <%}else{%>
-      <div class="col-12 col-sm-9 col-md-6 col-lg-4 mb-5 d-flex justify-content-center">
+      <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex justify-content-center">
         <div class="card" style="border-radius:0px;">
       <%} %>
         <div class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
@@ -35,8 +34,13 @@
         </div>
         <div class="card-footer">
           <div class="row">
-            <div class="col-10 d-flex justify-content-start">
-              <p><%=product.name %></p>
+            <%  var name2 = product.name.slice(0,15); %>
+            <div class="col-10 d-flex justify-content-start" style="white-space: pre;">
+              <% if(product.name.length > 18){%>
+                <p><%=name2 %>...</p>
+              <%}else{%>
+                <p><%= product.name %></p>
+              <% } %>  
             </div>
             <div class="col-2 d-flex justify-content-end">
               <p><%=product.price %>€</p>
@@ -86,12 +90,12 @@
       ΠΡΟΣΟΧΗ!!! Δε μπορείς να διαγράψεις προϊόντα που βρίσκονται σε υπάρχουσα παραγγελία.
     </div>
   <%}%>
-<div class="row container d-flex justify-content-end">
+<div class="row container-fluid d-flex justify-content-end">
   <% for (i = 0 ; i < pages ; i++) { %>
     <% if( page == i) {%>
-        <a class="pbtn btn-primary mr-1" style="border-radius: 5px; color:white; background-color:#659e7a" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+        <a class="pbtn btn-primary mr-1" style=" color:white; background-color:#659e7a" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
     <%}else{%>
-        <a class="pbtn btn-primary mr-1" style="border-radius: 5px;" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+        <a class="pbtn btn-primary mr-1" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
     <%}%>
   <%}%>
 </div>

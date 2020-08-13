@@ -1,23 +1,18 @@
-var express 	= require("express");
-var router 		= express.Router();
-var passport 	= require("passport");
-const JWT 		= require('jsonwebtoken');
-const { JWT_SECRET } = require('../configuration');
-const {JWT_SECRET_ADMIN} = require('../configuration');
-var User 		= require("../models/user");
-var Product = require("../models/product");
-var Cart = require("../models/cart");
-var Order = require("../models/order");
-var middleware  = require("../middleware/index.js");
-var bodyParser = require("body-parser");
-const sanitization	= require('express-autosanitizer');
+const express 			 = require("express"),
+	  router 			 = express.Router(),
+	  passport 			 = require("passport"),
+	  JWT 				 = require('jsonwebtoken'),
+	  {JWT_SECRET} 		 = require('../configuration'),
+	  {JWT_SECRET_ADMIN} = require('../configuration'),
+	  User 				 = require("../models/user"),
+	  Product 			 = require("../models/product"),
+	  Cart 				 = require("../models/cart"),
+	  Order 			 = require("../models/order"),
+	  middleware  		 = require("../middleware/index.js"),
+	  bodyParser 		 = require("body-parser"),
+	  sanitization		 = require('express-autosanitizer');
 
-router.use(function(req, res, next) {
-res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-        next();
-})
-
-signToken = function(user) {
+const signToken = function(user) {
   return JWT.sign({
     iss: 'Scorpion',
     sub: user.id,
@@ -26,7 +21,7 @@ signToken = function(user) {
   }, JWT_SECRET);
 }
 
-signAdminToken = function(admin) {
+const signAdminToken = function(admin) {
   return JWT.sign({
     iss: 'Scorpion',
     sub: admin,
@@ -34,6 +29,11 @@ signAdminToken = function(admin) {
     exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
   }, JWT_SECRET_ADMIN);
 }
+
+router.use(function(req, res, next) {
+	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    next();
+})
 
 router.get("/secret" ,passport.authenticate('jwt', { session: false }), function(req, res){
 	res.redirect("/");

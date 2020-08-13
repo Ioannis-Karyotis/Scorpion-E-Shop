@@ -1,34 +1,28 @@
-var express 	= require("express");
-var router 		= express.Router();
-var passport 	= require("passport");
-var User 		= require("../models/user");
-var Order = require("../models/order");
-var middleware  = require("../middleware/index.js");
-const sanitization	= require('express-autosanitizer');
-const JWT 		= require('jsonwebtoken');
-const { JWT_SECRET } = require('../configuration');
-const config 	= require('../configuration');
-const crypto = require('crypto');
-var nodemailer = require('nodemailer');
-var ejs = require("ejs");
-var smtpTransport = 	require('nodemailer-smtp-transport');
+const express 		= require("express"),
+	  router 		= express.Router(),
+	  passport 		= require("passport"),
+	  User 			= require("../models/user"),
+	  Order 		= require("../models/order"),
+	  middleware  	= require("../middleware/index.js"),
+	  sanitization	= require('express-autosanitizer'),
+	  JWT 			= require('jsonwebtoken'),
+	  {JWT_SECRET}  = require('../configuration'),
+ 	  config 		= require('../configuration'),
+	  crypto 		= require('crypto'),
+	  nodemailer 	= require('nodemailer'),
+	  ejs 			= require("ejs"),
+	  smtpTransport = 	require('nodemailer-smtp-transport'),
+	  transporter = nodemailer.createTransport({
+		  host: "smtp.gmail.com",
+		  port: 465,
+		  secure: true, // true for 465, false for other ports
+		  auth: {
+		    user:  String(config.EMAIL),
+		    pass: String(config.EMAIL_PASSWORD)
+		  }
+	  });
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // true for 465, false for other ports
-  auth: {
-    user:  String(config.EMAIL),
-    pass: String(config.EMAIL_PASSWORD)
-  }
-});
-
-router.use(function(req, res, next) {
-res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-        next();
-})
-
-signToken = function(email) {
+const signToken = function(email) {
   return JWT.sign({
     iss: 'Scorpion',
     sub: email,
@@ -37,6 +31,12 @@ signToken = function(email) {
   }, JWT_SECRET);
 }
 
+
+
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
 
 router.get("/fpass",middleware.user ,function(req,res){
 	res.render("fpass");

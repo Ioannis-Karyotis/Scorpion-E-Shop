@@ -1,28 +1,27 @@
-var express 	= require("express");
-var router 		= express.Router();
-var middleware  = require("../middleware/index.js");
-const config 	= require('../configuration');
-var User 		= require("../models/user");
-const sanitization	= require('express-autosanitizer');
-var nodemailer = require('nodemailer');
-var smtpTransport = 	require('nodemailer-smtp-transport');
-
+const express 	    = require("express"),
+      router 		    = express.Router(),
+      middleware    = require("../middleware/index.js"),
+      config 	      = require('../configuration'),
+      User 		      = require("../models/user"),
+      sanitization  = require('express-autosanitizer'),
+      nodemailer    = require('nodemailer'),
+      smtpTransport = require('nodemailer-smtp-transport'),
+      transporter = nodemailer.createTransport(smtpTransport
+        ({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            user:  String(config.EMAIL),
+            pass: String(config.EMAIL_PASSWORD)
+          }
+        })
+      );
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         next();
 })
-
-var transporter = nodemailer.createTransport(smtpTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // true for 465, false for other ports
-  auth: {
-    user:  String(config.EMAIL),
-    pass: String(config.EMAIL_PASSWORD)
-  }
-}));
-
 
 router.get("/contact" , function(req, res){
 	if(req.app.locals.specialContext!= null){

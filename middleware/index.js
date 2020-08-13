@@ -3,45 +3,6 @@ const middlewareObj = {},
       Cart          = require("../models/cart"),
       Product       = require("../models/product");
 
-// middlewareObj.checkCommentOwnership = function(req, res , next){
-// 	if(req.isAuthenticated()){
-// 		Comment.findById(req.params.comment_id, function(err, foundComment){
-// 		if(err){
-// 			res.redirect("back");
-// 		} else{
-// 			if(foundComment.author.id.equals(req.user._id)){
-// 				next();
-// 			} else{
-// 				req.flash("error","You dont have permission to do that");
-// 				res.redirect("back");
-// 			}
-// 		}
-// 	});
-// 	}else{
-// 		req.flash("error","You need to be Logged in to do that");
-// 		res.redirect("back");
-// 	}	
-// }
-
-// middlewareObj.checkCampgroundOwnership = function (req, res , next){
-// 	if(req.isAuthenticated()){
-// 		Campground.findById(req.params.id, function(err, foundCampground){
-// 		if(err){
-// 			res.redirect("back");
-// 		} else{
-// 			if(foundCampground.author.id.equals(req.user._id)){
-// 				next();
-// 			} else{
-// 				req.flash("error","You dont have permission to do that");
-// 				res.redirect("back");
-// 			}
-// 		}
-// 	});
-// 	}else{
-// 		req.flash("error","You need to be Logged in to do that");
-// 		res.redirect("back");
-// 	}	
-// }
 
 middlewareObj.cart = function (req , res ,  next){
   cart = req.session.cart;
@@ -271,17 +232,17 @@ middlewareObj.user = function (req , res ,  next){
 
 middlewareObj.validateCart = async function (req , res ,  next){
 
+  if (req.session.cart == undefined) {
+    next();
+  }
+
   var cart = req.session.cart;
   var products = cart.products;
   var product_ids = await Object.keys(products);
-  console.log("product_ids"); 
-  console.log(product_ids);
   var notExist = [];
   for(i=0; i<product_ids.length; i++){
     
     var err,product = await Product.findById(product_ids[i]);
-    console.log("product" + i); 
-    console.log(product);
     if(product == null || product.status == "hidden"){
       notExist.push(product_ids[i]);
     }

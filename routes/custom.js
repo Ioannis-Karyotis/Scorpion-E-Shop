@@ -1,28 +1,20 @@
-var express 	= require("express");
-var router 		= express.Router();
-var Product     = require("../models/product");
-var Cart		= require("../models/cart");
-const sanitization	= require('express-autosanitizer');
-const multer 	= require('multer');
-const path 		= require('path');
+const express 	   = require("express"),
+      router 		   = express.Router(),
+      Product      = require("../models/product"),
+      Cart		     = require("../models/cart"),
+      sanitization = require('express-autosanitizer'),
+      multer 	     = require('multer'),
+      path 	       = require('path'),
+      storage = multer.diskStorage({
+        destination: function(req, file, cb) {
+            cb(null, "./public/images/stamps");
+        },
 
-router.use(function(req, res, next) {
-res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-        next();
-})
-//===================
-// Product ROUTES
-//===================
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "./public/images/stamps");
-    },
-
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
+        // By default, multer removes file extensions so let's add them back
+        filename: function(req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        }
+      });
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -33,12 +25,14 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
+router.use(function(req, res, next) {
+res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+        next();
+})
 
-//Custom T-Shirt//
 router.get("/custom", function(req,res){
   res.render("custom");
 });
-
 
 router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter }).single('image'), function(req, res, next){
 

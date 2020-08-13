@@ -1,15 +1,15 @@
-const express 			= require("express"),
- 	  router    		= express.Router(),
- 	  Product 			= require("../models/product"),
-    Order         = require("../models/order"),
-    Cart          = require("../models/cart"),
-	{ SECRET_STRIPE } 	= require('../configuration'),
-	{ PUBLIC_STRIPE }	= require('../configuration'),
-	{ WEBHOOK_SECRET}	= require('../configuration'),
-		stripesk 		= require("stripe")(SECRET_STRIPE),
- 		stripepk 		= require('stripe')(PUBLIC_STRIPE),
-    middleware  = require("../middleware/index.js"),
-    sanitization  = require('express-autosanitizer');
+const express 			  = require("express"),
+ 	    router    		  = express.Router(),
+ 	    Product 			  = require("../models/product"),
+      Order           = require("../models/order"),
+      Cart            = require("../models/cart"),
+	    {SECRET_STRIPE} = require('../configuration'),
+	    {PUBLIC_STRIPE}	= require('../configuration'),
+	    {WEBHOOK_SECRET}= require('../configuration'),
+	   	stripesk 		    = require("stripe")(SECRET_STRIPE),
+ 		  stripepk 		    = require('stripe')(PUBLIC_STRIPE),
+      middleware      = require("../middleware/index.js"),
+      sanitization    = require('express-autosanitizer');
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -20,8 +20,6 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 router.post("/post_order",sanitization.route, async function(req,res){
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
-  //const lol = await  stripesk.paymentIntents.update(req.autosan.body.paymentIntent.id,{receipt_email: req.autosan.body.paymentIntent.receipt_email });
-
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

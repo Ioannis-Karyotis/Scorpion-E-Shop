@@ -1,42 +1,31 @@
-var express 	= require("express");
-var router     	= express.Router();
-var Product     = require("../models/product");
-var Review 		= require("../models/review");
-var middleware  = require("../middleware/index.js");
-var Cart		= require("../models/cart");
-var Order		= require("../models/order");
-var passport 	= require("passport");
-const multer 	= require('multer');
-const path 		= require('path');
-const paginate 		= require('express-paginate');
-const sanitization	= require('express-autosanitizer');
-const productsNames = {
-	isothermika : 'Ισοθερμικά',
-	parallages : "Παραλλαγές / Φούτερ",
-	tiedye : "Tie Dye",
-	extra : "Έξτρα"
-}
-const sizes= ["S","M","L","XL","XXL"];
+const express 		= require("express"),
+	  router     	= express.Router(),
+	  Product     	= require("../models/product"),
+	  Review 		= require("../models/review"),
+	  middleware 	= require("../middleware/index.js"),
+	  Cart			= require("../models/cart"),
+	  Order			= require("../models/order"),
+	  passport 		= require("passport"),
+	  multer 		= require('multer'),
+	  path 			= require('path'),
+	  sanitization	= require('express-autosanitizer'),
+	  productsNames = {
+		isothermika : 'Ισοθερμικά',
+		parallages : "Παραλλαγές / Φούτερ",
+		tiedye : "Tie Dye",
+		extra : "Έξτρα"
+	  },
+	  sizes= ["S","M","L","XL","XXL"],
+	  storage = multer.diskStorage({
+	    destination: function(req, file, cb) {
+	        cb(null, "./public/images/");
+	    },
 
-
-
-router.use(function(req, res, next) {
-res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-        next();
-})
-//===================
-// Product ROUTES
-//===================
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "./public/images/");
-    },
-
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
+	    // By default, multer removes file extensions so let's add them back
+	    filename: function(req, file, cb) {
+	        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+	    }
+	  });
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -47,6 +36,10 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
+router.use(function(req, res, next) {
+	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    next();
+})
 
 router.get("/products/:type", function(req, res, next){
 	var wantedType = req.params.type;
@@ -69,13 +62,13 @@ router.get("/products/:type", function(req, res, next){
 		      		})
 		      		var itemCount = products.length;
 		      		var showing = [];
-		      		var div = (itemCount / 6);
+		      		var div = (itemCount / 8);
 		      		var pages = 0;
 		      		if(div != 1 && div > 1){
 		      			pages = parseInt(div) + 1;
 		      		}      		
 		      		console.log(pages);
-		      		for (i = (req.query.page * 6) ; i < (req.query.page * 6) + 6; i++) {
+		      		for (i = (req.query.page * 8) ; i < (req.query.page * 8) + 8; i++) {
 		      			if(products[i] == undefined){
 		      				break;
 		      			}else{
