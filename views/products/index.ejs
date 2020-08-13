@@ -77,8 +77,8 @@
     <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") { %>
     <div class="px-0 col-12 col-sm-9 col-md-6 col-lg-4  mb-4 d-flex justify-content-center">
       <div class="card" style="height:20em; width:17em; margin-right:5em;">
-        <a href="http://localhost:3000/products/<%= type %>/add">
-          <img  src="http://localhost:3000/images/add.png">
+        <a href="./products/<%= type %>/add">
+          <img  src="./../../public/images/add.png">
         </a>
       </div>
     </div>
@@ -93,9 +93,9 @@
 <div class="row container-fluid d-flex justify-content-end">
   <% for (i = 0 ; i < pages ; i++) { %>
     <% if( page == i) {%>
-        <a class="pbtn btn-primary mr-1" style=" color:white; background-color:#659e7a" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+        <a class="pbtn btn-primary mr-1" style=" color:white; background-color:#659e7a" href="./products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
     <%}else{%>
-        <a class="pbtn btn-primary mr-1" href="http://localhost:3000/products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
+        <a class="pbtn btn-primary mr-1" href="./products/<%=type%>?page=<%= i %>"> <span><%= i+1%></span></a>
     <%}%>
   <%}%>
 </div>
