@@ -66,7 +66,7 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
 	  	from: String(config.EMAIL),
 	  	to: String(req.autosan.body.email),
 	  	subject: 'Αλλαγή Κωδικού Πρόσβασης',
-	  	html : '<div> <a href="https://scorpion-store.herokuapp.com/fpass/'+ hash +'">Link επιβεβαίωσης</a></div>'
+	  	html : '<div> <a href="http://localhost:3000/fpass/'+ hash +'">Link επιβεβαίωσης</a></div>'
 	};
 				
 	transporter.sendMail(mainOptions, function(error, info){

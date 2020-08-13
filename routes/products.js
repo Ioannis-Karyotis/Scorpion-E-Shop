@@ -114,7 +114,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
           var str = file.path;
   			  var str2 = str.replace("public", "");
     			var final = str2.replace(/\\/g,"/");
-    			image={url : "https://scorpion-store.herokuapp.com" + final };
+    			image={url : "http://localhost:3000" + final };
   			  newProduct.images.push(image);
         });
 		newProduct.save();
@@ -239,7 +239,7 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
-						var photo = "https://scorpion-store.herokuapp.com/images/blank.PNG"
+						var photo = "http://localhost:3000/images/blank.png"
 		    		}
 					var today = new Date();
 
