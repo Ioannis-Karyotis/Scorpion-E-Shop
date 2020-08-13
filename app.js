@@ -41,7 +41,6 @@ app.use(bodyParser.json({
   }
 }))
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(expressSanitizer());
 app.use(cookieParser());
 
 
@@ -53,7 +52,15 @@ app.set("view engine","ejs");
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
+
+const MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/Scorpion";
+const options = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4 // Use IPv4, skip trying IPv6
+};
+mongoose.connect(MONGODB_URI,options)
 //seedDB(); //seed the database with products
 
 
