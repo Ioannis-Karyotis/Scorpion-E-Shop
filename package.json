@@ -43,7 +43,7 @@
     "webpack": "^4.44.1"
   },
   "scripts": {
-    "start": "node --harmony index.js",
+    "start": "node index.js",
     "heroku-prebuild": "npm install --dev"
   },
   "repository": {
