@@ -33,6 +33,10 @@
     "path": "^0.12.7",
     "stripe": "^8.49.0"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.3"
