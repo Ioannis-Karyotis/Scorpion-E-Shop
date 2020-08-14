@@ -585,7 +585,7 @@ hr.normal{
   opacity: 0.75;
 }
 #logo-bck img:hover:active {
-  content:url("http://localhost:3000/images/logo4.png");
+  content:url("https://scorpion-store.herokuapp.com/images/logo4.png");
   opacity: 1;
 }
 
