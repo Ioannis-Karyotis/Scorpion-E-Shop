@@ -1538,7 +1538,7 @@ hr.normal{
 }
 
 #logo-foot img:hover:active {
-  content:url("http://localhost:3000/images/logo3.png");
+  content:url("https://scorpion-store.herokuapp.com/images/logo3.png");
   opacity: 1;
   background-color: rgba(255, 255, 255, 0);
   filter: drop-shadow(5px 5px 5px #222);
