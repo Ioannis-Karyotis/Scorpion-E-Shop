@@ -39,8 +39,7 @@
     "heroku"
   ],
   "devDependencies": {
-    
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "webpack": "^4.44.1"
   },
   "scripts": {
