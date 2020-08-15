@@ -880,7 +880,7 @@ hr.normal{
 @media screen and (max-width:330px){
   .projects-section {
     box-shadow: 0px 12px 6px 7px rgba(0,0,0,0.67);
-    margin-top: -12em;
+    margin-top: -5em;
   } 
 
 .content{
@@ -1083,8 +1083,7 @@ hr.normal{
 .hidden{
   display: none;
 }
-
-@media screen and (max-width:2560px){
+@media screen and (max-width:4000px){
 
   .modal-content {
     border-radius: 0px;
@@ -1104,7 +1103,16 @@ hr.normal{
     height:20rem;
   }
   .card{
-    width:70%;
+    width:17rem;
+  }
+  .products-row{
+    width :100em;
+    height: auto;
+    margin: 0 auto;
+    padding: 5em 5px ;
+    position: relative;
+    background-color: white;
+    box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
   }
 }
 
@@ -1128,6 +1136,14 @@ hr.normal{
   }
   .card{
     width:75%;
+  }
+  .products-row{
+    width:100%;
+    position: relative;
+    padding: 0px 0px;
+    margin: 0px 0px;
+    background-color: #F8F9FA;
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.0);
   }
 }
 

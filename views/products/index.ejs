@@ -8,13 +8,13 @@
           <div><%= name %><hr class="normal"align="center" /></div>
       
         </b>
-      </h1>
+      </h3>
     </div>
   </div>
   <!-- <hr class="pic thick mx-5"> -->
     
   <div  class="container-fluid">
-    <div class="row products-row d-flex justify-content-lg-start justify-content-around align-items-start">
+    <div class="row products-row d-flex justify-content-around align-items-start">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
       <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mb-5  d-flex justify-content-center">
