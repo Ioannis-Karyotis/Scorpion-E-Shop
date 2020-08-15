@@ -876,6 +876,43 @@ hr.normal{
     opacity:0.9;
   }
 }
+@media screen and (max-width:330px){
+  .projects-section {
+    box-shadow: 0px 12px 6px 7px rgba(0,0,0,0.67);
+    margin-top: -12em;
+  } 
+
+.content{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top:3em;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color:white;
+  text-align: center;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                 0px 8px 13px rgba(0,0,0,0.1),
+                 0px 18px 23px rgba(0,0,0,0.1);
+  }
+  .content-contact{
+    position:absolute;
+    padding:2em 2em;
+    top:50%;
+    font-size: 10px;
+    left:5em;
+    right:5em;
+    color:white;
+    text-align: center;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                 0px 8px 13px rgba(0,0,0,0.1),
+                 0px 18px 23px rgba(0,0,0,0.1);
+    background-color: #3A3E44;
+    border-radius: 5px;
+    opacity:0.9;
+  }
+}
 /*=========*/
 /*  Modals */
 /*=========*/
