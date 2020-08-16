@@ -1,13 +1,13 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container main pb-2 mb-5">
+<div id="main" class="main container-fluid main pb-2 mb-5">
   <% if(genError && genError.length > 0){ %>
     <div class=" alert-danger px-3 py-3 mx-auto" role="alert">
         <%= genError %>
     </div>
   <%}%>
-    <div class="row my-4">
-        <div class="col-md-5">
+    <div class="row my-4 justify-content-center">
+        <div class="col-lg-4 col-md-6 col-9 mb-2 mx-auto jumbotron-mini" style="padding:0px 0px;" >
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                 <% Object.keys(images).forEach(function(key) { %>
@@ -17,7 +17,7 @@
                     <% } else{ %>
                         ">
                     <% } %>
-                        <img class="d-block w-100 h-75 ml-1" src="<%=images[key].url%>" alt="">
+                        <img class="d-block w-100 h-100" src="<%=images[key].url%>" alt="">
                     </div>
                 <% }) %>
                 </div>
@@ -31,8 +31,8 @@
                 </a>
             </div>
         </div>
-        <div id="desc" class="col-md-7 mx-auto mt-3">
-          <div class="container">
+        <div id="desc" class="col-lg-8 col-md-12 col-12 mx-auto mt-1 bg-white"s>
+          <div class="container pb-3 jumbotron-mini" style="background-color: white;">
           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
             <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
               <div class="row">
@@ -72,12 +72,12 @@
             </form>  
           <%}else{%>
               <div class="row">
-                <div class="col-12 pt-3 d-flex justify-content-md-start justify-content-center ">
-                  <h4><%=product.name%></h4>
+                <div class="col-12 pt-3 d-flex justify-content-center ">
+                  <h2><%=product.name%></h2>
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 mt-1 d-flex justify-content-md-start  justify-content-center">
+                <div class="col-12 mt-1 d-flex justify-content-center">
                   <div class="star-ratings">
                     <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
                       <div>★★★★★</div>
@@ -89,22 +89,23 @@
                   <span class="pt-2 px-2 lol"style="font-size:1.4rem;">(<%=revCount %> Αξιολογήσεις)</span>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12 pt-2 pr-4 d-flex justify-content-md-start justify-content-end">
-                  <h4><%=product.price%>€</h4>
-                </div>
-              </div>
               <hr class="thin">
-              <div class="row">
-                <div class="col-12 mt-2 d-flex align-left">
+              <div class="row d-flex justify-content-center desc">
+                <div class="col-12 mt-2">
                   <h5><%= product.description%></h5>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-11 pt-2 pr-4 d-flex justify-content-end">
+                  <h3><%=product.price%>€</h3>
+                </div>
+              </div>
+              <hr class="thin"> 
             <%}%>
-                <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row py-4 d-flex justify-content-start"> 
-                    <div class="col-6 col-lg-4 align-center">
-                      Μέγεθος: <select id="tshirtSize" name="size" style="width:4em;display: inline-block;" class=" form-control">
+                <form class="mr-3" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
+                  <div class="row py-4 d-flex justify-content-center"> 
+                    <div class="col-6 col-lg-7" align="center">
+                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em; height:2.2em; display: block; text-align: center;" class=" form-control">
                         <% products.forEach(function(match) { %>
                             <% if(match.sizeStatus!="hidden"){ %>
                               <option> <%=match.size%> </option>
@@ -112,13 +113,18 @@
                         <%});%>
                       </select>
                     </div>
-                    <div class="col-5 col-lg-4 align-center" >
-                     Ποσότητα: <input type="number"  class="form-control" style="width:4em; display: inline-block;"  name="qty" value="1" min="1" max="99">
+                    <div class="col-6 col-lg-5" align="left">
+                     <span class="ml-3 pl-4">Ποσότητα:</span> 
+                      <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
+                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
+                        <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
+                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
+                      </div>  
                     </div>
                   </div>      
-                  <div class="row">
-                    <div class="col-12 d-flex justify-content-center justify-content-md-start">
-                      <div class="pt-3">
+                  <div class="row d-flex justify-content-center desc">
+                    <div class="col-12 d-flex justify-content-center">
+                      <div class="pt-3 ml-3">
                         <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
                           Προσθηκη στο καλαθι
                         </button>
@@ -137,32 +143,33 @@
                       <%});%>
                     </div>
                   <%}%>
-           
 
             </div>
         </div>
-    </div>
+    </div> 
     <hr class="pic thick mx-5 mt-5">
-    <div class="row mx-auto my-2" style="text-align:center">
-      <div class="mx-auto">
-        <h3>
-        Αξιολογήσεις
-        </h3>
+    <div class="pb-5 pt-2 mb-4" style="background-color: white;">
+      <div class="row mx-auto my-2 pb-4" style="text-align:center">
+        <div class="mx-auto">
+          <h1>
+          Αξιολογήσεις
+          </h1>
+        </div>
       </div>
-    </div>
 
-  <%if(product.reviews.length <= 0){ %>
-    <div class="row mx-auto my-2" style="text-align:center">
-      <div class="mx-auto">
-        <h5>
-        Δεν υπάρχουν αξιολογήσεις! Προσθέστε μία τώρα!
-        </h5>
+    <%if(product.reviews.length <= 0){ %>
+      <div class="row mx-auto my-2" style="text-align:center">
+        <div class="mx-auto">
+          <h5>
+          Δεν υπάρχουν αξιολογήσεις! Προσθέστε μία τώρα!
+          </h5>
+        </div>
       </div>
     </div>
   <%}%>
 
     <!-- <div class="py-4"style="background:#F5F5F5;"> -->
-      <form id="review-form" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
+      <form id="review-form" class="mb-5" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
         <input type="hidden" name="productId" value="<%=product._id%>">
         <div class="form-row">
