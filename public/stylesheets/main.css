@@ -472,14 +472,12 @@ hr.normal{
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
 }
 
-.btn-danger{
+.btn-dangerous{
   border: 0px;
   margin: 0px 0px;
   border-radius: 0px;
 }
-.btn-primary{
-  border-radius: 0px;
-}
+
 
 @media screen and (max-width:530px){
   .lol{
@@ -773,7 +771,7 @@ hr.normal{
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top:10em;
+  top:13em;
   left: 0;
   right: 0;
   text-align: center;
@@ -811,7 +809,7 @@ hr.normal{
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  top:10em;
+  top:13em;
   left: 0;
   right: 0;
   text-align: center;
@@ -1193,7 +1191,7 @@ hr.normal{
   }
 }
 
-@media screen and (max-width:1198px){
+@media screen and (max-width:1200px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
@@ -1269,42 +1267,38 @@ hr.normal{
   }
 }
 
-@media screen and (max-width:760px){
+@media screen and (max-width:768px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
-    /* border: 2px solid #888; */
     width: 80%;
-    height: 40em;
+    height: 50em;
      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 80%;
     height: 40em;
   }
-  .modal-desc{
-    visibility: hidden;
+  .hide{
+    display: none;
   }
   .card img{
     width:100%;
     height: 29rem;
   }
-  .product-col{
-    margin-bottom: -10em;
-  }
+  
 }
 
-@media screen and (max-width:690px){
+@media screen and (max-width:710px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
-    /* border: 2px solid #888; */
     width: 80%;
-    height: 40rem;
+    height: 50rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
@@ -1312,15 +1306,12 @@ hr.normal{
     width: 80%;
     height: 40rem;
   }
+  .hide{
+    display: none;
+  }
   .card img{
     width:100%;
     height:29rem;
-  }
-  .product-col{
-    margin-bottom: -15em;
-  }
-  .modal-desc{
-    visibility: hidden;
   }
 }
 
@@ -1330,9 +1321,8 @@ hr.normal{
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
-    /* border: 2px solid #888; */
     width: 80%;
-    height: 40rem;
+    height: 50rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
@@ -1340,15 +1330,12 @@ hr.normal{
     width: 80%;
     height: 40rem;
   }
+  .hide{
+    display: none;
+  }
   .card img{
     width:100%;
     height:26rem;
-  }
-  .product-col{
-    margin-bottom: -15em;
-  }
-  .modal-desc{
-    visibility: hidden;
   }
 }
 
@@ -1360,7 +1347,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 80%;
-    height: 35rem;
+    height: 45rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
@@ -1372,11 +1359,8 @@ hr.normal{
     width:100%;
     height:24rem;
   }
-  .product-col{
-    margin-bottom: -15em;
-  }
-  .modal-desc{
-    visibility: hidden;
+  .hide{
+    display: none;
   }
 }
 
@@ -1388,7 +1372,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 80%;
-    height: 35rem;
+    height: 45rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
@@ -1400,11 +1384,8 @@ hr.normal{
     width:100%;
     height:30rem;
   }
-  .product-col{
-    margin-bottom: -15em;
-  }
-  .modal-desc{
-    visibility: hidden;
+  .hide{
+    display: none;
   }
 }
 
@@ -1416,7 +1397,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 80%;
-    height: 35rem;
+    height: 45rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
@@ -1428,11 +1409,8 @@ hr.normal{
     width:100%;
     height:27rem;
   }
-  .product-col{
-    margin-bottom: -15em;
-  }
-  .modal-desc{
-    visibility: hidden;
+ .hide{
+    display: none;
   }
 }
 
@@ -1443,22 +1421,22 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 30rem;
+    height: 40rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 80%;
     height: 30rem;
   }
-  .modal-desc{
-    visibility: hidden;
-  }
   .card img{
-    width:100%;
+    width :100%;
     height:22rem;
   }
-  .product-col{
-    margin-bottom: -2em;
+  .card{
+    width:18rem;
+  }
+  .hide{
+    display: none;
   }
 }
 
@@ -1469,22 +1447,19 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 23rem;
+    height: 33rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 80%;
     height: 23rem;
   }
-  .modal-desc{
-    visibility: hidden;
-  }
   .card img{
     width:100%;
     height:20rem;
   }
-  .product-col{
-    margin-bottom: -4em;
+  .hide{
+    display: none;
   }
   
 }
@@ -1496,7 +1471,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 20rem;
+    height: 30rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1507,8 +1482,8 @@ hr.normal{
     width:100%;
     height:18rem;
   }
-  .modal-desc{
-    visibility: hidden;
+  .hide{
+    display: none;
   }
 }
 
@@ -1519,22 +1494,19 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 20rem;
+    height: 30rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 80%;
     height: 20rem;
   }
-  .modal-desc{
-    visibility: hidden;
-  }
   .card img{
     width:100%;
     height:17rem;
   }
-  .product-col{
-    margin-bottom: -15em;
+  .hide{
+    display: none;
   }
 }
 
