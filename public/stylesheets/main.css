@@ -1081,6 +1081,7 @@ hr.normal{
 .hidden{
   display: none;
 }
+
 @media screen and (max-width:4000px){
 
   .modal-content {

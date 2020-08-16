@@ -239,7 +239,7 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
-						var photo = "https://scorpion-store.herokuapp.com/images/blank.PNG"
+						var photo = "https://scorpion-store.herokuapp.com/images/blank.png"
 		    		}
 					var today = new Date();
 
