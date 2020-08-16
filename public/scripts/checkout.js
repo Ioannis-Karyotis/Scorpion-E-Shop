@@ -132,7 +132,7 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
       lineHeight: '60px',
       fontWeight: 500,
       fontFamily: 'Helvetica Neue',
-      fontSize: '18px',
+      fontSize: '14px',
 
       '::placeholder': {
         color: '#CFD7E0',
