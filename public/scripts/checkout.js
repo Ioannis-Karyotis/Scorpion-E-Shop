@@ -264,5 +264,5 @@ var changeLoadingState = function(isLoading) {
 
 function relocate(){
 
-  window.location.replace("http://localhost:3000/");
+  window.location.replace("https://scorpion-store.herokuapp.com/");
 }
