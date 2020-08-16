@@ -110,11 +110,11 @@
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
     <div class="modal-content animate " >
-        <button class="btn-danger Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
+        <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
             <i class="fas fa-times"></i>
         </button>
         <div id="inside_modal" class="row">
-          <div class="col-md-6 py-auto product-col">
+          <div class="col-md-6 py-auto">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 <% Object.keys(product.images).forEach(function(key) { %>
@@ -139,18 +139,18 @@
             </div>
           </div>
           <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-5 pb-sm-5 py-auto mx-auto modal-desc">
-              <div class="row">
+              <div class="row hide">
                 <div class="col-12 align-center"> <!--name -->
                   <h4><%=product.name %></h4>
                 </div>
               </div>
-              <hr class="thin mx-5">
-              <div class="row mx-1">
+              <hr class="thin mx-5 hide">
+              <div class="row mx-1 hide">
                 <div class="col-12 align-center">
                   <h4><%=product.price%>€</h4>
                 </div>
               </div>
-              <div class="row mx-1">
+              <div class="row mx-1 hide">
                 <div class="col-md-12 align-center">
                   <h6><%=product.description%></h6>
                 </div>

@@ -251,11 +251,25 @@
     font-size: 12px;
   }
 }
-@media screen and (max-width:400px){
+@media screen and (max-width:486px){
   .chkout{
-    margin: 10px 10px;
-    width: 300px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
     font-size: 12px;
   }
-
+  .card-element{
+    width: 99vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+  }
+  .chkout2{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    z-index: 10!important;
+    font-size: 12px;
+  }
 }
