@@ -19,16 +19,16 @@
 				</div>
 				<div class="col-md-9">
 					<% orders.forEach(function(order){ %>
-						<div class="container-sm"  style="background-color: white;">
+						<div class="container-sm jumbotron-mini my-4">
 						<div class="container-sm">
-							<div class="row pr-3 d-flex justify-content-end">	
+							<div class="row mb-2 d-flex justify-content-center">	
 								<span style="font-size: 14px;"><b>Ημερομηνία: </b><%=order.date %></span>
 							</div>	
-							<div class="row justify-content-start">
-								<h5 style="display: inline-block;"><b>ID παραγγελίας: </b><%=order._id %></h5>
+							<div class="row mb-2 justify-content-center desc">
+								<h5><b>ID παραγγελίας: </b></h5><span class="ml-2" style="font-size: 16px;"> <%=order._id %></span>
 							</div>
-							<div class="row d-flex justify-content-end">
-							<span style="float:right;" ><b>Μέθοδος: </b><%=order.method %></span>
+							<div class="row mb-2 d-flex justify-content-center">
+							<span style="font-size: 14px;" ><b>Μέθοδος: </b><%=order.method %></span>
 							</div>	
 						</div>	
 						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
