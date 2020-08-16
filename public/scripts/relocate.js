@@ -1,3 +1,3 @@
   setTimeout(function() {
-      window.location.replace("http://localhost:3000/login");
+      window.location.replace("https://scorpion-store.herokuapp.com/");
     }, 3000);
