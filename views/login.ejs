@@ -30,12 +30,12 @@
                 </div>
                 <a href="/fpass">Ξέχασες το κωδικό σου?</a>
                 <% if(error&& error.length > 0){ %>
-                    <div class="alert alert-danger mr-3" role="alert">
+                    <div class="alert alert-danger mr-3 my-4 desc" role="alert">
                         <%= error %>
                     </div>
                 <%}%>
                 <% if(genSuccess&& genSuccess.length > 0){ %>
-                    <div class="alert alert-success mr-3" role="alert">
+                    <div class="alert alert-success mr-3 my-4 desc" role="alert">
                         <%= genSuccess %>
                     </div>
                 <%}%>

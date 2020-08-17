@@ -142,4 +142,25 @@ router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { ses
 });
 
 
+router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('jwt', { session: false }), function(req, res){
+	console.log(req.autosan.body);
+	User.remove({ _id: req.autosan.body._id }, function(err) {
+	    if (err) {
+	        console.log(err.message);
+	    }
+	    else {
+	    	req.logout();
+	    	req.user = undefined;
+			cookie = req.cookies;
+		    for (var prop in cookie) {
+		        if (!cookie.hasOwnProperty(prop)) {
+		            continue;
+		        }    
+		        res.cookie(prop, '', {expires: new Date(0)});
+		    }
+	        res.send("ok");
+	    }
+	});
+});
+
 module.exports = router;
