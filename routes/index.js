@@ -60,7 +60,7 @@ router.get("/register",middleware.user,function(req,res){
 })
 
 
-router.post("/register",sanitization.route, middleware.namesur ,  middleware.emailExists, middleware.email , middleware.password ,function(req,res){
+router.post("/register",sanitization.route, middleware.namesur , middleware.emailExists, middleware.email , middleware.password ,function(req,res){
 	
 	var newUser = new User({
 	methods: 'local',
@@ -119,7 +119,7 @@ router.post('/login',sanitization.route, passport.authenticate('local', { failWi
 	},
 	function(err, req, res, next) {
 		// handle error
-		req.flash("error","Το E-mail δεν αντιστοιχεί σε κάποιο χρήστη");
+		req.flash("error","Το E-mail ή ο κωδικός δεν είναι σωστά");
 		res.redirect('back');
 	}
 );

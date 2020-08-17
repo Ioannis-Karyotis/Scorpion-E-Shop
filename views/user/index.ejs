@@ -76,6 +76,8 @@
 			                <input type="password" name="password" form="changeSecond" placeholder="Παλιός Κωδικός" class="form-control w-50 mb-2 secondi hidden">
 			                <input type="password" name="password2" form="changeSecond" placeholder="Επιβεβαίωση Παλιού Κωδικού" class="form-control mb-2 w-50 secondi hidden">
 			                <input type="password" name="passwordnew" form="changeSecond" placeholder="Καινούργιος Κωδικός" class="form-control mb-2 w-50 secondi hidden">
+			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
+			                <button class="btn btn-primary mt-4" onclick="deleteProfile(<%= JSON.stringify(currentUser) %>)" style="float: right;">Διαγραφη Λογαριασμου <i class="far fa-trash-alt fa-lg"></i></button>
 			                
 			            <%}else{%>
 							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
@@ -102,6 +104,30 @@
 		<%}%>	
 	</div>
 </div> 
+
+<!-- The Modal -->
+<div id="user-modal" class="modal-chk">
+  <!-- Modal content -->
+  <div class="modal-content-chk" style="border-radius: 5px;">
+  	<div class="container">
+  		<div class="row d-flex justify-content-center">
+  			<div class="circle-loader">
+	  			<div class="checkmark draw"></div>
+			</div>
+  		</div>
+	  	<div class="row  ">
+	  		<div class="col-12 d-flex justify-content-center">
+	  			<div class="desc result hidden">
+	  				<h3 style="display: inline-block;">Ο λογαριασμός έχει διαγραφεί επιτυχώς</h2>
+	  			</div>
+			</div>
+		</div>	
+	</div>
+  </div>
+</div>
+
+
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>   	
 <script type="text/javascript" src="/scripts/user.js"></script>
 <%- include("./../partials/footer")%>

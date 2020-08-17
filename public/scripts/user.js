@@ -36,6 +36,35 @@ function readURL(input) {
     }
 }
 
+function deleteProfile(user) {
+  var txt;
+  console.log(user.local.email);
+  var r = prompt("Πληκτρολόγησε το e-mail σου για επιβεβαίωση διαγραφής");
+  var modal = document.getElementById("user-modal");
+      
+  if (r != null && r == user.local.email ) {
+    modal.style.display = "block";
+    fetch("/user/deleteProfile", {
+        method: "DELETE",  
+        headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user)
+    })
+    .then(function() { 
+      $('.circle-loader').toggleClass('load-complete');
+      $('.checkmark').toggle();
+      document.querySelector(".result").classList.remove("hidden");
+      setTimeout(function() {
+        window.location.replace("http://localhost:3000/login");
+      }, 2000);             
+    })
+  }else{
+    alert("Πληκτρολόγησε το σωστο e-mail για επιβεβαίωση διαγραφής");
+  }
+}
+
+
 $("#imgInp").change(function(){
     readURL(this);
 });
