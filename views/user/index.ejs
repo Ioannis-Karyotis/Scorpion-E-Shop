@@ -77,7 +77,7 @@
 			                <input type="password" name="password2" form="changeSecond" placeholder="Επιβεβαίωση Παλιού Κωδικού" class="form-control mb-2 w-50 secondi hidden">
 			                <input type="password" name="passwordnew" form="changeSecond" placeholder="Καινούργιος Κωδικός" class="form-control mb-2 w-50 secondi hidden">
 			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
-			                <button class="btn btn-primary mt-4" onclick="deleteProfile(<%= JSON.stringify(currentUser) %>)" style="float: right;">Διαγραφη Λογαριασμου <i class="far fa-trash-alt fa-lg"></i></button>
+			                <button class="btn btn-primary mt-4 mb-4" onclick="deleteProfile(<%= JSON.stringify(currentUser) %>)" style="float: right;">Διαγραφη Λογαριασμου <i class="far fa-trash-alt fa-lg"></i></button>
 			                
 			            <%}else{%>
 							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
@@ -108,7 +108,7 @@
 <!-- The Modal -->
 <div id="user-modal" class="modal-chk">
   <!-- Modal content -->
-  <div class="modal-content-chk" style="border-radius: 5px;">
+  <div class="modal-content-chk chkout2" style="border-radius: 5px;">
   	<div class="container">
   		<div class="row d-flex justify-content-center">
   			<div class="circle-loader">
