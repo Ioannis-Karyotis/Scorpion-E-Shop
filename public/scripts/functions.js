@@ -81,5 +81,5 @@ function removeProduct(){
 
 
 function goToProduct(type, name){
-	window.location.replace("http://localhost:3000/products/"+type+"/"+name);
+	window.location.replace("https://scorpion-store.herokuapp.com/products/"+type+"/"+name);
 }
