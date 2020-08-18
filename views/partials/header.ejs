@@ -128,7 +128,7 @@
 														 <div class="col-8">
 															<div class="row mb-2 d-flex justify-content-start">
 																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
-																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;"><i><%= item.product.name %></i></label>
+																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;" onclick="goToProduct(<%=JSON.stringify(item.product.type)%>,<%=JSON.stringify(item.product.name)%>)"><i><%= item.product.name %></i></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>

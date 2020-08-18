@@ -78,3 +78,8 @@ function removeProduct(){
 		}
 	}
 }
+
+
+function goToProduct(type, name){
+	window.location.replace("http://localhost:3000/products/"+type+"/"+name);
+}
