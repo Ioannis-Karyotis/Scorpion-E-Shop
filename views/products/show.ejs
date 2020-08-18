@@ -7,7 +7,7 @@
     </div>
   <%}%>
     <div class="row my-4 justify-content-center">
-        <div class="col-lg-4 col-md-6 col-9 mb-2 mx-auto jumbotron-mini" style="padding:0px 0px;" >
+        <div class="col-lg-4 col-md-6 col-9 mb-2 jumbotron-mini showIMG" style="padding:0px 0px;" >
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                 <% Object.keys(images).forEach(function(key) { %>
@@ -31,7 +31,7 @@
                 </a>
             </div>
         </div>
-        <div id="desc" class="col-lg-8 col-md-12 col-12 mx-auto mt-1 bg-white"s>
+        <div id="desc" class="col-lg-7 col-md-12 col-12 mx-auto mt-1 bg-white"s>
           <div class="container pb-3 jumbotron-mini" style="background-color: white;">
           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
             <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
