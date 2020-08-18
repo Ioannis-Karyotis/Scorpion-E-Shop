@@ -1122,6 +1122,9 @@ hr.normal{
 .hidden{
   display: none;
 }
+.showIMG{
+    margin-left:4em;
+}
 
 @media screen and (max-width:4000px){
 
@@ -1307,6 +1310,9 @@ hr.normal{
   .card{
     width:80%;
   }
+  .showIMG{
+    margin-left:0em;
+  }
 }
 
 @media screen and (max-width:768px){
@@ -1330,7 +1336,9 @@ hr.normal{
     width:100%;
     height: 29rem;
   }
-  
+  .showIMG{
+    margin-left:0em;
+  }
 }
 
 @media screen and (max-width:710px){
