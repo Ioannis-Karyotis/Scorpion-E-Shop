@@ -158,8 +158,12 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
     currency: currency
     });
     
+    var date = new Date();
+    date.setTime(date.getTime() + (600 * 1000));
+
     res.cookie('Payment_Intent', paymentIntent , {
-        httpOnly: true
+      expires: date,
+      httpOnly: true
     });
   }else{
     paymentIntent = req.cookies["Payment_Intent"];
@@ -169,7 +173,7 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
   res.send({
     publishableKey: PUBLIC_STRIPE,
     clientSecret: paymentIntent.client_secret,
-    id : paymentIntent.id,
+    id : paymentIntent.id
   });
 
 });

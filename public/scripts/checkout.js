@@ -117,8 +117,14 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
       }     
   })
   .catch(function(error){ 
-    console.error(error);
-    window.location.reload();
+    var modal2 = document.getElementById("StripeModal");
+    modal2.style.display = "none";
+
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+    document.querySelector(".result3").classList.remove("hidden");
+    statusChange('failed');
   });  
 });
 
@@ -190,10 +196,18 @@ var pay =async function(stripe, card, clientSecret) {
         receipt_email : document.getElementById("email").value
     })
     .then(function(result) {
+      console.log(result);
       if (result.error) {
-        changeLoadingState(false);
-        document.querySelector(".loading").classList.add("hidden");
-        document.querySelector(".content-chk").classList.remove("hidden");
+        
+        var modal2 = document.getElementById("StripeModal");
+        modal2.style.display = "none";
+        
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
+        document.querySelector(".result3").classList.remove("hidden");
+        statusChange('failed');
+
       } else {
 
         var modal2 = document.getElementById("StripeModal");
@@ -228,10 +242,6 @@ var orderComplete = function(clientSecret) {
     $('.checkmark').toggle();
     document.querySelector(".result2").classList.remove("hidden");
        
-    // setTimeout(function() {
-    //   window.location.replace("http://localhost:3000/");
-    // }, 3000);
-
     changeLoadingState(false);
 
   }else{ //when the user pays with card
@@ -242,10 +252,6 @@ var orderComplete = function(clientSecret) {
       $('.circle-loader').toggleClass('load-complete');
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
-
-      // setTimeout(function() {
-      //   window.location.replace("http://localhost:3000/");
-      // }, 3000);
 
       changeLoadingState(false);
     });
@@ -263,6 +269,16 @@ var changeLoadingState = function(isLoading) {
 };
 
 function relocate(){
-
   window.location.replace("http://localhost:3000/");
+}
+
+function relocate2(){
+  window.location.replace("http://localhost:3000/checkout");
+}
+
+function statusChange(status){
+  var el = $('.circle-loader')
+  el.removeClass()
+  el.addClass('circle-loader');
+  el.addClass(status);
 }
