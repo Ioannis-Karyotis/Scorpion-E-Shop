@@ -234,6 +234,69 @@
      opacity: 1;
   }
 }
+ .failed {
+   -webkit-animation: none;
+   animation: none;
+   border-color: #f00;
+   transition: border opacity 500ms ease-out;
+}
+ .failed .status {
+   top: 50%;
+   left: 50%;
+   position: absolute;
+}
+ .failed .status.draw:before, .failed .status.draw:after {
+   animation-duration: 1.2s;
+   animation-timing-function: ease;
+   animation-name: crossmark;
+}
+ .failed .status.draw:before {
+   transform: scaleX(-1) rotate(45deg);
+}
+ .failed .status.draw:after {
+   transform: scaleX(-1) rotate(225deg);
+}
+ .failed .status:before, .failed .status:after {
+   opacity: 1;
+   height: 2em;
+   width: 2em;
+   transform-origin: left top;
+   border-right: 2px solid #f00;
+   border-top: 2px solid #f00;
+   content: '';
+   position: absolute;
+}
+ .failed .status:before {
+   left: calc(1.656854259em - 4px);
+   top: calc(4px - 1.656854259em);
+}
+ .failed .status:after {
+   left: calc(5.656854259px - 1.656854259em);
+   top: calc(1.656854259em - 2.8284271295px);
+}
+
+ @keyframes crossmark {
+   0% {
+     height: 0;
+     width: 0;
+     opacity: 1;
+  }
+   20% {
+     height: 0;
+     width: 2em;
+     opacity: 1;
+  }
+   40% {
+     height: 2em;
+     width: 2em;
+     opacity: 1;
+  }
+   100% {
+     height: 2em;
+     width: 2em;
+     opacity: 1;
+  }
+}
 .product-image img{
     width:4em;
     height:6em;
