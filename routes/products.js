@@ -130,14 +130,19 @@ router.get("/products/:type/:name", function(req ,res,next){
 		    if(foundProducts[0]!= null){
 		    	var lastReviews = await Review.find().sort({'date': -1}).limit(3).exec();
 		    	var countReviews = await Review.count().exec();
-
+		    	var validated = {};
+		    	if (req.app.locals.specialContext != null) {
+		    		validated = req.app.locals.specialContext;
+		    		
+		    		req.app.locals.specialContext = null;
+		    	}
 			    var images = foundProducts[0].images;
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images,admin:null});
-			    	}
-			        return res.render("products/show", {product: foundProducts[0], products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin"});
+			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images,admin:null, validated :validated});
+			    	}			    	
+			        return res.render("products/show", {product: foundProducts[0], products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin" , validated :validated});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");

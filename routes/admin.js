@@ -109,7 +109,7 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 });
 
 router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body } , function (err, data) {
+	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
 	    if (err) {
 	        console.log(err);
 	    } else {

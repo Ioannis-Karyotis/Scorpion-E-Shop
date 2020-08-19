@@ -10,7 +10,6 @@
         <a href="#contact-form" class="btn btn-primary btn-lg">Επικοινωνηστε μαζι μας</a>
     </div>
 </div>
-
 <div class="container-fluid main mb-5" align="center">
     <div class="row d-flex justify-content-around">
     	<div class="col-12 col-md-6 py-3 ">
@@ -20,7 +19,7 @@
 					<hr class="thick">
 					<%if(user) {%>
 					<div class="form-group mx-1">
-		                <span class="form-group mx-1">
+		                <span class="d-flex align-items-center">
 		                	<input type="text" name="name" class="form-control" placeholder="Όνομα" value="<%= user[method].name %>" required>
 		                	<i class="fas fa-info-circle fa-lg ml-1">
 		                		<div class="tooltiptext">Σε αυτό το πεδίο εισάγετε το Όνομά σας</div>
@@ -78,12 +77,12 @@
 		                <button class="btn btn-primary mr-3" style="width:15em;" type="submit">Αποστολη</button>
 		            </div>
 		            <% if(regError&& regError.length > 0){ %>
-						<div class="alert alert-danger mr-3" role="alert">
+						<div id="error" class="alert alert-danger mr-3" role="alert">
 							<%= regError %>
 						</div>
 					<%}%>
 					<% if(genSuccess&& genSuccess.length > 0){ %>
-						<div class="alert alert-success mr-3" role="alert">
+						<div id="success" class="alert alert-success mr-3" role="alert">
 							<%= genSuccess %>
 						</div>
 					<%}%>
@@ -106,6 +105,8 @@
 		    </div>
 		</div>	
 	</div>	
-</div>				
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/scripts/contact.js"></script>
 
 <%- include("./../partials/footer")%>
