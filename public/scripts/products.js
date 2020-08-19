@@ -1,3 +1,11 @@
+$(document).ready(function() { 
+  if (document.getElementById("error") != null) {
+    var elmnt = document.getElementById("error");
+      elmnt.scrollIntoView();
+  }
+});
+
+
 var deleteProduct = function(name,type){
    	var txt;
 	var r = confirm("Are you sure");

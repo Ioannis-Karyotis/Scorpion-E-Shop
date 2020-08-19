@@ -206,16 +206,16 @@ middlewareObj.address = function (req , res ,  next){
 
 middlewareObj.rating = function (req , res ,  next){
 
-  if (req.autosan.body.rating != null)
+  if (req.autosan.body.rating != null && req.autosan.body.author != '')
     {
       return next();
     }else{
       res.app.locals.specialContext = 
       {
-          name : req.autosan.body.name,
-          description : req.autosan.body.surname,
+          author : req.autosan.body.author,
+          description : req.autosan.body.description,
       }
-      req.flash("genError","Παρακαλώ εισάγετε μία έγκυρη βαθμολογία");
+      req.flash("genError","To Όνομα και η βαθμολογία είναι υποχρεωτικά");
       res.redirect("back");   
     }
 

@@ -273,21 +273,33 @@
 </tr>
 </tbody>
 </table>
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 60px; padding-left: 60px; padding-top: 15px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
-<div style="color:#d5d4d4;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:15px;padding-right:60px;padding-bottom:0px;padding-left:60px;">
-<div style="line-height: 1.8; font-size: 12px; color: #d5d4d4; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;">
-<% if(order.method === "Παραλαβή από το κατάστημα"){ %>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Μπορείτε να περάσετε απο το κατάστημα για να τη παραλάβετε</span></p>
-<% }else if(order.method === "Αποστολή με αντικαταβολή") {%>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Θα σας σταλθεί  e-mail, σχετικά με τη διαδικασία αποστολής </span></p>
-<% } else if(order.method === "Πληρωμή με κάρτα") { %>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
-<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Θα σας σταλθεί  e-mail, σχετικά με τη διαδικασία αποστολής </span></p>
-<% } %>
-</div>
-</div>
+<% if (option == "mail2") { %>
+	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 60px; padding-left: 60px; padding-top: 15px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
+	<div style="color:#d5d4d4;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:15px;padding-right:60px;padding-bottom:0px;padding-left:60px;">
+	<div style="line-height: 1.8; font-size: 12px; color: #d5d4d4; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;">
+	<% if(order.method === "Παραλαβή από το κατάστημα"){ %>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Μπορείτε να περάσετε απο το κατάστημα για να τη παραλάβετε</span></p>
+	<% }else if(order.method === "Αποστολή με αντικαταβολή") {%>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Θα σας σταλθεί  e-mail, σχετικά με τη διαδικασία αποστολής </span></p>
+	<% } else if(order.method === "Πληρωμή με κάρτα") { %>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Η παραγγελία σας είναι έτοιμη</span></p>
+	<p style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;">Θα σας σταλθεί  e-mail, σχετικά με τη διαδικασία αποστολής </span></p>
+	<% } %>
+	</div>
+	</div>
+
+<%}else if(option == "mail3"){ %>
+	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 60px; padding-left: 60px; padding-top: 15px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
+	<div style="color:#d5d4d4;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:15px;padding-right:60px;padding-bottom:0px;padding-left:60px;">
+	<div style="line-height: 1.8; font-size: 12px; color: #d5d4d4; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;">
+	<p align="center" style="font-size: 16px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 29px; margin: 0;"><span style="font-size: 16px;"><h1> <a href="https://scorpion-store.herokuapp.com/fpass/<%=hash%>">Link επαναφοράς κωδικού</a></h1></span></p>
+	</div>
+	</div>
+<%}%>
+
+
 <!--[if mso]></td></tr></table><![endif]-->
 <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" width="100%">
 <tbody>

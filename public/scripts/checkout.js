@@ -1,3 +1,10 @@
+$(document).ready(function() { 
+  if (document.getElementById("error") != null) {
+    var elmnt = document.getElementById("payment-form");
+      elmnt.scrollIntoView();
+  }
+});
+
 var stripe
 
 var orderData = { //orderData are being used for creating the Payment Intent
@@ -117,14 +124,16 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
       }     
   })
   .catch(function(error){ 
-    var modal2 = document.getElementById("StripeModal");
-    modal2.style.display = "none";
+    // var modal2 = document.getElementById("StripeModal");
+    // modal2.style.display = "none";
 
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";
+    // var modal = document.getElementById("myModal");
+    // modal.style.display = "block";
 
-    document.querySelector(".result3").classList.remove("hidden");
-    statusChange('failed');
+    // document.querySelector(".result3").classList.remove("hidden");
+    // statusChange('failed');
+    console.error(error);
+    window.location.reload();
   });  
 });
 
