@@ -79,16 +79,14 @@ function removeProduct(){
 	}
 }
 
-<<<<<<< Updated upstream
-
 function goToProduct(type, name){
 	window.location.replace("https://scorpion-store.herokuapp.com/products/"+type+"/"+name);
-=======
+}
+
 function MakePhoneCall(){
 	window.open('tel:2310281363');
 }
 
 function ScrollToTop(){
 	window.scrollTo(0,0);
->>>>>>> Stashed changes
 }
