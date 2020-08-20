@@ -491,6 +491,9 @@ hr.normal{
   .lol{
     display: none;
   }  
+}
+
+@media screen and (max-width:1000px){
   .phonecall{
     position: fixed;
     bottom: 9em;
@@ -516,7 +519,6 @@ hr.normal{
     z-index: 5!important;
   }
 }
-
 
 /*==============*/
 /*    NavBar    */
