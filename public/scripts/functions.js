@@ -78,3 +78,11 @@ function removeProduct(){
 		}
 	}
 }
+
+function MakePhoneCall(){
+	window.open('tel:2310281363');
+}
+
+function ScrollToTop(){
+	window.scrollTo(0,0);
+}
