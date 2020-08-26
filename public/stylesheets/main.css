@@ -477,47 +477,30 @@ hr.normal{
   margin: 0px 0px;
   border-radius: 0px;
 }
+
 .phonecall{
-  position: absolute;
-  display: none;
+  position: fixed;
+  bottom: 9em;
+  right:1em;
+  display:block;
+  border-radius: 100%;
+  color:white;
+  width:5em;
+  height: 5em;
+  background-color: #2D2B30;
+  z-index: 5!important;
 }
 .scrollToTop{
-  position: absolute;
-  display: none;
-
-}
-
-@media screen and (max-width:530px){
-  .lol{
-    display: none;
-  }  
-}
-
-@media screen and (max-width:1000px){
-  .phonecall{
-    position: fixed;
-    bottom: 9em;
-    right:1em;
-    display:block;
-    border-radius: 100%;
-    color:white;
-    width:5em;
-    height: 5em;
-    background-color: #2D2B30;
-    z-index: 5!important;
-  }
-  .scrollToTop{
-    position: fixed;
-    bottom: 3em;
-    right:1em;
-    display:block;
-    border-radius: 100%;
-    color:white;
-    width:5em;
-    height: 5em;
-    background-color: #2D2B30;
-    z-index: 5!important;
-  }
+  position: fixed;
+  bottom: 3em;
+  right:1em;
+  display:block;
+  border-radius: 100%;
+  color:white;
+  width:5em;
+  height: 5em;
+  background-color: #2D2B30;
+  z-index: 5!important;
 }
 
 /*==============*/

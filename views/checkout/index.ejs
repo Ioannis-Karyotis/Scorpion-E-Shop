@@ -34,9 +34,9 @@
 					<button style="float: right"class="btn btn-primary mt-2"onclick="relocate()">Ενταξει</button>	
 	  			</div>
 	  			<div class="desc result3 hidden">
-	  				<h3  style="display: inline-block;">Κάτι πήγε στραβά</h3>
-					<h5  style="display: inline-block;">Παρακαλώ προσπαθήστε αργότερα</h5><br>
-					<button style="float: right"class="btn btn-primary mt-2"onclick="relocate2()">Ενταξει</button>	
+	  				<h3 class="mb-3" style="display: inline-block;">Κάτι πήγε στραβά</h3>
+					<h5  id="errormsg"  style="display: inline-block;"></h5><br>
+					<button style="float: right"class="btn btn-primary mt-5"onclick="relocate2()">Ενταξει</button>	
 	  			</div>
 			</div>
 		</div>	
@@ -101,12 +101,13 @@
 							<div id="card-element" class="chk-field"></div>
 						</label>
 					</div>
+					<div class="sr-field-error desc" style="color:red;"></div>	
 					<div class="payment ">
 						<button type="submit" id="finalPay" class="btn btn-primary">
 		            		<span id="button-text-pay">Πληρωμη</span>
 		          		</button>
 		          	</div>
-		        </form>  					
+		        </form>		
 			</div>
 		</div>		
 	</div>

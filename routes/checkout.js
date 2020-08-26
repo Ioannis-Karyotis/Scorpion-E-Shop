@@ -18,6 +18,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 
 
 router.post("/post_order",sanitization.route, async function(req,res){
+  console.log(req.autosan.body.paymentIntent.id);
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   var today = new Date();
@@ -78,9 +79,10 @@ router.post("/post_order_sent",sanitization.route,async function(req,res){
   }else{
     method = "Αποστολή με αντικαταβολή"
   }
-  console.log(req.autosan.body.payment_id);
-  //lol = await stripesk.paymentIntents.cancel(req.autosan.body.payment_id);
 
+  if(req.cookies["Payment_Intent"]){
+    await stripesk.paymentIntents.cancel(req.cookies["Payment_Intent"].id);
+  }
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -145,37 +147,50 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice, async (req, res) => {
   const { currency } = req.autosan.body;
   const total = req.session.cart.totalPrice * 100;
-  var paymentIntent = null;
-  // Create a PaymentIntent with the order amount and currency
-  if(req.cookies["Payment_Intent"] === undefined || req.cookies["Payment_Intent"].amount != total ){
+  var paymentIntent = req.cookies["Payment_Intent"];
+  try{
+    if(req.cookies["Payment_Intent"] === undefined){
 
-    if(req.cookies["Payment_Intent"] && req.cookies["Payment_Intent"].amount != total){
-      await stripesk.paymentIntents.cancel(req.cookies["Payment_Intent"].id);
+      paymentIntent = await stripesk.paymentIntents.create({
+        amount: total,
+        currency: currency
+      });
+
+      var date = new Date();
+      date.setTime(date.getTime() + (600 * 1000));
+      res.cookie('Payment_Intent', paymentIntent , {
+        expires: date,
+        httpOnly: true
+      });
+
+    }else if(req.cookies["Payment_Intent"] && req.cookies["Payment_Intent"].amount != total){
+
+      paymentIntent = await stripesk.paymentIntents.update(req.cookies["Payment_Intent"].id,
+        {
+          amount : total,
+          currency : currency
+        });
+      var date = new Date();
+      date.setTime(date.getTime() + (600 * 1000));
+      res.cookie('Payment_Intent', paymentIntent , {
+        expires: date,
+        httpOnly: true
+      });
     }
 
-    paymentIntent = await stripesk.paymentIntents.create({
-    amount: total,
-    currency: currency
+    console.log(paymentIntent);
+    // Send publishable key and PaymentIntent details to client
+    res.send({
+      publishableKey: PUBLIC_STRIPE,
+      clientSecret: paymentIntent.client_secret
     });
-    
-    var date = new Date();
-    date.setTime(date.getTime() + (600 * 1000));
-
-    res.cookie('Payment_Intent', paymentIntent , {
-      expires: date,
-      httpOnly: true
-    });
-  }else{
-    paymentIntent = req.cookies["Payment_Intent"];
   }
-
-  // Send publishable key and PaymentIntent details to client
-  res.send({
-    publishableKey: PUBLIC_STRIPE,
-    clientSecret: paymentIntent.client_secret,
-    id : paymentIntent.id
-  });
-
+  catch(error){
+    res.send({
+      error : error
+    });
+  }
+  
 });
 
 // Expose a endpoint as a webhook handler for asynchronous events.
