@@ -477,20 +477,8 @@ hr.normal{
   margin: 0px 0px;
   border-radius: 0px;
 }
-.phonecall{
-  position: absolute;
-  display: none;
-}
-.scrollToTop{
-  position: absolute;
-  display: none;
 
-}
 
-@media screen and (max-width:530px){
-  .lol{
-    display: none;
-  }  
   .phonecall{
     position: fixed;
     bottom: 9em;
@@ -515,7 +503,6 @@ hr.normal{
     background-color: #2D2B30;
     z-index: 5!important;
   }
-}
 
 
 /*==============*/

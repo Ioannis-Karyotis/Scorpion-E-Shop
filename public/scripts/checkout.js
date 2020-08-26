@@ -98,19 +98,23 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             },
             body: JSON.stringify(orderData)
           })
-          .then(function(result) {   
+          .then(function(result) {
+
+            if (result.error) {
+              console.log(result.error);
+              var modal2 = document.getElementById("StripeModal");
+              modal2.style.display = "none";
+              
+              var modal = document.getElementById("myModal");
+              modal.style.display = "block";
+
+              document.querySelector(".result3").classList.remove("hidden");
+              document.getElementById("errormsg").innerHTML = result.error.message;
+              statusChange('failed');
+            } 
             return result.json();
           })
           .then(function(data) {
-            
-            if(data.CartDoesNotMatchError || data.CartDoesNotMatchError == "error"){
-              modal2.style.display = "none";
-              var modal4 = document.getElementById("CartDoesNotMatchModal");
-              modal4.style.display = "block";
-              setTimeout(function () {    
-                  window.location.replace("http://localhost:3000/");
-              }, 3000);
-            }
             return setupElements(data); //Setup the the card element along with the order data that were sent to the server
           })
           .then(function({ stripe, card, clientSecret, id }) {
@@ -124,14 +128,6 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
       }     
   })
   .catch(function(error){ 
-    // var modal2 = document.getElementById("StripeModal");
-    // modal2.style.display = "none";
-
-    // var modal = document.getElementById("myModal");
-    // modal.style.display = "block";
-
-    // document.querySelector(".result3").classList.remove("hidden");
-    // statusChange('failed');
     console.error(error);
     window.location.reload();
   });  
@@ -159,14 +155,17 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
     }
   };
 
-  var card = elements.create("card", { style: style });
+  var card = elements.create("card", { 
+    style: style,
+    hidePostalCode : true 
+  });
+
   card.mount("#card-element");
 
   return {
     stripe: stripe,
     card: card,
-    clientSecret: data.clientSecret,
-    id : data.id
+    clientSecret: data.clientSecret
   };
 };
 
@@ -207,16 +206,23 @@ var pay =async function(stripe, card, clientSecret) {
     .then(function(result) {
       console.log(result);
       if (result.error) {
-        
-        var modal2 = document.getElementById("StripeModal");
-        modal2.style.display = "none";
-        
-        var modal = document.getElementById("myModal");
-        modal.style.display = "block";
+        console.log(result.error);
 
-        document.querySelector(".result3").classList.remove("hidden");
-        statusChange('failed');
+        if(result.error.code == "incomplete_number" || result.error.code == "incomplete_expiry" || result.error.code == "incomplete_cvc"){
+          document.querySelector(".content-chk").classList.remove("hidden");
+          document.querySelector(".loading").classList.add("hidden");
+          showError(result.error.message);
+        }else{
+          var modal2 = document.getElementById("StripeModal");
+          modal2.style.display = "none";
+          
+          var modal = document.getElementById("myModal");
+          modal.style.display = "block";
 
+          document.querySelector(".result3").classList.remove("hidden");
+          document.getElementById("errormsg").innerHTML = result.error.message;
+          statusChange('failed');
+        }
       } else {
 
         var modal2 = document.getElementById("StripeModal");
@@ -291,3 +297,12 @@ function statusChange(status){
   el.addClass('circle-loader');
   el.addClass(status);
 }
+
+var showError = function(errorMsgText) {
+  changeLoadingState(false);
+  var errorMsg = document.querySelector(".sr-field-error");
+  errorMsg.textContent = errorMsgText;
+  setTimeout(function() {
+    errorMsg.textContent = "";
+  }, 4000);
+};
