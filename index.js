@@ -1,6 +1,7 @@
 const app 	 	= require('./app'),
 	  dotenv 	= require('dotenv'),
 	  Untracked = require("./models/untrackedPayment"),
+	  User 		= require("./models/user"),
 	  cron 	 	= require("node-cron"),
 	  {SECRET_STRIPE} = require('./configuration'),
 	  stripesk  = require("stripe")(SECRET_STRIPE),
@@ -20,6 +21,19 @@ cron.schedule("0 */2 * * *", function() {
       		})
       	}
       })
+      var date = new Date();
+      User.find({"local.forgotValidUntil" : { $lt : date}},function(err, users){
+      	if(err){
+          	console.log(err)
+      	}else{
+      		users.forEach(async function(user){
+      			user.local.forgotPassHash = null;
+ 				user.local.forgotPassSalt = null;
+ 				user.local.forgotValidUntil = null;
+ 				user.save();
+      		})
+      	}
+      });
 });
 
 // Start the server

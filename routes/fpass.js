@@ -9,6 +9,7 @@ const express 		= require("express"),
 	  {JWT_SECRET}  = require('../configuration'),
  	  config 		= require('../configuration'),
 	  crypto 		= require('crypto'),
+	  objEncDec     = require('object-encrypt-decrypt');
 	  nodemailer 	= require('nodemailer'),
 	  ejs       	= require("ejs"),
 	  smtpTransport = require('nodemailer-smtp-transport'),
@@ -60,10 +61,10 @@ const express 		= require("express"),
 			        ];
 	  
 
-const signToken = function(email) {
+const signToken = function(hashobj) {
   return JWT.sign({
     iss: 'Scorpion',
-    sub: email,
+    sub: hashobj,
     iat: new Date().getTime(), // current time
     exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
   }, JWT_SECRET);
@@ -85,22 +86,32 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
 
 	var email = req.autosan.body.email
 
-	const token = signToken(email);
+	var user = await User.findOne({ "local.email": email }).exec();
+
+	var salt = crypto.randomBytes(16).toString('hex');
+  	var hash = crypto.pbkdf2Sync(email, salt, 10000, 512, 'sha512').toString('hex');
+  	var date = new Date();
+    date.setTime(date.getTime() + (600 * 1000));
+  
+ 	user.local.forgotPassHash = hash;
+ 	user.local.forgotPassSalt = salt;
+ 	user.local.forgotValidUntil = date;
+
+ 	var hashobj = {
+ 		hash : hash,
+ 		email : email
+ 	}
+	
+	hashobj = objEncDec.encrypt(hashobj);
+ 	user.save();
+
+ 	const token = signToken(hashobj);
 	res.cookie('Change_Pass', token, {
 		maxAge: 0.1 * 60 * 60 * 1000 ,
   		httpOnly: true
 	});
 
-	var user = await User.findOne({ "local.email": email }).exec();
-
-	var salt = crypto.randomBytes(16).toString('hex');
-  	var hash = crypto.pbkdf2Sync(email, salt, 10000, 512, 'sha512').toString('hex');
-  
- 	user.local.forgotPassHash = hash;
- 	user.local.forgotPassSalt = salt;
- 	user.save();
-
- 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hash : hash , option: "mail3" ,order :null } , function (err, data) {
+ 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hashobj : hashobj , option: "mail3" ,order :null } , function (err, data) {
 	    if (err) {
 	        console.log(err);
 	    } else {
@@ -122,51 +133,49 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
 			});
 	    }  
 	})
-
-	// var mainOptions = {
-	//   	from: String(config.EMAIL),
-	//   	to: String(req.autosan.body.email),
-	//   	subject: 'Αλλαγή Κωδικού Πρόσβασης',
-	//   	html : '<div> <a href="https://scorpion-store.herokuapp.com/fpass/'+ hash +'">Link επιβεβαίωσης</a></div>'
-	// };
-				
-	// transporter.sendMail(mainOptions, function(error, info){
-	//   	if (error) {
-	//     	console.log(error);
-	//   	} else {
-			  
-	// 	}
-	// });
 });
 
-router.get("/fpass/:emailHash", passport.authenticate('forgot_pass', { session: false }), function(req,res){
-	res.render("fpass/add",{ email : req.params.emailHash});	
+router.get("/fpass/:hashobj", passport.authenticate('forgot_pass', { session: false }), function(req,res){
+	res.render("fpass/add",{ email : req.params.hashobj});	
 });
 
-router.post("/fpass/:emailHash", sanitization.route, middleware.email,  middleware.emailExistsLocal, middleware.password ,passport.authenticate('forgot_pass', { session: false }),async function(req,res){
-	var hash = req.params.emailHash;
+router.post("/fpass/:hashobj", sanitization.route, middleware.password ,passport.authenticate('forgot_pass', { session: false }),async function(req,res){
+	var hashobj = req.params.hashobj;
+	hashobj = objEncDec.decrypt(hashobj);
+	console.log(hashobj);
 
-	var user = await User.findOne({ "local.email": req.autosan.body.email }).exec();
-	var hash2 = crypto.pbkdf2Sync(user.local.email , user.local.forgotPassSalt, 10000, 512, 'sha512').toString('hex');
+	var user = await User.findOne({ "local.email": hashobj.email },function(err ,user){
+		if(err || user == null || user == undefined){
+			console.log("lol");
+			res.render('fpass/error');
+		}else{
+			console.log(user);
+			var hash2 = crypto.pbkdf2Sync(user.local.email , user.local.forgotPassSalt, 10000, 512, 'sha512').toString('hex');
+			
+			if(hashobj.hash == hash2){
+				user.setPassword(req.autosan.body.password);
+				user.local.forgotPassHash = null;
+ 				user.local.forgotPassSalt = null;
+ 				user.local.forgotValidUntil = null;
+				user.save();
+				req.user = undefined;
+				cookie = req.cookies;
+			    for (var prop in cookie) {
+			        if (!cookie.hasOwnProperty(prop)) {
+			            continue;
+			        }    
+		        res.cookie(prop, '', {expires: new Date(0)});
+		    	}
+				console.log("password changed");
+				res.render('fpass/success');
 
-	req.user = undefined;
-	cookie = req.cookies;
-    for (var prop in cookie) {
-        if (!cookie.hasOwnProperty(prop)) {
-            continue;
-        }    
-        res.cookie(prop, '', {expires: new Date(0)});
-    }
-
-	if(hash == hash2){
-		user.setPassword(req.autosan.body.password);
-		user.save();
-		console.log("password changed");
-		res.render('fpass/success');
-	}else{
-		console.log("password didnt change");
-		res.render('fpass/error');	
-	}
+			}else{
+				console.log("password didnt change");
+				res.render('fpass/error');	
+			}
+		}
+	});
+	
 });
 
 module.exports = router;
