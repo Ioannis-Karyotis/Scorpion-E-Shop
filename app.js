@@ -17,7 +17,7 @@ const express 		= require("express"),
 	Product			= require("./models/product"),
 	seedDB			= require("./seeds"),
 	session			= require("express-session"),
-	mongoStore		= require('connect-mongo')(session);
+	mongoStore		= require('connect-mongo')(session),
 	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv");
 
 
@@ -110,5 +110,6 @@ app.use(cartRoutes);
 app.use(customRoutes);
 app.use(contactRoutes);
 app.use(fpassRoutes);
+
 
 module.exports = app;

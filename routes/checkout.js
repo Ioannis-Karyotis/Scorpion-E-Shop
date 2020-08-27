@@ -3,13 +3,16 @@ const express 			  = require("express"),
  	    Product 			  = require("../models/product"),
       Order           = require("../models/order"),
       Cart            = require("../models/cart"),
+      Untracked       = require("../models/untrackedPayment"),
 	    {SECRET_STRIPE} = require('../configuration'),
 	    {PUBLIC_STRIPE}	= require('../configuration'),
 	    {WEBHOOK_SECRET}= require('../configuration'),
 	   	stripesk 		    = require("stripe")(SECRET_STRIPE),
  		  stripepk 		    = require('stripe')(PUBLIC_STRIPE),
       middleware      = require("../middleware/index.js"),
-      sanitization    = require('express-autosanitizer');
+      sanitization    = require('express-autosanitizer'),
+      objEncDec       = require('object-encrypt-decrypt');
+
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -65,23 +68,29 @@ router.post("/post_order",sanitization.route, async function(req,res){
         order.save();  
         }
       });
+  var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
+  await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
+
   req.session.cart = null;
   req.session.productList = null
   req.app.locals.specialContext = null;
-  res.clearCookie('Payment_Intent');
+  res.clearCookie('stripe-gate');
   res.send({result : "succeeded"});
 })
 
 router.post("/post_order_sent",sanitization.route,async function(req,res){
   var method = "";
+ 
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
     method = "Αποστολή με αντικαταβολή"
   }
 
-  if(req.cookies["Payment_Intent"]){
-    await stripesk.paymentIntents.cancel(req.cookies["Payment_Intent"].id);
+  if(req.cookies["stripe-gate"] != undefined){
+    var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
+    await stripesk.paymentIntents.cancel(paymentIntent.id);
+    await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
   }
 
   var today = new Date();
@@ -132,7 +141,7 @@ router.post("/post_order_sent",sanitization.route,async function(req,res){
   req.session.cart = null;
   req.session.productList = null
   req.app.locals.specialContext = null;
-  res.clearCookie('Payment_Intent');
+  res.clearCookie('stripe-gate');
   res.send({result : "succeeded"});
 })
 
@@ -147,10 +156,12 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice, async (req, res) => {
   const { currency } = req.autosan.body;
   const total = req.session.cart.totalPrice * 100;
-  var paymentIntent = req.cookies["Payment_Intent"];
+  var paymentIntent = null;
+  var untracked = await Untracked.count();
+  console.log("untracked is: " + untracked);
   try{
-    if(req.cookies["Payment_Intent"] === undefined){
-
+    if(req.cookies["stripe-gate"] === undefined){
+      console.log("Got old1 new case");
       paymentIntent = await stripesk.paymentIntents.create({
         amount: total,
         currency: currency
@@ -158,27 +169,58 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
 
       var date = new Date();
       date.setTime(date.getTime() + (600 * 1000));
-      res.cookie('Payment_Intent', paymentIntent , {
+      res.cookie('stripe-gate', objEncDec.encrypt(paymentIntent) , {
         expires: date,
         httpOnly: true
       });
+      var trackPaymentIntent = {
+        paymentIntentId : paymentIntent.id,
+        date : date
+      }
+      await Untracked.create(trackPaymentIntent);
 
-    }else if(req.cookies["Payment_Intent"] && req.cookies["Payment_Intent"].amount != total){
+    }else if(req.cookies["stripe-gate"] != undefined && untracked == 0){
+      
+      console.log("Got into new case");
 
-      paymentIntent = await stripesk.paymentIntents.update(req.cookies["Payment_Intent"].id,
+      var date = new Date();
+      date.setTime(date.getTime() + (600 * 1000));
+
+      paymentIntent = await stripesk.paymentIntents.create({
+        amount: total,
+        currency: currency
+      });
+
+      res.cookie('stripe-gate', objEncDec.encrypt(paymentIntent) , {
+        expires: date,
+        httpOnly: true,
+        overwrite: true
+      });
+      
+      var trackPaymentIntent = {
+        paymentIntentId : paymentIntent.id,
+        date : date
+      }
+      await Untracked.create(trackPaymentIntent);
+
+    }else if(req.cookies["stripe-gate"] && objEncDec.decrypt(req.cookies["stripe-gate"]).amount != total){
+      console.log("Got old2 new case");
+      paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
+      paymentIntent = await stripesk.paymentIntents.update(paymentIntent.id,
         {
           amount : total,
           currency : currency
         });
       var date = new Date();
       date.setTime(date.getTime() + (600 * 1000));
-      res.cookie('Payment_Intent', paymentIntent , {
+      res.cookie('stripe-gate', paymentIntent , {
         expires: date,
-        httpOnly: true
+        httpOnly: true,
+        overwrite: true
       });
     }
 
-    console.log(paymentIntent);
+    console.log("paymentIntent is: " + paymentIntent);
     // Send publishable key and PaymentIntent details to client
     res.send({
       publishableKey: PUBLIC_STRIPE,
