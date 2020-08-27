@@ -6,7 +6,8 @@ const mongoose = require('mongoose'),
       GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
       {ExtractJwt } = require('passport-jwt'),
       User    = require("../models/user"),
-      Admin    = require("../models/admin"),
+      Admin    = require("../models/admin"),   
+      objEncDec     = require('object-encrypt-decrypt');
       config = require('./index');
 
 const cookieExtractor = function(req) {
@@ -85,13 +86,19 @@ passport.use('forgot_pass', new JwtStrategy({
   passReqToCallback: true
 }, function(req, payload, done){
     process.nextTick(function(){
-      const user = User.findOne({"local.email": payload.sub }, function(err,user){
+      hashobj = objEncDec.decrypt(payload.sub);
+
+      const user = User.findOne({"local.email": hashobj.email , "local.forgotPassHash" : hashobj.hash }, function(err,user){
         if(err){
           done(error, false);
         }
-      
-        if (!user) {
-          console.log("user doens't exist");
+        var date = new Date();
+        if (!user || user.local.forgotValidUntil < date) {
+          user.local.forgotPassHash = null;
+          user.local.forgotPassSalt = null;
+          user.local.forgotValidUntil = null;
+          user.save();
+          console.log("Not authenticated");
           return done(null, false);
         }
         done(null, user);

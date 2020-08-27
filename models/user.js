@@ -23,7 +23,8 @@ var UserSchema = new mongoose.Schema({
 		hash: String,
 		salt: String,
 		forgotPassHash: String,
-		forgotPassSalt: String
+		forgotPassSalt: String,
+		forgotValidUntil : Date
 	},
 	google: {
 	    id: {
