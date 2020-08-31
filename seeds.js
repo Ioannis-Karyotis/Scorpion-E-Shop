@@ -46,11 +46,11 @@ var data = [
         price: 15,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 colorTag: "Μοβ"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 colorTag : "Πράσινο"
             }
         ],
@@ -68,11 +68,11 @@ var data = [
         price: 10,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 colorTag: "Μοβ"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 colorTag : "Πράσινο"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
@@ -89,11 +89,11 @@ var data = [
         price: 20,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 colorTag: "Μοβ"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 colorTag : "Πράσινο"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
