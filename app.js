@@ -64,8 +64,6 @@ const options = {
 mongoose.connect(MONGODB_URI,options)
 seedDB(); //seed the database with products
 
-
-
 app.use(require("express-session")({
 	secret: require("./configuration/index").SESSION_SECRET,
 	resave: false,

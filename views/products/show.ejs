@@ -2,8 +2,8 @@
 
 <div id="main" class="main container-fluid main pb-2 mb-5">
     <div class="row my-4 justify-content-center">
-        <div class="col-lg-4 col-md-6 col-9 mb-2 jumbotron-mini showIMG" style="padding:0px 0px;" >
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div class="col-lg-4 col-md-6 col-9 mb-2 showIMG" style="padding:0px 0px;" >
+            <div id="carouselExampleIndicators" class="carousel slide jumbotron-mini" style="padding:0px 0px;" data-ride="carousel">
                 <div class="carousel-inner">
                 <% Object.keys(images).forEach(function(key) { %>
                     <div class="carousel-item
@@ -30,14 +30,14 @@
           <div class="container pb-3 jumbotron-mini" style="background-color: white;">
           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
             <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
-              <div class="row">
-                <div class="col-12 pt-3 align-left">
-                  <h2><input type="text" class="form-control w-50" name="name" value="<%=product.name%>"></h2>
+              <div class="row d-flex justify-content-center justify-content-sm-start">
+                <div class="col-12 pt-3" align="center">
+                  <h2><b><input type="text" class="form-control w-50" name="name" value="<%=product.name%>"></b></h2>
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 mt-1 align-left">
-                  <div class="star-ratings">
+                <div class="col-12"align="center">
+                  <div class="star-ratings" >
                     <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
                       <div>★★★★★</div>
                     </div>
@@ -45,35 +45,34 @@
                       <div>★★★★★</div>
                     </div>
                   </div>
-                  <span style="font-size:1.4rem;">(<%=product.rating.toPrecision(2) %>)</span>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12 pt-2 align-left">
-                  <h4 style="display:inline-block;"><input type="number" min="1" class="form-control pb-2" style="width:4em;display:inline-block;" name="price" value="<%=product.price%>"> €</h4>
+              <div class="row d-flex justify-content-center desc">
+                <div class="col-12 mt-4">
+                  <p><textarea name="description" class="form-control w-75" rows="5" cols="40"><%=product.description %></textarea></p>
                 </div>
               </div>
-              <hr class="thin">
-              <div class="row">
-                <div class="col-12 mt-2 align-left">
-                  <h5><textarea name="description" class="form-control w-75" rows="5" cols="40"><%=product.description %></textarea></h5>
+              <div class="row d-flex justify-content-center justify-content-sm-end">
+                <div class="col-12 col-lg-4 pt-2" align="center">
+                  <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><input type="number" min="1" class="form-control pb-2" style="width:4em;display:inline-block;" name="price" value="<%=product.price%>">€</h3>
                 </div>
-              </div>
+              </div>            
               <div class="row">
                 <div class="col-12 mt-2 align-left">
                   <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγη</button>
                 </div>
               </div>
-            </form>  
+            </form>
+            <hr class="thin">   
           <%}else{%>
-              <div class="row">
-                <div class="col-12 pt-3 d-flex justify-content-center ">
-                  <h2><%=product.name%></h2>
+              <div class="row d-flex justify-content-center justify-content-sm-start">
+                <div class="col-12 pt-3" align="center">
+                  <h2><b><%=product.name%></b></h2>
                 </div>
               </div>
               <div class="row">
-                <div class="col-12 mt-1 d-flex justify-content-center">
-                  <div class="star-ratings">
+                <div class="col-12"align="center">
+                  <div class="star-ratings" >
                     <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
                       <div>★★★★★</div>
                     </div>
@@ -81,55 +80,88 @@
                       <div>★★★★★</div>
                     </div>
                   </div>
-                  <span class="pt-2 px-2 lol"style="font-size:1.4rem;">(<%=revCount %> Αξιολογήσεις)</span>
                 </div>
               </div>
-              <hr class="thin">
               <div class="row d-flex justify-content-center desc">
-                <div class="col-12 mt-2">
-                  <h5><%= product.description%></h5>
+                <div class="col-12 mt-4">
+                  <p><%= product.description%></p>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-11 pt-2 pr-4 d-flex justify-content-end">
-                  <h3><%=product.price%>€</h3>
+              <div class="row d-flex justify-content-center justify-content-sm-end">
+                <div class="col-12 col-lg-4 pt-2" align="center">
+                  <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><%=product.price%>€</h3>
                 </div>
-              </div>
+              </div>            
               <hr class="thin"> 
             <%}%>
                 <form class="mr-3" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row py-4 d-flex justify-content-center"> 
-                    <div class="col-6 col-lg-7" align="center">
-                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em; height:2.2em; display: block; text-align: center;" class=" form-control">
-                        <% products.forEach(function(match) { %>
-                            <% if(match.sizeStatus!="hidden"){ %>
-                              <option> <%=match.size%> </option>
-                            <%}%>  
-                        <%});%>
-                      </select>
-                    </div>
-                    <div class="col-6 col-lg-5" align="left">
-                     <span class="ml-3 pl-4">Ποσότητα:</span> 
-                      <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
-                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
-                        <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
-                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
-                      </div>  
-                    </div>
-                  </div>      
-                  <div class="row d-flex justify-content-center desc">
-                    <div class="col-12 d-flex justify-content-center">
-                      <div class="pt-3 ml-3">
-                        <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
-                          Προσθηκη στο καλαθι
-                        </button>
-                      </div>
+                  <div class="row py-4 d-flex justify-content-center">
+                    <div id="tshirtSize" name="size" style class="colors col-12" align="center">
+                      <h4 class="pb-2"><b>Μέγεθος: </b></h4>
+                      <ul>
+                        <div class="row ml-1 d-flex justify-content-center">
+                          <% var j=0%>
+                          <% product.sizes.forEach(function(match) { %>
+                              <% if(match.sizeStatus!="hidden"){ %>
+                              <div class="col-4 col-sm-2">
+                                <li>
+                                  <label>
+                                    <input type="radio" name="size" value="<%=match.size%>" <% if(j==0) {%> checked <% } %>>
+                                    <span class="swatch" style="background-color:#31a579"></span><%= match.size %>
+                                  </label>
+                                </li>
+                              </div>  
+                              <% j = j + 1}%>  
+                          <%});%>
+                        </div>
+                      </ul> 
                     </div>
                   </div>
-                </form>
+                  <hr class="thin"> 
+                  <div class="row py-4 d-flex justify-content-center"> 
+                    <div  name="color" class="colors col-12" align="center">
+                      <h4 class="pb-2"><b>Χρώμα: </b></h4>
+                      <ul>
+                        <div class="row d-flex justify-content-center">
+                        <% var i=0%>
+                        <% product.colors.forEach(function(match) { %>
+                            <% if(match.colorStatus!="hidden"){ %>
+                            <div class="col-4 col-sm-3">
+                              <li>
+                                <label>
+                                  <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
+                                  <span class="swatch" style="background-color:<%= match.colorHex %>"></span><%= match.color %>
+                                </label>
+                              </li>
+                            </div>  
+                            <% i = i + 1 }%>  
+                        <%});%>
+                        </div>
+                      </ul> 
+                    </div>
+                  </div>
+                  <hr class="thin"> 
+                  <div class="row py-4 d-flex justify-content-center">  
+                    <div class="col-12 col-sm-6 mb-3" align="center">
+                       <h4><b>Ποσότητα:</b></h4>
+                          <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
+                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
+                            <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
+                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
+                          </div>  
+                      </div> 
+                      <div class="col-12 col-sm-6" align="center">
+                        <div class="pt-3">
+                          <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
+                            Προσθηκη στο καλαθι
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%> 
                     <div class="row mt-5 d-flex justify-content-around">
-                      <% products.forEach(function(match) { %>
+                      <% product.sizes.forEach(function(match) { %>
                           <% if(match.sizeStatus=="hidden"){ %>
                             <label style="opacity: 0.8;"> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=match._id%>','<%=product.type%>')"> <i class="fas fa-eye"></i></button></label>
                           <%} else if(match.sizeStatus=="active") { %>
@@ -149,6 +181,7 @@
           <h1>
           Αξιολογήσεις
           </h1>
+          <h5><span class="pt-2 px-2"style="font-size:1.4rem;"><%=revCount %> Κριτικές</span></h5>
         </div>
       </div>
 

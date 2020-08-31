@@ -155,16 +155,37 @@
                   <h6><%=product.description%></h6>
                 </div>
               </div>  
-              <div class="px-2 mt-3 mb-2 align-center d-flex justify-content-center">
+              <div class="px-2 mt-2 mb-2 align-center d-flex justify-content-center">
                 <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row mx-2 pb-4 d-flex align-items-center">
+                  <div class="row mx-2 pb-3 d-flex align-items-center">
                     <div class="col-12 align-center">
-                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="ml-2 form-control">
-                        <% allProducts.forEach(function(match){ %>
-                          <% if(match.name == product.name && match.sizeStatus!="hidden"){ %>
+                      Μέγεθος: <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="ml-2 form-control" value="0">
+                        <% product.sizes.forEach(function(match){ %>
+                          <% if(match.sizeStatus!="hidden"){ %>
                           <option> <%= match.size %></option>
                         <% }}) %>
                       </select>
+                    </div>
+                  </div>
+                  <div class="row mx-2 pb-2 d-flex align-items-center"> 
+                    <div  name="color" class="colors col-12" align="center">
+                      <ul>
+                        <div class="row d-flex justify-content-center">
+                        <% var i=0%>
+                        <% product.colors.forEach(function(match) { %>
+                            <% if(match.colorStatus!="hidden"){ %>
+                            <div class="col-3">
+                              <li>
+                                <label>
+                                  <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
+                                  <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
+                                </label>
+                              </li>
+                            </div>  
+                            <% i = i + 1 }%>  
+                        <%});%>
+                        </div>
+                      </ul> 
                     </div>
                   </div>
                   <div class="row">
@@ -175,10 +196,8 @@
                     </div>
                   </div>
                 </form>
-              </div>
-            
+              </div>      
           </div>
-      
       </div>
     </div>
   </div>
