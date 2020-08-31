@@ -54,28 +54,21 @@ router.get("/products/:type", function(req, res, next){
 		    		foundProducts = await Product.find({ type : wantedType, status : 'active'}).exec();
 		    	}
 
-		    	var products = [];
-	      		foundProducts.forEach(function(match){
-	      			if(match.size == "S"){
-	      				products.push(match);
-		      			}
-		      		})
-		      		var itemCount = products.length;
-		      		var showing = [];
-		      		var div = (itemCount / 8);
-		      		var pages = 0;
-		      		if(div != 1 && div > 1){
-		      			pages = parseInt(div) + 1;
-		      		}      		
-		      		console.log(pages);
-		      		for (i = (req.query.page * 8) ; i < (req.query.page * 8) + 8; i++) {
-		      			if(products[i] == undefined){
-		      				break;
-		      			}else{
-		      				showing.push(products[i]);	
-		      			}
-					}
-
+	      		var itemCount = foundProducts.length;
+	      		var showing = [];
+	      		var div = (itemCount / 8);
+	      		var pages = 0;
+	      		if(div != 1 && div > 1){
+	      			pages = parseInt(div) + 1;
+	      		}      		
+	      		console.log(pages);
+	      		for (i = (req.query.page * 8) ; i < (req.query.page * 8) + 8; i++) {
+	      			if(foundProducts[i] == undefined){
+	      				break;
+	      			}else{
+	      				showing.push(foundProducts[i]);	
+	      			}
+				}
 		    	if (!admin) {
 		    		return	res.render("products", {products : showing , allProducts: foundProducts, pages : pages, page : req.query.page, name : productsNames[wantedType], admin :null,type: req.params.type });
 		    	}
@@ -140,9 +133,9 @@ router.get("/products/:type/:name", function(req ,res,next){
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProducts[0],products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images,admin:null, validated :validated});
+			    		return	res.render("products/show", {product: foundProducts[0], reviews : lastReviews, revCount : countReviews, images :images,admin:null, validated :validated});
 			    	}			    	
-			        return res.render("products/show", {product: foundProducts[0], products: foundProducts, reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin" , validated :validated});
+			        return res.render("products/show", {product: foundProducts[0],reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin" , validated :validated});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");
@@ -280,25 +273,25 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 	});
 });
 
-router.post("/products/:type/:name/add", function(req, res){
-	Product.find({name : req.params.name, size : req.body.size}, function(err, foundProduct){
+router.post("/products/:type/:name/add" , sanitization.route, function(req, res){
+	Product.find({name : req.params.name}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
 			if(foundProduct[0]!=null){
-					var cart = new Cart(req.session.cart ? req.session.cart : {});
-          var quantity = req.body.qty ? req.body.qty : 1;
-          let qty = quantity < 10 ? quantity % 10 : quantity % 100;
-					cart.add(foundProduct[0], qty);
-					req.session.cart = cart;
-					req.session.productList = cart.productList();
+				var cart = new Cart(req.session.cart ? req.session.cart : {});
+          		var quantity = req.body.qty ? req.body.qty : 1;
+          		let qty = quantity < 10 ? quantity % 10 : quantity % 100;
+				cart.add(foundProduct[0], qty , req.autosan.body.size , req.autosan.body.color);
+				req.session.cart = cart;
+				req.session.productList = cart.productList();
 
-					console.log("_SessionCart_");
-					console.log(req.session.cart);
-					console.log("_ProductList_");
-					console.log(req.session.productList);
+				console.log("_SessionCart_");
+				console.log(req.session.cart);
+				console.log("_ProductList_");
+				console.log(req.session.productList);
 
-					res.redirect("back");
+				res.redirect("back");
 			}
 		}
 	});
