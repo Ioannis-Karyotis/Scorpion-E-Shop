@@ -79,10 +79,14 @@ function removeProduct(){
 	}
 }
 
-function MakePhoneCall(){
+function MakePhoneCall(element){
+
+	// element.style.backgroundColor = "#2D2B30";
 	window.open('tel:2310281363');
 }
 
-function ScrollToTop(){
+function ScrollToTop(element){
+
+	// element.style.backgroundColor = "#2D2B30";
 	window.scrollTo(0,0);
 }

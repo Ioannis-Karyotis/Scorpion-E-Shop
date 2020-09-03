@@ -504,6 +504,12 @@ hr.normal{
     z-index: 5!important;
   }
 
+  .scrollToTop:active{
+  
+    background-color: #2D2B30!important;
+ 
+  }
+
 
 /*==============*/
 /*    NavBar    */
@@ -1154,12 +1160,23 @@ hr.normal{
 
 .colors input[type="radio"]:checked + .swatch{box-shadow: inset 0 0 0 4px #F6F7F7;}
 
+.colors input[type="radio"]:checked + .swatch-mini{box-shadow: inset 0 0 0 2.5px #F6F7F7;}
+
 .swatch{
   display:inline-block;
   vertical-align: middle;
   height: 40px;
   width:40px;
   margin: 0 5px 0 0 ;
+  border-radius: 50%;
+  border: 1px solid #d4d4d4;
+}
+.swatch-mini{
+  display:inline-block;
+  vertical-align: middle;
+  height: 30px;
+  width:30px;
+  margin: 0 2px 0 0 ;
   border-radius: 50%;
   border: 1px solid #d4d4d4;
 }

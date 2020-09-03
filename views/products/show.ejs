@@ -98,23 +98,13 @@
                   <div class="row py-4 d-flex justify-content-center">
                     <div id="tshirtSize" name="size" style class="colors col-12" align="center">
                       <h4 class="pb-2"><b>Μέγεθος: </b></h4>
-                      <ul>
-                        <div class="row ml-1 d-flex justify-content-center">
-                          <% var j=0%>
-                          <% product.sizes.forEach(function(match) { %>
-                              <% if(match.sizeStatus!="hidden"){ %>
-                              <div class="col-4 col-sm-2">
-                                <li>
-                                  <label>
-                                    <input type="radio" name="size" value="<%=match.size%>" <% if(j==0) {%> checked <% } %>>
-                                    <span class="swatch" style="background-color:#31a579"></span><%= match.size %>
-                                  </label>
-                                </li>
-                              </div>  
-                              <% j = j + 1}%>  
-                          <%});%>
-                        </div>
-                      </ul> 
+                      <select id="tshirtSize" name="size" style="width:10em; height:2.2em; display: block; text-align: center;" class=" form-control">
+                        <% product.sizes.forEach(function(match) { %>
+                          <% if(match.sizeStatus!="hidden"){ %>
+                            <option> <%=match.size%> </option>
+                          <%}%>
+                        <%});%>  
+                      </select>       
                     </div>
                   </div>
                   <hr class="thin"> 
@@ -126,7 +116,7 @@
                         <% var i=0%>
                         <% product.colors.forEach(function(match) { %>
                             <% if(match.colorStatus!="hidden"){ %>
-                            <div class="col-4 col-sm-3">
+                            <div class="col-4 col-sm-3 ">
                               <li>
                                 <label>
                                   <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
