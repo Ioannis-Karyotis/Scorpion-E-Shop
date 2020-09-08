@@ -20,16 +20,16 @@ router.post("/cart/update", function(req, res){
   let cart = new Cart(req.session.cart);
   let id = req.body.id;
   let qty = parseInt(req.body.qty);
-  cart.updateQuantity(id,qty);
+  let size = req.body.size;
+  let color = req.body.color;
+  var price = cart.updateQuantity(id,qty,size,color);
   req.session.cart = cart;
   req.session.productList = cart.productList();
-  console.log(req.session.cart);
-  res.send({price:cart.products[id].price, totalPrice:cart.totalPrice, totalQuantity:cart.totalQuantity});
+  res.send({price, totalPrice:cart.totalPrice, totalQuantity:cart.totalQuantity});
 });
 
 //remove product
 router.post("/cart/remove", function(req,res){
-  console.log(JSON.stringify(req.body));
   let cart = new Cart(req.session.cart);
   let id = req.body.id;
   cart.removeProduct(id);

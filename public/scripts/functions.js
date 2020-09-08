@@ -20,6 +20,7 @@ function qtyUpdate(){
 	let http = new XMLHttpRequest();
 	let url = "/cart/update";
 	var id = event.target.parentNode.querySelector('input[type=number]').id;
+	var values = id.split(",");
 	var qty = document.getElementById(id).value;
 	console.log(qty);
 	console.log(id);
@@ -29,8 +30,10 @@ function qtyUpdate(){
     document.getElementById(id).value = 1;
   }
 	let params = {};
-	params.id = id;
+	params.id = values[0];
 	params.qty = qty;
+	params.size = values[1];
+	params.color = values[2];
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");
@@ -58,9 +61,9 @@ function removeProduct(){
 	let url = "/cart/remove";
 	let temp = event.currentTarget.id;
     let id = temp.substring(5,temp.length);
-    console.log(id);
+    var values = id.split(",");
 	let params = {};
-	params.id = id;
+	params.id = values;
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");

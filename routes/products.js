@@ -282,6 +282,7 @@ router.post("/products/:type/:name/add" , sanitization.route, function(req, res)
 				var cart = new Cart(req.session.cart ? req.session.cart : {});
           		var quantity = req.body.qty ? req.body.qty : 1;
           		let qty = quantity < 10 ? quantity % 10 : quantity % 100;
+          		console.log("qty:"+qty);
 				cart.add(foundProduct[0], qty , req.autosan.body.size , req.autosan.body.color);
 				req.session.cart = cart;
 				req.session.productList = cart.productList();

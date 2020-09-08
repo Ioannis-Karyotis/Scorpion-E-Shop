@@ -59,13 +59,18 @@ router.post("/post_order",sanitization.route, async function(req,res){
           var products= cart.products;
           var product_ids = await Object.keys(products);
           for(i=0; i<product_ids.length; i++){
-            var product = {
-             product : products[product_ids[i]].product,
-             quantity :  products[product_ids[i]].quantity
-            }
-            order.productList.push(product);
+            products[product_ids[i]].variants.forEach(function(item){
+              var product = {
+                product : products[product_ids[i]].product,
+                quantity : item.quantity,
+                size : item.size,
+                color : item.color
+              }
+              totalPrice =+ product.quantity * product.product.price;
+              order.productList.push(product);
+            })
           }
-        order.save();  
+          order.save();  
         }
       });
   var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
@@ -127,12 +132,16 @@ router.post("/post_order_sent",sanitization.route,async function(req,res){
           var totalPrice = 0;
           var product_ids = await Object.keys(products);
           for(i=0; i<product_ids.length; i++){
-            var product = {
-             product : products[product_ids[i]].product,
-             quantity :  products[product_ids[i]].quantity
-            }
-            totalPrice =+ product.quantity * products[product_ids[i]].price;
-            order.productList.push(product);
+            products[product_ids[i]].variants.forEach(function(item){
+              var product = {
+                product : products[product_ids[i]].product,
+                quantity : item.quantity,
+                size : item.size,
+                color : item.color
+              }
+              totalPrice =+ product.quantity * product.product.price;
+              order.productList.push(product);
+            })
           }
           order.totalPrice = (totalPrice) + 4;
           order.save();  

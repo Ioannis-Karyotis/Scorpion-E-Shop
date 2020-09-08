@@ -48,5 +48,14 @@ var hideSize = function(id,type){
 $( ".modal" ).click(function(e) {
   if($(event.target).attr('class') == "container-fluid" || $(event.target).attr('class') == "modal"){
     this.style.display= "none";
+    $('html').removeClass("hideOverflow");
   }
+});
+
+$( ".Xbutton" ).click(function(e) {
+    $('html').removeClass("hideOverflow");
+});
+
+$( ".product-img" ).click(function(e) {
+    $('html').addClass("hideOverflow");
 });

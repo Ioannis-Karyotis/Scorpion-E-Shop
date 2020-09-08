@@ -115,23 +115,24 @@
 												</div>
 											</div>
 											<div class="container quick-cart-container " >
-											 <% session.productList.forEach(function(item){ %>
+											<% session.productList.forEach(function(prd){ %>
+												<%prd.variants.forEach(function(item){ %>
 												 <!-- <div class="dropdown-item"> -->
-
+												<% var id = prd.product._id%> 	
 													<div class="row mx-auto my-2 jumbotron-mini">
 														<div class="col-4 align-center" > <!--picture -->
 															<div>
-															 	<img class="quick-cart-img" src="<%=item.product.images[0].url %>"></img>
+															 	<img class="quick-cart-img" src="<%=prd.product.images[0].url %>"></img>
 															</div>
 														 </div>
 														 <div class="col-8">
 															<div class="row mb-2 d-flex justify-content-start">
 																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
-																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;"><i><%= item.product.name %></i></label>
+																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;"><i><%= prd.product.name %></i></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
-																	 	<button id="rmvq_<%= item.product._id%>" class="btn-danger btn-dangerous Xbutton" onclick="removeProduct()">
+																	 	<button id="rmvq_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton" onclick="removeProduct()">
 																		 	<i class="fa fa-trash-alt"></i>
 																		</button>
 																	</p>
@@ -140,23 +141,24 @@
 															 <hr class="thin" style="margin-top: -3px;">
 															 <div class="row">
 																<div class="col-4"><!--price -->
-																	<%= item.product.price %>€
+																	<%= prd.product.price %>€
 																</div>
-																<div id="quick_qty<%= item.product._id%>" class="col-4 align-center"><!--qty -->
+																<div id="quick_qty<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4 align-center"><!--qty -->
 																	x<%=item.quantity%>
 																</div>
-																<div id="quick_product_total<%=item.product._id%>" class="col-4  align-right"><!--total price -->
+																<div id="quick_product_total<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4  align-right"><!--total price -->
 																	<%= item.price %>€
 																</div>
 															 </div>
 															 <div class="mt-4 pr-2 row justify-content-end">
-																<i><span class="ml-2">"<%=sizes[item.product.size]%>" </span></i>
+															 	<i><span class="ml-2"><%=item.color%> </span></i>
+																<i><span class="ml-2"><%=sizes[item.size]%></span></i>
 															 </div>
 														 </div>
 													</div>
-													 
+												<%});%>
 												<!-- </div> -->
-											 <%});%>
+											<%});%>
 											 	<div class="row my-2 mx-1">
 													<div class="col-6">
 														<b><i>Σύνολο:</i></b>

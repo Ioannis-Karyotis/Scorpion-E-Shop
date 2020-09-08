@@ -121,37 +121,40 @@
     <%if(session.productList && session.productList.length > 0){ %>
     	<div class="col-lg-6 order-lg-2 mx-auto pb-5" align="center">
 		    <div class="shopping-cart container-fluid">
-			    <% session.productList.forEach(function(item){ %>
-			      	<div class="jumbotron-mini product-micro mb-1">
-			      		<div class="row d-flex justify-content-around">
-				        	<div class="col-3 product-image" align="left">
-				          		<img  src="<%=item.product.images[0].url %>"></img>
-				        	</div>
+			    <% session.productList.forEach(function(prd){ %>
+			    	<%prd.variants.forEach(function(item){ %>
+				      	<div class="jumbotron-mini product-micro mb-1">
+				      		<div class="row d-flex justify-content-around">
+					        	<div class="col-3 product-image" align="left">
+					          		<img  src="<%=prd.product.images[0].url %>"></img>
+					        	</div>
 
-			          		<div class="col-9">
-			          			<div class="row d-flex justify-content-start">
-			          				<div class="col-12" align="left">
-				            			<b><%=item.product.name%></b>
-				            			<i><span class="ml-5"> <%=sizes[item.product.size]%> </span></i>
-			            			</div>
-			            		</div>
-			            		<hr class="thin" align="right">
-			            		<div class="row d-flex justify-content-start mt-2">
-				          			<div class="col-6" align="left">
-						          		<b>Τελ.τιμή: </b><%=item.price%> €
-						        	</div>
-						        	<div class="col-6" align="left">
-						          		<b>Ποσότητα: </b><%=item.quantity%>
-						        	</div>
+				          		<div class="col-9">
+				          			<div class="row d-flex justify-content-start">
+				          				<div class="col-12" align="left">
+					            			<b><%=prd.product.name%></b>
+					            			<i><span class="ml-2"> <%=item.color%> </span></i>
+					            			<i><span class="ml-2"> <%=sizes[item.size]%> </span></i>
+				            			</div>
+				            		</div>
+				            		<hr class="thin" align="right">
+				            		<div class="row d-flex justify-content-start mt-2">
+					          			<div class="col-6" align="left">
+							          		<b>Τελ.τιμή: </b><%=item.price%> €
+							        	</div>
+							        	<div class="col-6" align="left">
+							          		<b>Ποσότητα: </b><%=item.quantity%>
+							        	</div>
+					          		</div>
+					          		<!-- <div class="row d-flex justify-content-center mt-2">
+					          			<div class="col-6">
+							          		Τελ.τιμή: <%=item.price%> €
+							        	</div>	
+					          		</div> -->
 				          		</div>
-				          		<!-- <div class="row d-flex justify-content-center mt-2">
-				          			<div class="col-6">
-						          		Τελ.τιμή: <%=item.price%> €
-						        	</div>	
-				          		</div> -->
-			          		</div>
-		          		</div>		          				          				        		
-			      	</div>
+			          		</div>		          				          				        		
+				      	</div>
+				    <%})%>
 		     	<%});%> 
 		     	<hr class="thin">
 		     	<div class="jumbotron-mini prices-content" align="right">
