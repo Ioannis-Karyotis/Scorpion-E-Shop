@@ -67,11 +67,37 @@ function offSetManager(){
 
     if(yOffset < currYOffSet) {
         myNavBar.add();
+        document.getElementById("scrollToTop").classList.remove("d-flex");
+        document.getElementById("scrollToTop").classList.remove("d-block");
+        document.getElementById("scrollToTop").classList.add("d-none")
     }
     else if(currYOffSet = yOffset){
         myNavBar.remove();
+        document.getElementById("scrollToTop").classList.add("d-flex");
+        document.getElementById("scrollToTop").classList.add("d-block");
+        document.getElementById("scrollToTop").classList.remove("d-none")
     }
 
+}
+
+function offSetManager2(){
+
+    var yOffset = document.getElementById("logo-nav").offsetTop + document.getElementById("logo-nav").offsetHeight
+    console.log(yOffset);
+    var currYOffSet = window.pageYOffset;
+
+    if(yOffset < currYOffSet) {
+        document.getElementById("scrollToTop").classList.add("d-flex");
+        document.getElementById("scrollToTop").classList.add("d-block");
+        document.getElementById("scrollToTop").classList.add("fade-in");
+        document.getElementById("scrollToTop").classList.remove("d-none")
+    }
+    else if(currYOffSet = yOffset){
+        document.getElementById("scrollToTop").classList.remove("d-flex");
+        document.getElementById("scrollToTop").classList.remove("d-block");
+        document.getElementById("scrollToTop").classList.remove("fade-in");
+        document.getElementById("scrollToTop").classList.add("d-none");
+    }
 }
 
 /**
@@ -81,6 +107,8 @@ window.onscroll = function(e) {
     
     if(window.innerWidth > 756 && window.pageYOffset != 0){
         offSetManager();
+    }else if(window.innerWidth < 756 && window.pageYOffset != 0){
+        offSetManager2();
     }else{
         myNavBar.remove();
     }

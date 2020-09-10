@@ -1,0 +1,27 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="main container mb-5">
+    <div class="row d-flex justify-content-around my-4">
+	    <form action="/products/<%=type%>/<%=id%>/addImages" class="col-lg-6" method="post" enctype="multipart/form-data">
+	        <div class="desc py-5">
+				<h1 class="pb-5">Εισαγωγή Εικόνων</h1>
+				<div class="col-12 justify-content-center">
+					<img  id="blah" alt="" class="w-50 h-50 mr-1" >
+	        	</div>
+	        	<div class="col-12 justify-content-center">
+					<img  id="blah" alt="" class="w-50 h-50 mr-1" >
+	        	</div>
+			    <div class="col-12 justify-content-center"> 
+			        <label>Επέλεξε μία εικόνα:</label>
+			        <input id="imgInp" type="file" name="image" required/>
+			    </div>
+	            <div class="col-12 justify-content-center mt-3">
+	                <button class="btn btn-primary" type="submit">Υποβολη</button>
+	            </div>
+	        </div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>   	
+<script type="text/javascript" src="/scripts/products.js"></script>
+<%- include("./../partials/footer")%>

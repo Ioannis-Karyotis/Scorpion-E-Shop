@@ -1,166 +1,177 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container-fluid main pb-2 mb-5">
-    <div class="row my-4 justify-content-center">
+<div id="main" class="main ninety mx-auto main pb-2 mb-5">
+    <div class="row mx-auto container my-4 pt-2 justify-content-center">
         <div class="col-lg-4 col-md-6 col-9 mb-2 showIMG" style="padding:0px 0px;" >
             <div id="carouselExampleIndicators" class="carousel slide jumbotron-mini" style="padding:0px 0px;" data-ride="carousel">
-                <div class="carousel-inner">
-                <% Object.keys(images).forEach(function(key) { %>
-                    <div class="carousel-item
-                    <% if(key == 0){ %>
-                        active">
-                    <% } else{ %>
-                        ">
-                    <% } %>
-                        <img class="d-block w-100 h-100" src="<%=images[key].url%>" alt="">
-                    </div>
-                <% }) %>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-                </a>
+              <div class="carousel-inner">
+              <% Object.keys(images).forEach(function(key) { %>
+                  <div class="carousel-item
+                  <% if(key == 0){ %>
+                      active">
+                  <% } else{ %>
+                      ">
+                  <% } %>
+                      <img class="d-block w-100 h-100" src="<%=images[key].url%>" alt="">
+                  </div>
+              <% }) %>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+              </a>
             </div>
+            <div class="row container d-flex justify-content-start mt-2">
+              <% Object.keys(images).forEach(function(key) { %>
+                <div class="col-3 d-flex justify-content-center pb-2" align="right">
+                  <img data-target="#carouselExampleIndicators" data-slide-to="<%=key%>" class="d-block w-100 h-100 mini-images" src="<%=images[key].url%>" alt="">    
+                </div>
+                <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>  
+                  <button type="button" class=" btn-danger d-flex justify-content-center align-items-center" style="height:1.5em; width:1.5em; margin-left:-10px;" onclick="deleteImage('<%=product._id%>','<%=product.type%>','<%=images[key].name%>')">
+                    <i class="fas fa-times fa-lg"></i>
+                  </button>
+                <% } %>
+              <% }) %>
+            </div>
+            <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>             
+              <div class="row d-flex justify-content-center mt-2">
+                  <a href="<%=product._id%>/addImages" class="btn btn-primary btn-lg">Εισαγωγη εικονας</a>
+              </div>
+            <%}%> 
         </div>
         <div id="desc" class="col-lg-7 col-md-12 col-12 mx-auto mt-1 bg-white"s>
           <div class="container pb-3 jumbotron-mini" style="background-color: white;">
-          <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
-            <form id="edit_form" action="/products/<%= product.type %>/<%=product.name %>/edit?_method=PUT" method="POST">
-              <div class="row d-flex justify-content-center justify-content-sm-start">
-                <div class="col-12 pt-3" align="center">
-                  <h2><b><input type="text" class="form-control w-50" name="name" value="<%=product.name%>"></b></h2>
-                </div>
+            <div class="row d-flex justify-content-center justify-content-sm-start">
+              <div class="col-12 pt-3" align="center">
+                <h2><b><%=product.name%></b></h2>
               </div>
-              <div class="row">
-                <div class="col-12"align="center">
-                  <div class="star-ratings" >
-                    <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
-                      <div>★★★★★</div>
-                    </div>
-                    <div class="empty-ratings">
-                      <div>★★★★★</div>
-                    </div>
+            </div>
+            <div class="row">
+              <div class="col-12"align="center">
+                <div class="star-ratings" >
+                  <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
+                    <div>★★★★★</div>
+                  </div>
+                  <div class="empty-ratings">
+                    <div>★★★★★</div>
                   </div>
                 </div>
               </div>
-              <div class="row d-flex justify-content-center desc">
-                <div class="col-12 mt-4">
-                  <p><textarea name="description" class="form-control w-75" rows="5" cols="40"><%=product.description %></textarea></p>
-                </div>
+            </div>
+            <div class="row d-flex justify-content-center desc">
+              <div class="col-12 mt-4">
+                <p><%= product.description%></p>
               </div>
-              <div class="row d-flex justify-content-center justify-content-sm-end">
-                <div class="col-12 col-lg-4 pt-2" align="center">
-                  <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><input type="number" min="1" class="form-control pb-2" style="width:4em;display:inline-block;" name="price" value="<%=product.price%>">€</h3>
-                </div>
-              </div>            
-              <div class="row">
-                <div class="col-12 mt-2 align-left">
-                  <button type="submit" form="edit_form" class="btn btn-dark btn-lg" style="border-radius:0px">Αλλαγη</button>
-                </div>
+            </div>
+            <div class="row d-flex justify-content-center justify-content-sm-end">
+              <div class="col-12 col-lg-4 pt-2" align="center">
+                <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><%=product.price%>€</h3>
               </div>
-            </form>
-            <hr class="thin">   
-          <%}else{%>
-              <div class="row d-flex justify-content-center justify-content-sm-start">
-                <div class="col-12 pt-3" align="center">
-                  <h2><b><%=product.name%></b></h2>
-                </div>
+            </div>
+            <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>             
+              <div class="row d-flex justify-content-center">
+                  <a href="<%=product.name%>/edit" class="btn btn-primary btn-lg">Τροποποιηση Προιοντος</a>
               </div>
-              <div class="row">
-                <div class="col-12"align="center">
-                  <div class="star-ratings" >
-                    <div class="fill-ratings" id="star<%=product._id%>"style="width:<%=product.rating.toPrecision(2)*20%>%">
-                      <div>★★★★★</div>
-                    </div>
-                    <div class="empty-ratings">
-                      <div>★★★★★</div>
-                    </div>
+            <%}%>            
+            <hr class="thin"> 
+              <form class="mr-3" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
+                <div class="row py-4 d-flex justify-content-center">
+                  <div id="tshirtSize" name="size" style class="colors col-12" align="center">
+                    <h4 class="pb-2"><b>Μέγεθος: </b></h4>
+                    <select id="tshirtSize" name="size" style="width:10em; height:2.2em; display: block; text-align: center;" class=" form-control">
+                      <% product.sizes.forEach(function(match) { %>
+                        <% if(match.sizeStatus!="hidden"){ %>
+                          <option> <%=match.size%> </option>
+                        <%}%>
+                      <%});%>  
+                    </select>       
                   </div>
                 </div>
-              </div>
-              <div class="row d-flex justify-content-center desc">
-                <div class="col-12 mt-4">
-                  <p><%= product.description%></p>
-                </div>
-              </div>
-              <div class="row d-flex justify-content-center justify-content-sm-end">
-                <div class="col-12 col-lg-4 pt-2" align="center">
-                  <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><%=product.price%>€</h3>
-                </div>
-              </div>            
-              <hr class="thin"> 
-            <%}%>
-                <form class="mr-3" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row py-4 d-flex justify-content-center">
-                    <div id="tshirtSize" name="size" style class="colors col-12" align="center">
-                      <h4 class="pb-2"><b>Μέγεθος: </b></h4>
-                      <select id="tshirtSize" name="size" style="width:10em; height:2.2em; display: block; text-align: center;" class=" form-control">
-                        <% product.sizes.forEach(function(match) { %>
-                          <% if(match.sizeStatus!="hidden"){ %>
-                            <option> <%=match.size%> </option>
+                <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%> 
+                  <div class="row mt-2 d-flex justify-content-around">
+                    <% product.sizes.forEach(function(match) { %>
+                        <% if(match.sizeStatus=="hidden"){ %>
+                          <label style="opacity: 0.8;"> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=product._id%>','<%=product.type%>','<%=match.size%>')"> <i class="fas fa-eye"></i></button></label>
+                        <%} else if(match.sizeStatus=="active") { %>
+                          <label> <%=match.size%><button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=product._id%>','<%=product.type%>','<%=match.size%>')"> <i class="fas fa-eye-slash"></i></button> </label> 
+                        <% } %>  
+                    <%});%>
+                  </div>
+                <%}%>
+                <hr class="thin"> 
+                <div class="row py-4 d-flex justify-content-center"> 
+                  <div  name="color" class="colors col-12" align="center">
+                    <h4 class="pb-2"><b>Χρώμα: </b></h4>
+                    <ul>
+                      <div class="row d-flex justify-content-center" align="center">
+                      <% var i=0%>
+                      <% product.colors.forEach(function(match) { %>
+                          <% if(match.colorStatus!="hidden"){ %>
+                          <div class="col-3" >
+                            <li>
+                              <label>
+                                <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
+                                <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
+                              </label>
+                          <% i = i + 1 %>
+                          <%}else if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin" && match.colorStatus =="hidden"){%>
+                          <div class="col-3">
+                            <li>
+                              <label style="opacity: 0.7">
+                                <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
+                                <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
+                              </label>
+                              <% i = i + 1 %>
                           <%}%>
-                        <%});%>  
-                      </select>       
-                    </div>
-                  </div>
-                  <hr class="thin"> 
-                  <div class="row py-4 d-flex justify-content-center"> 
-                    <div  name="color" class="colors col-12" align="center">
-                      <h4 class="pb-2"><b>Χρώμα: </b></h4>
-                      <ul>
-                        <div class="row d-flex justify-content-center">
-                        <% var i=0%>
-                        <% product.colors.forEach(function(match) { %>
-                            <% if(match.colorStatus!="hidden"){ %>
-                            <div class="col-4 col-sm-3 ">
-                              <li>
-                                <label>
-                                  <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
-                                  <span class="swatch" style="background-color:<%= match.colorHex %>"></span><%= match.color %>
-                                </label>
-                              </li>
-                            </div>  
-                            <% i = i + 1 }%>  
-                        <%});%>
-                        </div>
-                      </ul> 
-                    </div>
-                  </div>
-                  <hr class="thin"> 
-                  <div class="row py-4 d-flex justify-content-center">  
-                    <div class="col-12 col-sm-6 mb-3" align="center">
-                       <h4><b>Ποσότητα:</b></h4>
-                          <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
-                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
-                            <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
-                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
+                          <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin"){ %>
+                            <button type="button" class=" btn-danger " style="height:2.5em; width:2.5em; text-align: center; " onclick="deleteColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                              <i class="fas fa-times fa-lg"></i>
+                            </button>
+                            <% if(match.colorStatus=="hidden"){ %>
+                            <button type="button"  class=" btn-secondary " style="height:2.5em;width:2.5em; text-align: center; " onclick="hideColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                            <%}else{%>
+                              <button type="button"  class=" btn-secondary" style="height:2.5em;width:2.5em; text-align: center; " onclick="hideColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                                <i class="fas fa-eye-slash"></i>
+                              </button>
+                            <%}%>
+                            </li>
                           </div>  
-                      </div> 
-                      <div class="col-12 col-sm-6" align="center">
-                        <div class="pt-3">
-                          <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
-                            Προσθηκη στο καλαθι
-                          </button>
-                        </div>
+                          <%}%>  
+                      <%});%>
+                      </div>
+                    </ul> 
+                  </div>
+                </div>
+                <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>             
+                  <div class="row d-flex justify-content-center">
+                      <a href="<%=product._id%>/addColors" class="btn btn-primary btn-lg">Προσθήκη Χρωμάτων</a>
+                  </div>
+                <%}%>
+                <hr class="thin"> 
+                <div class="row py-4 d-flex justify-content-center">  
+                  <div class="col-12 col-sm-6 mb-3" align="center">
+                     <h4><b>Ποσότητα:</b></h4>
+                        <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
+                          <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
+                          <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
+                          <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
+                        </div>  
+                    </div> 
+                    <div class="col-12 col-sm-6" align="center">
+                      <div class="pt-3">
+                        <button type="submit" class="btn btn-dark btn-lg" style="border-radius:0px">
+                          Προσθηκη στο καλαθι
+                        </button>
                       </div>
                     </div>
-                  </form>
-                <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%> 
-                    <div class="row mt-5 d-flex justify-content-around">
-                      <% product.sizes.forEach(function(match) { %>
-                          <% if(match.sizeStatus=="hidden"){ %>
-                            <label style="opacity: 0.8;"> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=match._id%>','<%=product.type%>')"> <i class="fas fa-eye"></i></button></label>
-                          <%} else if(match.sizeStatus=="active") { %>
-                            <label> <%=match.size%>  <button style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=match._id%>','<%=product.type%>')"> <i class="fas fa-eye-slash"></i></button> </label> 
-                          <% } %>  
-                      <%});%>
-                    </div>
-                  <%}%>
-
+                  </div>
+                </form>
             </div>
         </div>
     </div> 
@@ -176,7 +187,7 @@
       </div>
 
     <%if(product.reviews.length <= 0){ %>
-      <div class="row mx-auto my-2" style="text-align:center">
+      <div class="row  mx-auto my-2" style="text-align:center">
         <div class="mx-auto">
           <h5>
           Δεν υπάρχουν αξιολογήσεις! Προσθέστε μία τώρα!
@@ -191,7 +202,7 @@
       </div>
     <%}%>
     <!-- <div class="py-4"style="background:#F5F5F5;"> -->
-      <form id="review-form" class="mb-5" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
+      <form id="review-form" class="mb-5 container mx-auto" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
         <input type="hidden" name="productId" value="<%=product._id%>">
         <div class="form-row">

@@ -115,6 +115,79 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 	res.redirect("/products/"+ req.params.type+"?page=0");
 })
 
+router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+	res.render("products/addColors",{type: req.params.type ,id : req.params.id});
+});
+
+router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+	Product.findById(req.params.id,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+			var newColor = {
+				color : req.body.color,
+				colorStatus: "active",
+				colorHex : req.body.colorHex,
+			}
+			foundProduct.colors.push(newColor);
+			foundProduct.save();
+			res.redirect('products/'+ req.params.type + '/' + foundProduct.name);
+		}
+	});
+})
+
+router.get("/products/:type/:id/addImages",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+	res.render("products/addImages",{type: req.params.type ,id : req.params.id});
+});
+
+router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilter: imageFilter }).single("image") ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+	Product.findById(req.params.id,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+	        if (req.fileValidationError) {
+		        return res.send(req.fileValidationError);
+		    }
+		    else if (!req.file) {
+		        return res.send('Please select an image to upload');
+		    }
+			var str = req.file.path;
+			console.log(str);
+			var str2 = str.replace("public", "");
+			var final = str2.replace(/\\/g,"/");
+			var last = final.split("/");
+			var last2 = last.pop();
+			var name = last2.split(".")
+			image={url : "http://localhost:3000" + final , name : name[0]};
+	  		foundProduct.images.push(image);
+			foundProduct.save();
+			res.redirect("/products/"+ req.params.type + "/" + foundProduct.name);
+		}
+	});
+})
+
+router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
+	Product.findById(req.params.id,function(err, foundProduct){
+		if(err){
+			console.log(err);
+		} else {
+			console.log(foundProduct);
+			var index = 0
+			foundProduct.images.forEach(function(img){
+				if (img.name == req.params.name) {
+					foundProduct.images.splice(index,1);
+					foundProduct.save();
+				}
+				index = index + 1;
+			})
+			res.redirect("/products/"+ req.params.type + "/" + foundProduct.name);
+		}
+	});
+})
+
+
+
+
 router.get("/products/:type/:name", function(req ,res,next){
 	Product.find({name : req.params.name }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
@@ -169,11 +242,32 @@ router.delete("/products/:type/:name/delete" ,passport.authenticate('jwtAdmin', 
 	}	
 });
 
-router.put("/products/:type/:name/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	Product.updateMany({type: req.params.type, name : req.params.name}, req.autosan.body, function(err , updateProduct){
+router.get("/products/:type/:name/edit",passport.authenticate('jwtAdmin', { session: false }), function(req ,res,next){
+	Product.find({name : req.params.name }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
+			console.log(err);
+		} else {
+		    if(foundProducts[0]!= null){
+		    	console.log(foundProducts[0]);
+			    var images = foundProducts[0].images;  		    	
+			    return res.render("products/edit", {product: foundProducts[0],images :images});
+		    } else{
+		        res.redirect("back");
+		    }
+		}
+	});
+});
+
+
+
+router.put("/products/:type/:name/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	console.log(req.autosan.body);
+	Product.update({type: req.params.type, name : req.params.name}, req.autosan.body, function(err , updateProduct){
+		if(err){
+			console.log("Got to error");
 			res.redirect("back");
 		}else{
+			//console.log(updateProduct);
 			res.redirect("/products/"+ req.params.type+"?page=0");
 		}
 	});
@@ -204,21 +298,66 @@ router.post("/products/:type/:name/hide" ,passport.authenticate('jwtAdmin', { se
 });
 
 
-router.post("/products/:type/:id/hideSize" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+router.post("/products/:type/:id/hideSize/:size" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
-			if(foundProduct.sizeStatus == "active"){
-				foundProduct.sizeStatus = "hidden";
-				foundProduct.save();
-			}else{
-				foundProduct.sizeStatus = "active";
-				foundProduct.save();
-			}
+			foundProduct.sizes.forEach(function(size){
+			if(size.size == req.params.size){	
+					if(size.sizeStatus == "active"){
+						size.sizeStatus = "hidden";
+						foundProduct.save();
+					}else{
+						size.sizeStatus = "active";
+						foundProduct.save();
+					}
+				}
+			})
 			res.redirect('products/'+ req.params.type + '/' + foundProduct.name);
 		}
 	});
+});
+
+router.post("/products/:type/:id/deleteColor/:color" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+	Product.findOne({type: req.params.type, _id : req.params.id}, function(err,product){
+		if(err){
+			res.redirect("/products/"+ req.params.type);
+		} else{
+			var index = 0
+			product.colors.forEach(function(color){
+				if (color.colorHex == "#"+req.params.color) {
+					product.colors.splice(index,1);
+					product.save();
+				}
+				index = index + 1;
+			})
+			res.redirect("/products/"+ req.params.type);
+		}
+	});;
+});
+
+router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+	Product.findOne({type: req.params.type, _id : req.params.id}, function(err,product){
+		if(err){
+			console.log(product);
+			res.redirect("/products/"+ req.params.type);
+		} else{
+			console.log(product);
+			product.colors.forEach(function(color){
+				if(color.colorHex == "#"+req.params.color){	
+					if(color.colorStatus == "active"){
+						color.colorStatus = "hidden";
+						product.save();
+					}else{
+						color.colorStatus = "active";
+						product.save();
+					}
+				}
+			})
+			res.redirect("/products/"+ req.params.type);
+		}
+	});;
 });
 
 

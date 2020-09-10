@@ -57,11 +57,11 @@ var data = [
         images: [
             {
                 url: "http://localhost:3000/images/tshirt/example2.jpg",
-                colorTag: "Μοβ"
+                name: "example2"
             },
             {
                 url:"http://localhost:3000/images/tshirt/example1.jpg",
-                colorTag : "Πράσινο"
+                name : "example1"
             }
         ],
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
@@ -79,11 +79,11 @@ var data = [
         images: [
             {
                 url: "http://localhost:3000/images/tshirt/example2.jpg",
-                colorTag: "Μοβ"
+                name: "example2"
             },
             {
                 url:"http://localhost:3000/images/tshirt/example1.jpg",
-                colorTag : "Πράσινο"
+                name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
         reviews: [],
@@ -100,11 +100,11 @@ var data = [
         images: [
             {
                 url: "http://localhost:3000/images/tshirt/example2.jpg",
-                colorTag: "Μοβ"
+                name : "example2"
             },
             {
                 url:"http://localhost:3000/images/tshirt/example1.jpg",
-                colorTag : "Πράσινο"
+                name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
         reviews: [],

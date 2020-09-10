@@ -4,7 +4,10 @@ var ProductSchema = new mongoose.Schema({
     name: String,
     type: String, //custom t-shirt type = custom
     price: Number,
-    images: [{}],  //stamp for custom t-shirts placed here
+    images: [{
+      url: String,
+      name :String
+    }],  //stamp for custom t-shirts placed here
     description: String,
     reviews: [
      {

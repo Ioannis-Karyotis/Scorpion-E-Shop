@@ -41,7 +41,7 @@ app.use(bodyParser.json({
   }
 }))
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(expressSanitizer());
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 
@@ -54,7 +54,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-//seedDB(); //seed the database with products
+seedDB(); //seed the database with products
 
 
 

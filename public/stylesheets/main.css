@@ -482,9 +482,9 @@ hr.normal{
 
   .phonecall{
     position: fixed;
-    bottom: 9em;
+    bottom: 3em;
     right:1em;
-    display:block;
+    display:none;
     border-radius: 100%;
     color:white;
     width:5em;
@@ -494,15 +494,16 @@ hr.normal{
   }
   .scrollToTop{
     position: fixed;
-    bottom: 3em;
+    bottom: 9em;
     right:1em;
-    display:block;
+    display:none;
     border-radius: 100%;
     color:white;
     width:5em;
     height: 5em;
     background-color: #2D2B30;
     z-index: 5!important;
+    transition: opacity 1s ease-in-out;
   }
 
   .scrollToTop:active{
@@ -510,6 +511,23 @@ hr.normal{
     background-color: #2D2B30!important;
  
   }
+
+.fade-in {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.2s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 
 /*==============*/
@@ -547,6 +565,7 @@ hr.normal{
   font-family: sans-serif;
     font-weight: 500;
     font-size: 0.9rem;
+  overflow-y:auto;  
 }
 
 .nav-link span{
@@ -1185,6 +1204,14 @@ hr.normal{
   border-radius: 50%;
   border: 1px solid #d4d4d4;
 }
+.mini-images{
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.mini-images:hover{
+  opacity:0.8;
+}
+
 @media screen and (max-width:4000px){
 
   .modal-content {
