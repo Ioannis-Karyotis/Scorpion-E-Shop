@@ -46,7 +46,7 @@
               <p><%=product.price %>€</p>
             </div>
             <div class="col-12 d-flex justify-content-center">
-              <a class="btn btn-dark btn-lg" style="border-radius:0px;" href="/products/<%=product.type %>/<%=product.name%>">
+              <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product.name%>">
                 Λεπτομερειες
               </a>
             </div>
@@ -110,7 +110,7 @@
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
     <div class="modal-content animate " >
-        <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn">
+        <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn" style="border-radius: 0px;">
             <i class="fas fa-times"></i>
         </button>
         <div id="inside_modal" class="row">
@@ -172,12 +172,12 @@
                     <div  name="color" class="colors col-12" align="center">
                       <h6><b>Χρώμα:</b></h6>
                       <ul>
-                        <div class="row d-flex justify-content-start pt-2">
+                        <div class="row d-flex justify-content-center ml-3 pt-2">
                         <% var i=0%>
                         <% product.colors.forEach(function(match) { %>
                             <% if(match.colorStatus!="hidden"){ %>
                             <div class="col-3">
-                              <li style="margin-right: -1.5em;">
+                              <li>
                                 <label>
                                   <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
                                   <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
@@ -192,7 +192,7 @@
                   </div>
                   <div class="row">
                     <div class="col-12 d-flex justify-content-center">
-                      <button class="btn btn-dark btn-lg ml-3" style="border-radius:0px" type="submit">
+                      <button class="btn btn-primary btn-lg ml-3" type="submit">
                         Προσθηκη στο καλαθι
                       </button>
                     </div>

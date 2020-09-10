@@ -15,7 +15,29 @@ const express 		= require("express"),
 		tiedye : "Tie Dye",
 		extra : "Έξτρα"
 	  },
-	  sizes= ["S","M","L","XL","XXL"],
+	  sizes = [
+                {
+                    size : "S",
+                    sizeStatus: "active",
+                },
+                {
+                    size : "M",
+                    sizeStatus: "active",
+                },
+                {
+                    size : "L",
+                    sizeStatus: "active",
+                },
+                {
+                    size : "XL",
+                    sizeStatus: "active",
+                },
+                {
+                    size : "XXL",
+                    sizeStatus: "active",
+                },
+            ],
+
 	  storage = multer.diskStorage({
 	    destination: function(req, file, cb) {
 	        cb(null, "./public/images/");
@@ -83,19 +105,20 @@ router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: fa
 });
 
 router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storage, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
-	for (i = 0; i < sizes.length; i++) {
-		var newProduct = new Product({
-			name    : req.body.name,
-			price : req.body.price,
-			description : req.body.description,
-			type : req.params.type,
-			reviews: [],
-        	rating: 0,
-        	size : sizes[i],
-        	sizeStatus: "active",
-        	reviewCount: 0,
-        	status : "active"
-		});
+
+	var newProduct = new Product({
+		name    : req.body.name,
+		price : req.body.price,
+		description : req.body.description,
+		type : req.params.type,
+		reviews: [],
+    	rating: 0,
+    	size : sizes,
+        colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
+        sizes: sizes,
+    	reviewCount: 0,
+    	status : "active"
+	});
 
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
@@ -104,14 +127,16 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
             return res.send('Please select an image to upload');
         }
         req.files.forEach(function(file){
-          var str = file.path;
-  			  var str2 = str.replace("public", "");
-    			var final = str2.replace(/\\/g,"/");
-    			image={url : "http://localhost:3000" + final };
-  			  newProduct.images.push(image);
+          	var str = file.path;
+		  	var str2 = str.replace("public", "");
+			var final = str2.replace(/\\/g,"/");
+			var last = final.split("/");
+			var last2 = last.pop();
+			var name = last2.split(".");
+			image={url : "http://localhost:3000" + final,name : name[0] };
+		  	newProduct.images.push(image);
         });
 		newProduct.save();
-	}
 	res.redirect("/products/"+ req.params.type+"?page=0");
 })
 

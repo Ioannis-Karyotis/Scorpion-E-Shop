@@ -3,14 +3,31 @@
   padding: 0rem;
   margin:0rem;
   font-size: 1.15rem;
+  background-color: white;
+  z-index: 7!important;
 }
 .quick-cart-container{
+  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  overflow: auto; 
+  max-height:20em;
   padding: 0.5rem;
   background-color: #f8f9fa;
+
 }
+.quick-cart-fonts{
+  background-color: white;
+  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
 .quick-cart-img{
   text-align: center;
   width:70%;
+  border-radius: 2px;
 }
 
 .total-quantity-info{
