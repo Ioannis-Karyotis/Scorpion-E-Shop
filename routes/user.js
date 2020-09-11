@@ -7,11 +7,12 @@ const express 		= require("express"),
 	  sanitization	= require('express-autosanitizer'),
 	  JWT 			= require('jsonwebtoken'),
 	  {JWT_SECRET} 	= require('../configuration'),
+	  fs 			= require('fs'),
 	  multer 		= require('multer'),
 	  path 			= require('path'),
 	  storage 		= multer.diskStorage({
 						destination: function(req, file, cb) {
-							cb(null, "./public/images/");
+							cb(null, "./public/images/profile-pictures");
 						},
 						filename: function(req, file, cb) {
 							cb(null, req.user._id+".jpg");
@@ -144,11 +145,19 @@ router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { ses
 
 router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('jwt', { session: false }), function(req, res){
 	console.log(req.autosan.body);
-	User.remove({ _id: req.autosan.body._id }, function(err) {
+	User.remove({ _id: req.autosan.body._id },async function(err) {
 	    if (err) {
 	        console.log(err.message);
 	    }
 	    else {
+	    	const path = "./public/images/profile-pictures/"+req.autosan.body._id+".jpg";
+
+			await fs.unlink(path ,function(err){
+				if(err){
+					console.log(err);
+				}
+			});
+
 	    	req.logout();
 	    	req.user = undefined;
 			cookie = req.cookies;

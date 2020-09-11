@@ -7,6 +7,7 @@ const express 		= require("express"),
 	  Order			= require("../models/order"),
 	  passport 		= require("passport"),
 	  multer 		= require('multer'),
+	  fs 			= require('fs'),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = {
@@ -40,12 +41,12 @@ const express 		= require("express"),
 
 	  storage = multer.diskStorage({
 	    destination: function(req, file, cb) {
-	        cb(null, "./public/images/");
+	        cb(null, "./public/images/"+req.params.type+"/");
 	    },
 
 	    // By default, multer removes file extensions so let's add them back
 	    filename: function(req, file, cb) {
-	        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+	        cb(null, req.params.id + '-' + Date.now() + path.extname(file.originalname));
 	    }
 	  });
 
@@ -198,9 +199,16 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 		} else {
 			console.log(foundProduct);
 			var index = 0
-			foundProduct.images.forEach(function(img){
+			foundProduct.images.forEach(async function(img){
 				if (img.name == req.params.name) {
 					foundProduct.images.splice(index,1);
+					var url = img.url.split("/");
+					var path = "./public/images/"+ req.params.type + "/" + url.pop();
+					await fs.unlink(path ,function(err){
+						if(err){
+							console.log(err);
+						}
+					});
 					foundProduct.save();
 				}
 				index = index + 1;
