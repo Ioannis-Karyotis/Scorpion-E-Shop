@@ -36,6 +36,16 @@ var colors =    [
                         color : "Μοβ", 
                         colorStatus: "active",
                         colorHex : "#905193"
+                    },
+                    {
+                        color : "Κίτρινο", 
+                        colorStatus: "active",
+                        colorHex : "#ffff00"
+                    },
+                    {
+                        color : "Κίτρινο", 
+                        colorStatus: "active",
+                        colorHex : "#ffff00"
                     }
                 ];          
 

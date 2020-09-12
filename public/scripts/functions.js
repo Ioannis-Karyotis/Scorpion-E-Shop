@@ -79,14 +79,14 @@ function removeProduct(){
 	}
 }
 
-function goToProduct(type, name){
-	window.location.replace("https://scorpion-store.herokuapp.com/products/"+type+"/"+name);
-}
+function MakePhoneCall(element){
 
-function MakePhoneCall(){
+	// element.style.backgroundColor = "#2D2B30";
 	window.open('tel:2310281363');
 }
 
-function ScrollToTop(){
+function ScrollToTop(element){
+
+	// element.style.backgroundColor = "#2D2B30";
 	window.scrollTo(0,0);
 }
