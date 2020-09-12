@@ -382,6 +382,7 @@ body {
   background-size:  cover;
   background-attachment: fixed;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 li{
   white-space: nowrap;
@@ -981,6 +982,10 @@ hr.normal{
 /*=========*/
 /*  Modals */
 /*=========*/
+
+.hideOverflow{
+  overflow: hidden;
+}
 
 .Xbutton{
   position: absolute;

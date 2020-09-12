@@ -11,28 +11,33 @@ module.exports = function Cart(previousCart){
       product = this.products[id] = 
         {
           product: productToAdd,
-          variants : {
+          variants : [{
             color : color,
             size :  size ,
-            quantity : qty
-          },
-          price: 0
+            quantity : qty,
+            price: productToAdd.price * qty
+          }],   
         };
-      //create a new one with the aobove attributes and associate that id
-      //products: {
-      //  id:{
-      //    product: [Object],
-      //    quantity: 0,
-      //    price: 0
-      //  }
-      //}
-      //basically, an array is an object so when I do products[id], I create
-      //a new entry with the specified id and then I create a new entry for that id
-      //this way I end up with a key-value pair where the id=key and the object=value implicitly
-      //without having to deal with hash maps
     }
-    product.price += productToAdd.price * qty; //update the price for either the new product or an already existing one
-    product.variants.quantity += qty; ////update the quantity for either the new product or an already existing one
+    else if(product){
+      var found = false;
+      product.variants.forEach(function(item){
+        if (item.color == color && item.size == size) {
+          item.quantity += qty;////update the quantity for either the new product or an already existing one
+          item.price += productToAdd.price * qty;
+          found = true;
+        }
+      });
+      if (!found) {
+        product.variants.push({
+          color : color,
+          size :  size ,
+          quantity : qty,
+          price: productToAdd.price * qty
+        })
+      }
+    }
+     //update the price for either the new product or an already existing one  
     this.totalPrice += productToAdd.price * qty;  //update the total price
     this.totalQuantity += qty; //update the total quantity
   }
@@ -45,19 +50,40 @@ module.exports = function Cart(previousCart){
     return pL;
   }
 
-  this.updateQuantity = function(id, qty){
-    let prevPrice = this.products[id].price;
-    let prevQty = this.products[id].quantity;
-    this.products[id].quantity = qty;
-    this.products[id].price = this.products[id].product.price * qty;
-    this.totalPrice += this.products[id].price - prevPrice;
-    this.totalQuantity += this.products[id].quantity - prevQty;
+  this.updateQuantity = function(id, qty ,size , color){
+    let qtyNow = null;
+    let prcNow = null;
+    let prevPrice = null;
+    let prevQty = null;
+    let product = this.products[id];
+    product.variants.forEach(function(item){
+      if (item.color == color && item.size == size) {
+        prevPrice = item.price;
+        prevQty = item.quantity;
+        qtyNow = qty;
+        prcNow = product.product.price * qtyNow;
+        item.quantity = qtyNow;
+        item.price = prcNow;
+      }   
+    });
+    this.totalPrice += prcNow - prevPrice;
+    this.totalQuantity += qtyNow - prevQty;
+
+    return prcNow;
   }
 
   this.removeProduct = function(id){
-    let product = this.products[id];
-    delete this.products[id];
-    this.totalPrice -= product.price;
-    this.totalQuantity -= product.quantity;
+    let product = this.products[id[0]];
+    let itemToRmv = null;
+    product.variants.forEach(function(item){
+      if (item.color == id[2] && item.size == id[1]) {
+        itemToRmv = product.variants.pop(item);
+      }   
+    });
+    this.totalPrice -= itemToRmv.price;
+    this.totalQuantity -= itemToRmv.quantity;
+    if (product.variants.length == 0 ) {
+      delete this.products[id[0]];
+    }
   }
 }

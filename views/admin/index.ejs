@@ -76,16 +76,21 @@
 				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
 				<div class="row d-flex justify-content-start">
 					<%order.productList.forEach(function(productlist){%>
-						<div class="col-12 col-sm-12 col-md-6 col-lg-4  mb-2 d-flex justify-content-center">
+						<div class="col-12 col-sm-12 col-md-6 col-lg-6  mb-2 d-flex justify-content-center">
 							<div class="mr-2" style="border-left: 1px solid grey; height: 110px;"></div>	
 							<img class="mr-2" style="width:5em; height:7em;" src="<%=productlist.product.images[0].url %>" >
 							<div >
 								<p><b>Προϊόν: </b><%= productlist.product.name%></p>
-								<p><b>Μέγεθος: </b>'<%=productlist.product.size%>' </p>
+								<p><b>Μέγεθος: </b><%=productlist.size%> </p>
+								<p><b>Χρώμα: </b><%=productlist.color%> </p>
 								<p><b>Ποσότητα: </b><%= productlist.quantity%></p>
 							</div>
 						</div>
 					<%}) %>				
+				</div>
+				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
+				<div class="row mb-1 d-flex justify-content-center">
+					<h4><B>Σύνολο: </B> <%=order.totalPrice%> €</h4>
 				</div>
 				<% if(order.confirm==true && order.complete==true){%>
 				    <img src="https://scorpion-store.herokuapp.com/images/check.png" style="width:2em; height: 2em; position:absolute; right:8px; top:45%;">

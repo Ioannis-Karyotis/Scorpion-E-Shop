@@ -268,7 +268,10 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
   var total = 0;
   var product_ids = await Object.keys(products);
   for(i=0; i<product_ids.length; i++){
-    var quantity = products[product_ids[i]].quantity;
+    var quantity = 0;
+    products[product_ids[i]].variants.forEach(function(item){
+      quantity += item.quantity
+    })
     var err,product = await Product.findById(product_ids[i]);
     if(product == null){
       total = total + 0;
@@ -280,11 +283,13 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
   if(total === req.session.cart.totalPrice){
     next();
   }else{
-    console.log("Total prices do not match with each other");
+    console.log("Το καλάθι αγορών δεν είναι έγκυρο. Κάτι πήγε στραβά");
     req.session.cart = null;
     req.session.productList= null;
     res.send({
-      CartDoesNotMatchError : "error"
+      error : {
+        message : "Το καλάθι αγορών δεν είναι έγκυρο. Προσπαθήστε αργότερα."
+      }
     });
   }
 }

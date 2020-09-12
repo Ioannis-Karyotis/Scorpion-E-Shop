@@ -99,7 +99,6 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             body: JSON.stringify(orderData)
           })
           .then(function(result) {
-
             if (result.error) {
               console.log(result.error);
               var modal2 = document.getElementById("StripeModal");
@@ -115,7 +114,19 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             return result.json();
           })
           .then(function(data) {
-            return setupElements(data); //Setup the the card element along with the order data that were sent to the server
+            if(data.error){
+              var modal2 = document.getElementById("StripeModal");
+              modal2.style.display = "none";
+              
+              var modal = document.getElementById("myModal");
+              modal.style.display = "block";
+
+              document.querySelector(".result3").classList.remove("hidden");
+              document.getElementById("errormsg").innerHTML = data.error.message;
+              statusChange('failed');
+            }else{
+              return setupElements(data); //Setup the the card element along with the order data that were sent to the server
+            }
           })
           .then(function({ stripe, card, clientSecret, id }) {
             changeLoadingState(false);
