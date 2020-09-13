@@ -529,6 +529,11 @@ hr.normal{
   }
 }
 
+ #content-wrap {
+    position: relative;
+    padding-bottom: 12em;
+  }
+
 
 /*==============*/
 /*    NavBar    */
@@ -1236,12 +1241,10 @@ hr.normal{
     margin: 0 auto;
     padding: 5em 5px ;
     position: relative;
-    background-color: white;
-    box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
   }
 }
 
-@media screen and (max-width:1920px){
+@media screen and (max-width:1700px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
@@ -1664,7 +1667,7 @@ hr.normal{
   
   #content-wrap {
     position: relative;
-    padding-bottom: 20rem;
+    padding-bottom: 13em;
   }
 
   .page-footer{
