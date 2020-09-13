@@ -84,12 +84,20 @@ function removeProduct(){
 
 function MakePhoneCall(element){
 
-	// element.style.backgroundColor = "#2D2B30";
+	element.style.backgroundColor = "#2D2B30";
 	window.open('tel:2310281363');
 }
 
 function ScrollToTop(element){
 
-	// element.style.backgroundColor = "#2D2B30";
+	element.style.backgroundColor = "#2D2B30";
 	window.scrollTo(0,0);
+}
+
+function clickedback(element){
+	element.style.backgroundColor = "#65A07B";
+}
+
+function normalback(element){
+	element.style.backgroundColor = "#2D2B30";
 }
