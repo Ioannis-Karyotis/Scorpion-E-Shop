@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Scorpion</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/stylesheets/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
@@ -122,13 +123,16 @@
 													<div class="row mx-auto my-2 jumbotron-mini">
 														<div class="col-4 align-center" > <!--picture -->
 															<div>
-															 	<img class="quick-cart-img" src="<%=prd.product.images[0].url %>"></img>
+															 	<a href="/products/<%=prd.product.type%>/<%= prd.product.name %>">
+															 		<img class="quick-cart-img" src="<%=prd.product.images[0].url %>"></img>
+															 	</a>
 															</div>
 														 </div>
 														 <div class="col-8">
 															<div class="row mb-2 d-flex justify-content-start">
 																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
-																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;"><i><%= prd.product.name %></i></label>
+																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;">
+																		<a href="/products/<%=prd.product.type%>/<%= prd.product.name %>"><i><%= prd.product.name %></i></a></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
