@@ -36,7 +36,7 @@
     "passport-local-mongoose-email": "^0.1.4",
     "path": "^0.12.7",
     "stripe": "^8.49.0",
-    "opencollective-postinstall": "^2.0.0", 
+    "opencollective-postinstall": "^2.0.0"
   },
   "keywords": [
     "example",
