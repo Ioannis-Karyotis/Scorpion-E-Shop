@@ -53,8 +53,8 @@ app.set("view engine","ejs");
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-//seedDB(); //seed the database with products
+mongoose.connect("mongodb://tejohny:wq6gxGSwUFBocOrQ@scorpion-store-shard-00-00.gngrw.mongodb.net:27017,scorpion-store-shard-00-01.gngrw.mongodb.net:27017,scorpion-store-shard-00-02.gngrw.mongodb.net:27017/test?authSource=admin&replicaSet=atlas-130fer-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true",{ useNewUrlParser: true, useUnifiedTopology:true  });
+seedDB(); //seed the database with products
 
 
 
