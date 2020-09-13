@@ -394,31 +394,34 @@ hr {
   overflow: visible;
   border-radius: 25px;
   border:2px solid #65A07B;
+  background-color:#65A07B;
 }
 
 
 hr.thin{
   border-radius: 10px;
   border:1px solid grey;
+  background-color: grey;
 }
 
 hr.thick{
   border-radius: 20px;
   border:1.2px solid rgba(0, 0, 0, 0.4);
   margin-bottom: 3em;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 hr.normal{
   align-items: center;
   border-radius: 15px;
   border:1.2px solid rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 
 #page-container {
-
   position: relative;
-  min-height: 100vh;
+  min-height: 110vh;
 }
 
 #content-wrap {
@@ -1666,6 +1669,7 @@ hr.normal{
 @media screen and (max-width:960px){
   
   #content-wrap {
+    overflow-y: hidden;
     position: relative;
     padding-bottom: 13em;
   }
@@ -1688,6 +1692,7 @@ hr.normal{
 @media screen and (max-width:768px){
   
   #content-wrap {
+    overflow-y: hidden;
     position: relative;
     padding-bottom: 34rem;
   }
