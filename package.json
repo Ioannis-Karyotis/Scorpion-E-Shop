@@ -48,7 +48,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "postinstall": "opencollective-postinstall",
     "heroku-prebuild": "npm install --dev"
   },
   "repository": {
