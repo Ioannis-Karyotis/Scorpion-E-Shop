@@ -134,7 +134,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
-			image={url : "http://localhost:3000" + final,name : name[0] };
+			image={url : "https://scorpion-store.herokuapp.com" + final,name : name[0] };
 		  	newProduct.images.push(image);
         });
 		newProduct.save();
@@ -184,7 +184,7 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".")
-			image={url : "http://localhost:3000" + final , name : name[0]};
+			image={url : "https://scorpion-store.herokuapp.com" + final , name : name[0]};
 	  		foundProduct.images.push(image);
 			foundProduct.save();
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct.name);
@@ -409,7 +409,7 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
-						var photo = "http://localhost:3000/images/blank.png"
+						var photo = "https://scorpion-store.herokuapp.com/images/blank.png"
 		    		}
 					var today = new Date();
 

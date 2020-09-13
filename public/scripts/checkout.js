@@ -295,11 +295,11 @@ var changeLoadingState = function(isLoading) {
 };
 
 function relocate(){
-  window.location.replace("http://localhost:3000/");
+  window.location.replace("https://scorpion-store.herokuapp.com/");
 }
 
 function relocate2(){
-  window.location.replace("http://localhost:3000/checkout");
+  window.location.replace("https://scorpion-store.herokuapp.com/checkout");
 }
 
 function statusChange(status){

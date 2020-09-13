@@ -56,7 +56,7 @@ function deleteProfile(user) {
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
       setTimeout(function() {
-        window.location.replace("http://localhost:3000/login");
+        window.location.replace("https://scorpion-store.herokuapp.com/login");
       }, 2000);             
     })
   }else{

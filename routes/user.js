@@ -122,7 +122,7 @@ router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storag
 	console.log(str);
 	var str2 = str.replace("public", "");
 	var final = str2.replace(/\\/g,"/");
-	var image="http://localhost:3000" + final;	
+	var image="https://scorpion-store.herokuapp.com" + final;	
 	User.findById(req.params.id, function(err , foundUser){
 		if(err){
 			console.log(err)
