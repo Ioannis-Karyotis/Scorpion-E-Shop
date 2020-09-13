@@ -56,11 +56,11 @@ var data = [
         price: 15,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 name: "example2"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 name : "example1"
             }
         ],
@@ -78,11 +78,11 @@ var data = [
         price: 10,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 name: "example2"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
@@ -99,11 +99,11 @@ var data = [
         price: 20,
         images: [
             {
-                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.jpg",
+                url: "https://scorpion-store.herokuapp.com/images/tshirt/example2.JPG",
                 name : "example2"
             },
             {
-                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.jpg",
+                url:"https://scorpion-store.herokuapp.com/images/tshirt/example1.JPG",
                 name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
