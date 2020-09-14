@@ -102,9 +102,6 @@
 
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<script type="text/javascript" src="/scripts/products.js"></script>
 <%- include("./../partials/footer")%>
 
 <% products.forEach(function(product){ %>
@@ -155,11 +152,12 @@
                   <h6><%=product.description%></h6>
                 </div>
               </div>  
-              <div class="px-2 mt-1 pb-3 align-center d-flex justify-content-center">
-                <form action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row pb-1 d-flex align-items-center">
-                    <div class="col-12 align-center">
-                      <h6 class="pb-1"><b>Μέγεθος:</b></h6>
+              <div class="row align-center d-flex justify-content-center">
+                <form id="putForm" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
+                  <div class="row pb-1 mt-4 d-flex d-flex justify-content-center">
+                    <h6 class="pb-1"><b>Μέγεθος:</b></h6>
+                    <div class="col-12 d-flex justify-content-center align-items-center" align="center">
+                      
                       <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="form-control mb-2" value="0">
                         <% product.sizes.forEach(function(match){ %>
                           <% if(match.sizeStatus!="hidden"){ %>
@@ -168,37 +166,40 @@
                       </select>
                     </div>
                   </div>
-                  <div class="row mx-2 pb-2 d-flex align-items-center"> 
-                    <div  name="color" class="colors col-12" align="center">
-                      <h6><b>Χρώμα:</b></h6>
-                      <ul>
-                        <div class="row d-flex justify-content-center ml-3 pt-2">
-                        <% var i=0%>
-                        <% product.colors.forEach(function(match) { %>
-                            <% if(match.colorStatus!="hidden"){ %>
-                            <div class="col-3">
-                              <li>
-                                <label>
-                                  <input type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
-                                  <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
-                                </label>
-                              </li>
-                            </div>  
-                            <% i = i + 1 }%>  
-                        <%});%>
-                        </div>
-                      </ul> 
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12 d-flex justify-content-center">
-                      <button class="btn btn-primary btn-lg ml-3" type="submit">
-                        Προσθηκη στο καλαθι
-                      </button>
-                    </div>
-                  </div>
                 </form>
-              </div>      
+              </div>   
+                <div class="row d-flex justify-content-center"> 
+                  <div name="color" class="colors col-4" align="center">
+                    <h6 class="pb-2" align="center"><b>Χρώμα:</b></h6>
+                    <ul>
+                      <div class="row d-flex justify-content-center justify-content-sm-start" align="center">
+                      <% var i=0%>
+                      <% product.colors.forEach(function(match) { %>
+                          <% if(match.colorStatus!="hidden"){ %>
+                          <div class="col-6 col-sm-4 d-flex justify-content-center" align="center" >
+                            <li class="mx-auto">
+                              <label>
+                                <input form="putForm" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked <% } %> >
+                                <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
+                              </label>
+                            </li>
+                          </div>  
+                          <% i = i + 1 }%>  
+                      <%});%>
+                      </div>
+                    </ul> 
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-center">  
+                    <div class="col-12" align="center">
+                      <div class="pt-3">
+                        <button type="submit" form="putForm" class="btn btn-primary btn-lg">
+                          Προσθηκη στο καλαθι
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+     
           </div>
       </div>
     </div>
