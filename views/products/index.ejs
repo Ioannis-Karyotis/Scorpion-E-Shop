@@ -1,6 +1,6 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main container-fluid product">
+<div id="main" class="main container-fluid product"  >
   <div class="row my-4 d-flex justify-content-start">
     <div class="mx-auto mt-2" style="align-items: center;">
       <h3>
@@ -13,7 +13,7 @@
   </div>
   <!-- <hr class="pic thick mx-5"> -->
     
-  <div  class="container-fluid">
+  <div  class="container-fluid" >
     <div class="row products-row d-flex justify-content-around align-items-start">
 <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
@@ -46,7 +46,7 @@
               <p><%=product.price %>€</p>
             </div>
             <div class="col-12 d-flex justify-content-center">
-              <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product.name%>">
+              <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product._id%>">
                 Λεπτομερειες
               </a>
             </div>
@@ -55,15 +55,15 @@
       </div>
       <div>
       <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin"){ %>
-        <button class=" btn-danger " style="height:3em; width:3em; text-align: center; " onclick="deleteProduct('<%=product.name%>','<%=product.type%>')">
+        <button class=" btn-danger " style="height:3em; width:3em; text-align: center; " onclick="deleteProduct('<%=product._id%>','<%=product.type%>')">
           <i class="fas fa-times fa-lg"></i>
         </button>
         <% if(product.status=="hidden"){ %>
-        <button class=" btn-secondary " style="height:3em;width:3em; text-align: center; " onclick="hideProduct('<%=product.name%>','<%=product.type%>')">
+        <button class=" btn-secondary " style="height:3em;width:3em; text-align: center; " onclick="hideProduct('<%=product._id%>','<%=product.type%>')">
           <i class="fas fa-eye"></i>
         </button>
         <%}else{%>
-          <button class=" btn-secondary" style="height:3em;width:3em; text-align: center; " onclick="hideProduct('<%=product.name%>','<%=product.type%>')">
+          <button class=" btn-secondary" style="height:3em;width:3em; text-align: center; " onclick="hideProduct('<%=product._id%>','<%=product.type%>')">
           <i class="fas fa-eye-slash"></i>
           </button>
         <%}%>
@@ -153,7 +153,7 @@
             </div>
           </div>  
           <div class="row align-center d-flex justify-content-center">
-            <form id="putForm" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
+            <form id="putForm" action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
               <div class="row pb-1 d-flex d-flex justify-content-center">
                 <h6 class="pb-1"><b>Μέγεθος:</b></h6>
                 <div class="col-12 d-flex justify-content-center align-items-center" align="center">

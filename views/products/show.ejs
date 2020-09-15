@@ -74,11 +74,11 @@
             </div>
             <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>             
               <div class="row d-flex justify-content-center">
-                  <a href="<%=product.name%>/edit" class="btn btn-primary btn-lg">Τροποποιηση Προιοντος</a>
+                  <a href="<%=product._id%>/edit" class="btn btn-primary btn-lg">Τροποποιηση Προιοντος</a>
               </div>
             <%}%>            
             <hr class="thin"> 
-              <form class="mr-3" action="/products/<%=product.type%>/<%=product.name%>/add" id="buyForm" method="POST">
+              <form class="mr-3" action="/products/<%=product.type%>/<%=product._id%>/add" id="buyForm" method="POST">
                 <div class="row py-4 d-flex justify-content-center">
                   <div id="tshirtSize" name="size" class="colors col-12 col-sm-6 pb-4" align="center">
                     <h4><b>Μέγεθος: </b></h4>
@@ -207,7 +207,7 @@
       </div>
     <%}%>
     <!-- <div class="py-4"style="background:#F5F5F5;"> -->
-      <form id="review-form" class="mb-5 container mx-auto" action="/products/<%=product.type%>/<%=product.name%>/review" method="POST">
+      <form id="review-form" class="mb-5 container mx-auto" action="/products/<%=product.type%>/<%=product._id%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
         <input type="hidden" name="productId" value="<%=product._id%>">
         <div class="form-row">

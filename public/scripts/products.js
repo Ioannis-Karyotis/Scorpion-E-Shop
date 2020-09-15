@@ -6,11 +6,11 @@ $(document).ready(function() {
 });
 
 
-var deleteProduct = function(name,type){
+var deleteProduct = function(id,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type +"/"+ name+ "/delete", {
+  		fetch("/products/"+ type +"/"+ id+ "/delete", {
           method: "DELETE"  
          })
         .then(function() {   
@@ -19,11 +19,11 @@ var deleteProduct = function(name,type){
 	}
 }
 
-var hideProduct = function(name,type){
+var hideProduct = function(id,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type  +"/"+ name +"/hide", {
+  		fetch("/products/"+ type  +"/"+ id +"/hide", {
           method: "post"  
          })
         .then(function() {   
@@ -113,4 +113,21 @@ $( ".Xbutton" ).click(function(e) {
 
 $( ".product-img" ).click(function(e) {
     $('html').addClass("hideOverflow");
+});
+
+$(document).ready(function () {
+     $("#AddPrd").on('click', function (event) { 
+        document.getElementById("AddPrd").disabled = true;
+        var a = document.forms["Form"]["name"].value;
+        var b = document.forms["Form"]["price"].value;
+        var c = document.forms["Form"]["description"].value;
+        var d = document.forms["Form"]["color"].value;
+        var e = document.forms["Form"]["colorHex"].value;
+        var f = document.forms["Form"]["profile_pic"].value;
+        if (a == null || a == "", b == null || b == "", c == null || c == "", d == null || d == "", e == null || e == "", f == null || f == "") {
+          alert("Please Fill All Required Fields");
+          document.getElementById("AddPrd").disabled = false;
+          return false;
+        }
+    })
 });

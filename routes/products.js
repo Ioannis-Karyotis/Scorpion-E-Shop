@@ -48,7 +48,32 @@ const express 		= require("express"),
 	    filename: function(req, file, cb) {
 	        cb(null, req.params.id + '-' + Date.now() + path.extname(file.originalname));
 	    }
+	  }),
+	  storageNewItem = multer.diskStorage({
+	    destination: function(req, file, cb) {
+	        cb(null, "./public/images/"+req.params.type+"/");
+	    },
+
+	    // By default, multer removes file extensions so let's add them back
+	    filename: function(req, file, cb) {
+	    	var newProduct = new Product({
+				name    : req.body.name,
+				price : req.body.price,
+				description : req.body.description,
+				type : req.params.type,
+				reviews: [],
+		    	rating: 0,
+		    	size : sizes,
+		        colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
+		        sizes: sizes,
+		    	reviewCount: 0,
+		    	status : "active"
+			});
+	    	newProduct.save();
+	        cb(null, newProduct._id + '-' + Date.now() + path.extname(file.originalname));
+	    }
 	  });
+
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -105,22 +130,10 @@ router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: fa
 	res.render("products/add",{type: req.params.type});
 });
 
-router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storage, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
+router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storageNewItem, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
 
-	var newProduct = new Product({
-		name    : req.body.name,
-		price : req.body.price,
-		description : req.body.description,
-		type : req.params.type,
-		reviews: [],
-    	rating: 0,
-    	size : sizes,
-        colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
-        sizes: sizes,
-    	reviewCount: 0,
-    	status : "active"
-	});
-
+	Product.findOne({ name : req.body.name , price: req.body.price , description : req.body.description, type : req.params.type}, function(err,foundProduct){
+		console.log("got here");
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
         }
@@ -134,11 +147,17 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
+<<<<<<< Updated upstream
 			image={url : "https://scorpion-store.herokuapp.com" + final,name : name[0] };
 		  	newProduct.images.push(image);
+=======
+			image={url : "http://localhost:3000" + final,name : name[0] };
+		  	foundProduct.images.push(image);
+>>>>>>> Stashed changes
         });
-		newProduct.save();
-	res.redirect("/products/"+ req.params.type+"?page=0");
+		foundProduct.save();
+		res.redirect("/products/"+ req.params.type+"?page=0");
+	})	
 })
 
 router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
@@ -187,7 +206,7 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			image={url : "https://scorpion-store.herokuapp.com" + final , name : name[0]};
 	  		foundProduct.images.push(image);
 			foundProduct.save();
-			res.redirect("/products/"+ req.params.type + "/" + foundProduct.name);
+			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
 		}
 	});
 })
@@ -213,7 +232,7 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 				}
 				index = index + 1;
 			})
-			res.redirect("/products/"+ req.params.type + "/" + foundProduct.name);
+			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
 		}
 	});
 })
@@ -221,8 +240,8 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 
 
 
-router.get("/products/:type/:name", function(req ,res,next){
-	Product.find({name : req.params.name }).populate("reviews").exec(async function(err, foundProducts){
+router.get("/products/:type/:id", function(req ,res,next){
+	Product.find({_id : req.params.id }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
 			console.log(err);
 		} else {
@@ -251,18 +270,33 @@ router.get("/products/:type/:name", function(req ,res,next){
 });
 
 
-router.delete("/products/:type/:name/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
 	var orders = await Order.find({}).populate("productList.product").exec();
 	var count = 0;
 	orders.forEach(function(order){
 		order.productList.forEach(function(productlist){
-			if(productlist.product.name == req.params.name && productlist.product.type == req.params.type){
+			if(productlist.product._id == req.params.id && productlist.product.type == req.params.type){
 				count = count + 1;
 			}
 		})	
 	})	
 	if(count == 0){
-		Product.deleteMany({type: req.params.type, name : req.params.name}, function(err){
+		Product.findById(req.params.id,function(err, foundProduct){
+			if(err){
+				console.log(err);
+			} else {
+				foundProduct.images.forEach(async function(img){
+					var url = img.url.split("/");
+					var path = "./public/images/"+ req.params.type + "/" + url.pop();
+					await fs.unlink(path ,function(err){
+						if(err){
+							console.log(err);
+						}
+					});
+				})
+			}
+		});
+		Product.deleteOne({type: req.params.type, _id : req.params.id}, function(err){
 			if(err){
 				res.redirect("/products/"+ req.params.type);
 			} else{
@@ -275,8 +309,8 @@ router.delete("/products/:type/:name/delete" ,passport.authenticate('jwtAdmin', 
 	}	
 });
 
-router.get("/products/:type/:name/edit",passport.authenticate('jwtAdmin', { session: false }), function(req ,res,next){
-	Product.find({name : req.params.name }).populate("reviews").exec(async function(err, foundProducts){
+router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { session: false }), function(req ,res,next){
+	Product.find({_id : req.params.id }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
 			console.log(err);
 		} else {
@@ -293,9 +327,9 @@ router.get("/products/:type/:name/edit",passport.authenticate('jwtAdmin', { sess
 
 
 
-router.put("/products/:type/:name/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	console.log(req.autosan.body);
-	Product.update({type: req.params.type, name : req.params.name}, req.autosan.body, function(err , updateProduct){
+	Product.update({type: req.params.type, _id : req.params.id}, req.autosan.body, function(err , updateProduct){
 		if(err){
 			console.log("Got to error");
 			res.redirect("back");
@@ -308,10 +342,8 @@ router.put("/products/:type/:name/edit" ,sanitization.route, passport.authentica
 
 
 
-router.post("/products/:type/:name/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	console.log(req.params.name);
-	console.log(req.params.type);
-	Product.find({type: req.params.type, name : req.params.name}, function(err, products){
+router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+	Product.find({type: req.params.type, _id : req.params.id}, function(err, products){
 		if(err){
 			console.log(err);
 		} else {
@@ -394,9 +426,9 @@ router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAd
 });
 
 
-router.post("/products/:type/:name/review",sanitization.route, middleware.rating, function(req,res){
+router.post("/products/:type/:id/review",sanitization.route, middleware.rating, function(req,res){
 	
-	Product.find({name : req.params.name}, function(err, foundProduct){
+	Product.find({_id : req.params.id}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
@@ -445,8 +477,8 @@ router.post("/products/:type/:name/review",sanitization.route, middleware.rating
 	});
 });
 
-router.post("/products/:type/:name/add" , sanitization.route, function(req, res){
-	Product.find({name : req.params.name}, function(err, foundProduct){
+router.post("/products/:type/:id/add" , sanitization.route, function(req, res){
+	Product.find({_id : req.params.id}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
