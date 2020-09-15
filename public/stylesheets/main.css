@@ -449,6 +449,7 @@ hr.normal{
   height: 100%;
   position: relative;
   opacity: 0.97;
+  border-radius: 5px;
 }
 
 .carousel-item img{
@@ -465,6 +466,7 @@ hr.normal{
 
 .ninety{
   width:90%;
+  border-radius: 5px;
 }
 .jumbotron{
   background-color: rgba(231, 234, 236, 0.3);
