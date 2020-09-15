@@ -107,100 +107,99 @@
 <% products.forEach(function(product){ %>
 <div class="modal" id="product_modal_<%= product._id %>">
     <div class="modal-content animate " >
-        <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn" style="border-radius: 0px;">
-            <i class="fas fa-times"></i>
-        </button>
-        <div id="inside_modal" class="row">
-          <div class="col-md-6">
-            <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
-              <div class="carousel-inner">
-                <% Object.keys(product.images).forEach(function(key) { %>
-                  <div class="carousel-item modal-carousel
-                  <% if(key == 0){ %>
-                      active">
-                  <% } else{ %>
-                      ">
-                  <% } %>
-                      <img class="d-block w-100" src="<%=product.images[key].url%>" alt="">
-                  </div>
-                <% }) %>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+      <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn" style="border-radius: 0px;">
+          <i class="fas fa-times"></i>
+      </button>
+      <div id="inside_modal" class="row">
+        <div class="col-md-6">
+          <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
+            <div class="carousel-inner">
+              <% Object.keys(product.images).forEach(function(key) { %>
+                <div class="carousel-item modal-carousel
+                <% if(key == 0){ %>
+                    active">
+                <% } else{ %>
+                    ">
+                <% } %>
+                    <img class="d-block w-100" src="<%=product.images[key].url%>" alt="">
+                </div>
+              <% }) %>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-2 pb-sm-2 py-auto my-auto mx-auto modal-desc">
+          <div class="row hide">
+            <div class="col-12 align-center"> <!--name -->
+              <h4><b><%=product.name %></b></h4>
             </div>
           </div>
-          <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-2 pb-sm-2 py-auto my-auto mx-auto modal-desc">
-              <div class="row hide">
-                <div class="col-12 align-center"> <!--name -->
-                  <h4><b><%=product.name %></b></h4>
-                </div>
-              </div>
-              <hr class="thin mx-5 hide">
-              <div class="row mx-1 hide">
-                <div class="col-12 align-center">
-                  <h4><%=product.price%>€</h4>
-                </div>
-              </div>
-              <div class="row mx-1 hide">
-                <div class="col-md-12 align-center">
-                  <h6><%=product.description%></h6>
-                </div>
-              </div>  
-              <div class="row align-center d-flex justify-content-center">
-                <form id="putForm" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
-                  <div class="row pb-1 d-flex d-flex justify-content-center">
-                    <h6 class="pb-1"><b>Μέγεθος:</b></h6>
-                    <div class="col-12 d-flex justify-content-center align-items-center" align="center">
-                      
-                      <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="form-control mb-2" value="0">
-                        <% product.sizes.forEach(function(match){ %>
-                          <% if(match.sizeStatus!="hidden"){ %>
-                          <option> <%= match.size %></option>
-                        <% }}) %>
-                      </select>
-                    </div>
-                  </div>
-                </form>
-              </div>   
-                <div class="row d-flex justify-content-center mt-2"> 
-                  <div name="color" class="colors col-6" align="center">
-                    <h6 class="pb-2" align="center"><b>Χρώμα:</b></h6>
-                    <ul>
-                      <div class="row d-flex justify-content-center justify-content-sm-start" align="center">
-                      <% var i=0%>
-                      <% product.colors.forEach(function(match) { %>
-                          <% if(match.colorStatus!="hidden"){ %>
-                          <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
-                            <li class="mx-auto">
-                              <label>
-                                <input form="putForm" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked <% } %> >
-                                <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
-                              </label>
-                            </li>
-                          </div>  
-                          <% i = i + 1 }%>  
-                      <%});%>
-                      </div>
-                    </ul> 
-                  </div>
-                </div>
-                <div class="row d-flex justify-content-center mb-2">  
-                    <div class="col-12 d-flex justify-content-center" align="center">
-                      <div class="pt-3">
-                        <button type="submit" form="putForm" class="btn btn-primary btn-lg">
-                          Προσθηκη στο καλαθι
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-     
+          <hr class="thin mx-5 hide">
+          <div class="row mx-1 hide">
+            <div class="col-12 align-center">
+              <h4><%=product.price%>€</h4>
+            </div>
           </div>
+          <div class="row mx-1 hide">
+            <div class="col-md-12 align-center">
+              <h6><%=product.description%></h6>
+            </div>
+          </div>  
+          <div class="row align-center d-flex justify-content-center">
+            <form id="putForm" action="/products/<%=product.type%>/<%=product.name%>/add" method="POST">
+              <div class="row pb-1 d-flex d-flex justify-content-center">
+                <h6 class="pb-1"><b>Μέγεθος:</b></h6>
+                <div class="col-12 d-flex justify-content-center align-items-center" align="center">
+                  
+                  <select id="tshirtSize" name="size" style="width:5em;display: inline-block;" class="form-control mb-2" value="0">
+                    <% product.sizes.forEach(function(match){ %>
+                      <% if(match.sizeStatus!="hidden"){ %>
+                      <option> <%= match.size %></option>
+                    <% }}) %>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>   
+            <div class="row d-flex justify-content-center mt-2"> 
+              <div name="color" class="colors col-6" align="center">
+                <h6 class="pb-2" align="center"><b>Χρώμα:</b></h6>
+                <ul>
+                  <div class="row d-flex justify-content-center justify-content-sm-start" align="center">
+                  <% var i=0%>
+                  <% product.colors.forEach(function(match) { %>
+                      <% if(match.colorStatus!="hidden"){ %>
+                      <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
+                        <li class="mx-auto">
+                          <label>
+                            <input form="putForm" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked <% } %> >
+                            <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
+                          </label>
+                        </li>
+                      </div>  
+                      <% i = i + 1 }%>  
+                  <%});%>
+                  </div>
+                </ul> 
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center mb-2">  
+              <div class="col-12 d-flex justify-content-center" align="center">
+                <div class="pt-3">
+                  <button type="submit" form="putForm" class="btn btn-primary btn-lg">
+                    Προσθηκη στο καλαθι
+                  </button>
+                </div>  
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>

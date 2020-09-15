@@ -1210,6 +1210,8 @@ hr.normal{
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
   border-radius: 5px;
   border: 2px solid #FAFAFA;
+  width:3em;
+  height: 4em;
 }
 
 .mini-images:hover{
@@ -1680,7 +1682,7 @@ hr.normal{
 }
 @media screen and (max-width:360px){
   .modal-content {
-    border-radius: 0px;
+    border-radius: 5px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
