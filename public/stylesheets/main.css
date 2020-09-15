@@ -1410,12 +1410,12 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 55em;
+    height: 62em;
      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 60%;
-    height: 30em;
+    height: 60%!important;
   }
   .hide{
     display: none;
@@ -1436,13 +1436,37 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 50rem;
+    height: 60em;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
     width: 60%;
-    height: 30rem;
+    height: 60%!important;
+  }
+  .hide{
+    display: none;
+  }
+  .card img{
+    width:100%;
+    height:29rem;
+  }
+}
+
+@media screen and (max-width:680px){
+  .modal-content {
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: #fefefe;
+    margin: auto;
+    width: 60%;
+    height: 58rem;
+
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  }
+  .modal-carousel img{
+    width: 60%;
+    height: 60%!important;
   }
   .hide{
     display: none;
@@ -1460,13 +1484,13 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 50rem;
+    height: 57rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
     width: 60%;
-    height: 30rem;
+    height: 60%!important;
   }
   .hide{
     display: none;
@@ -1511,13 +1535,13 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 70%;
-    height: 55rem;
+    height: 57rem;
 
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
     width: 70%;
-    height: 35rem;
+    height: 70%!important;
   }
   .card img{
     width:100%;
@@ -1553,14 +1577,14 @@ hr.normal{
   }
 }
 
-@media screen and (max-width:480px){
+@media screen and (max-width:500px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 60rem;
+    height: 57rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1578,15 +1602,90 @@ hr.normal{
     display: none;
   }
 }
-
-@media screen and (max-width:400px){
+@media screen and (max-width:460px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 30rem;
+    height: 55rem;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+  }
+  .modal-carousel img{
+    width: 80%;
+    height: 80%!important;
+  }
+  .card img{
+    width :100%;
+    height:22rem;
+  }
+  .card{
+    width:18rem;
+  }
+  .hide{
+    display: none;
+  }
+}
+
+@media screen and (max-width:435px){
+  .modal-content {
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: #fefefe;
+    margin: auto;
+    width: 80%;
+    height: 50rem;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+  }
+  .modal-carousel img{
+    width: 80%;
+    height: 80%!important;
+  }
+  .card img{
+    width :100%;
+    height:22rem;
+  }
+  .card{
+    width:18rem;
+  }
+  .hide{
+    display: none;
+  }
+}
+
+
+@media screen and (max-width:390px){
+  .modal-content {
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: #fefefe;
+    margin: auto;
+    width: 80%;
+    height: 47rem;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+  }
+  .modal-carousel img{
+    width: 80%;
+    height: 23rem;
+  }
+  .card img{
+    width:100%;
+    height:20rem;
+  }
+  .hide{
+    display: none;
+  }
+  
+}
+@media screen and (max-width:360px){
+  .modal-content {
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: #fefefe;
+    margin: auto;
+    width: 80%;
+    height: 45rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1603,14 +1702,14 @@ hr.normal{
   
 }
 
-@media screen and (max-width:320px){
+@media screen and (max-width:323px){
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 30rem;
+    height: 42rem;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
