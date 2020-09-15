@@ -111,7 +111,7 @@
             <i class="fas fa-times"></i>
         </button>
         <div id="inside_modal" class="row">
-          <div class="col-md-6 py-auto">
+          <div class="col-md-6">
             <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
               <div class="carousel-inner">
                 <% Object.keys(product.images).forEach(function(key) { %>
@@ -135,7 +135,7 @@
               </a>
             </div>
           </div>
-          <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-5 pb-sm-5 py-auto mx-auto modal-desc">
+          <div class="col-md-6 mt-md-5 pr-md-5 mb-sm-2 pb-sm-2 py-auto my-auto mx-auto modal-desc">
               <div class="row hide">
                 <div class="col-12 align-center"> <!--name -->
                   <h4><b><%=product.name %></b></h4>
@@ -168,7 +168,7 @@
                   </div>
                 </form>
               </div>   
-                <div class="row d-flex justify-content-center"> 
+                <div class="row d-flex justify-content-center mt-2"> 
                   <div name="color" class="colors col-4" align="center">
                     <h6 class="pb-2" align="center"><b>Χρώμα:</b></h6>
                     <ul>
@@ -191,7 +191,7 @@
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center">  
-                    <div class="col-12" align="center">
+                    <div class="col-12 d-flex justify-content-center" align="center">
                       <div class="pt-3">
                         <button type="submit" form="putForm" class="btn btn-primary btn-lg">
                           Προσθηκη στο καλαθι
