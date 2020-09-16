@@ -78,8 +78,11 @@ app.use(function(req, res, next){
 	if(req.user == undefined){
 		if(req.cookies['access_token'])	{
 			res.clearCookie('access_token');
+			res.clearCookie('admin_token');
+
 		}
 		else if(req.cookies['admin_token']){
+			res.clearCookie('access_token');
 			res.clearCookie('admin_token');
 		}
 	}
