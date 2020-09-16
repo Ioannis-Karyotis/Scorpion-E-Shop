@@ -55,22 +55,8 @@ const express 		= require("express"),
 	    },
 
 	    // By default, multer removes file extensions so let's add them back
-	    filename: function(req, file, cb) {
-	    	var newProduct = new Product({
-				name    : req.body.name,
-				price : req.body.price,
-				description : req.body.description,
-				type : req.params.type,
-				reviews: [],
-		    	rating: 0,
-		    	size : sizes,
-		        colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
-		        sizes: sizes,
-		    	reviewCount: 0,
-		    	status : "active"
-			});
-	    	newProduct.save();
-	        cb(null, newProduct._id + '-' + Date.now() + path.extname(file.originalname));
+	    filename: function(req, file, cb ) {
+	    	cb(null, req.id + '-' + Date.now() + path.extname(file.originalname));
 	    }
 	  });
 
@@ -130,29 +116,33 @@ router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: fa
 	res.render("products/add",{type: req.params.type});
 });
 
-router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }),multer({ storage: storageNewItem, fileFilter: imageFilter }).array("profile_pic"), function(req, res, next){
-
-	Product.findOne({ name : req.body.name , price: req.body.price , description : req.body.description, type : req.params.type}, function(err,foundProduct){
-		console.log("got here");
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        else if (!req.files) {
-            return res.send('Please select an image to upload');
-        }
-        req.files.forEach(function(file){
-          	var str = file.path;
+router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }) ,middleware.addPrd,	 multer({ storage: storageNewItem, fileFilter: imageFilter }).array("profile_pic"),async function(req, res, next){
+	
+	Product.findOne({_id :req.id}, async function(err,newProduct){
+		newProduct.name =  req.body.name;
+		newProduct.price =  req.body.price;
+		newProduct.description =  req.body.description;
+		newProduct.colors =  {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex};
+		console.log(newProduct);
+		if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+	    }
+	    else if (!req.files) {
+	        return res.send('Please select an image to upload');
+	    }
+	    req.files.forEach(function(file){
+	      	var str = file.path;
 		  	var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
 			image={url : "http://localhost:3000" + final,name : name[0] };
-		  	foundProduct.images.push(image);
-        });
-		foundProduct.save();
+		  	newProduct.images.push(image);
+	    });
+		await newProduct.save();
 		res.redirect("/products/"+ req.params.type+"?page=0");
-	})	
+	})
 })
 
 router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
@@ -266,6 +256,7 @@ router.get("/products/:type/:id", function(req ,res,next){
 
 
 router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+	console.log(req.params.id);
 	var orders = await Order.find({}).populate("productList.product").exec();
 	var count = 0;
 	orders.forEach(function(order){
@@ -293,14 +284,13 @@ router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { 
 		});
 		Product.deleteOne({type: req.params.type, _id : req.params.id}, function(err){
 			if(err){
-				res.redirect("/products/"+ req.params.type);
+				res.send({ success:  "success" });
 			} else{
-				res.redirect("/products/"+ req.params.type);
+				res.send({ success:  "success" });
 			}
 		});
 	}else{
-		req.flash("genError","You Successfully Signed Up");
-		res.redirect("/products/"+ req.params.type);
+		res.send({ error: "Το Προιον υπάρχει σε Αναμένουσα παραγγελία" });
 	}	
 });
 

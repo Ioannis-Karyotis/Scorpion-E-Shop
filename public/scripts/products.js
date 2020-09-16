@@ -11,11 +11,22 @@ var deleteProduct = function(id,type){
 	var r = confirm("Are you sure");
 	if (r == true) {
   		fetch("/products/"+ type +"/"+ id+ "/delete", {
+          headers: {
+              "Content-Type": "application/json"
+          },
           method: "DELETE"  
          })
-        .then(function() {   
-	        window.location.reload();
-	    })
+        .then(function(result) {   
+	        return result.json();
+        }).then(function(data){
+          if (data.error) {
+             $('#error').removeClass("hidden");
+             $('#error').text(data.error);
+             setTimeout(function(){  $('#error').addClass("hidden"); }, 3000);
+          }else{
+            window.location.reload();
+          }
+        }); 
 	}
 }
 
@@ -113,21 +124,4 @@ $( ".Xbutton" ).click(function(e) {
 
 $( ".product-img" ).click(function(e) {
     $('html').addClass("hideOverflow");
-});
-
-$(document).ready(function () {
-     $("#AddPrd").on('click', function (event) { 
-        document.getElementById("AddPrd").disabled = true;
-        var a = document.forms["Form"]["name"].value;
-        var b = document.forms["Form"]["price"].value;
-        var c = document.forms["Form"]["description"].value;
-        var d = document.forms["Form"]["color"].value;
-        var e = document.forms["Form"]["colorHex"].value;
-        var f = document.forms["Form"]["profile_pic"].value;
-        if (a == null || a == "", b == null || b == "", c == null || c == "", d == null || d == "", e == null || e == "", f == null || f == "") {
-          alert("Please Fill All Required Fields");
-          document.getElementById("AddPrd").disabled = false;
-          return false;
-        }
-    })
 });

@@ -2,7 +2,28 @@ const middlewareObj = {},
       User          = require("../models/user"),
       Cart          = require("../models/cart"),
       Product       = require("../models/product");
-
+      sizes = [
+              {
+                  size : "S",
+                  sizeStatus: "active",
+              },
+              {
+                  size : "M",
+                  sizeStatus: "active",
+              },
+              {
+                  size : "L",
+                  sizeStatus: "active",
+              },
+              {
+                  size : "XL",
+                  sizeStatus: "active",
+              },
+              {
+                  size : "XXL",
+                  sizeStatus: "active",
+              },
+          ]
 
 middlewareObj.cart = function (req , res ,  next){
   cart = req.session.cart;
@@ -11,14 +32,23 @@ middlewareObj.cart = function (req , res ,  next){
   res.send({cart : cart , body : body });
 }
 
-middlewareObj.addPrd = function (req , res ,  next){
-  if(req.body.name != null && req.body.price != null && req.body.description != null && req.body.color != null && req.body.colorHex != null && req.body.profile_pic != null){
-    next();
-  }else{
-    req.flash("genError","Κάτι πήγε στραβά");
-    res.redirect("back");  
-  }
-
+middlewareObj.addPrd = async function (req , res ,  next){
+  var newProduct = new Product({
+        name    : req.body.name,
+        price : req.body.price,
+        description : req.body.description,
+        type : req.params.type,
+        reviews: [],
+          rating: 0,
+          size : sizes,
+            colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
+            sizes: sizes,
+          reviewCount: 0,
+          status : "active"
+      });
+  await newProduct.save();
+  req.id = newProduct._id;
+  next();
 }
 
 
