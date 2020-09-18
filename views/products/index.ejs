@@ -154,7 +154,7 @@
             </div>
           </div>  
           <div class="row align-center d-flex justify-content-center">
-            <form id="putForm" action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
+            <form id="form_modal_<%= product._id %>" action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
               <div class="row pb-1 d-flex d-flex justify-content-center">
                 <h6 class="pb-1"><b>Μέγεθος:</b></h6>
                 <div class="col-12 d-flex justify-content-center align-items-center" align="center">
@@ -180,12 +180,13 @@
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
                           <label>
-                            <input form="putForm" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked <% } %> >
+                            <input form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                             <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
                           </label>
                         </li>
-                      </div>  
-                      <% i = i + 1 }%>  
+                      </div>
+                      <% i = i + 1 %>  
+                      <% }%>  
                   <%});%>
                   </div>
                 </ul> 
@@ -194,7 +195,7 @@
             <div class="row d-flex justify-content-center mb-2">  
               <div class="col-12 d-flex justify-content-center" align="center">
                 <div class="pt-3">
-                  <button type="submit" form="putForm" class="btn btn-primary btn-lg">
+                  <button type="submit" form="form_modal_<%= product._id %>" class="btn btn-primary btn-lg">
                     Προσθηκη στο καλαθι
                   </button>
                 </div>  

@@ -123,7 +123,7 @@
 													<div class="row mx-auto my-2 jumbotron-mini">
 														<div class="col-4 align-center" > <!--picture -->
 															<div>
-															 	<a href="/products/<%=prd.product.type%>/<%= prd.product.name %>">
+															 	<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
 															 		<img class="quick-cart-img" src="<%=prd.product.images[0].url %>"></img>
 															 	</a>
 															</div>
@@ -132,7 +132,7 @@
 															<div class="row mb-2 d-flex justify-content-start">
 																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
 																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;">
-																		<a href="/products/<%=prd.product.type%>/<%= prd.product.name %>"><i><%= prd.product.name %></i></a></label>
+																		<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>"><i><%= prd.product.name %></i></a></label>
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
