@@ -463,10 +463,11 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 });
 
 router.post("/products/:type/:id/add" , sanitization.route, function(req, res){
-	Product.find({_id : req.params.id}, function(err, foundProduct){
+	Product.find( {_id : req.params.id}, function(err, foundProduct){
 		if(err){
 			console.log(err);
 		} else {
+			console.log(foundProduct);
 			if(foundProduct[0]!=null){
 				var cart = new Cart(req.session.cart ? req.session.cart : {});
           		var quantity = req.body.qty ? req.body.qty : 1;
