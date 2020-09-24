@@ -231,8 +231,9 @@ router.get("/products/:type/:id", function(req ,res,next){
 			console.log(err);
 		} else {
 		    if(foundProducts[0]!= null){
-		    	var lastReviews = await Review.find().sort({'date': -1}).limit(3).exec();
-		    	var countReviews = await Review.count().exec();
+		    	var sortedReviews = foundProducts[0].reviews.sort((a, b) => b.date - a.date);
+		    	var lastReviews = sortedReviews.slice(0, 3);
+		    	var countReviews = foundProducts[0].reviewCount;
 		    	var validated = {};
 		    	if (req.app.locals.specialContext != null) {
 		    		validated = req.app.locals.specialContext;
