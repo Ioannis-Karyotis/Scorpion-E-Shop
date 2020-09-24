@@ -291,14 +291,49 @@ middlewareObj.validateCart = async function (req , res ,  next){
   if(notExist.length == 0){
     next();
   }else{
+    console.log(notExist);
     notExist.forEach( function(id){
       let vcart = new Cart(cart);
-      vcart.removeProduct(id);
+      vcart.removeWholeProduct(id);
       req.session.cart = vcart;
       req.session.productList = vcart.productList();
     })
-    console.log("notExist"); 
-    console.log(notExist);
+    next();
+  }
+}
+
+middlewareObj.validateCartVariants = async function (req , res ,  next){
+
+  if (req.session.cart == undefined) {
+    next();
+  }
+
+  var cart = req.session.cart;
+  var products = cart.products;
+  var product_ids = await Object.keys(products);
+  var notExist = [];
+  for(i=0; i<product_ids.length; i++){
+    
+    var err,product = await Product.findById(product_ids[i]);
+    product.colors.forEach(function(color){
+      product.sizes.forEach(function(size){
+        if(color.colorStatus == "hidden" || size.sizeStatus == "hidden"){
+          var id = [product_ids[i],size.size,color.colorHex];
+          notExist.push(id);
+        }
+      })
+    })
+  }
+  console.log(notExist);
+  if(notExist.length == 0){
+    next();
+  }else{
+    notExist.forEach( function(id){
+      let vcart = new Cart(cart);
+      vcart.removeProductVariants(id);
+      req.session.cart = vcart;
+      req.session.productList = vcart.productList();
+    })
     next();
   }
 }

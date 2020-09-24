@@ -9,7 +9,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
-router.get("/cart",middleware.validateCart, express.json(), function(req, res){
+router.get("/cart",middleware.validateCart, middleware.validateCartVariants, express.json(), function(req, res){
   //console.log(JSON.stringify(req.body));
   res.render("cart");
 });
