@@ -25,6 +25,43 @@ const middlewareObj = {},
               },
           ]
 
+function existCase(item, product){
+    var colorExist = searchColor(item.color , product.colors);
+    var colorHidden = searchHiddenColor(item.color , product.colors);
+    var sizeHidden = searchHiddensize(item.size , product.sizes);
+    if (colorExist || colorHidden || sizeHidden) {
+      return true;
+    }else{
+      return false;
+    }
+}
+
+function searchColor(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].colorHex === nameKey) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function searchHiddenColor(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].colorHex === nameKey && myArray[i].colorStatus == "hidden") {
+            return true;
+        }
+    }
+    return false;
+}
+function searchHiddensize(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].size === nameKey && myArray[i].sizeStatus == "hidden") {
+            return true;
+        }
+    }
+    return false;
+}
+
 middlewareObj.cart = function (req , res ,  next){
   cart = req.session.cart;
   console.log(cart);
@@ -291,13 +328,16 @@ middlewareObj.validateCart = async function (req , res ,  next){
   if(notExist.length == 0){
     next();
   }else{
+    let vcart = new Cart(cart);
     console.log(notExist);
+    console.log(vcart);
     notExist.forEach( function(id){
-      let vcart = new Cart(cart);
       vcart.removeWholeProduct(id);
-      req.session.cart = vcart;
-      req.session.productList = vcart.productList();
-    })
+      console.log(vcart);
+    });
+    console.log(vcart);
+    req.session.cart = vcart;
+    req.session.productList = vcart.productList();
     next();
   }
 }
@@ -315,28 +355,29 @@ middlewareObj.validateCartVariants = async function (req , res ,  next){
   for(i=0; i<product_ids.length; i++){
     
     var err,product = await Product.findById(product_ids[i]);
-    product.colors.forEach(function(color){
-      product.sizes.forEach(function(size){
-        if(color.colorStatus == "hidden" || size.sizeStatus == "hidden"){
-          var id = [product_ids[i],size.size,color.colorHex];
-          notExist.push(id);
-        }
-      })
+    products[product_ids[i]].variants.forEach(function(item){
+      var lol = false;
+      lol = existCase(item, product);
+      console.log(lol);
+      if(lol){
+        var id = [product_ids[i],item.size,item.color];
+        notExist.push(id);
+      }
     })
   }
-  console.log(notExist);
   if(notExist.length == 0){
     next();
   }else{
+    let vcart = new Cart(cart);
     notExist.forEach( function(id){
-      let vcart = new Cart(cart);
-      vcart.removeProductVariants(id);
-      req.session.cart = vcart;
-      req.session.productList = vcart.productList();
+      vcart.removeProductVariants(id);  
     })
+    req.session.cart = vcart;
+    req.session.productList = vcart.productList();
     next();
   }
 }
+
 
 middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
 

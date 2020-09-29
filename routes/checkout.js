@@ -284,7 +284,7 @@ router.post("/webhook", async (req, res) => {
 });
 
 
-router.get('/checkout', middleware.validateCart , function (req, res){
+router.get('/checkout', middleware.validateCart, middleware.validateCartVariants , function (req, res){
   if(req.app.locals.specialContext!= null){
     var validated = req.app.locals.specialContext;
     req.flash(validated.error.type,validated.error.message);

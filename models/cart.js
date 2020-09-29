@@ -74,7 +74,6 @@ module.exports = function Cart(previousCart){
 
   this.removeProduct = function(id){
     let product = this.products[id[0]];
-    console.log(product);
     let itemToRmv = null;
     product.variants.forEach(function(item){
       if (item.color == id[2] && item.size == id[1]) {
@@ -91,25 +90,25 @@ module.exports = function Cart(previousCart){
   this.removeWholeProduct = function(id){  
     let product = this.products[id];
     let itemToRmv = null;
-    product.variants.forEach(function(item){
-        itemToRmv = product.variants.pop(item);
-        this.totalPrice -= itemToRmv.price;
-        this.totalQuantity -= itemToRmv.quantity;   
-    });
-    delete this.products[id];
+    for(var i=0; i < product.variants.length; i++){ 
+        itemToRmv = product.variants.splice(i, 1);
+        this.totalPrice -= itemToRmv[0].price;
+        this.totalQuantity -= itemToRmv[0].quantity;
+    }
+    if (product.variants.length == 0 ) {
+      delete this.products[id];
+    }
   }
 
     this.removeProductVariants = function(id){
     if (this.products[id[0]] != undefined) {
-      console.log(id);
       let product = this.products[id[0]];
-      console.log(product);
       let itemToRmv = null;
       for(var i=0; i < product.variants.length; i++){ 
         if (product.variants[i].color == id[2] && product.variants[i].size == id[1]) {
           itemToRmv = product.variants.splice(i, 1);
-          this.totalPrice -= itemToRmv.price;
-          this.totalQuantity -= itemToRmv.quantity;
+          this.totalPrice -= itemToRmv[0].price;
+          this.totalQuantity -= itemToRmv[0].quantity;
         }   
       }
       if (product.variants.length == 0 ) {
