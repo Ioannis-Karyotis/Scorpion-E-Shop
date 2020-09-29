@@ -75,15 +75,17 @@ app.use(passport.session());
 
 
 app.use(function(req, res, next){
+	console.log(req.user);
 	if(req.user == undefined){
 		if(req.cookies['access_token'])	{
 			res.clearCookie('access_token');
 			res.clearCookie('admin_token');
-
+			res.clearCookie('connect.sid');
 		}
 		else if(req.cookies['admin_token']){
 			res.clearCookie('access_token');
 			res.clearCookie('admin_token');
+			res.clearCookie('connect.sid');
 		}
 	}
 	

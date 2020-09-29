@@ -378,6 +378,69 @@ middlewareObj.validateCartVariants = async function (req , res ,  next){
   }
 }
 
+middlewareObj.validateCartOrderComplete = async function (req , res ,  next){
+
+  if (req.session.cart == undefined) {
+    next();
+  }
+
+  var cart = req.session.cart;
+  var products = cart.products;
+  var product_ids = await Object.keys(products);
+  var notExist = [];
+  for(i=0; i<product_ids.length; i++){
+    
+    var err,product = await Product.findById(product_ids[i]);
+    if(product == null || product.status == "hidden"){
+      notExist.push(product_ids[i]);
+    }
+  }
+  if(notExist.length == 0){
+    next();
+  }else{
+    res.send({
+      error : {
+        message : "Κάποια προϊόντα έχουν διαφοροποιηθεί από το διαχειρηστή"
+      }
+    });
+  }
+}
+
+middlewareObj.validateCartVariantsOrderComplete = async function (req , res ,  next){
+
+  if (req.session.cart == undefined) {
+    next();
+  }
+
+  var cart = req.session.cart;
+  var products = cart.products;
+  var product_ids = await Object.keys(products);
+  var notExist = [];
+  for(i=0; i<product_ids.length; i++){
+    
+    var err,product = await Product.findById(product_ids[i]);
+    products[product_ids[i]].variants.forEach(function(item){
+      var lol = false;
+      lol = existCase(item, product);
+      console.log(lol);
+      if(lol){
+        var id = [product_ids[i],item.size,item.color];
+        notExist.push(id);
+      }
+    })
+  }
+  if(notExist.length == 0){
+    next();
+  }else{
+    res.send({
+      error : {
+        message : "Κάποια προϊόντα έχουν διαφοροποιηθεί από το διαχειρηστή"
+      }
+    });
+  }
+}
+
+
 
 middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
 
