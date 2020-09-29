@@ -47,7 +47,7 @@ passport.use('jwtAdmin', new JwtStrategy({
         }
         if (!admin || !admin.validateAdminPassword(config.ADMIN_PASS)) {
           console.log("admin doens't exist");
-          req.user = {};
+          req.user = undefined;
           return done(null, false);
         }
         req.user = admin;
@@ -71,6 +71,7 @@ passport.use('jwt', new JwtStrategy({
       
         if (!user) {
           console.log("user doens't exist");
+          req.user = undefined;
           return done(null, false);
         }
         req.user = user;

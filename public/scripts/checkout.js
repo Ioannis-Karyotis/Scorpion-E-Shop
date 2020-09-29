@@ -80,7 +80,24 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
         })
         .then(function(result) {   
           clientSecret =null;
-          orderComplete(clientSecret);
+          console.log(result);
+          return result.json();
+        })
+        .then(function(data){
+          console.log(data);
+          if(data.error){
+              var modal2 = document.getElementById("StripeModal");
+              modal2.style.display = "none";
+              
+              var modal = document.getElementById("myModal");
+              modal.style.display = "block";
+
+              document.querySelector(".result3").classList.remove("hidden");
+              document.getElementById("errormsg").innerHTML = data.error.message;
+              statusChange('failed');
+          }else{
+            orderComplete(clientSecret);
+          }    
         })
       }else{
         console.log("Got into stripe");
@@ -133,8 +150,32 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             var form = document.getElementById("payment-form2");
             form.addEventListener("submit", function(event2) { 
               event2.preventDefault();
-              pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
-          })
+              fetch("/check_cart", {
+                method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(formData)
+                })
+                .then(function(result) {   
+                  return result.json();
+                })
+                .then(function(data){
+                  if(data.error){
+                      var modal2 = document.getElementById("StripeModal");
+                      modal2.style.display = "none";
+                      
+                      var modal = document.getElementById("myModal");
+                      modal.style.display = "block";
+
+                      document.querySelector(".result3").classList.remove("hidden");
+                      document.getElementById("errormsg").innerHTML = data.error.message;
+                      statusChange('failed');
+                  }else{
+                    pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
+                  }
+                });  
+            })
         })  
       }     
   })

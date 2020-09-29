@@ -20,7 +20,11 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 })
 
 
-router.post("/post_order",sanitization.route, async function(req,res){
+router.post("/check_cart",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
+  res.send({result : "succeeded"});
+}) 
+
+router.post("/post_order",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
   console.log(req.autosan.body.paymentIntent.id);
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
@@ -83,7 +87,7 @@ router.post("/post_order",sanitization.route, async function(req,res){
   res.send({result : "succeeded"});
 })
 
-router.post("/post_order_sent",sanitization.route,async function(req,res){
+router.post("/post_order_sent",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route,async function(req,res){
   var method = "";
  
   if(req.autosan.body.method==="3"){
