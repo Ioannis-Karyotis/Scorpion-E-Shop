@@ -24,8 +24,6 @@
             <div class="row d-flex justify-content-start">
               <div class="col-11 align-left">
                 <b style="font-size: 20px; font-weight:600; "><%=prd.product.name%></b>
-                <span class="ml-3">"<i><%=item.color%></i>"</span>
-                <span class="ml-3">"<i><%=sizes[item.size]%></i>"</span>
               </div>
             </div>
             <div class="row d-flex justify-content-center mt-3">
@@ -61,7 +59,13 @@
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
+              <div class="row d-flex justify-content-end">
+                <div class="col-10 align-right">
+                    <div class="mr-2 align-middle" style="background-color:<%=item.color%>;width:2em;height:2em; display: inline-block;"></div>
+                    <span class="mr-3 align-middle">"<%=sizes[item.size]%>"</span> 
+                </div>
+              </div>            
             </div> 
           </div>
         </div>
