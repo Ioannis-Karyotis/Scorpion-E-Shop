@@ -133,8 +133,6 @@
 				          			<div class="row d-flex justify-content-start">
 				          				<div class="col-12" align="left">
 					            			<b><%=prd.product.name%></b>
-					            			<i><span class="ml-2"> <%=item.color%> </span></i>
-					            			<i><span class="ml-2"> <%=sizes[item.size]%> </span></i>
 				            			</div>
 				            		</div>
 				            		<hr class="thin" align="right">
@@ -146,11 +144,12 @@
 							          		<b>Ποσότητα: </b><%=item.quantity%>
 							        	</div>
 					          		</div>
-					          		<!-- <div class="row d-flex justify-content-center mt-2">
-					          			<div class="col-6">
-							          		Τελ.τιμή: <%=item.price%> €
-							        	</div>	
-					          		</div> -->
+					          		<div class="row d-flex justify-content-end mt-2">
+							            <div class="col-10 align-right">
+							                <div class="mr-2 align-middle" style="background-color:<%=item.color%>;width:1.5em;height:1.5em; display: inline-block;"></div>
+							                <span class="mr-3 align-middle">"<%=sizes[item.size]%>"</span> 
+							            </div>
+							        </div>
 				          		</div>
 			          		</div>		          				          				        		
 				      	</div>
