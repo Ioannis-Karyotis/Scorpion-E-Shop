@@ -191,17 +191,17 @@
 		     	<div class="container">
 			     	<div class="form-check" align="left">
 						<label class="form-check-label">
-							<input id="pay" type="radio" class="form-check-input" name="optradio" onclick="buttonSelect(1)" checked>Πληρωμή με κάρτα
+							<input id="pay" type="radio" form="payment-form" class="form-check-input" name="optradio" onclick="buttonSelect(1)" <% if(validated != null && validated.method == 1) {%> checked <%}else if(Object.keys(validated).length === 0) {%> checked <% }%>>Πληρωμή με κάρτα
 						</label>
 					</div>
 					<div class="form-check"  align="left">
 						<label class="form-check-label">
-							<input id="send" type="radio" class="form-check-input" onclick="buttonSelect(2)" name="optradio">Πληρωμή με αντικαταβολή
+							<input id="send" type="radio" form="payment-form" class="form-check-input" onclick="buttonSelect(2)" name="optradio"<% if(validated != null && validated.method == 2) {%> checked <%}%>> Πληρωμή με αντικαταβολή
 						</label>
 					</div>
 					<div class="form-check"  align="left">
 						<label class="form-check-label">
-							<input id="sent" type="radio" class="form-check-input" onclick="buttonSelect(3)" name="optradio" >Παραλαβή απο το κατάστημα
+							<input id="sent" type="radio" form="payment-form" class="form-check-input" onclick="buttonSelect(3)" name="optradio" <% if(validated != null && validated.method == 3) {%> checked <%}%>>Παραλαβή απο το κατάστημα
 						</label>
 					</div>
 				</div>

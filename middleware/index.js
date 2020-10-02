@@ -233,6 +233,7 @@ middlewareObj.emailExistsLocal = async function (req , res ,  next){
 
 middlewareObj.phone = function (req , res ,  next){
 
+  console.log(req.autosan.body);
   if (/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(req.autosan.body.phone))
     {
       return next();
@@ -246,6 +247,7 @@ middlewareObj.phone = function (req , res ,  next){
           city : req.autosan.body.city,
           zip : req.autosan.body.zip,
           state : req.autosan.body.state,
+          method : req.autosan.body.method,
           error: {type : "regError" , message : "To τηλέφωνο δεν έχει τη σωστή μορφή" }
       }
       console.log(res.app.locals.specialContext);

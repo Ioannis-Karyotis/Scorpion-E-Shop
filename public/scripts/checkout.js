@@ -3,6 +3,14 @@ $(document).ready(function() {
     var elmnt = document.getElementById("payment-form");
       elmnt.scrollIntoView();
   }
+  if(document.getElementById('pay').checked) {
+    $('#pay').click();
+  }else if(document.getElementById('send').checked) {
+    $('#send').click();
+  }else if(document.getElementById('sent').checked){
+    $('#sent').click();
+  }
+
 });
 
 var stripe
