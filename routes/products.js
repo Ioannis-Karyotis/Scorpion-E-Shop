@@ -452,6 +452,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 								foundProduct[0].reviewCount = foundProduct[0].reviewCount + 1;
 								foundProduct[0].rating = ((foundProduct[0].rating * (foundProduct[0].reviewCount - 1)) + 	(review.rating / 2)) / foundProduct[0].reviewCount;
 								foundProduct[0].save();
+								req.flash("genSuccess","Επιτυχία");
 								res.redirect('back');
 							}
 						}
