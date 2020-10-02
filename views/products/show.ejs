@@ -202,6 +202,11 @@
     </div>
   <%}%>
     
+    <% if(genError&& genError.length > 0){ %>
+      <div id="error" class="wrninput d-flex justify-content-center align-items-center mb-3" role="alert">
+        <span><%= genError %> </span>
+      </div>
+    <%}%> 
     <!-- <div class="py-4"style="background:#F5F5F5;"> -->
       <form id="review-form" class="mb-5 container mx-auto" action="/products/<%=product.type%>/<%=product._id%>/review" method="POST">
         <input type="hidden" name="productType" value="<%=product.type%>">
