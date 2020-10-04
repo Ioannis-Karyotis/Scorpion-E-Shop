@@ -1,7 +1,6 @@
 const express 		= require("express"),
 	app				= express(),
 	path 			= require('path'),
-	favicon         = require('serve-favicon'),
 	bodyParser 		= require("body-parser"),
 	cors 			= require("cors"),
 	cookieParser 	= require("cookie-parser"),
@@ -33,7 +32,7 @@ const indexRoutes 	 = require("./routes/index"),
 	  fpassRoutes 	 = require("./routes/fpass"),	  
 	  config 		 = require("./configuration/passport");
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(bodyParser.json({
   verify: (req, res, buf) => {
     if (req.originalUrl.startsWith('/webhook')) {
