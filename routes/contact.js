@@ -23,6 +23,15 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  console.log("inside: " + inside);
+  return inside;
+}
+
 router.get("/contact" , function(req, res){
 	if(req.app.locals.specialContext!= null){
     var validated = req.app.locals.specialContext;
@@ -40,6 +49,7 @@ router.get("/contact" , function(req, res){
 
 
 router.post("/contact",sanitization.route,middleware.namesur , middleware.email ,function(req, res){
+  req.autosan.body = trimBody(req.autosan.body);
 	var mailOptions = {
 	  from: String(config.EMAIL),
 	  to: String(config.EMAIL),

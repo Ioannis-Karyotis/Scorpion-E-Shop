@@ -37,6 +37,15 @@ const signToken = function(user) {
   }, JWT_SECRET);
 }
 
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+  	console.log(typeof inside[key]);
+    inside[key].trim();
+  });
+  return inside;
+}
+
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         next();
@@ -77,6 +86,9 @@ router.get("/user/:id/orders" ,passport.authenticate('jwt', { session: false }),
 
 
 router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur , middleware.email ,passport.authenticate('jwt', { session: false }), function(req, res){
+	req.autosan.body = trimBody(req.autosan.body);
+	req.autosan.body.name = "tejohny";
+	console.log(req.autosan.body);
 	User.findById(req.params.id, function(err , foundUser){
 		if(err){
 			console.log(err)
@@ -95,6 +107,7 @@ router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur ,
 });
 
 router.put("/user/:id/changePassword" ,sanitization.route,middleware.password, passport.authenticate('jwt', { session: false }), function(req, res){
+	req.autosan.body = trimBody(req.autosan.body);
 	User.findById(req.params.id, function(err , foundUser){
 		if(err){
 			console.log(err)
@@ -144,7 +157,7 @@ router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { ses
 
 
 router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('jwt', { session: false }), function(req, res){
-	console.log(req.autosan.body);
+	req.autosan.body = trimBody(req.autosan.body);
 	User.remove({ _id: req.autosan.body._id },async function(err) {
 	    if (err) {
 	        console.log(err.message);

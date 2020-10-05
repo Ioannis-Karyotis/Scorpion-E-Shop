@@ -120,7 +120,7 @@
 												<%prd.variants.forEach(function(item){ %>
 												 <!-- <div class="dropdown-item"> -->
 												<% var id = prd.product._id%> 	
-													<div class="row mx-auto my-2 jumbotron-mini">
+													<div id="<%=id%>,<%=item.size%>,<%=item.color%>" class="row mx-auto my-2 jumbotron-mini">
 														<div class="col-4 align-center" > <!--picture -->
 															<div>
 															 	<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
@@ -136,7 +136,7 @@
 																</div>
 																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
 																	<p>
-																	 	<button id="rmvq_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton d-flex justify-content-center align-items-center" onclick="removeProduct()">
+																	 	<button id="rmvq_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton d-flex justify-content-center align-items-center" onclick="quickRemoveProduct(event)">
 																		 	<i class="fa fa-trash-alt"></i>
 																		</button>
 																	</p>

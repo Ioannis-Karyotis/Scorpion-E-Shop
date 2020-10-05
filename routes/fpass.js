@@ -70,7 +70,14 @@ const signToken = function(hashobj) {
   }, JWT_SECRET);
 }
 
+function trimBody(inside){
 
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  console.log("inside: " + inside);
+  return inside;
+}
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -83,10 +90,8 @@ router.get("/fpass",middleware.user ,function(req,res){
 
 
 router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExistsLocal, middleware.sameEmail, async function(req, res, next) {
-
+	req.autosan.body = trimBody(req.autosan.body);
 	var email = req.autosan.body.email
-
-	
 
 	var user = await User.findOne({ "local.email": email }).exec();
 
@@ -143,6 +148,7 @@ router.get("/fpass/:hashobj", passport.authenticate('forgot_pass', { session: fa
 });
 
 router.post("/fpass/:hashobj", sanitization.route, middleware.password ,passport.authenticate('forgot_pass', { session: false }),async function(req,res){
+	req.autosan.body = trimBody(req.autosan.body);
 	var hashobj = req.params.hashobj;
 	hashobj = objEncDec.decrypt(hashobj);
 	console.log(hashobj);

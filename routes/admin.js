@@ -57,6 +57,15 @@ const express 		= require("express"),
 			       		}
 			        ];
 	  
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  console.log("inside: " + inside);
+  return inside;
+}
+
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -76,7 +85,7 @@ router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), func
 
 
 router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
-
+	req.autosan.body = trimBody(req.autosan.body);
 	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
 	    if (err) {
 	        console.log(err);
@@ -109,6 +118,7 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 });
 
 router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+	req.autosan.body = trimBody(req.autosan.body);
 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
 	    if (err) {
 	        console.log(err);
@@ -141,7 +151,7 @@ router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jw
 });
 
 router.delete("/admin/deleteOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	console.log(req.autosan.body._id);
+	req.autosan.body = trimBody(req.autosan.body);
 	Order.remove({ _id: req.autosan.body._id }, function(err) {
 	    if (err) {
 	        console.log(err.message);

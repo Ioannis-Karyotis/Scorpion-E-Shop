@@ -33,6 +33,14 @@ const cookieForgotPExtractor = function(req) {
   }
   return token;
 }
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  return inside;
+}
+
 
 // JSON WEB TOKENS STRATEGY
 passport.use('jwtAdmin', new JwtStrategy({
@@ -88,7 +96,7 @@ passport.use('forgot_pass', new JwtStrategy({
 }, function(req, payload, done){
     process.nextTick(function(){
       hashobj = objEncDec.decrypt(payload.sub);
-
+      hashobj = trimBody(hashobj);
       const user = User.findOne({"local.email": hashobj.email , "local.forgotPassHash" : hashobj.hash }, function(err,user){
         if(err){
           done(error, false);
@@ -212,6 +220,8 @@ passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, function (email, password, done){
+  email =  email.trim();
+  password = password.trim();
   process.nextTick(function(){
     Admin.findOne({"local.email" : email}, function(err,admin){
       if(!admin || !admin.validatePassword(password)){

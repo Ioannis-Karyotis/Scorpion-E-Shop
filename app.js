@@ -19,7 +19,8 @@ const express 		= require("express"),
 	seedDB			= require("./seeds"),
 	session			= require("express-session"),
 	mongoStore		= require('connect-mongo')(session),
-	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv");
+	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv"),
+	dotenv 			= require('dotenv');
 
 
 const indexRoutes 	 = require("./routes/index"),
@@ -33,7 +34,17 @@ const indexRoutes 	 = require("./routes/index"),
 	  fpassRoutes 	 = require("./routes/fpass"),	  
 	  config 		 = require("./configuration/passport");
 
+dotenv.config();
+
+/*app.use(function(req, res, next) {
+	if (req.headers['x-forwarded-proto'] !== 'https' && req.path !== process.env.URL) {
+	  return res.redirect(['https://', req.get('Host'), req.url].join(''));
+	}
+	return next();
+});*/
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(bodyParser.json({
   verify: (req, res, buf) => {
     if (req.originalUrl.startsWith('/webhook')) {
@@ -41,6 +52,7 @@ app.use(bodyParser.json({
     }
   }
 }))
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());

@@ -58,7 +58,7 @@ function qtyUpdate(){
 
 function removeProduct(){
 	let http = new XMLHttpRequest();
-	let url = "/cart/remove";
+	let url = "/cart/remove2";
 	let temp = event.currentTarget.id;
     let id = temp.substring(5,temp.length);
     var values = id.split(",");
@@ -78,6 +78,37 @@ function removeProduct(){
 	    // console.log(xmlDoc);
 	    // document.getElementById('cart-id').innerHTML = tds.innerHTML;
 			window.location.reload();
+		}
+	}
+}
+
+function quickRemoveProduct(event){
+	event.stopPropagation();
+	let http = new XMLHttpRequest();
+	let url = "/cart/remove2";
+	let temp = event.currentTarget.id;
+    let id = temp.substring(5,temp.length);
+    var values = id.split(",");
+	let params = {};
+	params.id = values;
+	let data = JSON.stringify(params);
+	http.open("POST", url, true);
+	http.setRequestHeader("Content-Type", "application/json");
+	http.send(data);
+
+	http.onreadystatechange = function(){
+		if(http.readyState == 4 && http.status ==200){
+			let data = JSON.parse(this.responseText);
+			if(data.totalQuantity == 0){
+				window.location.reload();
+			}else{
+				document.getElementById(data.id[0] + "," + data.id[1] + "," + data.id[2]).style.display = "none";
+				document.getElementById('cart-glyphicon').innerHTML = " " + data.totalQuantity;
+				document.getElementById("quick_total").innerHTML = data.totalPrice + "€";
+				document.getElementById("quick_total_qty").innerHTML =
+				data.totalQuantity>1 ? "Το καλάθι σας έχει "+data.totalQuantity+" προϊόντα"
+				                     : "Το καλάθι σας έχει "+data.totalQuantity+" προϊόν";   
+			}    
 		}
 	}
 }

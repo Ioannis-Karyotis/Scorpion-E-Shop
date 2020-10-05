@@ -70,6 +70,15 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  console.log("inside: " + inside);
+  return inside;
+}
+
 router.use(function(req, res, next) {
 	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
@@ -314,7 +323,7 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 
 
 router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
-	console.log(req.autosan.body);
+	req.autosan.body = trimBody(req.autosan.body);
 	Product.update({type: req.params.type, _id : req.params.id}, req.autosan.body, function(err , updateProduct){
 		if(err){
 			console.log("Got to error");
@@ -413,7 +422,7 @@ router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAd
 
 
 router.post("/products/:type/:id/review",sanitization.route, middleware.rating, function(req,res){
-	
+	req.autosan.body = trimBody(req.autosan.body);
 	Product.find({_id : req.params.id}, function(err, foundProduct){
 		if(err){
 			console.log(err);
@@ -465,6 +474,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 });
 
 router.post("/products/:type/:id/add" , sanitization.route, function(req, res){
+	req.autosan.body = trimBody(req.autosan.body);
 	Product.find( {_id : req.params.id}, function(err, foundProduct){
 		if(err){
 			console.log(err);

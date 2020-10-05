@@ -1,13 +1,19 @@
-const app 	 	= require('./app'),
-	  dotenv 	= require('dotenv'),
-	  Untracked = require("./models/untrackedPayment"),
+const   app 	 	= require('./app'),
+	  dotenv 	      = require('dotenv'),
+	  Untracked       = require("./models/untrackedPayment"),
 	  User 		= require("./models/user"),
 	  cron 	 	= require("node-cron"),
 	  {SECRET_STRIPE} = require('./configuration'),
-	  stripesk  = require("stripe")(SECRET_STRIPE),
-	  fs 	 	= require("fs");
+	  stripesk        = require("stripe")(SECRET_STRIPE),
+	  fs 	 	      = require("fs");
 
 dotenv.config();
+
+if (process.env.URL && process.env.CONTENT) {
+  app.get(process.env.URL, function(req, res) {
+    return res.send(process.env.CONTENT)
+  });
+}
 
 cron.schedule("0 */2 * * *", function() {
       Untracked.find({},function(err,untrackedPaymentIntents){
