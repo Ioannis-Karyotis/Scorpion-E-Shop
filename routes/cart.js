@@ -35,9 +35,17 @@ router.post("/cart/remove", function(req,res){
   cart.removeProduct(id);
   req.session.cart = cart;
   req.session.productList = cart.productList();
-  console.log(req.session.cart);
-  console.log(req.session.productList);
   res.redirect('back');
+});
+
+//remove product ajax
+router.post("/cart/remove2", function(req,res){
+  let cart = new Cart(req.session.cart);
+  let id = req.body.id;
+  cart.removeProduct(id);
+  req.session.cart = cart;
+  req.session.productList = cart.productList();
+  res.send({id : id, totalPrice:cart.totalPrice, totalQuantity:cart.totalQuantity});
 });
 
 module.exports = router;

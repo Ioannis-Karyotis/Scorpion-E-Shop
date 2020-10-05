@@ -61,8 +61,17 @@ function searchHiddensize(nameKey, myArray){
     }
     return false;
 }
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  console.log("inside: " + inside);
+  return inside;
+}
 
 middlewareObj.cart = function (req , res ,  next){
+  req.body = trimBody(req.body);
   cart = req.session.cart;
   console.log(cart);
   body = req.body
@@ -70,6 +79,7 @@ middlewareObj.cart = function (req , res ,  next){
 }
 
 middlewareObj.addPrd = async function (req , res ,  next){
+  req.body = trimBody(req.body);
   var newProduct = new Product({
         name    : req.body.name,
         price : req.body.price,
@@ -91,9 +101,11 @@ middlewareObj.addPrd = async function (req , res ,  next){
 
 
 middlewareObj.namesur = function (req , res ,  next){
-  if (/^[\u0000-~\u0080-ʓʕ-ʯͰ-ҁҊ-ԣԱ-Ֆա-ևႠ-Ⴥᴀ-ᴫᵢ-ᵷᵹ-ᶚḀ-῾ⁱⁿℂℇℊ-ℓℕℙ-ℝℤΩℨK-ℭℯ-ℴℹℼ-ℿⅅ-ⅉⅎↃ-ↄⰀ-Ⱞⰰ-ⱞⱠ-\u2c7eⲀ-ⳤⴀ-ⴥꙀ-ꙟꙢ-ꙭꚀ-ꚗ꜠-ꟾﬀ-ﬆﬓ-ﬗＡ-Ｚａ-ｚ]|\ud800[\udd40-\udd8e]|\ud801[\udc00-\udc4f]|\ud834[\ude00-\ude4e]|\ud835[\udc00-\udc54\udc56-\udc9c\udc9e-\udc9f\udca2\udca5-\udca6\udca9-\udcac\udcae-\udcb9\udcbb\udcbd-\udcc3\udcc5-\udd05\udd07-\udd0a\udd0d-\udd14\udd16-\udd1c\udd1e-\udd39\udd3b-\udd3e\udd40-\udd44\udd46\udd4a-\udd50\udd52-\udea5\udea8-\udec0\udec2-\udeda\udedc-\udefa\udefc-\udf14\udf16-\udf34\udf36-\udf4e\udf50-\udf6e\udf70-\udf88\udf8a-\udfa8\udfaa-\udfc2\udfc4-\udfcb]$/.test(req.autosan.body.name))
+
+  req.autosan.body = trimBody(req.autosan.body);
+  if (/^[\u0000-~\u0080-ʓʕ-ʯͰ-ҁҊ-ԣԱ-Ֆա-ևႠ-Ⴥᴀ-ᴫᵢ-ᵷᵹ-ᶚḀ-῾ⁱⁿℂℇℊ-ℓℕℙ-ℝℤΩℨK-ℭℯ-ℴℹℼ-ℿⅅ-ⅉⅎↃ-ↄⰀ-Ⱞⰰ-ⱞⱠ-\u2c7eⲀ-ⳤⴀ-ⴥꙀ-ꙟꙢ-ꙭꚀ-ꚗ꜠-ꟾﬀ-ﬆﬓ-ﬗＡ-Ｚａ-ｚ]|\ud800[\udd40-\udd8e]|\ud801[\udc00-\udc4f]|\ud834[\ude00-\ude4e]|\ud835[\udc00-\udc54\udc56-\udc9c\udc9e-\udc9f\udca2\udca5-\udca6\udca9-\udcac\udcae-\udcb9\udcbb\udcbd-\udcc3\udcc5-\udd05\udd07-\udd0a\udd0d-\udd14\udd16-\udd1c\udd1e-\udd39\udd3b-\udd3e\udd40-\udd44\udd46\udd4a-\udd50\udd52-\udea5\udea8-\udec0\udec2-\udeda\udedc-\udefa\udefc-\udf14\udf16-\udf34\udf36-\udf4e\udf50-\udf6e\udf70-\udf88\udf8a-\udfa8\udfaa-\udfc2\udfc4-\udfcb]$/.test(req.autosan.body.name.trim()))
     {
-      if (/^[\u0000-~\u0080-ʓʕ-ʯͰ-ҁҊ-ԣԱ-Ֆա-ևႠ-Ⴥᴀ-ᴫᵢ-ᵷᵹ-ᶚḀ-῾ⁱⁿℂℇℊ-ℓℕℙ-ℝℤΩℨK-ℭℯ-ℴℹℼ-ℿⅅ-ⅉⅎↃ-ↄⰀ-Ⱞⰰ-ⱞⱠ-\u2c7eⲀ-ⳤⴀ-ⴥꙀ-ꙟꙢ-ꙭꚀ-ꚗ꜠-ꟾﬀ-ﬆﬓ-ﬗＡ-Ｚａ-ｚ]|\ud800[\udd40-\udd8e]|\ud801[\udc00-\udc4f]|\ud834[\ude00-\ude4e]|\ud835[\udc00-\udc54\udc56-\udc9c\udc9e-\udc9f\udca2\udca5-\udca6\udca9-\udcac\udcae-\udcb9\udcbb\udcbd-\udcc3\udcc5-\udd05\udd07-\udd0a\udd0d-\udd14\udd16-\udd1c\udd1e-\udd39\udd3b-\udd3e\udd40-\udd44\udd46\udd4a-\udd50\udd52-\udea5\udea8-\udec0\udec2-\udeda\udedc-\udefa\udefc-\udf14\udf16-\udf34\udf36-\udf4e\udf50-\udf6e\udf70-\udf88\udf8a-\udfa8\udfaa-\udfc2\udfc4-\udfcb]$/.test(req.autosan.body.surname))
+      if (/^[\u0000-~\u0080-ʓʕ-ʯͰ-ҁҊ-ԣԱ-Ֆա-ևႠ-Ⴥᴀ-ᴫᵢ-ᵷᵹ-ᶚḀ-῾ⁱⁿℂℇℊ-ℓℕℙ-ℝℤΩℨK-ℭℯ-ℴℹℼ-ℿⅅ-ⅉⅎↃ-ↄⰀ-Ⱞⰰ-ⱞⱠ-\u2c7eⲀ-ⳤⴀ-ⴥꙀ-ꙟꙢ-ꙭꚀ-ꚗ꜠-ꟾﬀ-ﬆﬓ-ﬗＡ-Ｚａ-ｚ]|\ud800[\udd40-\udd8e]|\ud801[\udc00-\udc4f]|\ud834[\ude00-\ude4e]|\ud835[\udc00-\udc54\udc56-\udc9c\udc9e-\udc9f\udca2\udca5-\udca6\udca9-\udcac\udcae-\udcb9\udcbb\udcbd-\udcc3\udcc5-\udd05\udd07-\udd0a\udd0d-\udd14\udd16-\udd1c\udd1e-\udd39\udd3b-\udd3e\udd40-\udd44\udd46\udd4a-\udd50\udd52-\udea5\udea8-\udec0\udec2-\udeda\udedc-\udefa\udefc-\udf14\udf16-\udf34\udf36-\udf4e\udf50-\udf6e\udf70-\udf88\udf8a-\udfa8\udfaa-\udfc2\udfc4-\udfcb]$/.test(req.autosan.body.surname.trim()))
       {
         return next();
       }else{
@@ -129,6 +141,8 @@ middlewareObj.namesur = function (req , res ,  next){
 }
 
 middlewareObj.password = function (req , res ,  next){
+
+  req.autosan.body = trimBody(req.autosan.body);
   if (req.autosan.body.password === req.autosan.body.password2)
     {
       if (/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,14}$/.test(req.autosan.body.password)){
@@ -158,7 +172,7 @@ middlewareObj.password = function (req , res ,  next){
 
 middlewareObj.email = function (req , res ,  next){
 
-
+  req.autosan.body = trimBody(req.autosan.body);
 	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.autosan.body.email))
   	{
     	return next();
@@ -182,6 +196,7 @@ middlewareObj.email = function (req , res ,  next){
 
 middlewareObj.emailExists = async function (req , res ,  next){
 
+  req.autosan.body = trimBody(req.autosan.body);
   var google = await User.findOne({ "google.email": req.autosan.body.email});
   var facebook = await User.findOne({ "facebook.email": req.autosan.body.email});
   var local = await User.findOne({ "local.email": req.autosan.body.email});
@@ -208,6 +223,7 @@ middlewareObj.emailExists = async function (req , res ,  next){
 
 middlewareObj.emailExistsLocal = async function (req , res ,  next){
 
+  req.autosan.body = trimBody(req.autosan.body);
   var google = await User.findOne({ "google.email": req.autosan.body.email});
   var facebook = await User.findOne({ "facebook.email": req.autosan.body.email});
   var local = await User.findOne({ "local.email": req.autosan.body.email});
@@ -233,7 +249,7 @@ middlewareObj.emailExistsLocal = async function (req , res ,  next){
 
 middlewareObj.phone = function (req , res ,  next){
 
-  console.log(req.autosan.body);
+  req.autosan.body = trimBody(req.autosan.body);
   if (/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(req.autosan.body.phone))
     {
       return next();
@@ -258,6 +274,7 @@ middlewareObj.phone = function (req , res ,  next){
 
 middlewareObj.address = function (req , res ,  next){
   
+  req.autosan.body = trimBody(req.autosan.body);
   if(req.autosan.body.method === "3"){
     return next();
   }
@@ -286,6 +303,7 @@ middlewareObj.address = function (req , res ,  next){
 
 middlewareObj.rating = function (req , res ,  next){
 
+  req.autosan.body = trimBody(req.autosan.body);
   if (req.autosan.body.rating != null && req.autosan.body.author != '')
     {
       return next();
@@ -479,6 +497,7 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
 
 middlewareObj.sameEmail = async function (req , res ,  next){
 
+  req.autosan.body = trimBody(req.autosan.body);
   if(req.autosan.body.email === req.autosan.body.email2){
     next();
   }

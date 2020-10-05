@@ -30,6 +30,14 @@ const signAdminToken = function(admin) {
   }, JWT_SECRET_ADMIN);
 }
 
+function trimBody(inside){
+
+  Object.keys(inside).forEach(function(key,index) {
+    inside[key].trim();
+  });
+  return inside;
+}
+
 router.use(function(req, res, next) {
 	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
@@ -61,7 +69,7 @@ router.get("/register",middleware.user,function(req,res){
 
 
 router.post("/register",sanitization.route, middleware.namesur , middleware.emailExists, middleware.email , middleware.password ,function(req,res){
-	
+	req.autosan.body = trimBody(req.autosan.body);
 	var newUser = new User({
 	methods: 'local',
 	local:{
