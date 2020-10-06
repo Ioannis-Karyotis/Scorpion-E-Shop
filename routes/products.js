@@ -473,12 +473,8 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 });
 
 router.post("/products/:type/:id/add" , sanitization.route, function(req, res){
-<<<<<<< Updated upstream
-	Product.find({_id : req.params.id}, function(err, foundProduct){
-=======
 	req.autosan.body = trimBody(req.autosan.body);
 	Product.find( {_id : req.params.id}, function(err, foundProduct){
->>>>>>> Stashed changes
 		if(err){
 			console.log(err);
 		} else {

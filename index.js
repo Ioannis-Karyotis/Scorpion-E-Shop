@@ -6,7 +6,7 @@ const   app 	 	= require('./app'),
 	  {SECRET_STRIPE} = require('./configuration'),
 	  stripesk        = require("stripe")(SECRET_STRIPE),
 	  fs 	 	      = require("fs");
-/*
+
 dotenv.config();
 
 if (process.env.URL && process.env.CONTENT) {
@@ -14,7 +14,7 @@ if (process.env.URL && process.env.CONTENT) {
     return res.send(process.env.CONTENT)
   });
 }
-*/
+
 cron.schedule("0 */2 * * *", function() {
       Untracked.find({},function(err,untrackedPaymentIntents){
       	if(err){
