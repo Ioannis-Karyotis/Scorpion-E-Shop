@@ -9,12 +9,12 @@ const   app 	 	= require('./app'),
 
 dotenv.config();
 
-if (process.env.URL && process.env.CONTENT) {
+/*if (process.env.URL && process.env.CONTENT) {
   app.get(process.env.URL, function(req, res) {
     return res.send(process.env.CONTENT)
   });
 }
-
+*/
 cron.schedule("0 */2 * * *", function() {
       Untracked.find({},function(err,untrackedPaymentIntents){
       	if(err){
