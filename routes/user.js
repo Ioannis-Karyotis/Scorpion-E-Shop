@@ -40,8 +40,7 @@ const signToken = function(user) {
 function trimBody(inside){
 
   Object.keys(inside).forEach(function(key,index) {
-  	console.log(typeof inside[key]);
-    inside[key].trim();
+    inside[key] = inside[key].trim();
   });
   return inside;
 }
@@ -87,7 +86,6 @@ router.get("/user/:id/orders" ,passport.authenticate('jwt', { session: false }),
 
 router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur , middleware.email ,passport.authenticate('jwt', { session: false }), function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
-	req.autosan.body.name = "tejohny";
 	console.log(req.autosan.body);
 	User.findById(req.params.id, function(err , foundUser){
 		if(err){
@@ -158,31 +156,32 @@ router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { ses
 
 router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('jwt', { session: false }), function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
-	User.remove({ _id: req.autosan.body._id },async function(err) {
+	User.remove({ _id: req.autosan.body.id },async function(err) {
 	    if (err) {
 	        console.log(err.message);
 	    }
 	    else {
-	    	const path = "./public/images/profile-pictures/"+req.autosan.body._id+".jpg";
+	    	const path = "./public/images/profile-pictures/"+req.autosan.body.id+".jpg";
 
-			await fs.unlink(path ,function(err){
-				if(err){
-					console.log(err);
-				}
-			});
-
-	    	req.logout();
-	    	req.user = undefined;
-			cookie = req.cookies;
-		    for (var prop in cookie) {
-		        if (!cookie.hasOwnProperty(prop)) {
-		            continue;
-		        }    
-		        res.cookie(prop, '', {expires: new Date(0)});
-		    }
-	        res.send("ok");
+		    if (fs.existsSync(path)) {
+	   			await fs.unlink(path ,function(err){
+					if(err){
+						console.log(err);
+					}
+				});
+	  		}
 	    }
 	});
+	req.logout();
+	req.user = undefined;
+	cookie = req.cookies;
+    for (var prop in cookie) {
+        if (!cookie.hasOwnProperty(prop)) {
+            continue;
+        }    
+        res.cookie(prop, '', {expires: new Date(0)});
+    }
+    res.send("ok");
 });
 
 module.exports = router;

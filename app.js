@@ -85,22 +85,18 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next){
+	if((req.user == undefined && req.cookies['access_token'] != undefined) || (req.user == undefined && req.cookies['admin_token'] != undefined)){
+		res.clearCookie('access_token');
+		res.clearCookie('admin_token');
+		res.clearCookie('connect.sid');
+		res.redirect('/expired');
+	}else{
+		next();
+	}
+})
 
 app.use(function(req, res, next){
-	console.log(req.user);
-	if(req.user == undefined){
-		if(req.cookies['access_token'])	{
-			res.clearCookie('access_token');
-			res.clearCookie('admin_token');
-			res.clearCookie('connect.sid');
-		}
-		else if(req.cookies['admin_token']){
-			res.clearCookie('access_token');
-			res.clearCookie('admin_token');
-			res.clearCookie('connect.sid');
-		}
-	}
-	
 	res.locals.currentUser = req.user;
 	res.locals.session 	   = req.session; //so I can access session from all the views
 	res.locals.error       = req.flash("error");
@@ -110,6 +106,7 @@ app.use(function(req, res, next){
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
+
 
 app.use(indexRoutes);
 app.use(userRoutes);
@@ -121,5 +118,10 @@ app.use(customRoutes);
 app.use(contactRoutes);
 app.use(fpassRoutes);
 
+
+
+app.get('/expired' ,function(req, res){
+	res.render('expired');
+})
 
 module.exports = app;

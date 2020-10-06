@@ -26,13 +26,7 @@
 
 
 <div id="main" class="main my-4 container mb-5">
-	<% if(!currentUser){ %>
-	<div class="jumbotron">
-		<h1>Η περίοδος σύνδεσής σας έχει λήξει</h1>
-		<script type="text/javascript" src="/scripts/relocate.js"></script>
-	</div>
-	<% }else {%>
-
+	<% if(currentUser){ %>
 	<% orders.forEach(function(order){ %>
 		<div class="row">
 			<% if(order.confirm==true && order.complete==true){%>

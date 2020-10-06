@@ -36,20 +36,20 @@ function readURL(input) {
     }
 }
 
-function deleteProfile(user) {
+function deleteProfile(id , email) {
   var txt;
-  console.log(user.local.email);
   var r = prompt("Πληκτρολόγησε το e-mail σου για επιβεβαίωση διαγραφής");
   var modal = document.getElementById("user-modal");
       
-  if (r != null && r == user.local.email ) {
+  if (r != null && r == email ) {
     modal.style.display = "block";
+    var userid = {id : id};
     fetch("/user/deleteProfile", {
         method: "DELETE",  
         headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(userid)
     })
     .then(function() { 
       $('.circle-loader').toggleClass('load-complete');
