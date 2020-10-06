@@ -2,12 +2,7 @@
 
 <div id="main" class="container main mb-5">
 	<div class="container-fluid my-4">
-		<% if(!currentUser){ %>
-			<div class="desc">
-				Η περίοδος σύνδεσης σας έχει λήξει
-				<script type="text/javascript" src="/scripts/relocate.js"></script>
-			</div>
-		<% }else {%>
+		<% if(currentUser){ %>
 		    <div class="row  d-flex justify-content-around ">
 				<div class="col-md-3 side-menu desc">
 					<h5 class="my-0">

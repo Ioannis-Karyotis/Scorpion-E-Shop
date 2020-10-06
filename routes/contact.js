@@ -26,9 +26,8 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 function trimBody(inside){
 
   Object.keys(inside).forEach(function(key,index) {
-    inside[key].trim();
+    inside[key] = inside[key].trim();
   });
-  console.log("inside: " + inside);
   return inside;
 }
 

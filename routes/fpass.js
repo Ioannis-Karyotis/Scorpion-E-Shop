@@ -73,9 +73,8 @@ const signToken = function(hashobj) {
 function trimBody(inside){
 
   Object.keys(inside).forEach(function(key,index) {
-    inside[key].trim();
+    inside[key] = inside[key].trim();
   });
-  console.log("inside: " + inside);
   return inside;
 }
 

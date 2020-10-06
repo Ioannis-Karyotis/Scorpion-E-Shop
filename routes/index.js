@@ -33,7 +33,7 @@ const signAdminToken = function(admin) {
 function trimBody(inside){
 
   Object.keys(inside).forEach(function(key,index) {
-    inside[key].trim();
+	inside[key] = inside[key].trim();
   });
   return inside;
 }
@@ -114,13 +114,16 @@ router.post('/login',sanitization.route, passport.authenticate('local', { failWi
 			console.log("inside");
 			const token = signAdminToken(req.user);
 			res.cookie('admin_token', token, {
-	  			httpOnly: true
+	  			httpOnly: true,
+	  			maxAge: 2* 60 * 60 * 1000
 			});
 			return res.redirect("/admin");
 		}
 		const token = signToken(req.user);
 		res.cookie('access_token', token, {
-	  		httpOnly: true
+	  		httpOnly: true,
+	  		maxAge: 2* 60 * 60 * 1000
+
 		});
 		req.flash("genSuccess","You Successfully Logged In");
 		return res.redirect("/user/"+ req.user._id);
