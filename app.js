@@ -34,15 +34,15 @@ const indexRoutes 	 = require("./routes/index"),
 	  fpassRoutes 	 = require("./routes/fpass"),	  
 	  config 		 = require("./configuration/passport");
 
-//dotenv.config();
+/*dotenv.config();
 
-/*app.use(function(req, res, next) {
+app.use(function(req, res, next) {
 	if (req.headers['x-forwarded-proto'] !== 'https' && req.path !== process.env.URL) {
 	  return res.redirect(['https://', req.get('Host'), req.url].join(''));
 	}
 	return next();
-});*/
-
+});
+*/
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(bodyParser.json({
