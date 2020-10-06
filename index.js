@@ -6,10 +6,10 @@ const   app 	 	= require('./app'),
 	  {SECRET_STRIPE} = require('./configuration'),
 	  stripesk        = require("stripe")(SECRET_STRIPE),
 	  fs 	 	      = require("fs");
-
+/*
 dotenv.config();
 
-/*if (process.env.URL && process.env.CONTENT) {
+if (process.env.URL && process.env.CONTENT) {
   app.get(process.env.URL, function(req, res) {
     return res.send(process.env.CONTENT)
   });
