@@ -1,6 +1,7 @@
 const express 		= require("express"),
 	app				= express(),
 	path 			= require('path'),
+	favicon         = require('serve-favicon'),
 	bodyParser 		= require("body-parser"),
 	cors 			= require("cors"),
 	cookieParser 	= require("cookie-parser"),
