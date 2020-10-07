@@ -1,3 +1,3 @@
   setTimeout(function() {
-      window.location.replace("https://scorpion-store.herokuapp.com/login");
+      window.location.replace("https://www.scorpionclothing.gr/login");
     }, 3000);

@@ -118,7 +118,7 @@ passport.use('forgot_pass', new JwtStrategy({
 passport.use("facebook" , new FacebookStrategy({
       clientID: config.oauth.facebook.clientID,
       clientSecret: config.oauth.facebook.clientSecret,
-      callbackURL: "https://scorpion-store.herokuapp.com/auth/facebook/callback",
+      callbackURL: "https://www.scorpionclothing.gr/auth/facebook/callback",
       profileFields: ['id', 'emails', 'name' , 'picture.type(large)']
     },
     function(accessToken, refreshToken, profile, done) {
@@ -166,7 +166,7 @@ passport.use("facebook" , new FacebookStrategy({
 passport.use("google" , new GoogleStrategy({
       clientID: config.oauth.google.clientID,
       clientSecret: config.oauth.google.clientSecret,
-      callbackURL: "https://scorpion-store.herokuapp.com/auth/google/callback",
+      callbackURL: "https://www.scorpionclothing.gr/auth/google/callback",
       // profileFields: ['id', 'emails', 'name']
     },
     function(accessToken, refreshToken, profile, done) {

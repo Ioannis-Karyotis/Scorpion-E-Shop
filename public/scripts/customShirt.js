@@ -10,9 +10,9 @@ function changeShirtColor(){
   let img = document.getElementById('selectedColor');
   let color = document.getElementById('tshirtColor').value;
   if(color === 'Άσπρο'){
-    img.src = "https://scorpion-store.herokuapp.com/images/white_t_shirt.png";
+    img.src = "https://www.scorpionclothing.gr/images/white_t_shirt.png";
   }else{
-    img.src = "https://scorpion-store.herokuapp.com/images/black_t_shirt.png";
+    img.src = "https://www.scorpionclothing.gr/images/black_t_shirt.png";
   }
 }
 

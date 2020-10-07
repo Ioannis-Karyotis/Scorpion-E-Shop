@@ -54,7 +54,7 @@ router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter })
       var str = req.file.path;
 			var str2 = str.replace("public", "");
   		var final = str2.replace(/\\/g,"/");
-  		image={url : "https://scorpion-store.herokuapp.com" + final };
+  		image={url : "https://www.scorpionclothing.gr" + final };
 			newProduct.images.push(image);
 
 

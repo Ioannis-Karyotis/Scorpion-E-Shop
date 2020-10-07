@@ -145,7 +145,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
-			image={url : "https://scorpion-store.herokuapp.com" + final,name : name[0] };
+			image={url : "https://www.scorpionclothing.gr" + final,name : name[0] };
 		  	newProduct.images.push(image);
 	    });
 		await newProduct.save();
@@ -196,7 +196,7 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".")
-			image={url : "https://scorpion-store.herokuapp.com" + final , name : name[0]};
+			image={url : "https://www.scorpionclothing.gr" + final , name : name[0]};
 	  		foundProduct.images.push(image);
 			foundProduct.save();
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
@@ -435,7 +435,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
-						var photo = "https://scorpion-store.herokuapp.com/images/blank.png"
+						var photo = "https://www.scorpionclothing.gr/images/blank.png"
 		    		}
 					var today = new Date();
 
