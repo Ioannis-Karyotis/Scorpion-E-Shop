@@ -10,6 +10,7 @@ const express 			 = require("express"),
 	  Order 			 = require("../models/order"),
 	  middleware  		 = require("../middleware/index.js"),
 	  bodyParser 		 = require("body-parser"),
+	  dotenv 			 = require('dotenv'),
 	  sanitization		 = require('express-autosanitizer');
 
 const signToken = function(user) {
@@ -37,6 +38,7 @@ function trimBody(inside){
   });
   return inside;
 }
+dotenv.config();
 
 router.use(function(req, res, next) {
 	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');

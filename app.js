@@ -99,6 +99,7 @@ app.use(function(req, res, next){
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
 	res.locals.session 	   = req.session; //so I can access session from all the views
+	res.locals.root 	   = process.env.ROOT;
 	res.locals.error       = req.flash("error");
 	res.locals.regError    = req.flash("regError");
 	res.locals.genError    = req.flash("genError");

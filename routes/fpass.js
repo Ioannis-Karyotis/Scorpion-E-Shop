@@ -9,9 +9,10 @@ const express 		= require("express"),
 	  {JWT_SECRET}  = require('../configuration'),
  	  config 		= require('../configuration'),
 	  crypto 		= require('crypto'),
-	  objEncDec     = require('object-encrypt-decrypt');
+	  objEncDec     = require('object-encrypt-decrypt'),
 	  nodemailer 	= require('nodemailer'),
 	  ejs       	= require("ejs"),
+	  dotenv 		= require('dotenv'),
 	  smtpTransport = require('nodemailer-smtp-transport'),
 	  transporter 	= nodemailer.createTransport({
 							host: "smtp.gmail.com",
@@ -59,7 +60,7 @@ const express 		= require("express"),
 				            cid: 'logo'
 			       		}
 			        ];
-	  
+dotenv.config();	  
 
 const signToken = function(hashobj) {
   return JWT.sign({

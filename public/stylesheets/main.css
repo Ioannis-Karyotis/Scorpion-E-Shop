@@ -631,7 +631,7 @@ hr.normal{
   opacity: 0.75;
 }
 #logo-bck img:hover:active {
-  content:url("https://scorpion-store.herokuapp.com/images/logo4.png");
+  /*content:url("https://scorpion-store.herokuapp.com/images/logo4.png");*/
   opacity: 1;
 }
 
@@ -1835,7 +1835,7 @@ hr.normal{
 }
 
 #logo-foot img:hover:active {
-  content:url("https://scorpion-store.herokuapp.com/images/logo3.png");
+  /*content:url("https://scorpion-store.herokuapp.com/images/logo3.png");*/
   opacity: 1;
   background-color: rgba(255, 255, 255, 0);
   filter: drop-shadow(5px 5px 5px #222);

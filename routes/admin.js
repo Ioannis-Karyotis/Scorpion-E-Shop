@@ -5,6 +5,7 @@ const express 		= require("express"),
 	  config 		= require('../configuration'),
 	  User 			= require("../models/user"),
 	  Product   	= require("../models/product"),
+	  dotenv 		= require('dotenv'),
 	  Order     	= require("../models/order"),
 	  sanitization	= require('express-autosanitizer'),
 	  nodemailer 	= require('nodemailer'),
@@ -56,6 +57,7 @@ const express 		= require("express"),
 				            cid: 'logo'
 			       		}
 			        ];
+dotenv.config();
 	  
 function trimBody(inside){
 

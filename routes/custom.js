@@ -5,6 +5,7 @@ const express 	   = require("express"),
       sanitization = require('express-autosanitizer'),
       multer 	     = require('multer'),
       path 	       = require('path'),
+      dotenv     = require('dotenv'),
       storage = multer.diskStorage({
         destination: function(req, file, cb) {
             cb(null, "./public/images/stamps");
@@ -24,6 +25,8 @@ const imageFilter = function(req, file, cb) {
     }
     cb(null, true);
 };
+
+dotenv.config();
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -54,7 +57,7 @@ router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter })
       var str = req.file.path;
 			var str2 = str.replace("public", "");
   		var final = str2.replace(/\\/g,"/");
-  		image={url : "http://localhost:3000" + final };
+  		image={url : process.env.ROOT + final };
 			newProduct.images.push(image);
 
 

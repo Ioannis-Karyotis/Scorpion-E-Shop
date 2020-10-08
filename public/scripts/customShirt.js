@@ -4,15 +4,16 @@ $(document).ready(function() {
   //custom t-shirt - reset upload form files
   document.getElementById("stampImage").value = "";
 });
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 function changeShirtColor(){
   let img = document.getElementById('selectedColor');
   let color = document.getElementById('tshirtColor').value;
   if(color === 'Άσπρο'){
-    img.src = "http://localhost:3000/images/white_t_shirt.png";
+    img.src = process.env.ROOT + "/images/white_t_shirt.png";
   }else{
-    img.src = "http://localhost:3000/images/black_t_shirt.png";
+    img.src = process.env.ROOT + "/images/black_t_shirt.png";
   }
 }
 

@@ -9,6 +9,7 @@ const express 		= require("express"),
 	  {JWT_SECRET} 	= require('../configuration'),
 	  fs 			= require('fs'),
 	  multer 		= require('multer'),
+	  dotenv 		= require('dotenv'),
 	  path 			= require('path'),
 	  storage 		= multer.diskStorage({
 						destination: function(req, file, cb) {
@@ -18,6 +19,8 @@ const express 		= require("express"),
 							cb(null, req.user._id+".jpg");
 						}
 					});
+
+dotenv.config();
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -133,7 +136,7 @@ router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storag
 	console.log(str);
 	var str2 = str.replace("public", "");
 	var final = str2.replace(/\\/g,"/");
-	var image="http://localhost:3000" + final;	
+	var image= process.env.ROOT + final;	
 	User.findById(req.params.id, function(err , foundUser){
 		if(err){
 			console.log(err)

@@ -1,8 +1,10 @@
 const express 	  = require("express"),
       router 		  = express.Router(),
       Cart        = require("../models/cart"),
+      dotenv    = require('dotenv'),
       middleware  = require("../middleware/index.js");
 
+dotenv.config();
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');

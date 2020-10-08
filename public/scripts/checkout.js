@@ -13,8 +13,9 @@ $(document).ready(function() {
 
 });
 
+const dotenv = require('dotenv');
+dotenv.config();
 var stripe
-
 var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
 };
@@ -344,11 +345,11 @@ var changeLoadingState = function(isLoading) {
 };
 
 function relocate(){
-  window.location.replace("http://localhost:3000/");
+  window.location.replace(process.env.ROOT);
 }
 
 function relocate2(){
-  window.location.replace("http://localhost:3000/checkout");
+  window.location.replace(process.env.ROOT + "/checkout");
 }
 
 function statusChange(status){

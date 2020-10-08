@@ -2,6 +2,9 @@ var mongoose = require("mongoose");
 var Product = require("./models/product");
 var Review = require("./models/review");
 var Admin = require("./models/admin");
+var dotenv = require('dotenv');
+
+dotenv.config();
 
 var sizes = [
                 {
@@ -56,11 +59,11 @@ var data = [
         price: 15,
         images: [
             {
-                url: "http://localhost:3000/images/tshirt/example2.jpg",
+                url: process.env.ROOT + "/images/tshirt/example2.jpg",
                 name: "example2"
             },
             {
-                url:"http://localhost:3000/images/tshirt/example1.jpg",
+                url: process.env.ROOT+ "/images/tshirt/example1.jpg",
                 name : "example1"
             }
         ],
@@ -78,11 +81,11 @@ var data = [
         price: 10,
         images: [
             {
-                url: "http://localhost:3000/images/tshirt/example2.jpg",
+                url:  process.env.ROOT + "/images/tshirt/example2.jpg",
                 name: "example2"
             },
             {
-                url:"http://localhost:3000/images/tshirt/example1.jpg",
+                url: process.env.ROOT+ "/images/tshirt/example1.jpg",
                 name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
@@ -99,11 +102,11 @@ var data = [
         price: 20,
         images: [
             {
-                url: "http://localhost:3000/images/tshirt/example2.jpg",
+                url:  process.env.ROOT + "/images/tshirt/example2.jpg",
                 name : "example2"
             },
             {
-                url:"http://localhost:3000/images/tshirt/example1.jpg",
+                url: process.env.ROOT + "/images/tshirt/example1.jpg",
                 name : "example1"
             }
         ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",

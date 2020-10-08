@@ -26,7 +26,7 @@
 					   			</div>
 					    		<div class="col-12 justify-content-center">
 					    			<% if(!currentUser[currentUser.methods].profile) {%>
-										<img src="http://localhost:3000/images/blank.png" id="blah" alt="" class="blank mr-1" >
+										<img src="<%=root%>/images/blank.png" id="blah" alt="" class="blank mr-1" >
 									<% }else{ %>
 										<img src="<%=currentUser[currentUser.methods].profile%>" id="blah" alt="" class="blank mr-1" >
 									<%}%>

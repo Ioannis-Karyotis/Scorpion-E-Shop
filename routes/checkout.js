@@ -11,7 +11,10 @@ const express 			  = require("express"),
  		  stripepk 		    = require('stripe')(PUBLIC_STRIPE),
       middleware      = require("../middleware/index.js"),
       sanitization    = require('express-autosanitizer'),
+      dotenv          = require('dotenv'),
       objEncDec       = require('object-encrypt-decrypt');
+      
+dotenv.config();
 
 function trimBody(inside){
 

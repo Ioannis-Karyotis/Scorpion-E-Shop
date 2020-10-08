@@ -5,6 +5,7 @@ const express 	    = require("express"),
       User 		      = require("../models/user"),
       sanitization  = require('express-autosanitizer'),
       nodemailer    = require('nodemailer'),
+      dotenv        = require('dotenv'),
       smtpTransport = require('nodemailer-smtp-transport'),
       transporter = nodemailer.createTransport(smtpTransport
         ({
@@ -22,6 +23,8 @@ router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         next();
 })
+
+dotenv.config();
 
 function trimBody(inside){
 

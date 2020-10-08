@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
   setTimeout(function() {
-      window.location.replace("http://localhost:3000/login");
+      window.location.replace( process.env.ROOT +"/login");
     }, 3000);

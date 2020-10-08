@@ -8,6 +8,7 @@ const express 		= require("express"),
 	  passport 		= require("passport"),
 	  multer 		= require('multer'),
 	  fs 			= require('fs'),
+	  dotenv 		= require('dotenv'),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = {
@@ -60,6 +61,7 @@ const express 		= require("express"),
 	    }
 	  });
 
+dotenv.config();
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -145,7 +147,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
-			image={url : "http://localhost:3000" + final,name : name[0] };
+			image={url : process.env.ROOT + final,name : name[0] };
 		  	newProduct.images.push(image);
 	    });
 		await newProduct.save();
@@ -196,7 +198,7 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".")
-			image={url : "http://localhost:3000" + final , name : name[0]};
+			image={url : process.env.ROOT + final , name : name[0]};
 	  		foundProduct.images.push(image);
 			foundProduct.save();
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
@@ -435,7 +437,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 		    		}else{
 		    			var name = req.autosan.body.author;
 						var surname =  "";
-						var photo = "http://localhost:3000/images/blank.png"
+						var photo = process.env.ROOT + "/images/blank.png"
 		    		}
 					var today = new Date();
 
