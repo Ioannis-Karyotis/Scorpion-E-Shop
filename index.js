@@ -5,7 +5,9 @@ const   app 	 	= require('./app'),
 	  cron 	 	= require("node-cron"),
 	  {SECRET_STRIPE} = require('./configuration'),
 	  stripesk        = require("stripe")(SECRET_STRIPE),
-	  fs 	 	      = require("fs");
+	  fs 	 	      = require("fs"),
+        http            = require('http'),
+        https           = require('https');
 
 dotenv.config();
 
