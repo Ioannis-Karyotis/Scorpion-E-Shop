@@ -5,119 +5,120 @@ var Admin = require("./models/admin");
 var dotenv = require('dotenv');
 
 dotenv.config();
-
-var sizes = [
-                {
-                    size : "S",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "M",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "L",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "XL",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "XXL",
-                    sizeStatus: "active",
-                },
-            ];
-
-var colors =    [
+if(process.env.ENV != "production") {
+    var sizes = [
                     {
-                        color : "Πράσινο", 
-                        colorStatus: "active",
-                        colorHex : "#466267"
+                        size : "S",
+                        sizeStatus: "active",
                     },
                     {
-                        color : "Μοβ", 
-                        colorStatus: "active",
-                        colorHex : "#905193"
+                        size : "M",
+                        sizeStatus: "active",
                     },
                     {
-                        color : "Κίτρινο", 
-                        colorStatus: "active",
-                        colorHex : "#ffff00"
+                        size : "L",
+                        sizeStatus: "active",
                     },
                     {
-                        color : "Κίτρινο", 
-                        colorStatus: "active",
-                        colorHex : "#ffff00"
-                    }
-                ];          
+                        size : "XL",
+                        sizeStatus: "active",
+                    },
+                    {
+                        size : "XXL",
+                        sizeStatus: "active",
+                    },
+                ];
 
-var data = [
-    {
-        name: "Example 1",
-        type: "isothermika" ,
-        price: 15,
-        images: [
-            {
-                url: process.env.ROOT + "/images/tshirt/example2.jpg",
-                name: "example2"
-            },
-            {
-                url: process.env.ROOT+ "/images/tshirt/example1.jpg",
-                name : "example1"
-            }
-        ],
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-        reviews:[],
-        rating: 0,
-        colors: colors,
-        sizes: sizes,
-        reviewCount: 0,
-        status : "active"
-    },
-    {
-        name: "Example 2",
-        type: "isothermika" ,
-        price: 10,
-        images: [
-            {
-                url:  process.env.ROOT + "/images/tshirt/example2.jpg",
-                name: "example2"
-            },
-            {
-                url: process.env.ROOT+ "/images/tshirt/example1.jpg",
-                name : "example1"
-            }
-        ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-        reviews: [],
-        rating: 0,
-        colors: colors,
-        sizes: sizes,
-        reviewCount: 0,
-        status : "active"
-    },
-    {
-        name: "Example 3",
-        type: "isothermika" ,
-        price: 20,
-        images: [
-            {
-                url:  process.env.ROOT + "/images/tshirt/example2.jpg",
-                name : "example2"
-            },
-            {
-                url: process.env.ROOT + "/images/tshirt/example1.jpg",
-                name : "example1"
-            }
-        ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-        reviews: [],
-        rating: 0,
-        colors: colors,
-        sizes: sizes,
-        reviewCount: 0,
-        status : "active"
-    },
-]
+    var colors =    [
+                        {
+                            color : "Πράσινο", 
+                            colorStatus: "active",
+                            colorHex : "#466267"
+                        },
+                        {
+                            color : "Μοβ", 
+                            colorStatus: "active",
+                            colorHex : "#905193"
+                        },
+                        {
+                            color : "Κίτρινο", 
+                            colorStatus: "active",
+                            colorHex : "#ffff00"
+                        },
+                        {
+                            color : "Κίτρινο", 
+                            colorStatus: "active",
+                            colorHex : "#ffff00"
+                        }
+                    ];          
+
+    var data = [
+        {
+            name: "Example 1",
+            type: "isothermika" ,
+            price: 15,
+            images: [
+                {
+                    url: process.env.ROOT + "/images/tshirt/example2.jpg",
+                    name: "example2"
+                },
+                {
+                    url: process.env.ROOT+ "/images/tshirt/example1.jpg",
+                    name : "example1"
+                }
+            ],
+            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+            reviews:[],
+            rating: 0,
+            colors: colors,
+            sizes: sizes,
+            reviewCount: 0,
+            status : "active"
+        },
+        {
+            name: "Example 2",
+            type: "isothermika" ,
+            price: 10,
+            images: [
+                {
+                    url:  process.env.ROOT + "/images/tshirt/example2.jpg",
+                    name: "example2"
+                },
+                {
+                    url: process.env.ROOT+ "/images/tshirt/example1.jpg",
+                    name : "example1"
+                }
+            ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+            reviews: [],
+            rating: 0,
+            colors: colors,
+            sizes: sizes,
+            reviewCount: 0,
+            status : "active"
+        },
+        {
+            name: "Example 3",
+            type: "isothermika" ,
+            price: 20,
+            images: [
+                {
+                    url:  process.env.ROOT + "/images/tshirt/example2.jpg",
+                    name : "example2"
+                },
+                {
+                    url: process.env.ROOT + "/images/tshirt/example1.jpg",
+                    name : "example1"
+                }
+            ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+            reviews: [],
+            rating: 0,
+            colors: colors,
+            sizes: sizes,
+            reviewCount: 0,
+            status : "active"
+        },
+    ]
+}    
 
 function seedDB(){
     Admin.remove({}, function(err){
@@ -142,31 +143,30 @@ function seedDB(){
         console.log("Admin Created");
     })
 
-
-
-
-    //Remove all campgrounds
-    Product.remove({}, function(err){
-        if(err){
-            console.log(err);
-        }
-        console.log("removed products!");
-        Review.remove({}, function(err){
-          if(err){
-            console.log(err);
-          }
-    
-        data.forEach(function(seed){
-            Product.create(seed, function(err, product){
-                    if(err){
-                        console.log(err)
-                    } else {
-                        console.log("added a Product");
-                    }
+    if(process.env.ENV == "production") {
+        //Remove all campgrounds
+        Product.remove({}, function(err){
+            if(err){
+                console.log(err);
+            }
+            console.log("removed products!");
+            Review.remove({}, function(err){
+              if(err){
+                console.log(err);
+              }
+        
+            data.forEach(function(seed){
+                Product.create(seed, function(err, product){
+                        if(err){
+                            console.log(err)
+                        } else {
+                            console.log("added a Product");
+                        }
+                    });
                 });
-            });
-        });  
-    });
+            });  
+        });
+    }    
 }
 
 module.exports = seedDB;

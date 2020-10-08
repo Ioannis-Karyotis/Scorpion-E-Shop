@@ -61,10 +61,6 @@ if(process.env.ENV == "production") {
       const httpServer = http.createServer(app);
       const httpsServer = https.createServer(credentials, app);
 
-      app.get('*', function(req, res) {  
-          res.redirect('https://' + req.headers.host + req.url);
-      })
-
       httpServer.listen(80, () => {
             console.log('HTTP Server running on port 80');
       });

@@ -36,6 +36,22 @@ const indexRoutes 	 = require("./routes/index"),
 
 dotenv.config();
 
+
+app.use (function (req, res, next) {
+	if(process.env.ENV == "production") {
+	    if (req.secure) {
+	            // request was via https, so do no special handling
+	            next();
+	    } else {
+	            // request was via http, so redirect to https
+	            res.redirect('https://' + req.headers.host + req.url);
+	    }
+	}else{
+		next();
+	}
+});
+
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(bodyParser.json({
