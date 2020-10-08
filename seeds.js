@@ -143,7 +143,7 @@ function seedDB(){
         console.log("Admin Created");
     })
 
-    if(process.env.ENV == "production") {
+    if(process.env.ENV != "production") {
         //Remove all campgrounds
         Product.remove({}, function(err){
             if(err){
