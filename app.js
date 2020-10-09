@@ -133,5 +133,12 @@ app.use(fpassRoutes);
 app.get('/expired' ,function(req, res){
 	res.render('expired');
 })
+app.get('/Privacy_Policy' ,function(req, res){
+	res.render('Privacy_Policy');
+})
+app.get('/Terms_Of_Service' ,function(req, res){
+	res.render('Terms_Of_Service');
+})
+
 
 module.exports = app;
