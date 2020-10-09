@@ -13,9 +13,8 @@ $(document).ready(function() {
 
 });
 
-const dotenv = require('dotenv');
-dotenv.config();
 var stripe
+
 var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
 };
@@ -238,20 +237,20 @@ var pay =async function(stripe, card, clientSecret) {
 
   stripe
     .confirmCardPayment(clientSecret, {
-      	payment_method: {
-        	card: card,
-        	billing_details: {
-        		email:  document.getElementById("email").value,  		
-        		phone : document.getElementById("phone").value,
-        		name:  document.getElementById("name").value + " " + document.getElementById("surname").value ,
+        payment_method: {
+          card: card,
+          billing_details: {
+            email:  document.getElementById("email").value,     
+            phone : document.getElementById("phone").value,
+            name:  document.getElementById("name").value + " " + document.getElementById("surname").value ,
             address :{
               line1:  document.getElementById("line1").value,     
               city : document.getElementById("city").value,
               postal_code:  document.getElementById("postal_code").value,
               state:  document.getElementById("state").value
             }
-      		} 	
-      	},
+          }   
+        },
         shipping :{
           name: document.getElementById("name").value + " " + document.getElementById("surname").value,
           address:{
@@ -345,11 +344,11 @@ var changeLoadingState = function(isLoading) {
 };
 
 function relocate(){
-  window.location.replace(process.env.ROOT);
+  window.location.replace("https://scorpionclothing.gr/");
 }
 
 function relocate2(){
-  window.location.replace(process.env.ROOT + "/checkout");
+  window.location.replace("https://scorpionclothing.gr/checkout");
 }
 
 function statusChange(status){
