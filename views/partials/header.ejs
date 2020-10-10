@@ -70,7 +70,7 @@
 						</li>
 				    <% } else if(currentUser) { %>
 						<li class="nav-item go-left-first">
-							<a class="nav-link d-flex align-items-start justify-content-around" href="/user/<%= currentUser._id%>">
+							<a class="nav-link d-flex align-items-start justify-content-around" href="/user">
 								<% if(!currentUser[currentUser.methods].profile) {%>
 									<img src="<%=root%>/images/blank.png" alt="Avatar" class="blank-mini mr-1" >  <span> Προφίλ</span>
 								<% }else{ %>
