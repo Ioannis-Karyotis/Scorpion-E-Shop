@@ -344,11 +344,11 @@ var changeLoadingState = function(isLoading) {
 };
 
 function relocate(){
-  window.location.replace("https://scorpionclothing.gr/");
+  window.location.replace(document.getElementById("root").innerHTML);
 }
 
 function relocate2(){
-  window.location.replace("https://scorpionclothing.gr/checkout");
+  window.location.replace(document.getElementById("root").innerHTML + "/checkout");
 }
 
 function statusChange(status){

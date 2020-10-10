@@ -54,7 +54,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 })
 
 // passport.authenticate('jwt', { session: false })
-router.get("/user/:id" ,passport.authenticate('jwt', { session: false }), function(req, res){
+router.get("/user" ,passport.authenticate('jwt', { session: false }), function(req, res){
 		if(req.user){
 			res.render("user");
 		}else{
@@ -64,9 +64,9 @@ router.get("/user/:id" ,passport.authenticate('jwt', { session: false }), functi
 });
 
 // passport.authenticate('jwt', { session: false })
-router.get("/user/:id/orders" ,passport.authenticate('jwt', { session: false }), function(req, res){
+router.get("/user/orders" ,passport.authenticate('jwt', { session: false }), function(req, res){
 	if(req.user){
-		User.findById(req.params.id, function(err , foundUser){
+		User.findById(req.session.user._id, function(err , foundUser){
 			if(err){
 				console.log(err)
 				res.redirect("back");
@@ -87,10 +87,9 @@ router.get("/user/:id/orders" ,passport.authenticate('jwt', { session: false }),
 });
 
 
-router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur , middleware.email ,passport.authenticate('jwt', { session: false }), function(req, res){
+router.put("/user/changeInitials" ,sanitization.route,  middleware.namesur , middleware.email ,passport.authenticate('jwt', { session: false }), function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
-	console.log(req.autosan.body);
-	User.findById(req.params.id, function(err , foundUser){
+	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
 			console.log(err)
 			res.redirect("back");
@@ -107,9 +106,9 @@ router.put("/user/:id/changeInitials" ,sanitization.route,  middleware.namesur ,
 	});
 });
 
-router.put("/user/:id/changePassword" ,sanitization.route,middleware.password, passport.authenticate('jwt', { session: false }), function(req, res){
+router.put("/user/changePassword" ,sanitization.route,middleware.password, passport.authenticate('jwt', { session: false }), function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
-	User.findById(req.params.id, function(err , foundUser){
+	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
 			console.log(err)
 			res.redirect("back");
@@ -125,7 +124,7 @@ router.put("/user/:id/changePassword" ,sanitization.route,middleware.password, p
 });
 
 
-router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storage, fileFilter: imageFilter }).single("profile_pic"), passport.authenticate('jwt', { session: false }), function(req, res){
+router.put("/user/changeImage" ,sanitization.route, multer({ storage: storage, fileFilter: imageFilter }).single("profile_pic"), passport.authenticate('jwt', { session: false }), function(req, res){
 	if (req.fileValidationError) {
         return res.send(req.fileValidationError);
     }
@@ -137,7 +136,7 @@ router.put("/user/:id/changeImage" ,sanitization.route, multer({ storage: storag
 	var str2 = str.replace("public", "");
 	var final = str2.replace(/\\/g,"/");
 	var image= process.env.ROOT + final;	
-	User.findById(req.params.id, function(err , foundUser){
+	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
 			console.log(err)
 			res.redirect("back");

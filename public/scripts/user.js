@@ -1,5 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
 
 function showInputs1(){
 	ps =document.querySelectorAll(".firstp")
@@ -59,7 +57,7 @@ function deleteProfile(id , email) {
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
       setTimeout(function() {
-        window.location.replace(process.env.ROOT + "/login");
+        window.location.replace("/login");
       }, 2000);             
     })
   }else{

@@ -96,6 +96,7 @@ app.use(passport.session());
 
 app.use(function(req, res, next){
 	if((req.user == undefined && req.cookies['access_token'] != undefined) || (req.user == undefined && req.cookies['admin_token'] != undefined)){
+		req.session.user = undefined;
 		res.clearCookie('access_token');
 		res.clearCookie('admin_token');
 		res.clearCookie('connect.sid');

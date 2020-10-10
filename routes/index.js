@@ -95,7 +95,8 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 
 		passport.authenticate("local")(req, res, function(){
 			req.flash("genSuccess","You Successfully Signed Up");
-			res.redirect("/user/"+ req.user._id);
+			req.session.user = req.user;
+			res.redirect("/user");
 		});
 	})
 });
@@ -128,7 +129,8 @@ router.post('/login',sanitization.route, passport.authenticate('local', { failWi
 
 		});
 		req.flash("genSuccess","You Successfully Logged In");
-		return res.redirect("/user/"+ req.user._id);
+		req.session.user = req.user;
+		return res.redirect("/user");
 	},
 	function(err, req, res, next) {
 		// handle error
@@ -148,6 +150,7 @@ router.get("/logout",function(req,res){
 	req.logout();
 	req.flash("genSuccess","You Logged Out");
 	req.user = undefined;
+	req.session.user = undefined;
 	cookie = req.cookies;
     for (var prop in cookie) {
         if (!cookie.hasOwnProperty(prop)) {

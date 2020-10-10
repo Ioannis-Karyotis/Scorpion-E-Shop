@@ -16,14 +16,6 @@ const express 			  = require("express"),
       
 dotenv.config();
 
-function trimBody(inside){
-
-  Object.keys(inside).forEach(function(key,index) {
-    inside[key] = inside[key].trim();
-  });
-  return inside;
-}
-
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         next();
@@ -35,7 +27,7 @@ router.post("/check_cart",middleware.validateCartOrderComplete, middleware.valid
 }) 
 
 router.post("/post_order",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
-  req.autosan.body = trimBody(req.autosan.body);
+
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   var today = new Date();
@@ -99,7 +91,6 @@ router.post("/post_order",middleware.validateCartOrderComplete, middleware.valid
 
 router.post("/post_order_sent",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route,async function(req,res){
   var method = "";
-  req.autosan.body = trimBody(req.autosan.body);
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
@@ -177,7 +168,6 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 
 
 router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice, async (req, res) => {
-  req.autosan.body = trimBody(req.autosan.body);
   const { currency } = req.autosan.body;
   const total = req.session.cart.totalPrice * 100;
   var paymentIntent = null;
@@ -242,6 +232,8 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
         httpOnly: true,
         overwrite: true
       });
+    }else if(req.cookies["stripe-gate"] != undefined){
+       paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
     }
 
     console.log("paymentIntent is: " + paymentIntent);
