@@ -171,7 +171,7 @@ router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', {
 			}
 			foundProduct.colors.push(newColor);
 			foundProduct.save();
-			res.redirect('products/'+ req.params.type + '/' + req.params.id );
+			res.redirect('/products/'+ req.params.type + '/' + req.params.id );
 		}
 	});
 })
