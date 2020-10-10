@@ -180,6 +180,7 @@ router.get('/auth/facebook/callback',
 	      		httpOnly: true
 	    	});
 	    	console.log(req.cookies);
+	    	req.session.user = req.user;
 	    	res.redirect('/');
 	  	}
 );
@@ -197,6 +198,7 @@ router.get('/auth/google/callback',
 	    	res.cookie('access_token', token, {
 	      		httpOnly: true
 	    	});
+	    	req.session.user = req.user;
 	    	res.redirect('/');
 	  	}
 );

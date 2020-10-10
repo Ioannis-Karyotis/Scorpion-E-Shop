@@ -86,6 +86,7 @@ passport.use('jwt', new JwtStrategy({
           return done(null, false);
         }
         req.user = user;
+        req.session.user = req.user;
         done(null, user);
     });  
   });
@@ -157,7 +158,6 @@ passport.use("facebook" , new FacebookStrategy({
                 if(err){
                   throw err;
                 }
-
                 return done(null, newUser);
               })
             }
