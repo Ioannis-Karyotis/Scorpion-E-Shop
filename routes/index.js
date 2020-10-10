@@ -175,12 +175,11 @@ router.get('/auth/facebook/callback',
   	passport.authenticate('facebook', { failureRedirect: '/login' }),
 	  	function(req, res) {
 	  		const token = signToken(req.user);
+	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
 	    		// expires: new Date(Date.now() + 10),
 	      		httpOnly: true
 	    	});
-	    	console.log(req.cookies);
-	    	req.session.user = req.user;
 	    	res.redirect('/');
 	  	}
 );
@@ -195,10 +194,10 @@ router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	  	function(req, res) {
 	  		const token = signToken(req.user);
+	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
 	      		httpOnly: true
 	    	});
-	    	req.session.user = req.user;
 	    	res.redirect('/');
 	  	}
 );
