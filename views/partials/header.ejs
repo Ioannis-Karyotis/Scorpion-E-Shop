@@ -120,7 +120,7 @@
 												<%prd.variants.forEach(function(item){ %>
 												 <!-- <div class="dropdown-item"> -->
 												<% var id = prd.product._id%> 	
-													<div id="<%=id%>,<%=item.size%>,<%=item.color%>" class="row mx-auto my-2 jumbotron-mini">
+													<div id="item-<%=id%>,<%=item.size%>,<%=item.color%>" class="row mx-auto my-2 jumbotron-mini">
 														<div class="col-4 align-center" > <!--picture -->
 															<div>
 															 	<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">

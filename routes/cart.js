@@ -18,7 +18,7 @@ router.get("/cart",middleware.validateCart, middleware.validateCartVariants, exp
 
 
 router.post("/cart/update", function(req, res){
-  console.log(JSON.stringify(req.body));
+  console.log("body is : "+ JSON.stringify(req.body));
   let cart = new Cart(req.session.cart);
   let id = req.body.id;
   let qty = parseInt(req.body.qty);

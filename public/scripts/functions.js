@@ -22,8 +22,6 @@ function qtyUpdate(){
 	var id = event.target.parentNode.querySelector('input[type=number]').id;
 	var values = id.split(",");
 	var qty = document.getElementById(id).value;
-	console.log(qty);
-	console.log(id);
   if(qty <= 0){
     //reset the value to 1
     qty = 1;
@@ -102,7 +100,7 @@ function quickRemoveProduct(event){
 			if(data.totalQuantity == 0){
 				window.location.reload();
 			}else{
-				document.getElementById(data.id[0] + "," + data.id[1] + "," + data.id[2]).style.display = "none";
+				document.getElementById("item-" + data.id[0] + "," + data.id[1] + "," + data.id[2]).style.display = "none";
 				document.getElementById('cart-glyphicon').innerHTML = " " + data.totalQuantity;
 				document.getElementById("quick_total").innerHTML = data.totalPrice + "€";
 				document.getElementById("quick_total_qty").innerHTML =
