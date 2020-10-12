@@ -51,7 +51,6 @@ app.use (function (req, res, next) {
 	}
 });
 
-
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(bodyParser.json({
@@ -118,7 +117,6 @@ app.use(function(req, res, next){
 	next();
 });
 
-
 app.use(indexRoutes);
 app.use(userRoutes);
 app.use(productRoutes);
@@ -141,5 +139,15 @@ app.get('/Terms_Of_Service' ,function(req, res){
 	res.render('Terms_Of_Service');
 })
 
+// Handle 404
+app.use(function(req, res) {
+ 	res.status(400);
+	res.render('404.ejs', {title: '404: File Not Found'});
+});
 
+// Handle 500
+app.use(function(error, req, res, next) {
+  	res.status(500);
+	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+});
 module.exports = app;

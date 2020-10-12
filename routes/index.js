@@ -11,7 +11,9 @@ const express 			 = require("express"),
 	  middleware  		 = require("../middleware/index.js"),
 	  bodyParser 		 = require("body-parser"),
 	  dotenv 			 = require('dotenv'),
-	  sanitization		 = require('express-autosanitizer');
+	  sanitization		 = require('express-autosanitizer'),
+	  bouncer 			 = require ("express-bouncer")(900000, 900000, 10);
+
 
 const signToken = function(user) {
   return JWT.sign({
@@ -38,6 +40,13 @@ function trimBody(inside){
   });
   return inside;
 }
+
+bouncer.blocked = function (req, res, next, remaining)
+{
+	res.status(429);
+	res.render('429.ejs', {title:'Too many requests'});
+};
+
 dotenv.config();
 
 router.use(function(req, res, next) {
@@ -110,7 +119,7 @@ router.get("/login",middleware.user ,function(req,res){
 });
 
 
-router.post('/login',sanitization.route, passport.authenticate('local', { failWithError: true }),
+router.post('/login', bouncer.block, sanitization.route, passport.authenticate('local', { failWithError: true }),
 	function(req, res, next) {
 		// handle success
 		if(req.user.local.priviledge == "Admin"){
@@ -128,6 +137,7 @@ router.post('/login',sanitization.route, passport.authenticate('local', { failWi
 	  		maxAge: 2* 60 * 60 * 1000
 
 		});
+		bouncer.reset(req);
 		req.flash("genSuccess","You Successfully Logged In");
 		req.session.user = req.user;
 		return res.redirect("/user");

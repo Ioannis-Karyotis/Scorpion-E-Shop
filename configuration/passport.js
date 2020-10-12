@@ -229,7 +229,6 @@ passport.use('local', new LocalStrategy({
     Admin.findOne({"local.email" : email}, function(err,admin){
       if(!admin || !admin.validatePassword(password)){
         User.findOne({ "local.email" : email }, function(err,user){
-          console.log(user);
           if(!user || !user.validatePassword(password)) {
             user={};
             return done(null, false);
