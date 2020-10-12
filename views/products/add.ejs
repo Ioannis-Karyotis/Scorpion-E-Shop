@@ -1,70 +1,67 @@
 <%- include("./../partials/header")%>
-
 <div id="main" class="main container mb-5">
-    <div class="row d-flex justify-content-around my-4">
-	    <form name="Form" action="/products/<%=type%>/add" class="col-lg-6" method="post" enctype="multipart/form-data">
-	        <div class="desc py-5">
+	<div class="row d-flex justify-content-around my-4">
+		<form name="Form" action="/products/<%=type%>/add" class="col-lg-6" method="post" enctype="multipart/form-data">
+			<div class="desc py-5">
 				<h1 class="pb-5">Εισαγωγή προϊόντος</h1>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<input type="text" name="name" class="form-control  mr-3" placeholder="Όνομα προϊόντος" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το όνομα το προϊόντος</div>
-	                	</i>
-	                </span>
-	            </div>
-	            <div class="form-group pl-2">
-	            	<span class="d-flex align-items-center">
-	                	<input type="number" name="price" class="form-control  mr-3" placeholder="Τιμή" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Στο πεδίο αυτό , ορίζετε την τιμή του προϊόντος σε Ευρώ €</div>
-	                	</i>
-	                </span>
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<textarea name="description" class="form-control mr-4" placeholder="Περιγραφή" required></textarea>
-	                	<i class="fas fa-info-circle fa-lg mr-2 pr-1">
-	                		<div class="tooltiptext">Ορίστε την περιγραφη του προϊόντος</div>
-	                	</i>
-	                </span>
-	            </div>
-	            <div class="form-group pl-2">
-	                <span class="d-flex align-items-center">
-	                	<input type="text" name="color" class="form-control  mr-3" placeholder="Όνομα Χρώματος" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το όνομα του χρώματος</div>
-	                	</i>
-	                </span>
-	            </div>
-	            <div class="form-group pl-2">
-	            	<span class="d-flex align-items-center">
-	                	<input type="text" name="colorHex" class="form-control  mr-3" placeholder="Hexadecimal Value" required>
-	                	<i class="fas fa-info-circle fa-lg ">
-	                		<div class="tooltiptext">Ορίστε τη 16δική τιμή του χρώματος</div>
-	                	</i>
-	                </span>
-	            </div>
-            	<div class="form-group px-2">
-				    <div>
-				        <label>Select multiple images:</label>
-				        <input type="file" name="profile_pic" multiple required/>
-				    </div>
-	            </div>
-	            <div class="form-group">
-	                <button id="AddPrd" class="btn btn-primary" type="submit">Υποβολη</button>
-	            </div>
-	        </div>
+				<div class="form-group pl-2">
+					<span class="d-flex align-items-center">
+						<input type="text" name="name" class="form-control  mr-3" placeholder="Όνομα προϊόντος" required>
+						<i class="fas fa-info-circle fa-lg ">
+						<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το όνομα το προϊόντος</div>
+						</i>
+					</span>
+				</div>
+				<div class="form-group pl-2">
+					<span class="d-flex align-items-center">
+						<input type="number" name="price" class="form-control  mr-3" placeholder="Τιμή" required>
+						<i class="fas fa-info-circle fa-lg ">
+						<div class="tooltiptext">Στο πεδίο αυτό , ορίζετε την τιμή του προϊόντος σε Ευρώ €</div>
+						</i>
+					</span>
+				</div>
+				<div class="form-group pl-2">
+					<span class="d-flex align-items-center">
+						<textarea name="description" class="form-control mr-4" placeholder="Περιγραφή" required></textarea>
+						<i class="fas fa-info-circle fa-lg mr-2 pr-1">
+						<div class="tooltiptext">Ορίστε την περιγραφη του προϊόντος</div>
+						</i>
+					</span>
+				</div>
+				<div class="form-group pl-2">
+					<span class="d-flex align-items-center">
+						<input type="text" name="color" class="form-control  mr-3" placeholder="Όνομα Χρώματος" required>
+						<i class="fas fa-info-circle fa-lg ">
+						<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το όνομα του χρώματος</div>
+						</i>
+					</span>
+				</div>
+				<div class="form-group pl-2">
+					<span class="d-flex align-items-center">
+						<input type="text" name="colorHex" class="form-control  mr-3" placeholder="Hexadecimal Value" required>
+						<i class="fas fa-info-circle fa-lg ">
+						<div class="tooltiptext">Ορίστε τη 16δική τιμή του χρώματος</div>
+						</i>
+					</span>
+				</div>
+				<div class="form-group px-2">
+					<div>
+						<label>Select multiple images:</label>
+						<input type="file" name="profile_pic" multiple required/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button id="AddPrd" class="btn btn-primary" type="submit">Υποβολη</button>
+				</div>
+			</div>
 		</form>
 		<% if(genError && genError.length > 0){ %>
-	      <div id="error" class="container desc alert alert-danger mb-4" role="alert">
-	          <%= genError %>
-	      </div>
-	    <%}%>
+		<div id="error" class="container desc alert alert-danger mb-4" role="alert">
+			<%= genError %>
+		</div>
+		<%}%>
 	</div>
 </div>
-
 <%- include("./../partials/footer")%>
-
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript" src="/scripts/products.js"></script>

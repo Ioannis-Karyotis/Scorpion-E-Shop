@@ -1,10 +1,36 @@
 $(document).ready(function() {
-  // Gets the span width of the filled-ratings span
-  // this will be the same for each rating
-  var star_rating_width = $('.fill-ratings span').width();
-  // Sets the container of the ratings to span width
-  // thus the percentages in mobile will never be wrong
-  $('.star-ratings').width(star_rating_width);
+	// Gets the span width of the filled-ratings span
+	// this will be the same for each rating
+	var star_rating_width = $('.fill-ratings span').width();
+	// Sets the container of the ratings to span width
+	// thus the percentages in mobile will never be wrong
+	$('.star-ratings').width(star_rating_width);
+
+	// Carousel
+
+	$(".carousel").carousel({
+	    interval: false,
+	    pause: true
+	});
+
+	$( ".carousel .carousel-inner" ).swipe( {
+	swipeLeft: function ( event, direction, distance, duration, fingerCount ) {
+	    this.parent( ).carousel( 'next' );
+	},
+	swipeRight: function ( ) {
+	    this.parent( ).carousel( 'prev' );
+	},
+	threshold: 0,
+	tap: function(event, target) {
+	    window.location = $(this).find('.carousel-item.active img').attr('src');
+	},
+	excludedElements:"label, button, input, select, textarea, .noSwipe"
+	} );
+
+	$('.carousel .carousel-inner').on('dragstart', 'img', function () {
+	    return false;
+	});  
+
 
 });
 
@@ -15,6 +41,8 @@ var checkPassword = function(){
     x.type = "password";
   }
 }
+
+
 
 function qtyUpdate(){
 	let http = new XMLHttpRequest();
