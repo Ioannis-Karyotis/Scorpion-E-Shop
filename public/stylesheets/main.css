@@ -463,6 +463,33 @@ hr.normal{
   height: 50px;
   background-color: black;
 }
+.carousel-control-next
+{
+    position: absolute;
+    top:45%;
+    right: 10px;
+    border-radius: 25px;
+    width : 10px;
+    height: 50px;
+    background-color: black;
+  }
+
+.carousel-control-prev
+  {
+    position: absolute;
+    top:45%;
+    left:10px;
+    border-radius: 25px;
+    width : 10px;
+    height: 50px;
+    background-color: black;
+  }
+
+.carousel-inner>.carousel-item {
+    -webkit-transition: -webkit-transform 0.3s ease-in-out !important;
+    -o-transition: -o-transform 0.3s ease-in-out !important;
+    transition: transform 0.3s ease-in-out !important;
+}
 
 .ninety{
   width:90%;
