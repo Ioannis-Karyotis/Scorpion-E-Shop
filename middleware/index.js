@@ -118,6 +118,7 @@ middlewareObj.namesur = function (req , res ,  next){
             city :req.autosan.body.city,
             zip : req.autosan.body.zip,
             state : req.autosan.body.state,
+            method : req.autosan.body.method,
             error: {type : "regError" , message : "To Επίθετο δεν έχει τη σωστή μορφή" }
           }
         req.flash("regError","Το Επίθετο δεν έχει τη σωστή μορφή");
@@ -133,6 +134,7 @@ middlewareObj.namesur = function (req , res ,  next){
           city : req.autosan.body.city,
           zip : req.autosan.body.zip,
           state : req.autosan.body.state,
+          method : req.autosan.body.method,
           error: {type : "regError" , message : "To Όνομα δεν έχει τη σωστή μορφή" }
         }
       req.flash("regError","Το Όνομα δεν έχει τη σωστή μορφή");
@@ -186,6 +188,7 @@ middlewareObj.email = function (req , res ,  next){
           city : req.autosan.body.city,
           zip : req.autosan.body.zip,
           state : req.autosan.body.state,
+          method : req.autosan.body.method,
           error: {type : "regError" , message : "To e-mail δεν έχει τη σωστή μορφή" }
       }
   		req.flash("regError","To e-mail δεν έχει τη σωστή μορφή");
@@ -294,6 +297,7 @@ middlewareObj.address = function (req , res ,  next){
           surname : req.autosan.body.surname,
           email : req.autosan.body.email,
           phone: req.autosan.body.phone,
+          method : req.autosan.body.method,
           error: {type : "regError" , message : "Η Διεύθυνση σας είναι ελλιπής" }
       }
       req.flash("regError","Η Διεύθυνση σας είναι ελλιπής");
