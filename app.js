@@ -37,7 +37,7 @@ const indexRoutes 	 = require("./routes/index"),
 dotenv.config();
 
 
-app.use (function (req, res, next) {
+/*app.use (function (req, res, next) {
 	if(process.env.ENV == "production") {
 	    if (req.secure) {
 	            // request was via https, so do no special handling
@@ -49,7 +49,7 @@ app.use (function (req, res, next) {
 	}else{
 		next();
 	}
-});
+});*/
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 

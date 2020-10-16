@@ -61,7 +61,7 @@ if(process.env.ENV == "production") {
       const httpServer = http.createServer(app);
       //const httpsServer = https.createServer(credentials, app);
 
-      httpServer.listen(process.env.PORT, () => {
+      httpServer.listen(process.env.PORT, 'localhost', () => {
             console.log('HTTP Server running on port 8080');
       });
 
