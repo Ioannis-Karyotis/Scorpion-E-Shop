@@ -101,6 +101,7 @@ function readURL(input) {
 
         reader.onload = function (e) {
             $('#blah').attr('src', e.target.result);
+            $('.imgbutton').removeClass("hidden");
         }
         reader.readAsDataURL(input.files[0]);
     }
