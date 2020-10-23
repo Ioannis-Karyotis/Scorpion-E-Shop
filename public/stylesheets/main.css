@@ -1057,7 +1057,7 @@ hr.normal{
   position: fixed; /* Stay in place */
   z-index: 10 !important; /* Sit on top */
   padding-top: 40px; /* Location of the box */
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -1074,16 +1074,16 @@ hr.normal{
 .modal::-webkit-scrollbar {
   display: none;
 }
-
+/*
 .modal-content {
   border-radius: 0px;
   background-color: #fefefe;
   margin: auto;
-  width: 60em;
-  height: 30em;
+  width: 80%;
+  height: 80%;
 }
 
-
+*/
 .animate {
     -webkit-animation: animatezoom 0.3s;
     animation: animatezoom 0.3s
@@ -1260,12 +1260,12 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60em;
-    height: 40em;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    height: 40em;
-    width: 25em;
+    height: 100%;
+    width: 100%;
   }
   .card img{
     width:100%;
@@ -1291,12 +1291,12 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60em;
-    height: 40em;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    width: 25em;
-    height: 40em;
+    height: 100%;
+    width: 100%;
   }
   .card img{
     width:100%;
@@ -1323,20 +1323,23 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60em;
-    height: 40em;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    width: 25em;
-    height: 40em;
+    height: 100%;
+    width: 100%;
   }
   .card img{
     width:100%;
     height:100%;
   }
   .card{
-    width:70%;
-    height:70%;
+    width:80%;
+    height:80%;
+  }
+  .card .btn{
+    font-size: 12px;
   }
 }
 
@@ -1347,20 +1350,23 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60em;
-    height: 40em;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    width: 25em;
-    height: 40em;
+    height: 100%;
+    width: 100%;
   }
   .card img{
     width:100%;
     height:100%;
   }
   .card{
-    width:70%;
-    height:70%;
+    width:80%;
+    height:80%;
+  }
+  .card .btn{
+    font-size: 14px;
   }
 }
 
@@ -1370,49 +1376,25 @@ hr.normal{
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
-    /* border: 2px solid #888; */
-    width: 100%;
-    height: 40em;
-     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    width: 60em;
+    height: auto;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    width: 25em;
-    height: 40em;
+    height: 70%;
+    width: 70%;
   }
   .card img{
     width:100%;
     height:100%;
   }
   .card{
-    width:70%;
-    height:70%;
+    width:80%;
+    height:80%;
   }
 }
 
-@media screen and (max-width:1140px){
-  .modal-content {
-    border-radius: 0px;
-    overflow: hidden;
-    background-color: #fefefe;
-    margin: auto;
-    /* border: 2px solid #888; */
-    width: 100%;
-    height: 40em;
-     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
-  }
-  .modal-carousel img{
-    width: 25em;
-    height: 40em;
-  }
-  .card img{
-    width:100%;
-    height:100%;
-  }
-  .card{
-    width:70%;
-    height:70%;
-  }
-}
+
 
 @media screen and (max-width:992px){
   /*change*/
@@ -1424,22 +1406,21 @@ hr.normal{
     overflow: hidden;
     background-color: #fefefe;
     margin: auto;
-    /* border: 2px solid #888; */
-    width: 100%;
-    height: 35em;
-     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    width: 90%;
+    height: auto;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
-    width: 20em;
-    height: 35em;
+    height: 60%;
+    width: 70%;
   }
   .card img{
     width:100%;
     height:100%;
   }
   .card{
-    width:70%;
-    height:70%;
+    width:80%;
+    height:80%;
   }
   .showIMG{
     margin-left:0em;
@@ -1453,8 +1434,8 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 62em;
-     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    height: auto;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
     width: 60%;
@@ -1483,8 +1464,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 60em;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1511,8 +1491,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 58rem;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1539,8 +1518,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 60%;
-    height: 57rem;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1568,8 +1546,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 70%;
-    height: 60rem;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1598,8 +1575,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 70%;
-    height: 57rem;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1623,8 +1599,7 @@ hr.normal{
     margin: auto;
     /* border: 2px solid #888; */
     width: 80%;
-    height: 60rem;
-
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   }
   .modal-carousel img{
@@ -1651,7 +1626,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 57rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1677,7 +1652,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 55rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1704,7 +1679,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 50rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1732,7 +1707,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 47rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1759,7 +1734,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 45rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1787,7 +1762,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 42rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
@@ -1814,7 +1789,7 @@ hr.normal{
     background-color: #fefefe;
     margin: auto;
     width: 80%;
-    height: 45rem;
+    height: auto;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
   }
   .modal-carousel img{
