@@ -7,8 +7,11 @@ function removeLoader(){
       // fadeOut complete. Remove the loading div
       $( "#loadingDiv" ).remove(); //makes page more lightweight
       var element = document.getElementById("page-container");
+      var footer  = document.getElementById("page-footer");
   	  element.classList.remove("loading-container");
+  	  footer.classList.remove("hidden");
   	  element.classList.add("after-loading-container"); 
+
   });  
 }
 
