@@ -1,11 +1,14 @@
-$('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+$('#page-container').append('<div class="d-flex justify-content-center align-items-center" id="loadingDiv"><div class="circle-loader"><div class="checkmark draw"></div><div class="status draw"></div></div></div>');
 $(window).on('load', function(){
-  setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+  setTimeout(removeLoader, 100); //wait for page load PLUS two seconds.
 });
 function removeLoader(){
     $( "#loadingDiv" ).fadeOut(500, function() {
       // fadeOut complete. Remove the loading div
-      $( "#loadingDiv" ).remove(); //makes page more lightweight 
+      $( "#loadingDiv" ).remove(); //makes page more lightweight
+      var element = document.getElementById("page-container");
+  	  element.classList.remove("loading-container");
+  	  element.classList.add("after-loading-container"); 
   });  
 }
 
