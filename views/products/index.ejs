@@ -119,6 +119,7 @@
                     </div>
                     <% }) %>
                   </div>
+                  <% if(product.images.length > 1){ %>
                   <a class="carousel-control-prev" href="#carouselExampleControls_<%= product._id %>" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -127,6 +128,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                   </a>
+                  <% }%>
                 </div>
               </div>
               <div class="col-md-5 mt-md-5 pr-md-5 mb-sm-2 pb-sm-2 py-auto my-auto mx-auto modal-desc">
