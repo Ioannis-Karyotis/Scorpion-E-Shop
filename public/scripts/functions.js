@@ -1,6 +1,6 @@
 $('#page-container').append('<div class="d-flex justify-content-center align-items-center" id="loadingDiv"><div class="circle-loader"><div class="checkmark draw"></div><div class="status draw"></div></div></div>');
 $(window).on('load', function(){
-  setTimeout(removeLoader, 100); //wait for page load PLUS two seconds.
+  removeLoader();
 });
 function removeLoader(){
     $( "#loadingDiv" ).fadeOut(500, function() {
