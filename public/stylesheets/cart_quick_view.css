@@ -7,7 +7,7 @@
   z-index: 7!important;
 }
 .quick-cart-container{
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
   overflow: auto; 
@@ -18,7 +18,7 @@
 }
 .quick-cart-fonts{
   background-color: white;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
   padding: 0.5rem;
@@ -65,7 +65,7 @@
     }
   .total-quantity-info{
     background:#F8F9FA;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     font-size: 0.75rem;
   }
@@ -90,7 +90,7 @@
     }
     .total-quantity-info{
       background:#F8F9FA;
-      font-family: sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 600;
       font-size: 0.75rem;
     }

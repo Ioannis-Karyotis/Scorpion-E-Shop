@@ -151,9 +151,10 @@ router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jw
 	})
 });
 
-router.delete("/admin/deleteOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	req.autosan.body = trimBody(req.autosan.body);
-	Order.remove({ _id: req.autosan.body._id }, function(err) {
+router.post("/admin/deleteOrder/:id",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+	//req.autosan.body = trimBody(req.autosan.body);
+	//console.log(req.autosan.body);
+	Order.deleteOne({ _id: req.params.id }, function(err) {
 	    if (err) {
 	        console.log(err.message);
 	    }

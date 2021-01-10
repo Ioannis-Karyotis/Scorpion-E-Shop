@@ -58,18 +58,17 @@ var completeOrder = function(order){
 
 
 var deleteOrder = function(order){
-    var txt;
+  var txt;
   var r = confirm("Are you sure");
   if (r == true) {
-      fetch("/admin/deleteOrder", {
-          method: "DELETE",
-          headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(order)
-      })
-      .then(function() {   
-        window.location.reload();
+    fetch("/admin/deleteOrder/" + order._id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
+    .then(function() {   
+      window.location.reload();
+    }) 
   }
 }

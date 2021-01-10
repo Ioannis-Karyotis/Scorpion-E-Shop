@@ -1,17 +1,18 @@
 $('#page-container').append('<div class="d-flex justify-content-center align-items-center" id="loadingDiv"><div class="circle-loader"><div class="checkmark draw"></div><div class="status draw"></div></div></div>');
 $(window).on('load', function(){
-  setTimeout(removeLoader, 1000); //wait for page load PLUS two seconds.
+  setTimeout(removeLoader, 0); //wait for page load PLUS two seconds.
 });
 function removeLoader(){
-    $( "#loadingDiv" ).fadeOut(500, function() {
-      // fadeOut complete. Remove the loading div
-      $( "#loadingDiv" ).remove(); //makes page more lightweight
-      var element = document.getElementById("page-container");
-      var footer  = document.getElementById("page-footer");
-  	  element.classList.remove("loading-container");
-  	  footer.classList.remove("hidden");
-  	  element.classList.add("after-loading-container"); 
-
+    $( "#loadingDiv" ).fadeOut(800, function() {
+		// fadeOut complete. Remove the loading div
+		$( "#loadingDiv" ).remove(); //makes page more lightweight
+		var element = document.getElementById("page-container");
+		var footer  = document.getElementById("page-footer");
+		var wholepage = document.getElementsByTagName('html');
+		wholepage[0].classList.remove("NotScrollable");
+		element.classList.remove("loading-container");
+		footer.classList.remove("hidden");
+		element.classList.add("after-loading-container");
   });  
 }
 

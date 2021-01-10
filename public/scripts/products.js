@@ -10,23 +10,23 @@ var deleteProduct = function(id,type){
    	var txt;
 	var r = confirm("Are you sure");
 	if (r == true) {
-  		fetch("/products/"+ type +"/"+ id+ "/delete", {
-          headers: {
-              "Content-Type": "application/json"
-          },
-          method: "DELETE"  
-         })
-        .then(function(result) {   
-	        return result.json();
-        }).then(function(data){
-          if (data.error) {
-             $('#error').removeClass("hidden");
-             $('#error').text(data.error);
-             setTimeout(function(){  $('#error').addClass("hidden"); }, 3000);
-          }else{
-            window.location.reload();
-          }
-        }); 
+    fetch("/products/"+ type +"/"+ id+ "/delete", {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "DELETE"  
+        })
+      .then(function(result) {   
+        return result.json();
+      }).then(function(data){
+        if (data.error) {
+            $('#error').removeClass("hidden");
+            $('#error').text(data.error);
+            setTimeout(function(){  $('#error').addClass("hidden"); }, 3000);
+        }else{
+          window.location.reload();
+        }
+      }); 
 	}
 }
 

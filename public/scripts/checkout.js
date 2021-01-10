@@ -41,7 +41,7 @@ var buttonSelect = function(type){ //Change the input form shape regarding the p
 
 }
 
-  
+
 var form = document.getElementById("payment-form");
 form.addEventListener("submit", function(event) { //Trigger the following event when the form button is pressed
   event.preventDefault();  // prevent the default form submit event ,which is redirecting the page
@@ -282,6 +282,9 @@ var pay =async function(stripe, card, clientSecret) {
           document.querySelector(".result3").classList.remove("hidden");
           document.getElementById("errormsg").innerHTML = result.error.message;
           statusChange('failed');
+          fetch("/delete_cookie", {
+            method: "GET"
+          })
         }
       } else {
 
@@ -365,4 +368,9 @@ var showError = function(errorMsgText) {
   setTimeout(function() {
     errorMsg.textContent = "";
   }, 4000);
+};
+
+var quitModal = function() {
+  document.getElementById('StripeModal').style.display='none';
+  window.location.reload();
 };

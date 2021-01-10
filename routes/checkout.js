@@ -26,7 +26,7 @@ router.post("/check_cart",middleware.validateCartOrderComplete, middleware.valid
   res.send({result : "succeeded"});
 }) 
 
-router.post("/post_order",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
+router.post("/post_order",sanitization.route, async function(req,res){
 
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
@@ -89,7 +89,7 @@ router.post("/post_order",middleware.validateCartOrderComplete, middleware.valid
   res.send({result : "succeeded"});
 })
 
-router.post("/post_order_sent",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route,async function(req,res){
+router.post("/post_order_sent", sanitization.route,async function(req,res){
   var method = "";
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
@@ -193,30 +193,31 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
       }
       await Untracked.create(trackPaymentIntent);
 
-    }else if(req.cookies["stripe-gate"] != undefined && untracked == 0){
+    // }else if(req.cookies["stripe-gate"] != undefined && untracked == 0){
       
-      console.log("Got into new case");
+    //   console.log("Got into new case");
 
-      var date = new Date();
-      date.setTime(date.getTime() + (600 * 1000));
+    //   var date = new Date();
+    //   date.setTime(date.getTime() + (600 * 1000));
 
-      paymentIntent = await stripesk.paymentIntents.create({
-        amount: total,
-        currency: currency
-      });
+    //   paymentIntent = await stripesk.paymentIntents.create({
+    //     amount: total,
+    //     currency: currency
+    //   });
 
-      res.cookie('stripe-gate', objEncDec.encrypt(paymentIntent) , {
-        expires: date,
-        httpOnly: true,
-        overwrite: true
-      });
+    //   res.cookie('stripe-gate', objEncDec.encrypt(paymentIntent) , {
+    //     expires: date,
+    //     httpOnly: true,
+    //     overwrite: true
+    //   });
       
-      var trackPaymentIntent = {
-        paymentIntentId : paymentIntent.id,
-        date : date
-      }
-      await Untracked.create(trackPaymentIntent);
+    //   var trackPaymentIntent = {
+    //     paymentIntentId : paymentIntent.id,
+    //     date : date
+    //   }
+    //   await Untracked.create(trackPaymentIntent);
 
+    // 
     }else if(req.cookies["stripe-gate"] && objEncDec.decrypt(req.cookies["stripe-gate"]).amount != total){
       console.log("Got old2 new case");
       paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
@@ -288,6 +289,13 @@ router.post("/webhook", async (req, res) => {
     res.sendStatus(200);
   // })
   // .catch(function(err) { console.log(err.message); }); 
+});
+
+router.get('/delete_cookie', function (req, res){
+
+  res.clearCookie('stripe-gate');
+  res.clearCookie('token');
+  return res.status(200).redirect('/checkout');
 });
 
 

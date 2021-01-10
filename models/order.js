@@ -24,6 +24,7 @@ var OrderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
       },
+      code: String,
       quantity: Number,
       size : String,
       color : String,

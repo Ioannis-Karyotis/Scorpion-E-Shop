@@ -133,6 +133,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.price =  req.body.price;
 		newProduct.description =  req.body.description;
 		newProduct.colors =  {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex};
+		newProduct.code =  req.body.code;
 		console.log(newProduct);
 		if (req.fileValidationError) {
         return res.send(req.fileValidationError);

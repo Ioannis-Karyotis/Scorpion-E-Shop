@@ -57,6 +57,7 @@ if(process.env.ENV != "production") {
             name: "Example 1",
             type: "isothermika" ,
             price: 15,
+            code : 1000,
             images: [
                 {
                     url: process.env.ROOT + "/images/tshirt/example2.jpg",
@@ -79,6 +80,7 @@ if(process.env.ENV != "production") {
             name: "Example 2",
             type: "isothermika" ,
             price: 10,
+            code : 1001,
             images: [
                 {
                     url:  process.env.ROOT + "/images/tshirt/example2.jpg",
@@ -100,6 +102,7 @@ if(process.env.ENV != "production") {
             name: "Example 3",
             type: "isothermika" ,
             price: 20,
+            code : 1002,
             images: [
                 {
                     url:  process.env.ROOT + "/images/tshirt/example2.jpg",

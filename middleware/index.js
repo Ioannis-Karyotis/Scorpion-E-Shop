@@ -440,9 +440,14 @@ middlewareObj.validateCartVariantsOrderComplete = async function (req , res ,  n
   var products = cart.products;
   var product_ids = await Object.keys(products);
   var notExist = [];
+
+  console.log("//////////")
+  console.log(products);
+
+
   for(i=0; i<product_ids.length; i++){
-    
     var err,product = await Product.findById(product_ids[i]);
+    console.log( products[product_ids[i]]);
     products[product_ids[i]].variants.forEach(function(item){
       var lol = false;
       lol = existCase(item, product);

@@ -31,8 +31,8 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+  /* --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
 }
 
 *,
@@ -42,12 +42,16 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth;
   overflow-x:hidden;
+}
+
+.NotScrollable{
+  position: fixed; overflow-y:scroll ; width: 100%;
 }
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
@@ -160,7 +164,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: 'Roboto', sans-serif;
   font-size: 1em;
 }
 
@@ -371,7 +375,7 @@ h6, .h6 {
 
 body {
   margin: 0;
-  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -607,15 +611,15 @@ hr.normal{
 
 .navbar{
   background-color: white;
-  font-family: sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 #header-container{
-    font-family: sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .nav-link span{
@@ -736,6 +740,7 @@ hr.normal{
   width:3.8em;
   height:3.8em;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 @media screen and (max-width:960px){
@@ -1836,7 +1841,7 @@ hr.normal{
 .page-footer{
   z-index: 0;
   background-color: #2D2B30;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 0.7rem;
   color: white;
@@ -1857,7 +1862,7 @@ hr.normal{
 
   .page-footer{
     background-color: #2D2B30;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 0.7rem;
     color: white;
@@ -1880,7 +1885,7 @@ hr.normal{
 
   .page-footer{
     background-color: #2D2B30;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 0.7rem;
     color: white;
@@ -2152,6 +2157,7 @@ hr.normal{
   .blank-mini {
       display: none;
       margin-left: -2em;
+      object-fit: cover;
    }
    .go-left-second-logged{
     position: absolute;
@@ -2204,6 +2210,7 @@ hr.normal{
    .blank-mini {
       display: none;
       margin-left: -2em;
+      object-fit: cover;
    }
    .go-left-second-logged{
     position: absolute;
