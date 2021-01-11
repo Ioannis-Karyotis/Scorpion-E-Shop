@@ -12,7 +12,7 @@ const express 		= require("express"),
 	  ejs       	= require("ejs"),
 	  smtpTransport = require('nodemailer-smtp-transport'),
 	  transporter 	= nodemailer.createTransport({
-							host: "smtp.gmail.com",
+							host: "smtp.zoho.eu",
 							port: 465,
 							secure: true, // true for 465, false for other ports
 							auth: {
@@ -86,10 +86,10 @@ router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), func
 
 
 router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
-	req.autosan.body = trimBody(req.autosan.body);
 	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
 	    if (err) {
-	        console.log(err);
+			console.log(err);
+			res.status(500).send("Failure Rendering ejs");
 	    } else {
 	        var mainOptions = {
 		  	from: String(config.EMAIL),
@@ -100,16 +100,18 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 			};
 			transporter.sendMail(mainOptions, function(error, info){
 			  	if (error) {
-			    	console.log(error);
+					console.log(error);
+					res.status(500).send("Failure");
 			  	} else {
 			    	console.log('Email sent: ' + info.response);
 			    	Order.findById(req.autosan.body.order._id,function(err, foundOrder){
 						if(err){
 							console.log(err);
+							res.status(500).send("Failure");
 						} else {
 							foundOrder.confirm = true;
 							foundOrder.save();
-				    		res.redirect("/admin");
+				    		res.status(200).send("Success");
 				    	}
 				    })		
 			  	}
@@ -119,7 +121,6 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 });
 
 router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	req.autosan.body = trimBody(req.autosan.body);
 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
 	    if (err) {
 	        console.log(err);

@@ -33,47 +33,47 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
-router.get("/custom", function(req,res){
-  res.render("custom");
-});
+// router.get("/custom", function(req,res){
+//   res.render("custom");
+// });
 
-router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter }).single('image'), function(req, res, next){
+// router.post("/custom/new", multer({ storage: storage, fileFilter: imageFilter }).single('image'), function(req, res, next){
 
-		var newProduct = new Product({
-			name    : "Custom T-Shirt",
-			price : req.body.price,
-      description : "Custom μπλουζάκι με στάμπα",
-			type : "custom",
-      size : req.body.size,
-      color : req.body.color
-		});
+// 		var newProduct = new Product({
+// 			name    : "Custom T-Shirt",
+// 			price : req.body.price,
+//       description : "Custom μπλουζάκι με στάμπα",
+// 			type : "custom",
+//       size : req.body.size,
+//       color : req.body.color
+// 		});
 
-    if (req.fileValidationError) {
-        return res.send(req.fileValidationError);
-    }else if (!req.file) {
-      return res.send('Please select an image to upload');
-    }
-    console.log(req.file.path);
-      var str = req.file.path;
-			var str2 = str.replace("public", "");
-  		var final = str2.replace(/\\/g,"/");
-  		image={url : process.env.ROOT + final };
-			newProduct.images.push(image);
+//     if (req.fileValidationError) {
+//         return res.send(req.fileValidationError);
+//     }else if (!req.file) {
+//       return res.send('Please select an image to upload');
+//     }
+//     console.log(req.file.path);
+//       var str = req.file.path;
+// 			var str2 = str.replace("public", "");
+//   		var final = str2.replace(/\\/g,"/");
+//   		image={url : process.env.ROOT + final };
+// 			newProduct.images.push(image);
 
 
-		newProduct.save(function(err){
-			if(err){
-				console.log(err.message);
-			}
+// 		newProduct.save(function(err){
+// 			if(err){
+// 				console.log(err.message);
+// 			}
 
-      //add it to the cart
-      var cart = new Cart(req.session.cart ? req.session.cart : {});
-      cart.add(newProduct, 1);
-      req.session.cart = cart;
-      req.session.productList = cart.productList();
+//       //add it to the cart
+//       var cart = new Cart(req.session.cart ? req.session.cart : {});
+//       cart.add(newProduct, 1);
+//       req.session.cart = cart;
+//       req.session.productList = cart.productList();
 
-			res.redirect("back");
-		});
-});
+// 			res.redirect("back");
+// 		});
+// });
 
 module.exports = router;

@@ -6,18 +6,16 @@ const express 	    = require("express"),
       sanitization  = require('express-autosanitizer'),
       nodemailer    = require('nodemailer'),
       dotenv        = require('dotenv'),
-      smtpTransport = require('nodemailer-smtp-transport'),
-      transporter = nodemailer.createTransport(smtpTransport
+      transporter = nodemailer.createTransport
         ({
-          host: "smtp.gmail.com",
+          host: "smtp.zoho.eu",
           port: 465,
           secure: true, // true for 465, false for other ports
           auth: {
             user:  String(config.EMAIL),
             pass: String(config.EMAIL_PASSWORD)
           }
-        })
-      );
+        });
 
 router.use(function(req, res, next) {
 res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');

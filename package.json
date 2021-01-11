@@ -42,7 +42,8 @@
     "passport-local-mongoose-email": "^0.1.4",
     "path": "^0.12.7",
     "serve-favicon": "^2.5.0",
-    "stripe": "^8.49.0"
+    "stripe": "^8.49.0",
+    "zoho-node-mailer": "^1.0.6"
   },
   "keywords": [
     "example",

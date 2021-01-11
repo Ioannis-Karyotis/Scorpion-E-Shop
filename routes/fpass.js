@@ -15,7 +15,7 @@ const express 		= require("express"),
 	  dotenv 		= require('dotenv'),
 	  smtpTransport = require('nodemailer-smtp-transport'),
 	  transporter 	= nodemailer.createTransport({
-							host: "smtp.gmail.com",
+							host: "smtp.zoho.eu",
 							port: 465,
 							secure: true, // true for 465, false for other ports
 							auth: {
@@ -90,7 +90,6 @@ router.get("/fpass",middleware.user ,function(req,res){
 
 
 router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExistsLocal, middleware.sameEmail, async function(req, res, next) {
-	req.autosan.body = trimBody(req.autosan.body);
 	var email = req.autosan.body.email
 
 	var user = await User.findOne({ "local.email": email }).exec();
@@ -118,8 +117,9 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
   		httpOnly: true
 	});
 
+	console.log(hashobj);
 
- 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hashobj : hashobj , option: "mail3" ,order :null } , function (err, data) {
+ 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hashobj : hashobj , rootserver:  process.env.ROOT , option: "mail3" ,order :null } , function (err, data) {
 	    if (err) {
 	        console.log(err);
 	    } else {

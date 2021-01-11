@@ -740,7 +740,6 @@ hr.normal{
   width:3.8em;
   height:3.8em;
   border-radius: 50%;
-  object-fit: cover;
 }
 
 @media screen and (max-width:960px){
@@ -2157,7 +2156,6 @@ hr.normal{
   .blank-mini {
       display: none;
       margin-left: -2em;
-      object-fit: cover;
    }
    .go-left-second-logged{
     position: absolute;
@@ -2210,7 +2208,6 @@ hr.normal{
    .blank-mini {
       display: none;
       margin-left: -2em;
-      object-fit: cover;
    }
    .go-left-second-logged{
     position: absolute;
