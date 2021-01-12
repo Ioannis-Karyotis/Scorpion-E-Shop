@@ -26,7 +26,7 @@
               <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex justify-content-center" >
                 <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;" >
                   <%} %>
-                  <div class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
+                  <div id="open<%= product._id %>" class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
                     <img src="<%=product.images[0].url %>" class="card-img-top" alt="" style="border-radius:0px;">
                     <div class="middle">
                       <div class="text">Προβολή</div>
@@ -143,11 +143,17 @@
                   <h4><%=product.price%>€</h4>
                 </div>
               </div>
-              <div class="row mx-1 hide">
-                <div class="col-md-12 mt-3 justify-content-center" align="justify">
+              <div class="row mx-1 hide justify-content-center" align="justify">
+                <div id="desc<%= product._id %>" class="descriptionMini col-md-12 mt-3">
                   <h6><%=product.description%></h6>
                 </div>
               </div>
+              <div class="row mx-1 hide">
+                <div class="col-11 justify-content-start" align="center">
+                  <a style="color:#8AC8B0;" id="more<%= product._id %>" class="hidden" href="/products/<%=product.type %>/<%=product._id%>">Διάβασε περισσότερα</a>
+                </div>
+              </div>
+
               <div class="row align-center d-flex justify-content-center">
                 <form id="form_modal_<%= product._id %>" action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
                   <hr class="thin">

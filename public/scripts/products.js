@@ -6,19 +6,41 @@ $(document).ready(function() {
   var zoomed =  document.getElementById('Zoom');
   $('.zoom').zoom();
 
-  if($('#description').height() <= 50){
-    $('#more').addClass('hidden');
-    $('#description').addClass('without-after-element');
-  }else{
-    $('#description').animate({
-      'height': '50px'
-    })
-    o = "opened";
-    document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
+  if($('#description').height() != undefined){
+    if($('#description').height() <= 50){
+      $('#more').addClass('hidden');
+      $('#description').addClass('without-after-element');
+    }else{
+      $('#description').animate({
+        'height': '50px'
+      })
+      o = "opened";
+      document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
+    }
   }
 });
 
+var o;
 var h =  $('#description').height();
+
+$('.product-img').click(function(e) {
+  e.stopPropagation();
+  var elId = $(this).attr('id');
+  var moreId = elId.replace('open','#more');
+  var descId = elId.replace('open','#desc');
+  var width = $(descId).height();
+  if($(descId).height() < 150){
+    $(moreId).removeClass('hidden');
+    $(moreId).innerHTML = 'Διάβασε περισσότερα';
+  }else{
+    $(descId).animate({
+      'height': '100px'
+    })
+    $(moreId).removeClass('hidden');
+    $(moreId).innerHTML = 'Διάβασε περισσότερα';
+  }
+});
+
 
 $('#more').click(function(e) {
   e.stopPropagation();
