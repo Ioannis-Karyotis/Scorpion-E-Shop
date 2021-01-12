@@ -4,7 +4,7 @@
   "description": "First initialisation of Scorpion e-store",
   "main": "app.js",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
@@ -23,6 +23,7 @@
     "install": "^0.13.0",
     "jquery": "^3.5.0",
     "jquery-touchswipe": "^1.6.19",
+    "jquery-zoom": "^1.7.21",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.7.5",
