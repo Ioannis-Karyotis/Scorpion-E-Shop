@@ -5,7 +5,46 @@ $(document).ready(function() {
   }
   var zoomed =  document.getElementById('Zoom');
   $('.zoom').zoom();
+
+  if($('#description').height() <= 50){
+    $('#more').addClass('hidden');
+    $('#description').addClass('without-after-element');
+  }else{
+    $('#description').animate({
+      'height': '50px'
+    })
+    o = "opened";
+    document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
+  }
 });
+
+var h =  $('#description').height();
+
+$('#more').click(function(e) {
+  e.stopPropagation();
+    if(o == "opened"){
+      $('#description').animate({
+        'height': h
+      })
+      o = "closed";
+      e.stopImmediatePropagation();
+      $('#description').addClass('without-after-element');
+      document.getElementById('more').innerHTML = 'Κλείσιμο';
+    }else{
+      $('#description').animate({
+        'height': '50px'
+      })
+      o = "opened";
+      e.stopImmediatePropagation();
+      $('#description').removeClass('without-after-element');
+      document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
+    }
+   
+});
+
+$(document).click(function() {
+  
+})
 
 var deleteProduct = function(id,type){
    	var txt;

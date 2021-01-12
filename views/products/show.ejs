@@ -67,12 +67,17 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center" align="justify">
-          <div class="col-11 mt-4">
-            <p><%= product.description%></p>
+          <div id="description" class="col-11 mt-4">
+            <%= product.description%>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center" align="left">
+          <div class="col-11 mt-4 description">
+            <span id="more" style="color:#8AC8B0;" href="#">Διάβασε περισσότερα</span>
           </div>
         </div>
         <div class="row d-flex justify-content-center justify-content-sm-end">
-          <div class="col-12 col-lg-4 pt-2" align="center">
+          <div class="col-12 col-lg-4" align="center">
             <h1 style="color:#31a579;font-weight: 200;font-size:60px;"><%=product.price%>€</h3>
           </div>
         </div>

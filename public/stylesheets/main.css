@@ -1266,7 +1266,29 @@ display: block;
 
 .zoom img::selection {
 	 background-color: transparent;
-	  }
+}
+
+#description{
+  height:auto;
+  min-height:10px;
+  overflow:hidden;
+}
+#description:after {
+  content  : "";
+  position : absolute;
+  z-index  : 1;
+  bottom   : 0;
+  left     : 0;
+  pointer-events   : none;
+  background-image : linear-gradient(to bottom, 
+                    rgba(255,255,255, 0), 
+                    rgba(255,255,255, 1) 90%);
+  width    : 100%;
+  height   : 4em;
+}
+#description.without-after-element:after {
+  content: none;
+}
 
 
 .colors ul{list-style:none; padding:0; margin: 0;}
