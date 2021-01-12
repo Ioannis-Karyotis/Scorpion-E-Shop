@@ -14,16 +14,16 @@
   <div id="error" class="container desc alert alert-danger mb-4 hidden" role="alert">
   </div>
   <div  class="container-fluid" >
-    <div class="row products-row d-flex justify-content-around align-items-start">
+    <div class="row products-row d-flex justify-content-md-start justify-content-center align-items-start">
       <% products.forEach(function(product){ %>
       <% if(product.status=="hidden" && admin=="admin"){ %>
-      <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mb-5  d-flex justify-content-center">
+      <div class="col-12 col-sm-16 col-md-6 col-lg-4 col-xl-3 mb-5  d-flex justify-content-center">
         <div class="card opac mb-5" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;" >
           <%}else if(product.status=="hidden" && !admin){%>
           <div>
             <div class="card hidden" style="border-radius:0px;" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;">
               <%}else{%>
-              <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex justify-content-center" >
+              <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-5 d-flex justify-content-center" >
                 <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;" >
                   <%} %>
                   <div class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
