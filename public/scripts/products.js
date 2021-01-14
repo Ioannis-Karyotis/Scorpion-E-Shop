@@ -11,12 +11,12 @@ $(document).ready(function() {
   }
 
   if($('#description').height() != undefined){
-    if($('#description').height() <= 50){
+    if($('#description').height() <= 80){
       $('#more').addClass('hidden');
       $('#description').addClass('without-after-element');
     }else{
       $('#description').animate({
-        'height': '50px'
+        'height': '80px'
       })
       o = "opened";
       document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
@@ -58,7 +58,7 @@ $('#more').click(function(e) {
       document.getElementById('more').innerHTML = 'Κλείσιμο';
     }else{
       $('#description').animate({
-        'height': '50px'
+        'height': '80px'
       })
       o = "opened";
       e.stopImmediatePropagation();

@@ -1276,7 +1276,6 @@ display: block;
 
 #description{
   height:auto;
-  min-height:10px;
   overflow:hidden;
 }
 #description:after {
@@ -1296,9 +1295,8 @@ display: block;
   content: none;
 }
 
-/* .descriptionMini{
+.descriptionMini{
   height:auto;
-  min-height:100px;
   overflow:hidden;
 }
 .descriptionMini:after {
@@ -1316,7 +1314,7 @@ display: block;
 }
 .descriptionMini.without-after-element:after {
   content: none;
-} */
+}
 
 
 .colors ul{list-style:none; padding:0; margin: 0;}
