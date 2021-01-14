@@ -193,6 +193,59 @@
             </div>
           </div>
         </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-6 col-12 pt-3" align="center">
+            <div class="container">
+
+              <button class="btn btn-primary w-100" style="border-radius: 0px;" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                  Μεγεθη
+              </button>
+
+              <div class="collapse show" id="collapseExample2">
+                <div class="card card-body w-100"  style="padding: 0 0;box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);">
+                       
+                  <table class="table table-bordered w-100" style="table-layout:fixed; width:100%;">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>XL</th>
+                        <th>XXL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% product.sizesTable.forEach(row => { %>
+                        <tr>
+                          <% row.forEach(element => { %>
+                            <td><%= element %></td>
+                          <% }); %> 
+                        </tr>
+                      <% }); %> 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-12 pt-3"  align="center">
+            <div class="container">
+
+              <button class="btn btn-primary w-100" style="border-radius: 0px; box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Φροντιδα
+              </button>
+
+              <div class="collapse show" id="collapseExample">
+                <div class="card card-body w-100"  style="padding: 0 0;box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);">
+                  <p align="justify" class="container pt-2">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, rem dicta! Rem natus reiciendis accusamus earum nulla hic aliquam repudiandae ut iusto? Assumenda, suscipit error fugit rerum impedit eaque deleniti vitae aliquam fuga ex non, tempore voluptatibus doloremque unde eveniet a harum totam. Quisquam itaque quas nemo molestiae perspiciatis libero corrupti dignissimos voluptatum odit placeat, accusamus vel molestias magni voluptatibus ad dolore quae alias, recusandae ducimus rem. Dicta, veniam? Ut nisi, minus deleniti nemo, laboriosam illum sapiente vitae quidem pariatur blanditiis dignissimos provident harum suscipit tempore? Maxime nostrum, ea eligendi aperiam assumenda corrupti. Excepturi voluptas quos consectetur vero ullam assumenda?
+                  </p>
+                </div>
+              </div>    
+          </div>
+        </div>
+        </div>
         <hr class="pic thick mx-5 mt-5">
         <div class="pb-5 pt-2 mb-4" style="background-color: white;">
           <div class="row mx-auto my-2 pb-4" style="text-align:center">

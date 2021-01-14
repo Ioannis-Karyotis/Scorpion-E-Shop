@@ -2,28 +2,8 @@ const middlewareObj = {},
       User          = require("../models/user"),
       Cart          = require("../models/cart"),
       Product       = require("../models/product");
-      sizes = [
-              {
-                  size : "S",
-                  sizeStatus: "active",
-              },
-              {
-                  size : "M",
-                  sizeStatus: "active",
-              },
-              {
-                  size : "L",
-                  sizeStatus: "active",
-              },
-              {
-                  size : "XL",
-                  sizeStatus: "active",
-              },
-              {
-                  size : "XXL",
-                  sizeStatus: "active",
-              },
-          ]
+      sizes 		    = require('../configuration/sizes');
+  
 
 function existCase(item, product){
     var colorExist = searchColor(item.color , product.colors);

@@ -6,28 +6,8 @@ var dotenv = require('dotenv');
 
 dotenv.config();
 if(process.env.ENV != "production") {
-    var sizes = [
-                    {
-                        size : "S",
-                        sizeStatus: "active",
-                    },
-                    {
-                        size : "M",
-                        sizeStatus: "active",
-                    },
-                    {
-                        size : "L",
-                        sizeStatus: "active",
-                    },
-                    {
-                        size : "XL",
-                        sizeStatus: "active",
-                    },
-                    {
-                        size : "XXL",
-                        sizeStatus: "active",
-                    },
-                ];
+    sizes = require('./configuration/sizes');
+
 
     var colors =    [
                         {

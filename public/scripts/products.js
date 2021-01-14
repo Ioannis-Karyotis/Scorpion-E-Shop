@@ -4,7 +4,11 @@ $(document).ready(function() {
       elmnt.scrollIntoView();
   }
   var zoomed =  document.getElementById('Zoom');
-  $('.zoom').zoom();
+  if(window.screen.availWidth > 775){
+    $('.zoom').zoom();
+  }else{
+    $('.zoom').addClass('without-after-element');
+  }
 
   if($('#description').height() != undefined){
     if($('#description').height() <= 50){

@@ -11,34 +11,8 @@ const express 		= require("express"),
 	  dotenv 		= require('dotenv'),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
-	  productsNames = {
-		isothermika : 'Ισοθερμικά',
-		parallages : "Παραλλαγές / Φούτερ",
-		tiedye : "Tie Dye",
-		extra : "Έξτρα"
-	  },
-	  sizes = [
-                {
-                    size : "S",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "M",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "L",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "XL",
-                    sizeStatus: "active",
-                },
-                {
-                    size : "XXL",
-                    sizeStatus: "active",
-                },
-            ],
+	  productsNames = require('../configuration/productNames'),
+	  sizes 		=  require('../configuration/sizes');
 
 	  storage = multer.diskStorage({
 	    destination: function(req, file, cb) {
@@ -134,6 +108,11 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.description =  req.body.description;
 		newProduct.colors =  {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex};
 		newProduct.code =  req.body.code;
+		newProduct.kind = req.body.kind;
+
+		sizesSearch = require('../configuration/sizesTables');
+		newProduct.sizesTable = sizesSearch[req.params.type + "_" + newProduct.kind];
+
 		console.log(newProduct);
 		if (req.fileValidationError) {
         return res.send(req.fileValidationError);
@@ -326,6 +305,8 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 
 router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
+	sizesSearch = require('../configuration/sizesTables');
+	req.autosan.body.sizesTable = sizesSearch[req.params.type + "_" + req.autosan.body.kind];
 	Product.update({type: req.params.type, _id : req.params.id}, req.autosan.body, function(err , updateProduct){
 		if(err){
 			console.log("Got to error");

@@ -3,6 +3,8 @@ var mongoose = require("mongoose");
 var ProductSchema = new mongoose.Schema({
     name: String,
     type: String, //custom t-shirt type = custom
+    kind : String,
+    sizesTable : [[]],
     price: Number,
     code: String,
     images: [{
