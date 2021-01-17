@@ -41,10 +41,12 @@ if(process.env.ENV != "production") {
             images: [
                 {
                     url: process.env.ROOT + "/images/tshirt/example2.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example2.jpg",
                     name: "example2"
                 },
                 {
                     url: process.env.ROOT+ "/images/tshirt/example1.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example1.jpg",
                     name : "example1"
                 }
             ],
@@ -64,10 +66,12 @@ if(process.env.ENV != "production") {
             images: [
                 {
                     url:  process.env.ROOT + "/images/tshirt/example2.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example2.jpg",
                     name: "example2"
                 },
                 {
                     url: process.env.ROOT+ "/images/tshirt/example1.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example1.jpg",
                     name : "example1"
                 }
             ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
@@ -86,10 +90,12 @@ if(process.env.ENV != "production") {
             images: [
                 {
                     url:  process.env.ROOT + "/images/tshirt/example2.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example2.jpg",
                     name : "example2"
                 },
                 {
                     url: process.env.ROOT + "/images/tshirt/example1.jpg",
+                    urlSmall :process.env.ROOT + "/images/tshirt/example1.jpg",
                     name : "example1"
                 }
             ],        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",

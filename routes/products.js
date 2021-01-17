@@ -8,6 +8,7 @@ const express 		= require("express"),
 	  passport 		= require("passport"),
 	  multer 		= require('multer'),
 	  fs 			= require('fs'),
+	  sharp 		= require('sharp'),
 	  dotenv 		= require('dotenv'),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
@@ -121,15 +122,35 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 	        return res.send('Please select an image to upload');
 	    }
 	    req.files.forEach(function(file){
-	      	var str = file.path;
+			var str = file.path;
+			console.log(file.path)
 		  	var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".");
-			image={url : process.env.ROOT + final,name : name[0] };
-		  	newProduct.images.push(image);
-	    });
+			
+			let smallProccess = final.split(".");
+			let finalSmall = smallProccess[0] + "_small." + smallProccess[1];
+			let Readfile = file.path.split(".");
+			
+			sharp(fs.readFileSync(file.path))
+			.resize(603, 723)
+			.toFile(Readfile[0] + "_small." + Readfile[1], (err, info) => { 
+				if(err){
+					console.log(err);
+				}
+			});
+
+			image = { 
+				url : process.env.ROOT + final,
+				urlSmall : process.env.ROOT + finalSmall,
+				name : name[0] 
+			};
+			console.log(finalSmall);
+			newProduct.images.push(image);
+		});
+		console.log("Got here before");
 		await newProduct.save();
 		res.redirect("/products/"+ req.params.type+"?page=0");
 	})
@@ -178,8 +199,27 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			var last = final.split("/");
 			var last2 = last.pop();
 			var name = last2.split(".")
-			image={url : process.env.ROOT + final , name : name[0]};
-	  		foundProduct.images.push(image);
+
+			let smallProccess = final.split(".");
+			let finalSmall = smallProccess[0] + "_small." + smallProccess[1];
+			let Readfile = req.file.path.split(".");
+			
+			sharp(fs.readFileSync(req.file.path))
+			.resize(603, 723)
+			.toFile(Readfile[0] + "_small." + Readfile[1], (err, info) => { 
+				if(err){
+					console.log(err);
+				}
+			});
+			
+			image = { 
+				url : process.env.ROOT + final,
+				urlSmall : process.env.ROOT + finalSmall,
+				name : name[0] 
+			};
+
+			foundProduct.images.push(image);
+			  
 			foundProduct.save();
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
 		}

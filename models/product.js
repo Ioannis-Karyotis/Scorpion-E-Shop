@@ -9,6 +9,7 @@ var ProductSchema = new mongoose.Schema({
     code: String,
     images: [{
       url: String,
+      urlSmall: String,
       name :String
     }],  //stamp for custom t-shirts placed here
     description: String,
