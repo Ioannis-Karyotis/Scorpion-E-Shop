@@ -56,7 +56,8 @@ if(process.env.ENV != "production") {
             colors: colors,
             sizes: sizes,
             reviewCount: 0,
-            status : "active"
+            status : "active",
+            showing: 1
         },
         {
             name: "Example 2",
@@ -80,7 +81,8 @@ if(process.env.ENV != "production") {
             colors: colors,
             sizes: sizes,
             reviewCount: 0,
-            status : "active"
+            status : "active",
+            showing: 2
         },
         {
             name: "Example 3",
@@ -104,7 +106,8 @@ if(process.env.ENV != "production") {
             colors: colors,
             sizes: sizes,
             reviewCount: 0,
-            status : "active"
+            status : "active",
+            showing: 3
         },
     ]
 }    

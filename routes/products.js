@@ -1,3 +1,5 @@
+const { count } = require("../models/product");
+
 const express 		= require("express"),
 	  router     	= express.Router(),
 	  Product     	= require("../models/product"),
@@ -71,8 +73,9 @@ router.get("/products/:type", function(req, res, next){
 
 		    	if(!admin){
 		    		foundProducts = await Product.find({ type : wantedType, status : 'active'}).exec();
-		    	}
-
+				}
+				
+				foundProducts.sort((a, b) => (a.showing > b.showing) ? 1 : -1)
 	      		var itemCount = foundProducts.length;
 	      		var showing = [];
 	      		var div = (itemCount / 8);
@@ -110,6 +113,10 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.colors =  {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex};
 		newProduct.code =  req.body.code;
 		newProduct.kind = req.body.kind;
+
+		let errCount,countTypes = await Product.count({type : req.params.type});
+		console.log(countTypes);
+		newProduct.showing = countTypes;
 
 		sizesSearch = require('../configuration/sizesTables');
 		newProduct.sizesTable = sizesSearch[req.params.type + "_" + newProduct.kind];
@@ -343,10 +350,17 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 
 
 
-router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }), async function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
 	sizesSearch = require('../configuration/sizesTables');
 	req.autosan.body.sizesTable = sizesSearch[req.params.type + "_" + req.autosan.body.kind];
+
+	let err,prdWithCurrentPosition = await Product.findOne({type : req.params.type, showing : req.autosan.body.showing });
+	let err2,prdToBeUpd = await Product.findOne({type : req.params.type, _id : req.params.id });
+
+	prdWithCurrentPosition.showing = prdToBeUpd.showing;
+	await prdWithCurrentPosition.save();
+
 	Product.update({type: req.params.type, _id : req.params.id}, req.autosan.body, function(err , updateProduct){
 		if(err){
 			console.log("Got to error");

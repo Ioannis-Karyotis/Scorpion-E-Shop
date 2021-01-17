@@ -4,6 +4,7 @@ var ProductSchema = new mongoose.Schema({
     name: String,
     type: String, //custom t-shirt type = custom
     kind : String,
+    showing : Number,
     sizesTable : [[]],
     price: Number,
     code: String,
