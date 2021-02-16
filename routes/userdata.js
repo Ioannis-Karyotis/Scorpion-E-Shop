@@ -53,8 +53,8 @@ router.post("/userData/delete/facebookData", function(req, res){
                 if(err){
                     throw err;
                 }
-
-                res.send({
+                
+                res.json({
                     url: 'https://scorpionclothing/deletion/' + String(deletion._id),
                     confirmation_code: String(deletion._id)
                 });
