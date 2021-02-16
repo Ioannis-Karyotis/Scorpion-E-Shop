@@ -148,9 +148,9 @@ app.use(function(req, res) {
 	res.render('404.ejs', {title: '404: File Not Found'});
 });
 
-// Handle 500
-// app.use(function(error, req, res, next) {
-//   	res.status(500);
-// 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
-// });
+//Handle 500
+app.use(function(error, req, res, next) {
+  	res.status(500);
+	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+});
 module.exports = app;

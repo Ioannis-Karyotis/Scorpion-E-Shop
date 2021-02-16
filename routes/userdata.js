@@ -38,9 +38,9 @@ function randomString(length, chars) {
 
 router.post("/userData/delete/facebookData", function(req, res){
     
-    let signed_request = req.body.signed_request;
-    let data = parseSignedRequest(signed_request,oauth.facebook.clientSecret);
-    let user_id = data.user_id;
+    // let signed_request = req.body.signed_request;
+    // let data = parseSignedRequest(signed_request,oauth.facebook.clientSecret);
+    let user_id = req.body.user_id;
     
     User.remove({ "facebook.id" : user_id },async function(err) {
 	    if (err) {
@@ -58,8 +58,9 @@ router.post("/userData/delete/facebookData", function(req, res){
                 if(err){
                     throw err;
                 }
-
-                res.json({url: 'https://scorpionclothing/deletion/' + String(deletion.identifier), confirmation_code: String(deletion.identifier)});
+                let url = 'https://scorpionclothing/deletion/' + String(deletion.identifier);
+                let confirmation_code = String(deletion.identifier);
+                res.send({ 'url': url, 'confirmation_code': confirmation_code });
             })
         }
 	});
