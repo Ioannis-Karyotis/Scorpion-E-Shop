@@ -14,30 +14,30 @@ function base64decode(data) {
     data = data.replace(/-/g, '+').replace(/_/g, '/');
     return new Buffer(data, 'base64').toString('utf-8');
 }
-
+       
 function parseSignedRequest(signedRequest, secret) {
     var encoded_data = signedRequest.split('.', 2);
     // decode the data
     var sig = encoded_data[0];
     var json = base64decode(encoded_data[1]);
     var data = JSON.parse(json);
-
     if (!data.algorithm || data.algorithm.toUpperCase() != 'HMAC-SHA256') {
-        throw Error('Unknown algorithm: ' + data.algorithm + '. Expected HMAC-SHA256');
+    throw Error('Unknown algorithm: ' + data.algorithm + '. Expected HMAC-SHA256');
     }
-
     var expected_sig = crypto.createHmac('sha256', secret).update(encoded_data[1]).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace('=', '');
-    
     if (sig !== expected_sig) {
-        throw Error('Invalid signature: ' + sig + '. Expected ' + expected_sig);
+    throw Error('Invalid signature: ' + sig + '. Expected ' + expected_sig);
     }
     return data;
 }
 
 router.post("/userData/delete/facebookData", function(req, res){
-    var signed_request = req.body.signed_request
-    var data = parseSignedRequest(signed_request,facebook.clientSecret)
-    User.remove({ "facebook.id" : data.user_id },async function(err) {
+    
+    let signed_request = req.body.signed_request;
+    let data = parseSignedRequest(signed_request,facebook.clientSecret);
+    let user_id = data.user_id;
+    
+    User.remove({ "facebook.id" : user_id },async function(err) {
 	    if (err) {
 	        throw err;
 	    }
@@ -46,7 +46,7 @@ router.post("/userData/delete/facebookData", function(req, res){
             var newDeletion = new DataDeletionsHistory();
             newDeletion.completed = true;
             newDeletion.source = 'facebook';
-            newDeletion.sourceId = data.user_id;
+            newDeletion.sourceId = user_id;
             newDeletion.date = Date.now();
 
             newDeletion.save(function(err,deletion){
@@ -55,8 +55,8 @@ router.post("/userData/delete/facebookData", function(req, res){
                 }
 
                 res.send({
-                    url: 'https://scorpionclothing/deletion/' + deletion._id,
-                    confirmation_code: deletion._id
+                    url: 'https://scorpionclothing/deletion/' + String(deletion._id),
+                    confirmation_code: String(deletion._id)
                 });
             })
         }
@@ -69,7 +69,8 @@ router.get("/deletion/:id", function(req, res){
             res.redirect('back');
         }
         if(foundDeletion != null){
-            res.render('dataDeletion',{ deletion: foundDeletion });
+            console.log(foundDeletion);
+            res.render('dataDeletion',{ deletion: foundDeletion[0] });
         }else{
             redirect('back');
         }
