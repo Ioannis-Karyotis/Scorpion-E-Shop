@@ -287,7 +287,6 @@ var pay =async function(stripe, card, clientSecret) {
           })
         }
       } else {
-
         var modal2 = document.getElementById("StripeModal");
         modal2.style.display = "none";
         
@@ -302,9 +301,24 @@ var pay =async function(stripe, card, clientSecret) {
             },
             body: JSON.stringify(result)
           })
-          .then(function(result) { 
-            orderComplete(clientSecret);
-          })  
+          .then(function(result) {   
+            return result.json();
+          })
+          .then(function(data){
+            if(data.error){
+              var modal2 = document.getElementById("StripeModal");
+              modal2.style.display = "none";
+              
+              var modal = document.getElementById("myModal");
+              modal.style.display = "block";
+
+              document.querySelector(".result3").classList.remove("hidden");
+              document.getElementById("errormsg").innerHTML = data.error.message;
+              statusChange('failed');
+            }else{
+              orderComplete(clientSecret);
+            }
+          });  
       }
     });
 };

@@ -22,11 +22,11 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 })
 
 
-router.post("/check_cart",middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
+router.post("/check_cart",middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
   res.send({result : "succeeded"});
 }) 
 
-router.post("/post_order",sanitization.route, async function(req,res){
+router.post("/post_order",middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
 
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
@@ -89,7 +89,7 @@ router.post("/post_order",sanitization.route, async function(req,res){
   res.send({result : "succeeded"});
 })
 
-router.post("/post_order_sent", sanitization.route,async function(req,res){
+router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, sanitization.route,async function(req,res){
   var method = "";
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
@@ -167,7 +167,7 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 })
 
 
-router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice, async (req, res) => {
+router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, async (req, res) => {
   const { currency } = req.autosan.body;
   const total = req.session.cart.totalPrice * 100;
   var paymentIntent = null;
@@ -255,41 +255,41 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
 // Expose a endpoint as a webhook handler for asynchronous events.
 // Configure your webhook in the stripe developer dashboard
 // https://dashboard.stripe.com/test/webhooks
-router.post("/webhook", async (req, res) => {
-  if (WEBHOOK_SECRET) {
+// router.post("/webhook", async (req, res) => {
+//   if (WEBHOOK_SECRET) {
       // Retrieve the event by verifying the signature using the raw body and secret.
-      let event;
-      let signature = req.headers["stripe-signature"];
-      try {
-        event = stripe.webhooks.constructEvent(
-          req.rawBody,
-          signature,
-          WEBHOOK_SECRET
-        );
-      } catch (err) {
-        console.log(`⚠️  Webhook signature verification failed.`);
-        return res.sendStatus(400);
-      }
-      data = event.data;
-      eventType = event.type;
-    } else {
+    //   let event;
+    //   let signature = req.headers["stripe-signature"];
+    //   try {
+    //     event = stripe.webhooks.constructEvent(
+    //       req.rawBody,
+    //       signature,
+    //       WEBHOOK_SECRET
+    //     );
+    //   } catch (err) {
+    //     console.log(`⚠️  Webhook signature verification failed.`);
+    //     return res.sendStatus(400);
+    //   }
+    //   data = event.data;
+    //   eventType = event.type;
+    // } else {
       // Webhook signing is recommended, but if the secret is not configured in `config.js`,
       // we can retrieve the event data directly from the request body.
-      data = req.body.data;
-      eventType = req.body.type;
-    }
+    //   data = req.body.data;
+    //   eventType = req.body.type;
+    // }
 
-    if (eventType === "payment_intent.succeeded") {
+    // if (eventType === "payment_intent.succeeded") {
       
-      console.log("💰 Payment captured!");
-    } else if (eventType === "payment_intent.payment_failed") {
-      Order.findOneAndRemove({paymentIntent : req.body.data.object.id }, function(err , found){});
-      console.log("❌ Payment failed.");
-    }
-    res.sendStatus(200);
+    //   console.log("💰 Payment captured!");
+    // } else if (eventType === "payment_intent.payment_failed") {
+    //   Order.findOneAndRemove({paymentIntent : req.body.data.object.id }, function(err , found){});
+    //   console.log("❌ Payment failed.");
+    // }
+    // res.sendStatus(200);
   // })
   // .catch(function(err) { console.log(err.message); }); 
-});
+// });
 
 router.get('/delete_cookie', function (req, res){
 

@@ -31,7 +31,8 @@ const indexRoutes 	 = require("./routes/index"),
 	  contactRoutes  = require("./routes/contact"),
 	  cartRoutes	 = require("./routes/cart"),
 	  customRoutes	 = require("./routes/custom"),
-	  fpassRoutes 	 = require("./routes/fpass"),	  
+	  fpassRoutes 	 = require("./routes/fpass"),
+	  userdataRoutes = require("./routes/userdata"),	  
 	  config 		 = require("./configuration/passport");
 
 dotenv.config();
@@ -126,6 +127,7 @@ app.use(cartRoutes);
 app.use(customRoutes);
 app.use(contactRoutes);
 app.use(fpassRoutes);
+app.use(userdataRoutes);
 
 
 
@@ -138,6 +140,7 @@ app.get('/Privacy_Policy' ,function(req, res){
 app.get('/Terms_Of_Service' ,function(req, res){
 	res.render('Terms_Of_Service');
 })
+
 
 // Handle 404
 app.use(function(req, res) {

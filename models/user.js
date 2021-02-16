@@ -48,6 +48,10 @@ var UserSchema = new mongoose.Schema({
 		id: {
 			type: String
 		},
+		facebookUserId: {
+			type: String,
+			lowercase: true
+		},
 		name: {
 			type: String,
 			lowercase: true

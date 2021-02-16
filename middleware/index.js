@@ -463,7 +463,14 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
     })
     var err,product = await Product.findById(product_ids[i]);
     if(product == null){
-      total = total + 0;
+      console.log("Το καλάθι αγορών δεν είναι έγκυρο. Κάτι πήγε στραβά");
+      req.session.cart = null;
+      req.session.productList= null;
+      res.send({
+        error : {
+          message : "Το καλάθι αγορών δεν είναι έγκυρο. Προσπαθήστε αργότερα."
+        }
+      });
     }else{
       var add = quantity * product.price;
       total = total + add;
