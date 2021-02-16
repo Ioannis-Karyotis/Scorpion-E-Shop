@@ -1,7 +1,7 @@
 const   express 		= require("express"),
         router 		    = express.Router(),
         passport 		= require("passport"),
-        {facebook} 	    = require('../configuration'),
+        {oauth} 	    = require('../configuration'),
         DataDeletionsHistory = require("../models/dataDeletionsHistory"),
         User 			= require("../models/user"),
         crypto          = require('crypto');
@@ -34,7 +34,7 @@ function parseSignedRequest(signedRequest, secret) {
 router.post("/userData/delete/facebookData", function(req, res){
     
     let signed_request = req.body.signed_request;
-    let data = parseSignedRequest(signed_request,facebook.clientSecret);
+    let data = parseSignedRequest(signed_request,oauth.facebook.clientSecret);
     let user_id = data.user_id;
     
     User.remove({ "facebook.id" : user_id },async function(err) {
