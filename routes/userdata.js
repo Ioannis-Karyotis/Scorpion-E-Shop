@@ -72,7 +72,7 @@ router.get("/deletion/:id", function(req, res){
             console.log(foundDeletion);
             res.render('dataDeletion',{ deletion: foundDeletion[0] });
         }else{
-            redirect('back');
+            res.redirect('back');
         }
     })
 })
