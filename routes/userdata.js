@@ -30,6 +30,11 @@ function parseSignedRequest(signedRequest, secret) {
     }
     return data;
 }
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 router.post("/userData/delete/facebookData", function(req, res){
     
@@ -48,23 +53,20 @@ router.post("/userData/delete/facebookData", function(req, res){
             newDeletion.source = 'facebook';
             newDeletion.sourceId = user_id;
             newDeletion.date = Date.now();
-
+            newDeletion.identifier = randomString(16, '0123456789abcdefghijklmnopqrstuvwxyz');
             newDeletion.save(function(err,deletion){
                 if(err){
                     throw err;
                 }
-                
-                res.json({
-                    url: 'https://scorpionclothing/deletion/' + String(deletion._id),
-                    confirmation_code: String(deletion._id)
-                });
+
+                res.json({url: 'https://scorpionclothing/deletion/' + String(deletion.identifier), confirmation_code: String(deletion.identifier)});
             })
         }
 	});
 });
 
-router.get("/deletion/:id", function(req, res){
-    DataDeletionsHistory.find({"_id" : req.params.id }, function(err,foundDeletion){
+router.get("/deletion/:identifier", function(req, res){
+    DataDeletionsHistory.find({"identifier" : req.params.identifier }, function(err,foundDeletion){
         if(err){
             res.redirect('back');
         }
