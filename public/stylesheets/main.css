@@ -1080,10 +1080,10 @@ hr.normal{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 10 !important; /* Sit on top */
-  padding-top: 40px; /* Location of the box */
-  padding-bottom: 40px;
   left: 0;
   top: 0;
+  padding-top:80px;
+  padding-bottom:80px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -1098,16 +1098,18 @@ hr.normal{
 .modal::-webkit-scrollbar {
   display: none;
 }
-/*
-.modal-content {
+.modal-interior{
   border-radius: 0px;
-  background-color: #fefefe;
-  margin: auto;
-  width: 80%;
-  height: 80%;
+  margin: auto auto;
+  width: 70em;
+  height: auto;
 }
 
-*/
+/* .modal-content {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
 .animate {
     -webkit-animation: animatezoom 0.3s;
     animation: animatezoom 0.3s
@@ -1364,11 +1366,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
-    margin: auto;
+    background-color :rgba(0, 0, 0, 0);
+    margin: auto auto;
     width: 60em;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 100%;
@@ -1405,11 +1407,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60em;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 100%;
@@ -1437,11 +1439,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60em;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 100%;
@@ -1464,11 +1466,11 @@ display: block;
  .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60em;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 100%;
@@ -1491,11 +1493,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60em;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 70%;
@@ -1521,11 +1523,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 90%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     height: 60%;
@@ -1548,11 +1550,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 60%;
@@ -1578,11 +1580,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 60%;
@@ -1605,11 +1607,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 60%;
@@ -1632,11 +1634,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 60%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 60%;
@@ -1659,12 +1661,12 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     /* border: 2px solid #888; */
     width: 70%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 70%;
@@ -1688,12 +1690,12 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     /* border: 2px solid #888; */
     width: 70%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 70%;
@@ -1712,12 +1714,12 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     /* border: 2px solid #888; */
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   }
   .modal-carousel img{
     width: 80%;
@@ -1740,11 +1742,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;
@@ -1766,11 +1768,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   /* .modal-carousel img{
     width: 80%;
@@ -1793,11 +1795,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;
@@ -1821,11 +1823,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;
@@ -1848,11 +1850,11 @@ display: block;
   .modal-content {
     border-radius: 5px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;
@@ -1876,11 +1878,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;
@@ -1903,11 +1905,11 @@ display: block;
   .modal-content {
     border-radius: 0px;
     overflow: hidden;
-    background-color: #fefefe;
+    background-color :rgba(0, 0, 0, 0);
     margin: auto;
     width: 80%;
     height: auto;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); 
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);  */
   }
   .modal-carousel img{
     width: 80%;

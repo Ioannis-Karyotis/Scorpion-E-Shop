@@ -21,7 +21,7 @@ $(document).ready(function() {
       o = "opened";
       document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
     }
-  }
+  }   
 }); 
 
 var o;
@@ -44,7 +44,6 @@ $('.product-img').click(function(e) {
     $(moreId).innerHTML = 'Διάβασε περισσότερα';
   }
 });
-
 
 $('#more').click(function(e) {
   e.stopPropagation();

@@ -100,12 +100,21 @@
         <%- include("./../partials/footer")%>
         <% products.forEach(function(product){ %>
         <div class="modal" id="product_modal_<%= product._id %>">
-          <div class="modal-content animate " >
+          <div class="modal-content animate" style="border: 0px solid black;" >
             <button class="btn-danger btn-dangerous Xbutton" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='none'" class="cancelbtn" style="border-radius: 0px;">
             <i class="fas fa-times"></i>
             </button>
             <div id="inside_modal" class="row">
-              <div class="col-md-7">
+              <div class="col-1 ">
+                <div class="row">
+                  <% Object.keys(product.images).forEach(function(key) { %>
+                    <div class="col-11 pb-2 ml-2">
+                      <img data-target="#carouselExampleControls_<%= product._id %>" data-slide-to="<%=key%>" class="mini-images" src="<%=product.images[key].urlSmall %>" alt="">
+                    </div>
+                  <% }); %> 
+                </div>
+              </div>
+              <div class="col-md-6 bg-white" style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); padding-left: 0px;">
                 <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
                   <div class="carousel-inner">
                     <% Object.keys(product.images).forEach(function(key) { %>
@@ -131,7 +140,7 @@
                   <% }%>
                 </div>
               </div>
-              <div class="col-md-5 mt-md-5 pr-md-5 mb-sm-2 pb-sm-2 py-auto my-auto mx-auto modal-desc">
+              <div class="col-md-5 pt-md-5 pr-md-5 pb-sm-2 pb-sm-2 py-auto py-auto px-auto modal-desc bg-white" style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);">
                 <div class="row hide">
                   <div class="col-12 align-center"> <!--name -->
                   <h4><b><%=product.name %></b></h4>
