@@ -15,7 +15,9 @@ const express 		= require("express"),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = require('../configuration/productNames'),
-	  sizes 		=  require('../configuration/sizes');
+	  sizes 		= require('../configuration/sizes');
+	  var width, height = null;
+
 
 	  storage = multer.diskStorage({
 	    destination: function(req, file, cb) {
@@ -60,6 +62,13 @@ function trimBody(inside){
 router.use(function(req, res, next) {
 	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
+})
+
+router.post("/get/resolution", function(req,res,next){
+	width = req.body.w;
+	height = req.body.h;
+
+	res.json({success : true});
 })
 
 router.get("/products/:type", function(req, res, next){
@@ -277,13 +286,25 @@ router.get("/products/:type/:id", function(req ,res,next){
 		    		
 		    		req.app.locals.specialContext = null;
 		    	}
+				
+				var n = 1;
+				if(width > 775){
+					n = 3;
+				}
+
 			    var images = foundProducts[0].images;
+				var err,recommendedP = await Product.find({}).sort({"rating": -1}).limit(6).exec();
+
+				var recommendedResult = new Array(Math.ceil(recommendedP.length / n))
+				.fill()
+				.map(_ => recommendedP.splice(0,n));
+
 				    passport.authenticate('jwtAdmin', function(err, admin, info) {
 			    	if (err) { return next(err); }
 			    	if (!admin) {
-			    		return	res.render("products/show", {product: foundProducts[0], reviews : lastReviews, revCount : countReviews, images :images,admin:null, validated :validated});
+			    		return	res.render("products/show", {product: foundProducts[0], reviews : lastReviews, revCount : countReviews, images :images,admin:null, validated :validated, recommended : recommendedResult});
 			    	}			    	
-			        return res.render("products/show", {product: foundProducts[0],reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin" , validated :validated});
+			        return res.render("products/show", {product: foundProducts[0],reviews : lastReviews, revCount : countReviews, images :images ,admin:"admin" , validated :validated ,recommended : recommendedResult});
 		    	})(req , res, next)
 		    } else{
 		        res.redirect("back");

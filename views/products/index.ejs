@@ -27,9 +27,9 @@
                 <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;" >
                   <%} %>
                   <div id="open<%= product._id %>" class="product-img" onclick="document.getElementById('product_modal_<%= product._id %>').style.display='block'">
-                    <img src="<%=product.images[0].urlSmall %>" class="card-img-top" alt="" style="border-radius:0px;">
+                    <img src="<%=product.images[0].urlSmall %>" class="card-img-top" alt="" style="border-radius:0px;cursor: pointer;">
                     <div class="middle">
-                      <div class="text" style="z-index: -1!important;">Προβολή</div>
+                      <div class="text" style="z-index: -1!important;cursor: pointer;">Προβολή</div>
                     </div>
                   </div>
                   <div class="card-footer">

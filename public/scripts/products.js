@@ -22,7 +22,7 @@ $(document).ready(function() {
       document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
     }
   }
-});
+}); 
 
 var o;
 var h =  $('#description').height();
