@@ -130,6 +130,12 @@ app.use(fpassRoutes);
 app.use(userdataRoutes);
 
 
+app.post("/get/resolution", function(req,res,next){
+	req.session.width = req.body.w;
+	req.session.height = req.body.h;
+
+	res.json({success : true});
+})
 
 app.get('/expired' ,function(req, res){
 	res.render('expired');

@@ -16,7 +16,6 @@ const express 		= require("express"),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = require('../configuration/productNames'),
 	  sizes 		= require('../configuration/sizes');
-	  var width, height = null;
 
 
 	  storage = multer.diskStorage({
@@ -59,17 +58,11 @@ function trimBody(inside){
   return inside;
 }
 
-router.use(function(req, res, next) {
-	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-    next();
-})
+// router.use(function(req, res, next) {
+// 	res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+//     next();
+// })
 
-router.post("/get/resolution", function(req,res,next){
-	width = req.body.w;
-	height = req.body.h;
-
-	res.json({success : true});
-})
 
 router.get("/products/:type", function(req, res, next){
 	var wantedType = req.params.type;
@@ -286,14 +279,14 @@ router.get("/products/:type/:id", function(req ,res,next){
 		    		
 		    		req.app.locals.specialContext = null;
 		    	}
-				
-				var n = 1;
-				if(width > 775){
-					n = 3;
+
+				var n = 4;
+				if(req.session.width <= 775){
+					n = 1;
 				}
 
 			    var images = foundProducts[0].images;
-				var err,recommendedP = await Product.find({}).sort({"rating": -1}).limit(6).exec();
+				var err,recommendedP = await Product.find({}).sort({"rating": -1}).limit(8).exec();
 
 				var recommendedResult = new Array(Math.ceil(recommendedP.length / n))
 				.fill()
