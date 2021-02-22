@@ -172,7 +172,8 @@ function readURL(input) {
     }
 }
 function goToImage(imageId){
-  image = imageId.getAttribute("value");
+  classes = document.getElementsByClassName(imageId);
+  image = classes[0].getAttribute("value");
   $('.carousel').carousel(parseInt(image));
 }
 

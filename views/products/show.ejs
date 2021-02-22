@@ -32,7 +32,7 @@
         <% Object.keys(images).forEach(function(key) { %>
         <div class="col-4 col-sm-3 d-flex justify-content-start pb-2" >
           <img data-target="#carouselExampleIndicators" data-slide-to="<%=key%>" class="mini-images" src="<%=images[key].url%>" alt="">
-          <span  id="<%= images[key].colorTag %>" value="<%=key %>" hidden></span>
+          <span  class="<%= images[key].colorTag %>" value="<%=key %>" hidden></span>
         </div>
         <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
         <button type="button" class="btn-danger d-flex justify-content-center align-items-center" style="height:1.5em; width:1.5em; margin-left:-10px;" onclick="deleteImage('<%=product._id%>','<%=product.type%>','<%=images[key].name%>')">
@@ -146,7 +146,7 @@
                   <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1 d-flex justify-content-center" align="center" >
                     <li class="mx-auto">
                       <label>
-                        <input form="buyForm" type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %> onclick="goToImage(<%= match.color %>);">
+                        <input form="buyForm" type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %> onclick="goToImage('<%= match.color %>');">
                         <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
                       </label>
                       <% i = i + 1 %>

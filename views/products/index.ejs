@@ -110,7 +110,7 @@
                   <% Object.keys(product.images).forEach(function(key) { %>
                     <div class="col-11 pb-2 ml-2">
                       <img data-target="#carouselExampleControls_<%= product._id %>" data-slide-to="<%=key%>" class="mini-images" src="<%=product.images[key].urlSmall %>" alt="">
-                      <span  id="<%= product.images[key].colorTag %>" value="<%=key %>" hidden></span>
+                      <span class="<%= product.images[key].colorTag %>" value="<%=key %>" hidden></span>
                     </div>
                   <% }); %> 
                 </div>
@@ -191,7 +191,7 @@
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
                           <label>
-                            <input form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %> onclick="goToImage(<%= match.color %>);">
+                            <input form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %> onclick="goToImage('<%= match.color %>');">
                             <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
                           </label>
                         </li>
