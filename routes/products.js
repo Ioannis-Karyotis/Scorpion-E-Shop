@@ -154,7 +154,8 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			image = { 
 				url : process.env.ROOT + final,
 				urlSmall : process.env.ROOT + finalSmall,
-				name : name[0] 
+				name : name[0],
+				colorTag : req.body.color
 			};
 			console.log(finalSmall);
 			newProduct.images.push(image);
@@ -166,7 +167,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 })
 
 router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
-	res.render("products/addColors",{type: req.params.type ,id : req.params.id});
+	res.render("products/addColors",{ type: req.params.type ,id : req.params.id });
 });
 
 router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
@@ -186,8 +187,14 @@ router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', {
 	});
 })
 
-router.get("/products/:type/:id/addImages",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
-	res.render("products/addImages",{type: req.params.type ,id : req.params.id});
+router.get("/products/:type/:id/addImages",passport.authenticate('jwtAdmin', { session: false }),async function(req, res, next){
+	var err,product = await Product.find({"_id": req.params.id}).exec();
+	var colorTags = []
+	product[0].colors.forEach(function(color) {
+		colorTags.push(color.color);
+	});
+	console.log(colorTags);
+	res.render("products/addImages",{type: req.params.type ,id : req.params.id,colors:colorTags});
 });
 
 router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilter: imageFilter }).single("image") ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
@@ -224,7 +231,8 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			image = { 
 				url : process.env.ROOT + final,
 				urlSmall : process.env.ROOT + finalSmall,
-				name : name[0] 
+				name : name[0],
+				colorTag : req.body.colorTag
 			};
 
 			foundProduct.images.push(image);

@@ -11,7 +11,8 @@ var ProductSchema = new mongoose.Schema({
     images: [{
       url: String,
       urlSmall: String,
-      name :String
+      name :String,
+      colorTag : String,
     }],  //stamp for custom t-shirts placed here
     description: String,
     reviews: [

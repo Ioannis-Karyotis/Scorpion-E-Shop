@@ -171,6 +171,10 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+function goToImage(imageId){
+  image = imageId.getAttribute("value");
+  $('.carousel').carousel(parseInt(image));
+}
 
 $("#imgInp").change(function(){
     readURL(this);

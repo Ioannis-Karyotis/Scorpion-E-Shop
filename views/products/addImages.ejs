@@ -15,6 +15,14 @@
 			        <label>Επέλεξε μία εικόνα:</label>
 			        <input id="imgInp" type="file" name="image" required/>
 			    </div>
+				<div class="col-12 mt-5 justify-content-center"> 
+			        <label>Επέλεξε χρώμα προιόντος:</label>
+			        <select class="form-control" name="colorTag" required align="center">
+						<% colors.forEach(function(color){ %>
+							<option value="<%= color %>" align="center"> <%= color %> </option>
+						<% }) %> 
+					</select>
+			    </div>
 	            <div class="col-12 justify-content-center mt-3">
 	                <button class="btn btn-primary" type="submit">Υποβολη</button>
 	            </div>
