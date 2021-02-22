@@ -167,7 +167,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 })
 
 router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
-	res.render("products/addColors",{ type: req.params.type ,id : req.params.id });
+	res.render("products/addColors",{type: req.params.type ,id : req.params.id});
 });
 
 router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){

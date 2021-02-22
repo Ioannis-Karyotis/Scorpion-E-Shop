@@ -1,7 +1,7 @@
 <%- include("./../partials/header")%>
 <div id="main" class="main ninety mx-auto main pb-2 mb-5">
   <div class="row mx-auto  my-4 pt-2 justify-content-center">
-    <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-2" >
+    <div class="col-lg-5 col-md-6 col-sm-12 col-12 mb-2 bg-white" >
       <div id="carouselExampleIndicators" class="carousel slide jumbotron-mini" style="padding:0px 0px;" data-ride="carousel">
         <div class="carousel-inner">
           <% Object.keys(images).forEach(function(key) { %>
@@ -11,9 +11,9 @@
             <% } else{ %>
             ">
             <% } %>
-            <span class='zoom' id='forZoom'>
+            <div class='zoom' id='forZoom' style="cursor:zoom-in;">
               <img id="Zoom" class="shownImage" src="<%=images[key].url%>" alt="">
-            </span>
+            </div>
           </div>
           <% }) %>
         </div>
@@ -47,7 +47,7 @@
       </div>
       <%}%>
     </div>
-    <div id="desc" class="col-lg-6 col-md-6 col-sm-12 col-12 mt-1 bg-white">
+    <div id="desc" class="col-lg-5 col-md-6 col-sm-12 col-12 mt-1 bg-white">
       <div class="container pb-3 jumbotron-mini" style="background-color: white;">
         <div class="row d-flex justify-content-center justify-content-sm-start">
           <div class="col-12 pt-3" align="center">
@@ -74,7 +74,7 @@
         </div>
         <div class="row d-flex justify-content-center" align="left">
           <div class="col-11 mt-4 description">
-            <span id="more" style="color:#8AC8B0;" href="#">Διάβασε περισσότερα</span>
+            <span id="more" style="color:#8AC8B0;cursor: pointer;" href="#">Διάβασε περισσότερα</span>
           </div>
         </div>
         <div class="row d-flex justify-content-center justify-content-sm-end">
@@ -202,10 +202,10 @@
                   Μεγεθη
               </button>
 
-              <div class="collapse show" id="collapseExample2">
-                <div class="card card-body w-100"  style="padding: 0 0;box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);">
+              <div class="collapse show" id="collapseExample2" style="overflow: auto;">
+                <div class="card card-body w-100 overflow-auto"  style="padding:0; box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);">
                        
-                  <table class="table table-bordered w-100" style="table-layout:fixed; width:100%;">
+                  <table class="table table-bordered" style="table-layout:inherit;margin: 0;">
                     <thead>
                       <tr>
                         <th></th>
@@ -247,6 +247,7 @@
           </div>
         </div>
         </div>
+        <% if(recommended != null) { %> 
         <hr class="pic thick mx-5 mt-5">
         <div class="container-fluid my-4" align="center">
           <div class="ninety " align="center">
@@ -320,6 +321,7 @@
           <!--/.Controls-->
           </div>
         </div>
+        <% } %> 
         <hr class="pic thick mx-5 mt-5">
 
         <div class="pb-5 pt-2 mb-4" style="background-color: white;">

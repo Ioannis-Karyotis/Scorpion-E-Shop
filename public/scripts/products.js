@@ -38,7 +38,7 @@ $('.product-img').click(function(e) {
     $(moreId).innerHTML = 'Διάβασε περισσότερα';
   }else{
     $(descId).animate({
-      'height': '100px'
+      'height': '70px'
     })
     $(moreId).removeClass('hidden');
     $(moreId).innerHTML = 'Διάβασε περισσότερα';
