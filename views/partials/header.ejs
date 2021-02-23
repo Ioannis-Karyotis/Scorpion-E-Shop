@@ -10,6 +10,10 @@
 		<link href="/stylesheets/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
 		<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/cart.css">
@@ -33,6 +37,36 @@
 		} %>
 	</head>
 <body>
+	<script>
+		window.cookieconsent.initialise({
+		container: document.getElementById("content"),
+		"palette": {
+			"popup": {
+				"background": "#3c404d",
+				"text": "#d6d6d6"
+			},
+			"button": {
+				"background": "#65a07b"
+			}
+		},
+		"theme": "classic",
+        "content": {
+          "message": "Η Ιστοσελίδα scorpionclothing.gr χρησιμοποιεί cookies, έτσι ώστε να εξασφαλιστεί η βέλτιστη πιθανή εμπειρία χρήστη.",
+          "dismiss": "Το κατάλαβα",
+          "link": "Μάθε περισσότερα"
+        },
+		"domain": "https://scorpionclothing.gr/",
+    	"secure": true,
+		revokable:true,
+		onStatusChange: function(status) {
+			console.log(this.hasConsented() ? 'enable cookies' : 'disable cookies');
+		},
+		law: {
+			regionalLaw: false,
+		},
+			location: true,
+		});
+	   </script>
 	<nav class="navbar navbar-expand navbar-light bg-light  py-0 ">
 		<% if(!currentUser){ %>
 			<div class="container-fluid" style="margin-top: 0.2em;">
