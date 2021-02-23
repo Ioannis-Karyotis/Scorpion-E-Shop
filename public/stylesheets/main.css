@@ -1294,7 +1294,7 @@ display: block;
 }
 
 .descriptionMini{
-  height:auto;
+  height:70px;
   overflow:hidden;
 }
 .descriptionMini:after {
