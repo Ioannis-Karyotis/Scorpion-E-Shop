@@ -11,7 +11,7 @@
             <% } else{ %>
             ">
             <% } %>
-            <div class='zoom' id='forZoom' style="cursor:zoom-in;">
+            <div class='zoom' id='forZoom' style="cursor:zoom-in;" onclick="window.open('<%=images[key].url%>')">
               <img id="Zoom" class="shownImage" src="<%=images[key].url%>" alt="">
             </div>
           </div>
