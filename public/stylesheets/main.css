@@ -674,7 +674,7 @@ hr.normal{
   z-index: 3;
 }
 #logo-bck img{
-  width: 348px; height:99px; 
+  width: 360px; height:90px; 
 }
 
 #logo-bck img:hover {
@@ -1998,8 +1998,8 @@ display: block;
 }
 
 #logo-foot img{
-  width: 5em;
-  height: 8em;
+  width: 80px;
+  height: 71px;
 }
 
 #logo-foot img:hover {
