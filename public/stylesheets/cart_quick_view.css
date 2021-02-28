@@ -27,7 +27,6 @@
 .quick-cart-img{
   text-align: center;
   width:70%;
-  height:70%;
   border-radius: 2px;
   box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.41);
 }
@@ -64,7 +63,6 @@
     .quick-cart-img{
       text-align: center;
       width:90%;
-      height:90%;
       box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.41);
     }
   .total-quantity-info{
@@ -91,7 +89,6 @@
     .quick-cart-img{
       text-align: center;
       width:90%;
-      height:90%
       box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.41);
     }
     .total-quantity-info{
