@@ -22,25 +22,47 @@ var orderData = { //orderData are being used for creating the Payment Intent
 var buttonSelect = function(type){ //Change the input form shape regarding the pressed radio button
 
   if(type==2 || type==3){
-    // document.getElementById("button-text-send").classList.remove("hidden");
-    // document.getElementById("button-text-pay").classList.add("hidden");
     document.querySelector(".address").classList.remove("hidden");
     document.getElementById("method").value = "2";
     if(type==3){
       document.querySelector(".address").classList.add("hidden");
-      document.getElementById("method").value = "3";                                
+      document.getElementById("method").value = "3";
+
+      document.getElementById("antikatavoli").setAttribute("hidden",true);
+      document.getElementById("exodaApostol").setAttribute("hidden",true);
+
+    }else{
+      document.getElementById("antikatavoli").removeAttribute("hidden");
+      document.getElementById("exodaApostol").removeAttribute("hidden");
     }
 
   }else if(type==1){
-    // document.getElementById("button-text-send").classList.add("hidden");
-    // document.getElementById("button-text-pay").classList.remove("hidden");
     document.querySelector(".card-element").classList.remove("hidden");
     document.querySelector(".address").classList.remove("hidden");
     document.getElementById("method").value = "1";  
-  }
 
+    document.getElementById("antikatavoli").setAttribute("hidden",true);
+    document.getElementById("exodaApostol").removeAttribute("hidden");
+  }
+  getTotalPrice();
 }
 
+function getTotalPrice(){
+  document.getElementById("totalPrice").innerHTML = 0
+  var antikatavoli = 0;
+  var exodaApostol = 0;
+  var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
+
+  if(document.getElementById("antikatavoli").hasAttribute("hidden") == false){
+    antikatavoli = 1.8;
+  }
+
+  if(document.getElementById("discount").innerHTML == "false" && document.getElementById("exodaApostol").hasAttribute("hidden") == false){
+    exodaApostol = 2.5;
+  }
+  var all = productsTotal + antikatavoli + exodaApostol;
+  document.getElementById("totalPrice").innerHTML = all.toFixed(1) + " €"
+}
 
 var form = document.getElementById("payment-form");
 form.addEventListener("submit", function(event) { //Trigger the following event when the form button is pressed

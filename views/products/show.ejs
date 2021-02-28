@@ -146,7 +146,7 @@
                   <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1 d-flex justify-content-center" align="center" >
                     <li class="mx-auto">
                       <label>
-                        <input form="buyForm" type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %> onclick="goToImage('<%= match.color %>');">
+                        <input form="buyForm" type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %> onclick="goToImage('<%= match.colorHex %>');">
                         <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
                       </label>
                       <% i = i + 1 %>
@@ -162,7 +162,7 @@
                           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin"){ %>
                           <div>
                             <button type="button" class=" btn-danger" style="height:2.5em; width:2.5em; text-align: center; " onclick="deleteColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
-                            <i class="fas fa-times fa-lg"></i>
+                              <i class="fas fa-times fa-lg"></i>
                             </button>
                           </div>
                           <% if(match.colorStatus=="hidden"){ %>

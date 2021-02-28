@@ -155,7 +155,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 				url : process.env.ROOT + final,
 				urlSmall : process.env.ROOT + finalSmall,
 				name : name[0],
-				colorTag : req.body.color
+				colorTag : req.body.colorHex
 			};
 			console.log(finalSmall);
 			newProduct.images.push(image);
@@ -191,7 +191,7 @@ router.get("/products/:type/:id/addImages",passport.authenticate('jwtAdmin', { s
 	var err,product = await Product.find({"_id": req.params.id}).exec();
 	var colorTags = []
 	product[0].colors.forEach(function(color) {
-		colorTags.push(color.color);
+		colorTags.push(color);
 	});
 	console.log(colorTags);
 	res.render("products/addImages",{type: req.params.type ,id : req.params.id,colors:colorTags});

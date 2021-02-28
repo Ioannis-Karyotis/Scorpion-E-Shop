@@ -19,7 +19,7 @@
 			        <label>Επέλεξε χρώμα προιόντος:</label>
 			        <select class="form-control" name="colorTag" required align="center">
 						<% colors.forEach(function(color){ %>
-							<option value="<%= color %>" align="center"> <%= color %> </option>
+							<option value="<%= color.colorHex %>" align="center"> <%= color.color %> </option>
 						<% }) %> 
 					</select>
 			    </div>

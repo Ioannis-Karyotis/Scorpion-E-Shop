@@ -21,6 +21,15 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
+function calculatePrice(ProductsPrice) {
+  var exodaApostol = 2.5
+  if(ProductsPrice >= 30){
+    exodaApostol = 0
+  }
+  finalPrice = (ProductsPrice + exodaApostol) * 100;
+  return finalPrice;
+}
+
 
 router.post("/check_cart",middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
   res.send({result : "succeeded"});
@@ -55,8 +64,7 @@ router.post("/post_order",middleware.calculateDatabasePrice, middleware.validate
             state : req.autosan.body.paymentIntent.shipping.address.state
           }
         }, 
-        extraFee : 4,
-        totalPrice :  (req.autosan.body.paymentIntent.amount / 100) + 4
+        totalPrice :  (req.autosan.body.paymentIntent.amount / 100)
       },
       async function(err, order){
         if(err){
@@ -126,8 +134,7 @@ router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.vali
             zip : req.autosan.body.zip,
             state : req.autosan.body.state
           }
-        }, 
-        extraFee : 4
+        }
       },
       async function(err, order){
         if(err){
@@ -169,7 +176,7 @@ router.post("/create-order",sanitization.route,middleware.namesur , middleware.e
 
 router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, async (req, res) => {
   const { currency } = req.autosan.body;
-  const total = req.session.cart.totalPrice * 100;
+  const total = calculatePrice(req.session.cart.totalPrice);
   var paymentIntent = null;
   var untracked = await Untracked.count();
   console.log("untracked is: " + untracked);
@@ -300,17 +307,22 @@ router.get('/delete_cookie', function (req, res){
 
 
 router.get('/checkout', middleware.validateCart, middleware.validateCartVariants , function (req, res){
+  var discount = false;
+  if(req.session.cart !=null && req.session.cart.totalPrice >= 30){
+    discount = true;
+  }
+
   if(req.app.locals.specialContext!= null){
     var validated = req.app.locals.specialContext;
     req.flash(validated.error.type,validated.error.message);
-    res.render("checkout",{user: null , method : null, validated : validated});
+    res.render("checkout",{user: null , method : null, validated : validated , discount : discount});
   }else{
     var validated = {};
     req.app.locals.specialContext = null;
     if(req.user){
-      res.render('checkout',{user: req.user, method : req.user.methods,validated : validated});
+      res.render('checkout',{user: req.user, method : req.user.methods,validated : validated, discount : discount});
     }else{
-      res.render('checkout',{user: null , method : null, validated : validated});
+      res.render('checkout',{user: null , method : null, validated : validated, discount : discount});
     }
   }
 });

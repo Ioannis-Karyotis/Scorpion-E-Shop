@@ -115,7 +115,7 @@
                   <% }); %> 
                 </div>
               </div>
-              <div class="col-md-6 idiotCol bg-white">
+              <div class="col-md-6 idiotCol" style="background-color: white;">
                 <div id="carouselExampleControls_<%= product._id %>" class="carousel slide" data-interval="false">
                   <div class="carousel-inner">
                     <% Object.keys(product.images).forEach(function(key) { %>
@@ -141,7 +141,7 @@
                   <% }%>
                 </div>
               </div>
-              <div class="col-md-5 pt-md-5 pr-md-5 pb-sm-2 pb-sm-2 py-auto py-auto px-auto modal-desc bg-white">
+              <div class="col-md-5 pt-md-5 pr-md-5 pb-sm-2 pb-sm-2 py-auto py-auto px-auto modal-desc" style="background-color: white;">
                 <div class="row hide">
                   <div class="col-12 align-center"> <!--name -->
                   <h4><b><%=product.name %></b></h4>
@@ -191,7 +191,7 @@
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
                           <label>
-                            <input form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %> onclick="goToImage('<%= match.color %>');">
+                            <input form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %> onclick="goToImage('<%= match.colorHex %>');">
                             <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
                           </label>
                         </li>

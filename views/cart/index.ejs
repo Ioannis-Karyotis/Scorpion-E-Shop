@@ -18,18 +18,26 @@
       <div class="row d-flex justify-content-start mt-2 mb-4 mx-2">
         <div class="col-md-12 col-12 jumbotron-mini align-left">
           <div class="container">
-            <button id="rmvc_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton" onclick="removeProduct()">
+            <button id="rmvc_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton" onclick="removeProduct()" style="z-index: 0;">
               <i class="fa fa-trash-alt"></i>
             </button>
             <div class="row d-flex justify-content-start">
               <div class="col-11 align-left">
-                <b style="font-size: 20px; font-weight:600; "><%=prd.product.name%></b>
+                <a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+                  <b style="font-size: 20px; font-weight:600; "><%=prd.product.name%></b>
+                </a>  
               </div>
             </div>
             <div class="row d-flex justify-content-center mt-3">
               <div class="col-sm-2 col-12" align="center" >
                 <div>
-                  <img src="<%= prd.product.images[0].url %>" style="width:5em; height:7em;"></img>
+                  <% prd.product.images.forEach(image => { %>
+                    <% if (image.colorTag == item.color) { %>
+                      <a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+                        <img class="quick-cart-img" src="<%=image.url%>"></img>
+                      </a>
+                    <% } %>
+                  <%});%>
                 </div>
               </div>
               <div class="col-12 col-sm-10">
@@ -63,7 +71,7 @@
               <div class="row d-flex justify-content-end">
                 <div class="col-10 align-right">
                     <div class="mr-2 align-middle" style="background-color:<%=item.color%>;width:2em;height:2em; display: inline-block;"></div>
-                    <span class="mr-3 align-middle">"<%=sizes[item.size]%>"</span> 
+                    <i><span class="mr-3 align-middle"><%=sizes[item.size]%></span></i> 
                 </div>
               </div>            
             </div> 

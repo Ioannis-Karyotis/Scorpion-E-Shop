@@ -143,87 +143,89 @@
 									</span>
 									<div class="dropdown-menu dropdown-menu-right cart-fonts">
 								    <%if(session.productList && session.productList.length > 0){ %>
-											<div class="align-center" >
-												<div id="quick_total_qty" class="col-12 total-quantity-info px-1" >
-													Το καλάθι σας έχει <%=session.cart.totalQuantity%>
-													<%if(session.cart.totalQuantity > 1){ %>
-														προϊόντα
-													<%}else{%>
-														προϊόν
-													<%}%>
-												</div>
-											</div>
-											<div class="container quick-cart-container mb-2" >
-											<% session.productList.forEach(function(prd){ %>
-												<%prd.variants.forEach(function(item){ %>
-												 <!-- <div class="dropdown-item"> -->
-												<% var id = prd.product._id%> 	
-													<div id="item-<%=id%>,<%=item.size%>,<%=item.color%>" class="row mx-auto my-2 jumbotron-mini">
-														<div class="col-4 align-center" > <!--picture -->
-															<div>
-															 	<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
-															 		<img class="quick-cart-img" src="<%=prd.product.images[0].url %>"></img>
-															 	</a>
-															</div>
-														 </div>
-														 <div class="col-8">
-															<div class="row mb-2 d-flex justify-content-start">
-																<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
-																	<label style="white-space: initial; word-wrap: break-word; font-size: 15px;">
-																		<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>"><i><%= prd.product.name %></i></a></label>
-																</div>
-																<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
-																	<p>
-																	 	<button id="rmvq_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton d-flex justify-content-center align-items-center" onclick="quickRemoveProduct(event)">
-																		 	<i class="fa fa-trash-alt"></i>
-																		</button>
-																	</p>
-																</div>
-															 </div>
-															 <hr class="thin" style="margin-top: -3px;">
-															 <div class="row">
-																<div class="col-4"><!--price -->
-																	<%= prd.product.price %>€
-																</div>
-																<div id="quick_qty<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4 align-center"><!--qty -->
-																	x<%=item.quantity%>
-																</div>
-																<div id="quick_product_total<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4  align-right"><!--total price -->
-																	<%= item.price %>€
-																</div>
-															 </div>
-															 <div class="mt-4 pr-2 row justify-content-end">
-															 	<i><div class="ml-2"style="background-color:<%=item.color%>; width: 1.5em; height: 1.5em;"> </div></i>
-																<i><span class="ml-2"><%=sizes[item.size]%></span></i>
-															 </div>
-														 </div>
-													</div>
-												<%});%>
-												<!-- </div> -->
-											<%});%>
-											 
-										 </div>
-										 <div class="quick-cart-fonts">
-										 	<div class="row my-2 mx-1">
-												<div class="col-6">
-													<b><i>Σύνολο:</i></b>
-												</div>
-												<div id="quick_total" class="col-6 align-right">
-													<%=session.cart.totalPrice%>€
-												</div>
-											</div>
-											<a class="align-center btn btn-primary btn-lg btn-block" href="/cart">
-												Μεταβαση στο καλαθι
-											</a>
+									<div class="align-center" >
+										<div id="quick_total_qty" class="col-12 total-quantity-info px-1" >
+											Το καλάθι σας έχει <%=session.cart.totalQuantity%>
+											<%if(session.cart.totalQuantity > 1){ %>
+												προϊόντα
+											<%}else{%>
+												προϊόν
+											<%}%>
 										</div>
-										<%}else{ %>
-												<div class="align-center total-quantity-info px-1">
-													<p class="desc">Δεν υπάρχουν προϊόντα στο καλάθι σας!</p>
+									</div>
+									<div class="container quick-cart-container mb-2" >
+									<% session.productList.forEach(function(prd){ %>
+										<%prd.variants.forEach(function(item){ %>
+											<!-- <div class="dropdown-item"> -->
+										<% var id = prd.product._id%> 	
+											<div id="item-<%=id%>,<%=item.size%>,<%=item.color%>" class="row mx-auto my-2 jumbotron-mini">
+												<div class="col-4 align-center" > <!--picture -->
+													<div>
+														<% prd.product.images.forEach(image => { %>
+															<% if (image.colorTag == item.color) { %>
+																<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+																	<img class="quick-cart-img" src="<%=image.url%>"></img>
+																</a>
+															<% } %>
+														<%});%>
+													</div>
 												</div>
-										<%}%>
-							  	</div>
-								</span>
-							</li>
+												<div class="col-8">
+													<div class="row mb-2 d-flex justify-content-start">
+														<div class="col-10 d-flex justify-content-start" style="display :inline-block" ><!--name -->
+															<label style="white-space: initial; word-wrap: break-word; font-size: 15px;">
+																<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>"><i><%= prd.product.name %></i></a></label>
+														</div>
+														<div class="col-2 px-1 d-flex justify-content-center "><!--remove -->
+															<p>
+																<button id="rmvq_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton d-flex justify-content-center align-items-center" onclick="quickRemoveProduct(event)">
+																	<i class="fa fa-trash-alt"></i>
+																</button>
+															</p>
+														</div>
+													</div>
+													<hr class="thin" style="margin-top: -3px;">
+													<div class="row">
+													<div class="col-4"><!--price -->
+														<%= prd.product.price %>€
+													</div>
+													<div id="quick_qty<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4 align-center"><!--qty -->
+														x<%=item.quantity%>
+													</div>
+													<div id="quick_product_total<%=id%>,<%=item.size%>,<%=item.color%>" class="col-4  align-right"><!--total price -->
+														<%= item.price %>€
+													</div>
+													</div>
+													<div class="mt-4 pr-2 row justify-content-end">
+													<i><div class="ml-2"style="background-color:<%=item.color%>; width: 1.5em; height: 1.5em;"> </div></i>
+													<i><span class="ml-2"><%=sizes[item.size]%></span></i>
+													</div>
+												</div>
+											</div>
+										<%});%>
+									<%});%>
+									</div>
+									<div class="quick-cart-fonts">
+									<div class="row my-2 mx-1">
+										<div class="col-6">
+											<b><i>Σύνολο:</i></b>
+										</div>
+										<div id="quick_total" class="col-6 align-right">
+											<%=session.cart.totalPrice%>€
+										</div>
+									</div>
+									<a class="align-center btn btn-primary btn-lg btn-block" href="/cart">
+										Μεταβαση στο καλαθι
+									</a>
+								</div>
+								<%}else{ %>
+								<div class="align-center total-quantity-info px-1">
+									<p class="desc">Δεν υπάρχουν προϊόντα στο καλάθι σας!</p>
+								</div>
+								<%}%>
+							</div>
+						</span>
+					</li>
 				</ul>
 			</div>
 		</div>
