@@ -129,7 +129,7 @@
 			    	<%prd.variants.forEach(function(item){ %>
 				      	<div class="jumbotron-mini product-micro mb-1">
 				      		<div class="row d-flex justify-content-around">
-					        	<div class="col-4 product-image">
+					        	<div class="col-3" align="left">
 									<% prd.product.images.forEach(image => { %>
 										<% if (image.colorTag == item.color) { %>
 											<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
@@ -139,7 +139,7 @@
 									<%});%>
 					        	</div>
 
-				          		<div class="col-8">
+				          		<div class="col-9">
 				          			<div class="row d-flex justify-content-start">
 				          				<div class="col-12" align="left">
 											<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">	  
