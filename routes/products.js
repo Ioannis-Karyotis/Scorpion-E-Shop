@@ -272,8 +272,8 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 
 
 
-router.get("/products/:type/:id", function(req ,res,next){
-	Product.find({_id : req.params.id }).populate("reviews").exec(async function(err, foundProducts){
+router.get("/products/:type/:code", function(req ,res,next){
+	Product.find({code : req.params.code }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
 			console.log(err);
 		} else {
