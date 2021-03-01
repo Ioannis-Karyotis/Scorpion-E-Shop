@@ -23,7 +23,7 @@
             </button>
             <div class="row d-flex justify-content-start">
               <div class="col-11 align-left">
-                <a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+                <a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">
                   <b style="font-size: 20px; font-weight:600; "><%=prd.product.name%></b>
                 </a>  
               </div>
@@ -33,7 +33,7 @@
                 <div>
                   <% prd.product.images.forEach(image => { %>
                     <% if (image.colorTag == item.color) { %>
-                      <a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+                      <a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">
                         <img class="quick-cart-img" src="<%=image.url%>"></img>
                       </a>
                     <% } %>

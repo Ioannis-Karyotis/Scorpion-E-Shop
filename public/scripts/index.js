@@ -7,7 +7,4 @@ $(document).ready(function() {
             h: window.screen.height
         },
     });
-    $(".progressShow").click(function(){
-        $('.toast').toast('show');
-      });
   }); 

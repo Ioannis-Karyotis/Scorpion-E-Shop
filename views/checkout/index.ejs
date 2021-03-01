@@ -129,7 +129,7 @@
 					        	<div class="col-3" align="left">
 									<% prd.product.images.forEach(image => { %>
 										<% if (image.colorTag == item.color) { %>
-											<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">
+											<a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">
 												<img class="quick-cart-img" src="<%=image.url%>"></img>
 											</a>
 										<% } %>
@@ -139,7 +139,7 @@
 				          		<div class="col-9">
 				          			<div class="row d-flex justify-content-start">
 				          				<div class="col-12" align="left">
-											<a href="/products/<%=prd.product.type%>/<%= prd.product._id %>">	  
+											<a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">	  
 					            				<b><%=prd.product.name%></b>
 											</a>	
 				            			</div>
