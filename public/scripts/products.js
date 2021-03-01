@@ -22,7 +22,16 @@ $(document).ready(function() {
       document.getElementById('more').innerHTML = 'Διάβασε περισσότερα';
     }
   }   
+
+  showProgressNotification();
 }); 
+
+function showProgressNotification(){
+  var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
+  if(productsTotal > 0){
+    $('.toast').toast('show');
+  }
+}
 
 var o;
 var h =  $('#description').height();

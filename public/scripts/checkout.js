@@ -10,8 +10,15 @@ $(document).ready(function() {
   }else if(document.getElementById('sent').checked){
     $('#sent').click();
   }
-
+  showProgressNotification();
 });
+
+function showProgressNotification(){
+  var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
+  if(productsTotal > 0){
+    $('.toast').toast('show');
+  }
+}
 
 var stripe
 

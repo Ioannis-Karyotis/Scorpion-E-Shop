@@ -3,14 +3,18 @@
 	<head>
 		<title>Βιοτεχνία Scorpion</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- BootStrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<!-- Font Awesome -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"rel="stylesheet"/>
 		<link href="/stylesheets/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
-
+		<!-- Cookie Concent -->
 		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
@@ -22,10 +26,7 @@
 		<link rel="stylesheet" type="text/css" href="/stylesheets/cart_quick_view.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/admin.css">
 		<link rel="stylesheet" type="text/css" href="/stylesheets/user.css">
-        <!-- Google fonts-->
-        <!-- <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" /> -->
-        <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/> -->
-		<!-- <link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,600;0,700;0,900;1,700&display=swap" rel="stylesheet"> -->
+
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 		<% const sizes = {
@@ -67,6 +68,7 @@
 			location: true,
 		});
 	</script>
+
 	<nav class="navbar navbar-expand navbar-light bg-light  py-0 ">
 		<% if(!currentUser){ %>
 			<div class="container-fluid" style="margin-top: 0.2em;">
@@ -293,4 +295,36 @@
 		</div>
 	</nav>
 <div id="page-container" class="loading-container">
-		<div id="content-wrap">
+	<% if(session.cart !=null){ %> 
+  		<span  id="productsPrice" hidden><%=session.cart.totalPrice%></span>
+	<% } %> 
+	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: fixed; top: 3em; left: 1em; z-index:20!important;">
+	  <div class="toast-header">
+			<strong class="mx-auto"><b>Δωρεάν Αποστολή</b></strong>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body">
+			<% if(session.cart == null ){ %>
+				<% var priceNow = 0 %>
+				<div class="mx-auto desc" align="center">Θέλετε <%=30 - priceNow%> ευρώ για να επιτυχετε την Δωρεάν αποστολή</div>
+				<div class="progress w-100 mt-4" style="border: 1px solid black;">
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow) %>/30 €</div>
+				</div>
+			<% }else if(session.cart !=null && session.cart.totalPrice < 30){ %>
+				<% var priceNow = session.cart.totalPrice %>
+				<div class="mx-auto desc" align="center">Θέλετε <%=30 - priceNow%> ευρώ για να επιτυχετε την Δωρεάν αποστολή</div>
+				<div class="progress w-100 mt-4" style="border: 1px solid black;">
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow)%>/30 €</div>
+				</div>
+			<% }else{ %> 
+				<% var priceNow = session.cart.totalPrice %>
+				<div class="mx-auto desc" align="center">Συγχαρητήρια!!! Τα έξοδα αποστολής είναι Δωρεάν.</div> 
+				<div class="progress w-100 mt-4" style="border: 1px solid black;">
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width:100%">30/30 €</div>
+				</div>
+			<% } %>
+		</div>
+	</div>
+	<div id="content-wrap">
