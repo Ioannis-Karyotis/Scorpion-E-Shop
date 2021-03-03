@@ -11,6 +11,7 @@ const express 		= require("express"),
 	  multer 		= require('multer'),
 	  dotenv 		= require('dotenv'),
 	  path 			= require('path'),
+	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  storage 		= multer.diskStorage({
 						destination: function(req, file, cb) {
 							cb(null, "./public/images/profile-pictures");
@@ -68,14 +69,13 @@ router.get("/user/orders" ,passport.authenticate('jwt', { session: false }), fun
 	if(req.user){
 		User.findById(req.session.user._id, function(err , foundUser){
 			if(err){
-				console.log(err)
+				logger.error("Error: ", err);
 				res.redirect("back");
 			}	
 			Order.find({ 'details.email': foundUser[foundUser.methods].email , 'complete':false }).populate("productList.product").exec(function(err , foundOrders ){
 		      	if(err){
-		          	console.log(err)
-		      	}else{
-		      		console.log(foundOrders);
+					logger.error("Error: ", err);
+				}else{
 		      		var orders = foundOrders.reverse();
 			        return res.render("user/show", {orders : orders });
 			    }
@@ -91,7 +91,7 @@ router.put("/user/changeInitials" ,sanitization.route,  middleware.namesur , mid
 	req.autosan.body = trimBody(req.autosan.body);
 	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
-			console.log(err)
+			logger.error("Error: ", err);
 			res.redirect("back");
 		}else{
 			req.logout();
@@ -110,7 +110,7 @@ router.put("/user/changePassword" ,sanitization.route,middleware.password, passp
 	req.autosan.body = trimBody(req.autosan.body);
 	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
-			console.log(err)
+			logger.error("Error: ", err);
 			res.redirect("back");
 		}else{
 			req.logout();
@@ -132,13 +132,12 @@ router.put("/user/changeImage" ,sanitization.route, multer({ storage: storage, f
         return res.send('Please select an image to upload');
     }
 	var str = req.file.path;
-	console.log(str);
 	var str2 = str.replace("public", "");
 	var final = str2.replace(/\\/g,"/");
 	var image= process.env.ROOT + final;	
 	User.findById(req.session.user._id, function(err , foundUser){
 		if(err){
-			console.log(err)
+			logger.error("Error: ", err);
 			res.redirect("back");
 		}else{
 			req.logout();
@@ -160,7 +159,7 @@ router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('j
 	req.autosan.body = trimBody(req.autosan.body);
 	User.remove({ _id: req.autosan.body.id },async function(err) {
 	    if (err) {
-	        console.log(err.message);
+			logger.error("Error: ", err);
 	    }
 	    else {
 	    	const path = "./public/images/profile-pictures/"+req.autosan.body.id+".jpg";
@@ -168,7 +167,7 @@ router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('j
 		    if (fs.existsSync(path)) {
 	   			await fs.unlink(path ,function(err){
 					if(err){
-						console.log(err);
+						logger.error("Error: ", err);
 					}
 				});
 	  		}

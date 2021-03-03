@@ -13,6 +13,7 @@ const express 		= require("express"),
 	  nodemailer 	= require('nodemailer'),
 	  ejs       	= require("ejs"),
 	  dotenv 		= require('dotenv'),
+	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  transporter 	= nodemailer.createTransport({
 							host: "smtp.zoho.eu",
 							port: 465,
@@ -81,11 +82,9 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
   		httpOnly: true
 	});
 
-	console.log(hashobj);
-
  	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hashobj : hashobj , rootserver:  process.env.ROOT , option: "mail3" ,order :null } , function (err, data) {
 	    if (err) {
-	        console.log(err);
+			logger.error("Error: ", err);
 	    } else {
 	        var mainOptions = {
 		  	from: String(config.EMAIL),
@@ -94,13 +93,12 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
 		  	html : data,
 		  	attachments: attachments
 			};
-			// console.log("html data ======================>", mainOptions.html);
 			res.render('fpass/email');
 			transporter.sendMail(mainOptions, function(error, info){
 			  	if (error) {
-			    	console.log(error);
-			  	} else {
-					console.log("email sent");	
+					logger.error("Error: ", error);
+				} else {
+					logger.info("Email sent: ",  info.response);
 				}
 			});
 	    }  
@@ -115,14 +113,11 @@ router.post("/fpass/:hashobj", sanitization.route, middleware.password ,passport
 	req.autosan.body = trimBody(req.autosan.body);
 	var hashobj = req.params.hashobj;
 	hashobj = objEncDec.decrypt(hashobj);
-	console.log(hashobj);
 
 	var user = await User.findOne({ "local.email": hashobj.email },function(err ,user){
 		if(err || user == null || user == undefined){
-			console.log("lol");
 			res.render('fpass/error');
 		}else{
-			console.log(user);
 			var hash2 = crypto.pbkdf2Sync(user.local.email , user.local.forgotPassSalt, 10000, 512, 'sha512').toString('hex');
 			
 			if(hashobj.hash == hash2){
@@ -139,11 +134,9 @@ router.post("/fpass/:hashobj", sanitization.route, middleware.password ,passport
 			        }    
 		        res.cookie(prop, '', {expires: new Date(0)});
 		    	}
-				console.log("password changed");
 				res.render('fpass/success');
 
 			}else{
-				console.log("password didnt change");
 				res.render('fpass/error');	
 			}
 		}

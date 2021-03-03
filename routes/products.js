@@ -15,6 +15,7 @@ const express 		= require("express"),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = require('../configuration/productNames'),
+	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  sizes 		= require('../configuration/sizes');
 
 
@@ -68,8 +69,8 @@ router.get("/products/:type", function(req, res, next){
 	var wantedType = req.params.type;
 	Product.find({ type : wantedType}, function(err , foundProducts ){
       	if(err){
-          	console.log(err)
-      	}else{
+			logger.error("Error: ", err);
+		}else{
 	      	passport.authenticate('jwtAdmin',async function(err, admin, info) {
 		    	if (err) { return next(err); }
 
@@ -85,7 +86,6 @@ router.get("/products/:type", function(req, res, next){
 	      		if(div != 1 && div > 1){
 	      			pages = parseInt(div) + 1;
 	      		}      		
-	      		console.log(pages);
 	      		for (i = (req.query.page * 8) ; i < (req.query.page * 8) + 8; i++) {
 	      			if(foundProducts[i] == undefined){
 	      				break;
@@ -117,13 +117,11 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.kind = req.body.kind;
 
 		let errCount,countTypes = await Product.count({type : req.params.type});
-		console.log(countTypes);
 		newProduct.showing = countTypes;
 
 		sizesSearch = require('../configuration/sizesTables');
 		newProduct.sizesTable = sizesSearch[req.params.type + "_" + newProduct.kind];
 
-		console.log(newProduct);
 		if (req.fileValidationError) {
         return res.send(req.fileValidationError);
 	    }
@@ -132,7 +130,6 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 	    }
 	    req.files.forEach(function(file){
 			var str = file.path;
-			console.log(file.path)
 		  	var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
@@ -147,7 +144,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 			.resize(603, 723)
 			.toFile(Readfile[0] + "_small." + Readfile[1], (err, info) => { 
 				if(err){
-					console.log(err);
+					logger.error("Error: ", err);
 				}
 			});
 
@@ -157,10 +154,8 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 				name : name[0],
 				colorTag : req.body.colorHex
 			};
-			console.log(finalSmall);
 			newProduct.images.push(image);
 		});
-		console.log("Got here before");
 		await newProduct.save();
 		res.redirect("/products/"+ req.params.type+"?page=0");
 	})
@@ -173,7 +168,7 @@ router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { s
 router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 			var newColor = {
 				color : req.body.color,
@@ -193,14 +188,13 @@ router.get("/products/:type/:id/addImages",passport.authenticate('jwtAdmin', { s
 	product[0].colors.forEach(function(color) {
 		colorTags.push(color);
 	});
-	console.log(colorTags);
 	res.render("products/addImages",{type: req.params.type ,id : req.params.id,colors:colorTags});
 });
 
 router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilter: imageFilter }).single("image") ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 	        if (req.fileValidationError) {
 		        return res.send(req.fileValidationError);
@@ -209,7 +203,6 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 		        return res.send('Please select an image to upload');
 		    }
 			var str = req.file.path;
-			console.log(str);
 			var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
@@ -224,7 +217,7 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			.resize(603, 723)
 			.toFile(Readfile[0] + "_small." + Readfile[1], (err, info) => { 
 				if(err){
-					console.log(err);
+					logger.error("Error: ", err);
 				}
 			});
 			
@@ -246,9 +239,8 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
-			console.log(foundProduct);
 			var index = 0
 			foundProduct.images.forEach(async function(img){
 				if (img.name == req.params.name) {
@@ -257,7 +249,7 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 					var path = "./public/images/"+ req.params.type + "/" + url.pop();
 					await fs.unlink(path ,function(err){
 						if(err){
-							console.log(err);
+							logger.error("Error: ", err);
 						}
 					});
 					foundProduct.save();
@@ -275,7 +267,7 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 router.get("/products/:type/:code", function(req ,res,next){
 	Product.find({code : req.params.code }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 		    if(foundProducts[0]!= null){
 		    	var sortedReviews = foundProducts[0].reviews.sort((a, b) => b.date - a.date);
@@ -316,7 +308,6 @@ router.get("/products/:type/:code", function(req ,res,next){
 
 
 router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
-	console.log(req.params.id);
 	var orders = await Order.find({}).populate("productList.product").exec();
 	var count = 0;
 	orders.forEach(function(order){
@@ -329,14 +320,14 @@ router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { 
 	if(count == 0){
 		Product.findById(req.params.id,function(err, foundProduct){
 			if(err){
-				console.log(err);
+				logger.error("Error: ", err);
 			} else {
 				foundProduct.images.forEach(async function(img){
 					var url = img.url.split("/");
 					var path = "./public/images/"+ req.params.type + "/" + url.pop();
 					await fs.unlink(path ,function(err){
 						if(err){
-							console.log(err);
+							logger.error("Error: ", err);
 						}
 					});
 				})
@@ -357,10 +348,9 @@ router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { 
 router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { session: false }), function(req ,res,next){
 	Product.find({_id : req.params.id }).populate("reviews").exec(async function(err, foundProducts){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 		    if(foundProducts[0]!= null){
-		    	console.log(foundProducts[0]);
 			    var images = foundProducts[0].images;  		    	
 			    return res.render("products/edit", {product: foundProducts[0],images :images});
 		    } else{
@@ -385,10 +375,9 @@ router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate
 
 	Product.update({type: req.params.type, _id : req.params.id}, req.autosan.body, function(err , updateProduct){
 		if(err){
-			console.log("Got to error");
+			logger.error("Error: ", err);
 			res.redirect("back");
 		}else{
-			//console.log(updateProduct);
 			res.redirect("/products/"+ req.params.type+"?page=0");
 		}
 	});
@@ -399,9 +388,8 @@ router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate
 router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.find({type: req.params.type, _id : req.params.id}, function(err, products){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
-			console.log(products);
 			products.forEach(function(foundProduct){
 				if(foundProduct.status == "active"){
 					foundProduct.status = "hidden";
@@ -420,7 +408,7 @@ router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { sess
 router.post("/products/:type/:id/hideSize/:size" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 			foundProduct.sizes.forEach(function(size){
 			if(size.size == req.params.size){	
@@ -459,10 +447,9 @@ router.post("/products/:type/:id/deleteColor/:color" ,passport.authenticate('jwt
 router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
 	Product.findOne({type: req.params.type, _id : req.params.id}, function(err,product){
 		if(err){
-			console.log(product);
+			logger.error("Error: ", err);
 			res.redirect("/products/"+ req.params.type);
 		} else{
-			console.log(product);
 			product.colors.forEach(function(color){
 				if(color.colorHex == "#"+req.params.color){	
 					if(color.colorStatus == "active"){
@@ -484,7 +471,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 	req.autosan.body = trimBody(req.autosan.body);
 	Product.find({_id : req.params.id}, function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
 
 		    if(foundProduct[0]!= null){
@@ -514,7 +501,7 @@ router.post("/products/:type/:id/review",sanitization.route, middleware.rating, 
 							rating: req.autosan.body.rating
 						}, function(err, review){
 							if(err){
-								console.log(err);
+								logger.error("Error: ", err);
 							}else{
 								foundProduct[0].reviews.push(review);
 								foundProduct[0].reviewCount = foundProduct[0].reviewCount + 1;
@@ -536,23 +523,15 @@ router.post("/products/:type/:id/add" , sanitization.route, function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
 	Product.find( {_id : req.params.id}, function(err, foundProduct){
 		if(err){
-			console.log(err);
+			logger.error("Error: ", err);
 		} else {
-			console.log(foundProduct);
 			if(foundProduct[0]!=null){
 				var cart = new Cart(req.session.cart ? req.session.cart : {});
           		var quantity = req.body.qty ? req.body.qty : 1;
           		let qty = quantity < 10 ? quantity % 10 : quantity % 100;
-          		console.log("qty:"+qty);
 				cart.add(foundProduct[0], qty , req.autosan.body.size , req.autosan.body.color);
 				req.session.cart = cart;
 				req.session.productList = cart.productList();
-
-				console.log("_SessionCart_");
-				console.log(req.session.cart);
-				console.log("_ProductList_");
-				console.log(req.session.productList);
-
 				res.redirect("back");
 			}
 		}

@@ -46,14 +46,12 @@ function trimBody(inside){
   Object.keys(inside).forEach(function(key,index) {
     inside[key].trim();
   });
-  console.log("inside: " + inside);
   return inside;
 }
 
 middlewareObj.cart = function (req , res ,  next){
   req.body = trimBody(req.body);
   cart = req.session.cart;
-  console.log(cart);
   body = req.body
   res.send({cart : cart , body : body });
 }
@@ -183,7 +181,6 @@ middlewareObj.emailExists = async function (req , res ,  next){
   var google = await User.findOne({ "google.email": req.autosan.body.email});
   var facebook = await User.findOne({ "facebook.email": req.autosan.body.email});
   var local = await User.findOne({ "local.email": req.autosan.body.email});
-  console.log("im here");
   if(!google && !facebook && !local){
      return next();
   }
@@ -249,7 +246,6 @@ middlewareObj.phone = function (req , res ,  next){
           method : req.autosan.body.method,
           error: {type : "regError" , message : "To τηλέφωνο δεν έχει τη σωστή μορφή" }
       }
-      console.log(res.app.locals.specialContext);
       req.flash("regError","To τηλέφωνο δεν έχει τη σωστή μορφή");
       res.redirect("back");   
     }     
@@ -333,13 +329,9 @@ middlewareObj.validateCart = async function (req , res ,  next){
     next();
   }else{
     let vcart = new Cart(cart);
-    console.log(notExist);
-    console.log(vcart);
     notExist.forEach( function(id){
       vcart.removeWholeProduct(id);
-      console.log(vcart);
     });
-    console.log(vcart);
     req.session.cart = vcart;
     req.session.productList = vcart.productList();
     next();
@@ -362,7 +354,6 @@ middlewareObj.validateCartVariants = async function (req , res ,  next){
     products[product_ids[i]].variants.forEach(function(item){
       var lol = false;
       lol = existCase(item, product);
-      console.log(lol);
       if(lol){
         var id = [product_ids[i],item.size,item.color];
         notExist.push(id);
@@ -421,17 +412,11 @@ middlewareObj.validateCartVariantsOrderComplete = async function (req , res ,  n
   var product_ids = await Object.keys(products);
   var notExist = [];
 
-  console.log("//////////")
-  console.log(products);
-
-
   for(i=0; i<product_ids.length; i++){
     var err,product = await Product.findById(product_ids[i]);
-    console.log( products[product_ids[i]]);
     products[product_ids[i]].variants.forEach(function(item){
       var lol = false;
       lol = existCase(item, product);
-      console.log(lol);
       if(lol){
         var id = [product_ids[i],item.size,item.color];
         notExist.push(id);
@@ -463,7 +448,6 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
     })
     var err,product = await Product.findById(product_ids[i]);
     if(product == null){
-      console.log("Το καλάθι αγορών δεν είναι έγκυρο. Κάτι πήγε στραβά");
       req.session.cart = null;
       req.session.productList= null;
       res.send({
@@ -479,7 +463,6 @@ middlewareObj.calculateDatabasePrice = async function (req , res ,  next){
   if(total === req.session.cart.totalPrice){
     next();
   }else{
-    console.log("Το καλάθι αγορών δεν είναι έγκυρο. Κάτι πήγε στραβά");
     req.session.cart = null;
     req.session.productList= null;
     res.send({

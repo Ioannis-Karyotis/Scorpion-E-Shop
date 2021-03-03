@@ -22,6 +22,9 @@ const express 		= require("express"),
 	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv"),
 	csp 			= require('helmet-csp'),
 	crypto 			= require("crypto"),
+	morgan 			= require('morgan'),
+	fs  			= require('fs'),
+	rfs 			= require('rotating-file-stream'),
 	dotenv 			= require('dotenv');
 
 
@@ -54,6 +57,14 @@ dotenv.config();
 	}
 });*/
 
+// create a rotating write stream
+var accessLogStream = rfs.createStream('Access.log', {
+	interval: '1d', // rotate daily
+	path: path.join(__dirname, 'log')
+  })
+
+// setup the logger
+app.use(morgan('dev', { stream: accessLogStream }))
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
@@ -118,7 +129,6 @@ app.use(function(req, res, next){
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
 	res.locals.nonce 	   = crypto.randomBytes(16).toString("hex");
-	res.locals.nonceStyles = crypto.randomBytes(16).toString("hex");
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
@@ -190,9 +200,9 @@ app.use(function(req, res) {
 	res.render('404.ejs', {title: '404: File Not Found'});
 });
 
-//Handle 500
-// app.use(function(error, req, res, next) {
-//   	res.status(500);
-// 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
-// });
+// Handle 500
+app.use(function(error, req, res, next) {
+  	res.status(500);
+	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+});
 module.exports = app;

@@ -12,6 +12,7 @@ const express 			 = require("express"),
 	  bodyParser 		 = require("body-parser"),
 	  dotenv 			 = require('dotenv'),
 	  sanitization		 = require('express-autosanitizer'),
+	  logger          	 = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  bouncer 			 = require ("express-bouncer")(900000, 900000, 10);
 
 
@@ -93,7 +94,7 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 	newUser.setPassword(req.autosan.body.password);
 	newUser.save(function(err){
 		if(err){
-			console.log(err.message);
+			logger.error("Error: ", err);
 		}
 		//Generate the token
     	const token = signToken(newUser);
@@ -123,7 +124,7 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 	function(req, res, next) {
 		// handle success
 		if(req.user.local.priviledge == "Admin"){
-			console.log("inside");
+			logger.info("Admin has logged in!!!");
 			const token = signAdminToken(req.user);
 			res.cookie('admin_token', token, {
 	  			httpOnly: true,

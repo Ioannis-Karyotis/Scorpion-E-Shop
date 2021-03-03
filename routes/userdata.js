@@ -72,7 +72,6 @@ router.get("/deletion/:identifier", function(req, res){
             res.redirect('back');
         }
         if(foundDeletion != null){
-            console.log(foundDeletion);
             res.render('dataDeletion',{ deletion: foundDeletion[0] });
         }else{
             res.redirect('back');

@@ -7,6 +7,7 @@ const   app 	 	= require('./app'),
 	  stripesk        = require("stripe")(SECRET_STRIPE),
 	  fs 	 	      = require("fs"),
         http            = require('http'),
+        logger          = require('simple-node-logger').createSimpleLogger('Logs.log'),
         https           = require('https');
 
 dotenv.config();
@@ -20,25 +21,27 @@ if (process.env.URL && process.env.CONTENT) {
 cron.schedule("0 */2 * * *", function() {
       Untracked.find({},function(err,untrackedPaymentIntents){
       	if(err){
-          	console.log(err)
+                  logger.info("No untracked payment intents.")
       	}else{
-      		console.log(untrackedPaymentIntents);
+      		logger.warn("Found untracked payment intents.")
       		untrackedPaymentIntents.forEach(async function(track){
       			await stripesk.paymentIntents.cancel(track.paymentIntentId);
       			await Untracked.deleteOne(track);
+                        logger.info("Deleted : " + track);
       		})
       	}
       })
       var date = new Date();
       User.find({"local.forgotValidUntil" : { $lt : date}},function(err, users){
       	if(err){
-          	console.log(err)
+                  logger.info("No Users pending for reset password : ");
       	}else{
       		users.forEach(async function(user){
       			user.local.forgotPassHash = null;
  				user.local.forgotPassSalt = null;
  				user.local.forgotValidUntil = null;
  				user.save();
+                        logger.info("Deleted User's "+ user._id + "hashes for reset password");
       		})
       	}
       });
@@ -46,32 +49,17 @@ cron.schedule("0 */2 * * *", function() {
 
 
 if(process.env.ENV == "production") {
-      // Certificate
-      /*const privateKey = fs.readFileSync('/etc/letsencrypt/live/scorpionclothing.gr/privkey.pem', 'utf8');
-      const certificate = fs.readFileSync('/etc/letsencrypt/live/scorpionclothing.gr/cert.pem', 'utf8');
-      const ca = fs.readFileSync('/etc/letsencrypt/live/scorpionclothing.gr/chain.pem', 'utf8');
-
-      const credentials = {
-            key: privateKey,
-            cert: certificate,
-            ca: ca
-      };*/
-
-      // Starting both http & https servers
       const httpServer = http.createServer(app);
-      //const httpsServer = https.createServer(credentials, app);
-
       httpServer.listen(process.env.PORT, 'localhost', () => {
-            console.log('HTTP Server running on port 8080');
+            logger.info("Running on Production at port: 8080");
       });
 
-      /*httpsServer.listen(443, () => {
-            console.log('HTTPS Server running on port 443');
-      });*/
+      
+
 }else{
       const port = process.env.PORT || 3000;
       app.listen(port);
-      console.log(`Server listening at ${port}`);
+      logger.info("Running on Development at port: ",port);
 } 
 
 

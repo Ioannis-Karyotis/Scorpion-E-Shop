@@ -13,7 +13,6 @@
     <h3 class="pb-4"><i><u>Το καλάθι σου</u></i></h3>
     <% session.productList.forEach(function(prd){ %>
     <% var id = prd.product._id%>
-    <% console.log(prd)%>
       <% prd.variants.forEach(function(item){%>
       <div class="row d-flex justify-content-start mt-2 mb-4 mx-2">
         <div class="col-md-12 col-12 jumbotron-mini align-left">

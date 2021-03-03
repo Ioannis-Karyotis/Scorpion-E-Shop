@@ -116,12 +116,6 @@ function removeProduct(){
 
 	http.onreadystatechange = function(){
 		if(http.readyState == 4 && http.status ==200){
-			// var resp = request.responseText;
-	    // var parser = new DOMParser();
-	    // var xmlDoc = parser.parseFromString(resp,"text/html");
-	    // var tds = xmlDoc.getElementById("cart-id");
-	    // console.log(xmlDoc);
-	    // document.getElementById('cart-id').innerHTML = tds.innerHTML;
 			window.location.reload();
 		}
 	}

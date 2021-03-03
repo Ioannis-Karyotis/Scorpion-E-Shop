@@ -62,7 +62,6 @@ myNavBar.init(  [
 function offSetManager(){
 
     var yOffset = document.getElementById("logo-nav").offsetTop + document.getElementById("logo-nav").offsetHeight
-    console.log(yOffset);
     var currYOffSet = window.pageYOffset;
 
     if(yOffset < currYOffSet) {
@@ -82,7 +81,6 @@ function offSetManager(){
 
 function offSetManager2(){
     var yOffset = document.getElementById("logo-nav").offsetTop + document.getElementById("logo-nav").offsetHeight
-    console.log(yOffset);
     var currYOffSet = window.pageYOffset;
 
     if(yOffset < currYOffSet) {

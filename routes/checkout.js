@@ -12,6 +12,7 @@ const express 			  = require("express"),
       middleware      = require("../middleware/index.js"),
       sanitization    = require('express-autosanitizer'),
       dotenv          = require('dotenv'),
+      logger          = require('simple-node-logger').createSimpleLogger('Logs.log'),
       objEncDec       = require('object-encrypt-decrypt');
       
 dotenv.config();
@@ -68,7 +69,7 @@ router.post("/post_order",middleware.calculateDatabasePrice, middleware.validate
       },
       async function(err, order){
         if(err){
-          console.log(err)
+          logger.error("Error: ", err);
         } else {
           var products= cart.products;
           var product_ids = await Object.keys(products);
@@ -138,7 +139,7 @@ router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.vali
       },
       async function(err, order){
         if(err){
-          console.log(err)
+          logger.error("Error: ", err);
         } else {
           var products= cart.products;
           var totalPrice = 0;
@@ -169,7 +170,6 @@ router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.vali
 
 
 router.post("/create-order",sanitization.route,middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
-    console.log("passed all middleware");
     res.send({result:"success"});
 })
 
@@ -179,10 +179,8 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
   const total = calculatePrice(req.session.cart.totalPrice);
   var paymentIntent = null;
   var untracked = await Untracked.count();
-  console.log("untracked is: " + untracked);
   try{
     if(req.cookies["stripe-gate"] === undefined){
-      console.log("Got old1 new case");
       paymentIntent = await stripesk.paymentIntents.create({
         amount: total,
         currency: currency
@@ -226,7 +224,6 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
 
     // 
     }else if(req.cookies["stripe-gate"] && objEncDec.decrypt(req.cookies["stripe-gate"]).amount != total){
-      console.log("Got old2 new case");
       paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
       paymentIntent = await stripesk.paymentIntents.update(paymentIntent.id,
         {
@@ -244,7 +241,6 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
        paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
     }
 
-    console.log("paymentIntent is: " + paymentIntent);
     // Send publishable key and PaymentIntent details to client
     res.send({
       publishableKey: PUBLIC_STRIPE,

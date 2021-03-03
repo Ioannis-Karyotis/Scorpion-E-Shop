@@ -2,3 +2,7 @@
 /public/images/**/
 #/public/images/
 /node_modules/**/
+Logs.log
+Logs.txt
+/log
+/log/

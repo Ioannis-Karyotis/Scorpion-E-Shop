@@ -7,8 +7,9 @@ const mongoose = require('mongoose'),
       {ExtractJwt } = require('passport-jwt'),
       User    = require("../models/user"),
       Admin    = require("../models/admin"),   
-      objEncDec     = require('object-encrypt-decrypt');
-      config = require('./index');
+      objEncDec     = require('object-encrypt-decrypt'),
+      config = require('./index'),
+      logger          = require('simple-node-logger').createSimpleLogger('Logs.log'),
       dotenv      = require('dotenv');
 
 dotenv.config();
@@ -54,14 +55,16 @@ passport.use('jwtAdmin', new JwtStrategy({
     process.nextTick(function(){
       Admin.findById(payload.sub._id , function(err,admin){
         if(err){
+          logger.error("Admin attempt failed");
           done(error, false);
         }
         if (!admin || !admin.validateAdminPassword(config.ADMIN_PASS)) {
-          console.log("admin doens't exist");
+          logger.error("Admin with id: ",payload.sub._id," was not found.");
           req.user = undefined;
           return done(null, false);
         }
         req.user = admin;
+        logger.info("Admin logged in success!!!");
         done(null, admin);
     });  
   });
@@ -81,11 +84,12 @@ passport.use('jwt', new JwtStrategy({
         }
       
         if (!user) {
-          console.log("user doens't exist");
+          logger.error("User with id: ",payload.sub," was not found.");
           req.user = undefined;
           return done(null, false);
         }
         req.user = user;
+        logger.error("User with id: ",payload.sub," has logged in.");
         done(null, user);
     });  
   });
@@ -110,7 +114,7 @@ passport.use('forgot_pass', new JwtStrategy({
           user.local.forgotPassSalt = null;
           user.local.forgotValidUntil = null;
           user.save();
-          console.log("Not authenticated");
+          logger.warn("Could not authenticate User");
           return done(null, false);
         }
         done(null, user);

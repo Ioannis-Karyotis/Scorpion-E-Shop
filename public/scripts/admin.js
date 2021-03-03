@@ -19,7 +19,6 @@ var verifyOrder =  async function(order){
         .then(function(result) {
             if(result.status  == 500){
               modal.style.display = "none";
-              console.log(result.status)
               alert("Κάτι πήγε Στραβά!!!!");
             }else{
               $('.circle-loader').toggleClass('load-complete');

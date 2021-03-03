@@ -74,7 +74,6 @@ function getTotalPrice(){
 var form = document.getElementById("payment-form");
 form.addEventListener("submit", function(event) { //Trigger the following event when the form button is pressed
   event.preventDefault();  // prevent the default form submit event ,which is redirecting the page
-  console.log("when pressing button");
  
   var formData= {  //collecting the values from the form
     name: document.getElementById("name").value,
@@ -117,11 +116,9 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
         })
         .then(function(result) {   
           clientSecret =null;
-          console.log(result);
           return result.json();
         })
         .then(function(data){
-          console.log(data);
           if(data.error){
               var modal2 = document.getElementById("StripeModal");
               modal2.style.display = "none";
@@ -152,7 +149,6 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
         })
         .then(function(result) {
           if (result.error) {
-            console.log(result.error);
             var modal2 = document.getElementById("StripeModal");
             modal2.style.display = "none";
             
@@ -291,9 +287,7 @@ var pay =async function(stripe, card, clientSecret) {
         receipt_email : document.getElementById("email").value
     })
     .then(function(result) {
-      console.log(result);
       if (result.error) {
-        console.log(result.error);
 
         if(result.error.code == "incomplete_number" || result.error.code == "incomplete_expiry" || result.error.code == "incomplete_cvc"){
           document.querySelector(".content-chk").classList.remove("hidden");

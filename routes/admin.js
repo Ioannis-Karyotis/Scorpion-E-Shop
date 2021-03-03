@@ -11,6 +11,7 @@ const express 		= require("express"),
 	  nodemailer 	= require('nodemailer'),
 	  ejs       	= require("ejs"),
 	  smtpTransport = require('nodemailer-smtp-transport'),
+	  logger         = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  transporter 	= nodemailer.createTransport({
 							host: "smtp.zoho.eu",
 							port: 465,
@@ -40,7 +41,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res){
 	Order.find({ }).populate("productList.product").exec(function(err , foundOrders ){
       	if(err){
-          	console.log(err)
+			logger.error("Error: ",err)
       	}else{
       		var orders = foundOrders.reverse();
 	        return res.render("admin", {orders : orders });
@@ -52,7 +53,7 @@ router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), func
 router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
 	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
 	    if (err) {
-			console.log(err);
+			logger.error("Error: ",err)
 			res.status(500).send("Failure Rendering ejs");
 	    } else {
 	        var mainOptions = {
@@ -64,13 +65,13 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 			};
 			transporter.sendMail(mainOptions, function(error, info){
 			  	if (error) {
-					console.log(error);
+					logger.error("Error: ",error)
 					res.status(500).send("Failure");
 			  	} else {
-			    	console.log('Email sent: ' + info.response);
+					logger.info('Email sent: ' , info.response);
 			    	Order.findById(req.autosan.body.order._id,function(err, foundOrder){
 						if(err){
-							console.log(err);
+							logger.error("Error: ",err)
 							res.status(500).send("Failure");
 						} else {
 							foundOrder.confirm = true;
@@ -87,7 +88,7 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
 	    if (err) {
-	        console.log(err);
+			logger.error("Error: ",err)
 	    } else {
 	        var mainOptions = {
 		  	from: String(config.EMAIL),
@@ -96,14 +97,13 @@ router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jw
 		  	html : data,
 		  	attachments: attachments
 			};
-			// console.log("html data ======================>", mainOptions.html);
 			transporter.sendMail(mainOptions, function(error, info){
 			  	if (error) {
-			    	console.log(error);
-			  	} else {
+					logger.error("Error: ",error)
+				} else {
 					Order.findById(req.autosan.body._id,function(err, foundOrder){
 						if(err){
-							console.log(err);
+							logger.error("Error: ",error)
 						} else {
 							foundOrder.complete = true;
 							foundOrder.save();
@@ -117,11 +117,9 @@ router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jw
 });
 
 router.post("/admin/deleteOrder/:id",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	//req.autosan.body = trimBody(req.autosan.body);
-	//console.log(req.autosan.body);
 	Order.deleteOne({ _id: req.params.id }, function(err) {
 	    if (err) {
-	        console.log(err.message);
+			logger.error("Error: ",err)
 	    }
 	    else {
 	        res.redirect("/admin");

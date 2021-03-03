@@ -6,6 +6,7 @@ const express 	    = require("express"),
       sanitization  = require('express-autosanitizer'),
       nodemailer    = require('nodemailer'),
       dotenv        = require('dotenv'),
+      logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
       transporter = nodemailer.createTransport
         ({
           host: "smtp.zoho.eu",
@@ -58,9 +59,10 @@ router.post("/contact",sanitization.route,middleware.namesur , middleware.email 
 	};
 	transporter.sendMail(mailOptions, function(error, info){
 	  	if (error) {
-	    	console.log(error);
+        logger.error("Error: ", error);
 	  	} else {
-	    	console.log('Email sent: ' + info.response);
+        logger.info("Email sent: ",  info.response);
+
 	    	req.flash("genSuccess","Το μήνυμα σας στάλθηκε με επιτυχία")
 	    	res.redirect('back');    		
 	  	}
