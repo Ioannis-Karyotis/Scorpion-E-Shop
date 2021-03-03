@@ -118,6 +118,7 @@ app.use(function(req, res, next){
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
 	res.locals.nonce 	   = crypto.randomBytes(16).toString("hex");
+	res.locals.nonceStyles = crypto.randomBytes(16).toString("hex");
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
@@ -142,7 +143,9 @@ app.use((req, res, next) => {
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
 					"'unsafe-inline'"],
 		imgSrc: ["'self'","data:"],
-		scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
+		scriptSrc: [`'nonce-${res.locals.nonce}'`,"'unsafe-inline'"],
+		objectSrc : ["'none'"],
+		"base-uri" : ["'self'"],
 		"script-src-attr" : ["'unsafe-inline'"]
 		}
 	})(req, res, next);

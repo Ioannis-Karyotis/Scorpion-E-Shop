@@ -27,9 +27,11 @@ $(document).ready(function() {
 }); 
 
 function showProgressNotification(){
-  var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
-  if(productsTotal > 0){
-    $('.toast').toast('show');
+  if(document.getElementById("productsPrice") != null){
+    var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
+    if(productsTotal > 0){
+      $('.toast').toast('show');
+    }
   }
 }
 
