@@ -20,6 +20,8 @@ const express 		= require("express"),
 	session			= require("express-session"),
 	mongoStore		= require('connect-mongo')(session),
 	stripe 			= require("stripe")("sk_test_KxwzeISn0eOZSyvQCSSHW6WQ00fsMakJLv"),
+	csp 			= require('helmet-csp'),
+	crypto 			= require("crypto"),
 	dotenv 			= require('dotenv');
 
 
@@ -51,6 +53,7 @@ dotenv.config();
 		next();
 	}
 });*/
+
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
@@ -114,9 +117,37 @@ app.use(function(req, res, next){
 	res.locals.regError    = req.flash("regError");
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
+	res.locals.nonce 	   = crypto.randomBytes(16).toString("hex");
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });
+
+app.use((req, res, next) => {
+	csp({
+	  directives: {
+		defaultSrc: ["'self'",
+					"https://fonts.gstatic.com",
+					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/webfonts/",
+					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
+					"https://js.stripe.com/v3/",
+					"https://www.google.com/"],
+		styleSrc : ["'self'",
+					"https://maxcdn.bootstrapcdn.com/",
+					"https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css",
+					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css",
+					"https://fonts.googleapis.com/",
+					"https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css",
+					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css",
+					"https://fonts.gstatic.com/",
+					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
+					"'unsafe-inline'"],
+		imgSrc: ["'self'","data:"],
+		scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
+		"script-src-attr" : ["'unsafe-inline'"]
+		}
+	})(req, res, next);
+});
+
 
 app.use(indexRoutes);
 app.use(userRoutes);

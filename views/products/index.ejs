@@ -34,10 +34,9 @@
                   </div>
                   <div class="card-footer">
                     <div class="row">
-                      <%  var name2 = product.name.slice(0,15); %>
                       <div class="col-10 d-flex justify-content-start" style="white-space: pre;">
                         <% if(product.name.length > 18){%>
-                        <p><%=name2 %>...</p>
+                        <p><%= product.name.slice(0,15); %>...</p>
                         <%}else{%>
                         <p><%= product.name %></p>
                         <% } %>
@@ -160,7 +159,7 @@
               </div>
               <div class="row mx-1 hide">
                 <div class="col-11 justify-content-start" align="center">
-                  <a style="color:#8AC8B0;cursor: pointer;" id="more<%= product._id %>" class="hidden" href="/products/<%=product.type %>/<%=product._id%>">Διάβασε περισσότερα</a>
+                  <a style="color:#8AC8B0;cursor: pointer;" id="more<%= product._id %>" class="hidden" href="/products/<%=product.type %>/<%=product.code%>">Διάβασε περισσότερα</a>
                 </div>
               </div>
 
@@ -185,8 +184,7 @@
                   <h6 class="pb-2" align="center"><b>Χρώμα:</b></h6>
                   <ul>
                     <div class="row d-flex justify-content-center" align="center">
-                      <% var i=0%>
-                      <% product.colors.forEach(function(match) { %>
+                      <% product.colors.forEach(function(match,i) { %>
                       <% if(match.colorStatus!="hidden"){ %>
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
@@ -196,7 +194,6 @@
                           </label>
                         </li>
                       </div>
-                      <% i = i + 1 %>
                       <% }%>
                       <%});%>
                     </div>
@@ -218,4 +215,4 @@
         </div>
       </div>
       <% }) %>
-      <script type="text/javascript" src="/scripts/products.js"></script>
+      <script nonce="9ouXM9MflQ27egHxWzjB" type="text/javascript" src="/scripts/products.js"></script>

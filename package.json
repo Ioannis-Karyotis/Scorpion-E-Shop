@@ -19,6 +19,7 @@
     "express-paginate": "^1.0.2",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
+    "helmet-csp": "^3.3.1",
     "http": "0.0.1-security",
     "https": "^1.0.0",
     "install": "^0.13.0",

@@ -137,83 +137,81 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
           }    
         })
       }else{
-        console.log("Got into stripe");
 
         changeLoadingState(true);
         var modal2 = document.getElementById("StripeModal");
         modal2.style.display = "block";
 
         
-          //document.querySelector("buttonPay").disabled = true; // Disable the button until we have Stripe set up on the page
-          fetch("/create-payment-intent", { // Make Post http request for creating the Payment Intent
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(orderData)
-          })
-          .then(function(result) {
-            if (result.error) {
-              console.log(result.error);
-              var modal2 = document.getElementById("StripeModal");
-              modal2.style.display = "none";
-              
-              var modal = document.getElementById("myModal");
-              modal.style.display = "block";
+        fetch("/create-payment-intent", { // Make Post http request for creating the Payment Intent
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(orderData)
+        })
+        .then(function(result) {
+          if (result.error) {
+            console.log(result.error);
+            var modal2 = document.getElementById("StripeModal");
+            modal2.style.display = "none";
+            
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
 
-              document.querySelector(".result3").classList.remove("hidden");
-              document.getElementById("errormsg").innerHTML = result.error.message;
-              statusChange('failed');
-            } 
-            return result.json();
-          })
-          .then(function(data) {
-            if(data.error){
-              var modal2 = document.getElementById("StripeModal");
-              modal2.style.display = "none";
-              
-              var modal = document.getElementById("myModal");
-              modal.style.display = "block";
+            document.querySelector(".result3").classList.remove("hidden");
+            document.getElementById("errormsg").innerHTML = result.error.message;
+            statusChange('failed');
+          } 
+          return result.json();
+        })
+        .then(function(data) {
+          if(data.error){
+            var modal2 = document.getElementById("StripeModal");
+            modal2.style.display = "none";
+            
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
 
-              document.querySelector(".result3").classList.remove("hidden");
-              document.getElementById("errormsg").innerHTML = data.error.message;
-              statusChange('failed');
-            }else{
-              return setupElements(data); //Setup the the card element along with the order data that were sent to the server
-            }
-          })
-          .then(function({ stripe, card, clientSecret, id }) {
-            changeLoadingState(false);
-            var form = document.getElementById("payment-form2");
-            form.addEventListener("submit", function(event2) { 
-              event2.preventDefault();
-              fetch("/check_cart", {
-                method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify(formData)
-                })
-                .then(function(result) {   
-                  return result.json();
-                })
-                .then(function(data){
-                  if(data.error){
-                      var modal2 = document.getElementById("StripeModal");
-                      modal2.style.display = "none";
-                      
-                      var modal = document.getElementById("myModal");
-                      modal.style.display = "block";
+            document.querySelector(".result3").classList.remove("hidden");
+            document.getElementById("errormsg").innerHTML = data.error.message;
+            statusChange('failed');
+          }else{
+            return setupElements(data); //Setup the the card element along with the order data that were sent to the server
+          }
+        })
+        .then(function({ stripe, card, clientSecret, id }) {
+          changeLoadingState(false);
+          var form = document.getElementById("payment-form2");
+          form.addEventListener("submit", function(event2) { 
+            event2.preventDefault();
+            fetch("/check_cart", {
+              method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+              })
+              .then(function(result) {   
+                return result.json();
+              })
+              .then(function(data){
+                if(data.error){
+                    var modal2 = document.getElementById("StripeModal");
+                    modal2.style.display = "none";
+                    
+                    var modal = document.getElementById("myModal");
+                    modal.style.display = "block";
 
-                      document.querySelector(".result3").classList.remove("hidden");
-                      document.getElementById("errormsg").innerHTML = data.error.message;
-                      statusChange('failed');
-                  }else{
-                    pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
-                  }
-                });  
+                    document.querySelector(".result3").classList.remove("hidden");
+                    document.getElementById("errormsg").innerHTML = data.error.message;
+                    statusChange('failed');
+                }else{
+                  pay(stripe, card, clientSecret);  //else call pay() to make payment and post to datababe via stripe help
+                }
+              });  
             })
-        })  
+          })  
       }     
   })
   .catch(function(error){ 
