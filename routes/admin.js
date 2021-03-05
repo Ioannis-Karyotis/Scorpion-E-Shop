@@ -1,6 +1,5 @@
 const express 		= require("express"),
 	  router 		= express.Router(),
-	//   middleware    = require("../middleware/index.js"),
 	  passport 		= require("passport"),
 	  JWT 			= require('jsonwebtoken'),
 	  config 		= require('../configuration'),
@@ -55,7 +54,6 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
-			res.header("x-api-key", req.session.xkey)
 			res.status(500).send("Failure Rendering ejs");
 	    } else {
 	        var mainOptions = {
@@ -68,19 +66,16 @@ router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtA
 			transporter.sendMail(mainOptions, function(error, info){
 			  	if (error) {
 					logger.error("Error: ",error)
-					res.header("x-api-key", req.session.xkey)
 					res.status(500).send("Failure");
 			  	} else {
 					logger.info('Email sent: ' , info.response);
 			    	Order.findById(req.autosan.body.order._id,function(err, foundOrder){
 						if(err){
 							logger.error("Error: ",err)
-							res.header("x-api-key", req.session.xkey)
 							res.status(500).send("Failure");
 						} else {
 							foundOrder.confirm = true;
 							foundOrder.save();
-							res.header("x-api-key", req.session.xkey)
 				    		res.status(200).send("Success");
 				    	}
 				    })		
