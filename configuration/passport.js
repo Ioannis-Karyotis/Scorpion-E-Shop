@@ -58,11 +58,11 @@ passport.use('jwtAdmin', new JwtStrategy({
           logger.error("Admin attempt failed");
           done(error, false);
         }
-        // if (!admin || !admin.validateAdminPassword(config.ADMIN_PASS)) {
-        //   logger.error("Admin with id: ",payload.sub._id," was not found.");
-        //   req.user = undefined;
-        //   return done(null, false);
-        // }
+        if (!admin || !admin.validateAdminPassword(config.ADMIN_PASS)) {
+          logger.error("Admin with id: ",payload.sub._id," was not found.");
+          req.user = undefined;
+          return done(null, false);
+        }
         req.user = admin;
         logger.info("Admin logged in success!!!");
         done(null, admin);
@@ -237,9 +237,11 @@ passport.use('local', new LocalStrategy({
             user={};
             return done(null, false);
           }
+          logger.info("Logged in as user");
           return done(null, user);
         });
       }else{
+        logger.info("Logged in as admin");
         return done(null,admin);
       }
     });      
