@@ -133,17 +133,18 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 			logger.info("Created Admin Cookie");
 			bouncer.reset(req);
 			return res.redirect("/admin");
+		}else{
+			const token = signToken(req.user);
+			res.cookie('access_token', token, {
+				  httpOnly: true,
+				  maxAge: 2* 60 * 60 * 1000
+	
+			});
+			bouncer.reset(req);
+			req.flash("genSuccess","You Successfully Logged In");
+			req.session.user = req.user;
+			return res.redirect("/user");
 		}
-		const token = signToken(req.user);
-		res.cookie('access_token', token, {
-	  		httpOnly: true,
-	  		maxAge: 2* 60 * 60 * 1000
-
-		});
-		bouncer.reset(req);
-		req.flash("genSuccess","You Successfully Logged In");
-		req.session.user = req.user;
-		return res.redirect("/user");
 	},
 	function(err, req, res, next) {
 		// handle error
