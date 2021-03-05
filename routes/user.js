@@ -155,7 +155,7 @@ router.get("/user/forgotYourPassword/:fpass" ,passport.authenticate('jwt', { ses
 });
 
 
-router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('jwt', { session: false }), function(req, res){
+router.delete("/user/deleteProfile",sanitization.route, middleware.checkOrigin, passport.authenticate('jwt', { session: false }), function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
 	User.remove({ _id: req.autosan.body.id },async function(err) {
 	    if (err) {
@@ -182,6 +182,7 @@ router.delete("/user/deleteProfile",sanitization.route, passport.authenticate('j
         }    
         res.cookie(prop, '', {expires: new Date(0)});
     }
+	res.header("x-api-key", req.session.xkey)
     res.send("ok");
 });
 

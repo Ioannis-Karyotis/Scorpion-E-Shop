@@ -48,7 +48,8 @@ function deleteProfile(id , email) {
     fetch("/user/deleteProfile", {
         method: "DELETE",  
         headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'x-api-key': window.sessionStorage.getItem("x-api-key")
       },
       body: JSON.stringify(userid)
     })
@@ -56,7 +57,8 @@ function deleteProfile(id , email) {
       $('.circle-loader').toggleClass('load-complete');
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
-      setTimeout(function() {
+      setTimeout(function(result) {
+        window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
         window.location.replace("/login");
       }, 2000);             
     })

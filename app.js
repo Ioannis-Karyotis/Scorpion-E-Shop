@@ -176,10 +176,12 @@ app.use(fpassRoutes);
 app.use(userdataRoutes);
 
 
-app.post("/get/resolution", function(req,res,next){
+app.post("/initializeClient", function(req,res,next){
 	req.session.width = req.body.w;
 	req.session.height = req.body.h;
-
+	req.session.xkey = crypto.randomBytes(20).toString("hex");
+	
+	res.header("x-api-key", req.session.xkey)
 	res.json({success : true});
 })
 

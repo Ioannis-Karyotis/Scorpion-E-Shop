@@ -13,10 +13,12 @@ var verifyOrder =  async function(order){
         method: "POST", 	
   			body: JSON.stringify(order2),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'x-api-key': window.sessionStorage.getItem("x-api-key")
         }
   		})
         .then(function(result) {
+            window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
             if(result.status  == 500){
               modal.style.display = "none";
               alert("Κάτι πήγε Στραβά!!!!");
@@ -44,11 +46,13 @@ var completeOrder = function(order){
   		fetch("/admin/completeOrder", {
         	method: "POST",  
          	headers: {
-    			"Content-Type": "application/json"
+    			"Content-Type": "application/json",
+          'x-api-key': window.sessionStorage.getItem("x-api-key")
   			},
   			body: JSON.stringify(order)
   		})
-        .then(function() {   
+        .then(function(result) {   
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
 	        $('.circle-loader').toggleClass('load-complete');
           $('.checkmark').toggle();
           document.querySelector(".wait").classList.add("hidden");
@@ -68,10 +72,12 @@ var deleteOrder = function(order){
     fetch("/admin/deleteOrder/" + order._id, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'x-api-key': window.sessionStorage.getItem("x-api-key")
       }
     })
-    .then(function() {   
+    .then(function(result) {
+      window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
       window.location.reload();
     }) 
   }

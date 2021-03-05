@@ -89,11 +89,13 @@ var deleteProduct = function(id,type){
 	if (r == true) {
     fetch("/products/"+ type +"/"+ id+ "/delete", {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
         },
         method: "DELETE"  
         })
-      .then(function(result) {   
+      .then(function(result) {
+        window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
         return result.json();
       }).then(function(data){
         if (data.error) {
@@ -112,9 +114,14 @@ var hideProduct = function(id,type){
 	var r = confirm("Are you sure");
 	if (r == true) {
   		fetch("/products/"+ type  +"/"+ id +"/hide", {
-          method: "post"  
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
+          },  
          })
-        .then(function() {   
+        .then(function(result) {  
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));      
 	        window.location.reload();
 	    })
 	}
@@ -125,9 +132,14 @@ var hideSize = function(id,type,size){
   var r = confirm("Are you sure");
   if (r == true) {
     fetch("/products/"+ type  +"/"+ id +"/hideSize/" + size, {
-        method: "post"
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          'x-api-key': window.sessionStorage.getItem("x-api-key")
+        },
        })
-      .then(function() {   
+      .then(function(result) {
+        window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
         window.location.reload();
     })
   }
@@ -138,9 +150,14 @@ var deleteColor = function(id,type,color){
   var r = confirm("Are you sure");
   if (r == true) {
       fetch("/products/" + type + "/" + id + "/deleteColor/" + color.substring(1), {
-          method: "post"  
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
+          }, 
          })
-        .then(function() {   
+        .then(function(result) {
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
           window.location.reload();
       })
   }
@@ -151,9 +168,14 @@ var hideColor = function(id,type,color){
   var r = confirm("Are you sure");
   if (r == true) {
       fetch("/products/" + type + "/" + id + "/hideColor/" + color.substring(1), {
-          method: "post"  
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
+          },  
          })
-        .then(function() {   
+        .then(function(result) {
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
           window.location.reload();
       })
   }
@@ -164,9 +186,14 @@ var deleteImage = function(id,type,name){
   var r = confirm("Are you sure");
   if (r == true) {
       fetch("/products/" + type + "/" + id + "/deleteImage/" + name, {
-          method: "post"  
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
+          },  
          })
-        .then(function() {   
+        .then(function(result) {
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
           window.location.reload();
       })
   }

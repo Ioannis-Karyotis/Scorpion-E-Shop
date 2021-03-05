@@ -1,7 +1,8 @@
 const middlewareObj = {},
+      crypto 			  = require("crypto"),
       User          = require("../models/user"),
       Cart          = require("../models/cart"),
-      Product       = require("../models/product");
+      Product       = require("../models/product"),
       sizes 		    = require('../configuration/sizes');
   
 
@@ -486,5 +487,17 @@ middlewareObj.sameEmail = async function (req , res ,  next){
   }
 }
 
+middlewareObj.checkOrigin = async function (req , res ,  next){
+  if(req.session.xkey != undefined && req.header('x-api-key') != undefined && req.session.xkey == req.header('x-api-key')){
+    req.session.xkey = crypto.randomBytes(20).toString("hex");
+    next();
+  }else{
+    res.send({
+      error : {
+        message : "Μη έγκυρη πηγή"
+      }
+    });
+  }
+}
 
 module.exports = middlewareObj;

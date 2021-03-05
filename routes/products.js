@@ -165,7 +165,7 @@ router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { s
 	res.render("products/addColors",{type: req.params.type ,id : req.params.id});
 });
 
-router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+router.post("/products/:type/:id/addColors" ,middleware.checkOrigin,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			logger.error("Error: ", err);
@@ -177,6 +177,8 @@ router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', {
 			}
 			foundProduct.colors.push(newColor);
 			foundProduct.save();
+
+			res.header("x-api-key", req.session.xkey)
 			res.redirect('/products/'+ req.params.type + '/' + req.params.id );
 		}
 	});
@@ -231,12 +233,13 @@ router.post("/products/:type/:id/addImages" ,multer({ storage: storage, fileFilt
 			foundProduct.images.push(image);
 			  
 			foundProduct.save();
+			res.header("x-api-key", req.session.xkey)
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
 		}
 	});
 })
 
-router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
+router.post("/products/:type/:id/deleteImage/:name" , middleware.checkOrigin, function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			logger.error("Error: ", err);
@@ -256,6 +259,7 @@ router.post("/products/:type/:id/deleteImage/:name" , function(req, res, next){
 				}
 				index = index + 1;
 			})
+			res.header("x-api-key", req.session.xkey);
 			res.redirect("/products/"+ req.params.type + "/" + foundProduct._id);
 		}
 	});
@@ -307,7 +311,7 @@ router.get("/products/:type/:code", function(req ,res,next){
 });
 
 
-router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+router.delete("/products/:type/:id/delete" , middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
 	var orders = await Order.find({}).populate("productList.product").exec();
 	var count = 0;
 	orders.forEach(function(order){
@@ -335,12 +339,15 @@ router.delete("/products/:type/:id/delete" ,passport.authenticate('jwtAdmin', { 
 		});
 		Product.deleteOne({type: req.params.type, _id : req.params.id}, function(err){
 			if(err){
+				res.header("x-api-key", req.session.xkey)
 				res.send({ success:  "success" });
 			} else{
+				res.header("x-api-key", req.session.xkey)
 				res.send({ success:  "success" });
 			}
 		});
 	}else{
+		res.header("x-api-key", req.session.xkey)
 		res.send({ error: "Το Προιον υπάρχει σε Αναμένουσα παραγγελία" });
 	}	
 });
@@ -385,7 +392,7 @@ router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate
 
 
 
-router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+router.post("/products/:type/:id/hide" ,  middleware.checkOrigin,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.find({type: req.params.type, _id : req.params.id}, function(err, products){
 		if(err){
 			logger.error("Error: ", err);
@@ -399,13 +406,14 @@ router.post("/products/:type/:id/hide" ,passport.authenticate('jwtAdmin', { sess
 					foundProduct.save();
 				}
 			})
+			res.header("x-api-key", req.session.xkey)
 			res.redirect('products/'+ req.params.type)
 		}
 	});
 });
 
 
-router.post("/products/:type/:id/hideSize/:size" ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
+router.post("/products/:type/:id/hideSize/:size" ,  middleware.checkOrigin ,passport.authenticate('jwtAdmin', { session: false }),  function(req, res){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			logger.error("Error: ", err);
@@ -421,12 +429,13 @@ router.post("/products/:type/:id/hideSize/:size" ,passport.authenticate('jwtAdmi
 					}
 				}
 			})
+			res.header("x-api-key", req.session.xkey)
 			res.redirect('products/'+ req.params.type + '/' + foundProduct.name);
 		}
 	});
 });
 
-router.post("/products/:type/:id/deleteColor/:color" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+router.post("/products/:type/:id/deleteColor/:color" ,middleware.checkOrigin ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
 	Product.findOne({type: req.params.type, _id : req.params.id}, function(err,product){
 		if(err){
 			res.redirect("/products/"+ req.params.type);
@@ -439,12 +448,13 @@ router.post("/products/:type/:id/deleteColor/:color" ,passport.authenticate('jwt
 				}
 				index = index + 1;
 			})
+			res.header("x-api-key", req.session.xkey)
 			res.redirect("/products/"+ req.params.type);
 		}
 	});;
 });
 
-router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
+router.post("/products/:type/:id/hideColor/:color" ,middleware.checkOrigin ,passport.authenticate('jwtAdmin', { session: false }),async function(req, res){
 	Product.findOne({type: req.params.type, _id : req.params.id}, function(err,product){
 		if(err){
 			logger.error("Error: ", err);
@@ -461,6 +471,7 @@ router.post("/products/:type/:id/hideColor/:color" ,passport.authenticate('jwtAd
 					}
 				}
 			})
+			res.header("x-api-key", req.session.xkey)
 			res.redirect("/products/"+ req.params.type);
 		}
 	});;

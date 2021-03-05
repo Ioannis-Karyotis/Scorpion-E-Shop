@@ -295,19 +295,19 @@
 		<div class="toast-body">
 			<% if(session.cart == null ){ %>
 				<% var priceNow = 0 %>
-				<div class="mx-auto desc" align="center">Θέλετε <%=30 - priceNow%> ευρώ για να επιτυχετε την Δωρεάν αποστολή</div>
+				<div class="mx-auto desc" align="center">Θέλετε ακόμα <%=30 - priceNow%> ευρώ για δωρεάν έξοδα αποστολής 🙄 🙄 🙄</div>
 				<div class="progress w-100 mt-4" style="border: 1px solid black;">
 					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow) %>/30 €</div>
 				</div>
 			<% }else if(session.cart !=null && session.cart.totalPrice < 30){ %>
 				<% var priceNow = session.cart.totalPrice %>
-				<div class="mx-auto desc" align="center">Θέλετε <%=30 - priceNow%> ευρώ για να επιτυχετε την Δωρεάν αποστολή</div>
+				<div class="mx-auto desc" align="center">Θέλετε ακόμα <%=30 - priceNow%> ευρώ για δωρεάν έξοδα αποστολής 🙄 🙄 🙄</div>
 				<div class="progress w-100 mt-4" style="border: 1px solid black;">
 					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow)%>/30 €</div>
 				</div>
 			<% }else{ %> 
 				<% var priceNow = session.cart.totalPrice %>
-				<div class="mx-auto desc" align="center">Συγχαρητήρια!!! Τα έξοδα αποστολής είναι Δωρεάν.</div> 
+				<div class="mx-auto desc" align="center">Τα έξοδα αποστολής έιναι πλέον δωρεάν 🥳 🥳 🥳</div> 
 				<div class="progress w-100 mt-4" style="border: 1px solid black;">
 					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width:100%">30/30 €</div>
 				</div>

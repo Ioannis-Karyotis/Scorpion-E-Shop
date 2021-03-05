@@ -32,11 +32,12 @@ function calculatePrice(ProductsPrice) {
 }
 
 
-router.post("/check_cart",middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
+router.post("/check_cart", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
+	res.header("x-api-key", req.session.xkey)
   res.send({result : "succeeded"});
 }) 
 
-router.post("/post_order",middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
+router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
 
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
@@ -70,6 +71,10 @@ router.post("/post_order",middleware.calculateDatabasePrice, middleware.validate
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
+          res.header("x-api-key", req.session.xkey)
+          res.send({
+            error : err.message
+          });
         } else {
           var products= cart.products;
           var product_ids = await Object.keys(products);
@@ -95,10 +100,12 @@ router.post("/post_order",middleware.calculateDatabasePrice, middleware.validate
   req.session.productList = null
   req.app.locals.specialContext = null;
   res.clearCookie('stripe-gate');
+
+  res.header("x-api-key", req.session.xkey)
   res.send({result : "succeeded"});
 })
 
-router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, sanitization.route,async function(req,res){
+router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, sanitization.route,async function(req,res){
   var method = "";
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
@@ -140,6 +147,10 @@ router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.vali
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
+          res.header("x-api-key", req.session.xkey)
+          res.send({
+            error : err.message
+          });
         } else {
           var products= cart.products;
           var totalPrice = 0;
@@ -164,17 +175,20 @@ router.post("/post_order_sent",middleware.calculateDatabasePrice,middleware.vali
   req.session.productList = null
   req.app.locals.specialContext = null;
   res.clearCookie('stripe-gate');
+
+	res.header("x-api-key", req.session.xkey)
   res.send({result : "succeeded"});
 })
 
 
 
-router.post("/create-order",sanitization.route,middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
-    res.send({result:"success"});
+router.post("/create-order",sanitization.route, middleware.checkOrigin ,middleware.namesur , middleware.email , middleware.phone ,middleware.address, function(req,res){
+	res.header("x-api-key", req.session.xkey)
+  res.send({result:"success"});
 })
 
 
-router.post("/create-payment-intent",sanitization.route, middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, async (req, res) => {
+router.post("/create-payment-intent",sanitization.route,middleware.checkOrigin ,middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, async (req, res) => {
   const { currency } = req.autosan.body;
   const total = calculatePrice(req.session.cart.totalPrice);
   var paymentIntent = null;
@@ -240,7 +254,7 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
     }else if(req.cookies["stripe-gate"] != undefined){
        paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);
     }
-
+	  res.header("x-api-key", req.session.xkey)
     // Send publishable key and PaymentIntent details to client
     res.send({
       publishableKey: PUBLIC_STRIPE,
@@ -248,6 +262,7 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
     });
   }
   catch(error){
+	  res.header("x-api-key", req.session.xkey)
     res.send({
       error : error
     });
@@ -294,7 +309,7 @@ router.post("/create-payment-intent",sanitization.route, middleware.calculateDat
   // .catch(function(err) { console.log(err.message); }); 
 // });
 
-router.get('/delete_cookie', function (req, res){
+router.get('/delete_cookie',  middleware.checkOrigin , function (req, res){
 
   res.clearCookie('stripe-gate');
   res.clearCookie('token');

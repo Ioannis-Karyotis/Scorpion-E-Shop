@@ -91,11 +91,13 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
   fetch('/create-order', { // check parameters through middleware that exist in this create-order post route;
     method: "POST",
     headers : { 
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-api-key': window.sessionStorage.getItem("x-api-key")
     },
     body: JSON.stringify(formData)
   })
   .then(function(response) {        
+    window.sessionStorage.setItem('x-api-key',response.headers.get('x-api-key'));
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
      throw new TypeError("Oops, we haven't got JSON!");//If the respnse is empty ,means not all middleware were passed .
@@ -111,12 +113,14 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
       fetch("/post_order_sent", {
         method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
           },
           body: JSON.stringify(formData)
         })
         .then(function(result) {   
           clientSecret =null;
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key')); 
           return result.json();
         })
         .then(function(data){
@@ -144,11 +148,13 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
         fetch("/create-payment-intent", { // Make Post http request for creating the Payment Intent
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key")
           },
           body: JSON.stringify(orderData)
         })
         .then(function(result) {
+          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));
           if (result.error) {
             var modal2 = document.getElementById("StripeModal");
             modal2.style.display = "none";
@@ -159,7 +165,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             document.querySelector(".result3").classList.remove("hidden");
             document.getElementById("errormsg").innerHTML = result.error.message;
             statusChange('failed');
-          } 
+          }
+          console.log(result.headers.get('x-api-key')) ;   
           return result.json();
         })
         .then(function(data) {
@@ -185,11 +192,13 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             fetch("/check_cart", {
               method: "POST",
                 headers: {
-                  "Content-Type": "application/json"
+                  "Content-Type": "application/json",
+                  'x-api-key': window.sessionStorage.getItem("x-api-key")
                 },
                 body: JSON.stringify(formData)
               })
-              .then(function(result) {   
+              .then(function(result) {
+                window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
                 return result.json();
               })
               .then(function(data){
@@ -319,11 +328,13 @@ var pay =async function(stripe, card, clientSecret) {
         fetch("/post_order", {
           method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              'x-api-key': window.sessionStorage.getItem("x-api-key")
             },
             body: JSON.stringify(result)
           })
-          .then(function(result) {   
+          .then(function(result) {
+            window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
             return result.json();
           })
           .then(function(data){
