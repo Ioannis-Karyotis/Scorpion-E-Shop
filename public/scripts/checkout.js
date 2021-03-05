@@ -17,6 +17,7 @@ function showProgressNotification(){
   var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
   if(productsTotal > 0){
     $('.toast').toast('show');
+    $('.toast').css('z-index', 4000);
   }
 }
 

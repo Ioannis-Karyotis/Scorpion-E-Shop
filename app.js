@@ -141,6 +141,7 @@ app.use((req, res, next) => {
 					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/webfonts/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
 					"https://js.stripe.com/v3/",
+					"https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js",
 					"https://www.google.com/"],
 		styleSrc : ["'self'",
 					"https://maxcdn.bootstrapcdn.com/",
@@ -155,7 +156,7 @@ app.use((req, res, next) => {
 		imgSrc: ["'self'","data:",
 				"https://platform-lookaside.fbsbx.com/platform/profilepic/",
 				"https://lh3.googleusercontent.com/"],
-		scriptSrc: [`'nonce-${res.locals.nonce}'`,"'unsafe-inline'"],
+		scriptSrc: [`'nonce-${res.locals.nonce}'`,"'unsafe-inline'","https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js"],
 		objectSrc : ["'none'"],
 		"base-uri" : ["'self'"],
 		"script-src-attr" : ["'unsafe-inline'"]

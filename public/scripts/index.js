@@ -8,3 +8,10 @@ $(document).ready(function() {
         },
     });
   }); 
+
+$( "html" ).click(function(e) {
+    if($(event.target).attr('class') != "openOnDemand" || $(event.target).attr('id') == "CartToggle"){
+        $('.openOnDemand').removeClass("show");
+        $('#CartToggle').attr("aria-expanded","false");
+    }
+});  

@@ -30,7 +30,8 @@ function showProgressNotification(){
   if(document.getElementById("productsPrice") != null){
     var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
     if(productsTotal > 0){
-      $('.toast').toast('show');
+      $('.openOnDemand').addClass("show");
+      $('#CartToggle').attr("aria-expanded","true");
     }
   }
 }

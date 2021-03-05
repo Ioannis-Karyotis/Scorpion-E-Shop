@@ -13,7 +13,13 @@ function removeLoader(){
 		element.classList.remove("loading-container");
 		footer.classList.remove("hidden");
 		element.classList.add("after-loading-container");
-  });  
+
+		//Scroll to Error In any case!!!
+		if (document.getElementById("error") != null) {
+			var elmnt = document.getElementById("error");
+			  elmnt.scrollIntoView();
+		}
+  	});  
 }
 
 

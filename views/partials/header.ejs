@@ -99,22 +99,22 @@
 				  <!--     </div> -->
 			      	<% } %>
 			      			<% if(!currentUser){ %>
-			      				<li  class="nav-item">
+			      				<li class="nav-item">
 			      			<% } else { %>
-								<li  class="nav-item">
+								<li class="nav-item">
 			      			<%}%>
 							
-								<span class="nav-link" href=""> <!-- span instead of a so that the links inside work-->
-									<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="nav-link openOnDemand" href=""> <!-- span instead of a so that the links inside work-->
+									<span id="CartToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<i  class="fas fa-shopping-cart badge-pill pl-1 ml-1">
-												<%if(session.cart){%>
-													<%if(session.cart.totalQuantity > 0){%>
-														<div class="redIndicator desc"><p id="cart-glyphicon"><%=session.cart.totalQuantity%></p></div>
-													<%}%>
+											<%if(session.cart){%>
+												<%if(session.cart.totalQuantity > 0){%>
+													<div class="redIndicator desc"><p id="cart-glyphicon"><%=session.cart.totalQuantity%></p></div>
 												<%}%>
+											<%}%>
 										</i>
 									</span>
-									<div class="dropdown-menu dropdown-menu-right cart-fonts">
+									<div class="dropdown-menu dropdown-menu-right cart-fonts openOnDemand">
 								    <%if(session.productList && session.productList.length > 0){ %>
 									<div class="align-center" >
 										<div id="quick_total_qty" class="col-12 total-quantity-info px-1" >
@@ -190,6 +190,22 @@
 									<a class="align-center btn btn-primary btn-lg btn-block" href="/cart">
 										Μεταβαση στο καλαθι
 									</a>
+									<hr class="thin">
+									<div class="row my-2 mx-1">
+										<% if(session.cart !=null && session.cart.totalPrice < 30){ %>
+											<% var priceNow = session.cart.totalPrice %>
+											<div class="mx-auto desc" align="center"><%=30 - priceNow%> ευρώ για Δωρεάν αποστολή</div>
+											<div class="progress w-100 mt-4" style="border: 1px solid black;">
+												<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow)%>/30 €</div>
+											</div>
+										<% }else if(session.cart !=null && session.cart.totalPrice >= 30){ %> 
+											<% var priceNow = session.cart.totalPrice %>
+											<div class="mx-auto desc" align="center">Δωρεάν Αποστολή</div> 
+											<div class="progress w-100 mt-4" style="border: 1px solid black;">
+												<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width:100%">30/30 €</div>
+											</div>
+										<% } %>
+									</div>
 								</div>
 								<%}else{ %>
 								<div class="align-center total-quantity-info px-1">
@@ -269,7 +285,7 @@
 	<% if(session.cart !=null){ %> 
   		<span  id="productsPrice" hidden><%=session.cart.totalPrice%></span>
 	<% } %> 
-	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: fixed; bottom: 3em; left: 1em; z-index:4!important;">
+	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="position: fixed; bottom: 3em; left: 1em;">
 	  <div class="toast-header">
 			<strong class="mx-auto"><b>Δωρεάν Αποστολή</b></strong>
 			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
