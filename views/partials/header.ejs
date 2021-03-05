@@ -191,16 +191,16 @@
 										Μεταβαση στο καλαθι
 									</a>
 									<hr class="thin">
-									<div class="row my-2 mx-1">
+									<div class="row my-2 mx-1 jumbotron-mini">
 										<% if(session.cart !=null && session.cart.totalPrice < 30){ %>
 											<% var priceNow = session.cart.totalPrice %>
-											<div class="mx-auto desc" align="center"><%=30 - priceNow%> ευρώ για Δωρεάν αποστολή</div>
+											<div class="desc"><h6 style="white-space: initial; word-wrap: break-word;">Θέλετε ακόμα <%=30 - priceNow%> ευρώ για δωρεάν έξοδα αποστολής 🙄 🙄 🙄</h6></div>
 											<div class="progress w-100 mt-4" style="border: 1px solid black;">
 												<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=30 - (30 - priceNow) %>" aria-valuemin="0" aria-valuemax="30" style="width:<%=(priceNow / 30 ) * 100 %>%"><%=30 - (30 - priceNow)%>/30 €</div>
 											</div>
 										<% }else if(session.cart !=null && session.cart.totalPrice >= 30){ %> 
 											<% var priceNow = session.cart.totalPrice %>
-											<div class="mx-auto desc" align="center">Δωρεάν Αποστολή</div> 
+											<div class="desc" ><h6 style="white-space: initial; word-wrap: break-word;">Τα έξοδα αποστολής έιναι πλέον δωρεάν 🥳 🥳 🥳</h6></div> 
 											<div class="progress w-100 mt-4" style="border: 1px solid black;">
 												<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width:100%">30/30 €</div>
 											</div>
