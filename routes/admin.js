@@ -1,6 +1,6 @@
 const express 		= require("express"),
 	  router 		= express.Router(),
-	  middleware    = require("../middleware/index.js"),
+	//   middleware    = require("../middleware/index.js"),
 	  passport 		= require("passport"),
 	  JWT 			= require('jsonwebtoken'),
 	  config 		= require('../configuration'),
@@ -51,7 +51,7 @@ router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), func
 });
 
 
-router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
+router.post("/admin/verifyOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
 	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
@@ -90,7 +90,7 @@ router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, pas
 	})
 });
 
-router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+router.post("/admin/completeOrder",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
 	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
@@ -121,7 +121,7 @@ router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, p
 	})
 });
 
-router.post("/admin/deleteOrder/:id",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
+router.post("/admin/deleteOrder/:id",sanitization.route, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
 	Order.deleteOne({ _id: req.params.id }, function(err) {
 	    if (err) {
 			logger.error("Error: ",err)
