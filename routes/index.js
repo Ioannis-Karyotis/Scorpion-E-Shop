@@ -127,17 +127,20 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 			logger.info("Admin has logged in!!!");
 			const token = signAdminToken(req.user);
 			res.cookie('admin_token', token, {
+				secure : true,
 	  			httpOnly: true,
 	  			maxAge: 2* 60 * 60 * 1000
 			});
 			logger.info("Created Admin Cookie");
+			console.log(req.user);
 			bouncer.reset(req);
-			return res.redirect("/admin");
+			res.redirect('back');
 		}else{
 			const token = signToken(req.user);
 			res.cookie('access_token', token, {
-				  httpOnly: true,
-				  maxAge: 2* 60 * 60 * 1000
+				secure : true,
+				httpOnly: true,
+				maxAge: 2* 60 * 60 * 1000
 	
 			});
 			bouncer.reset(req);
