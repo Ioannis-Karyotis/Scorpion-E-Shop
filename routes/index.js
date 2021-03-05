@@ -132,7 +132,7 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 			});
 			logger.info("Created Admin Cookie");
 			bouncer.reset(req);
-			res.redirect("/admin");
+			return res.redirect("/admin");
 		}
 		const token = signToken(req.user);
 		res.cookie('access_token', token, {
@@ -143,7 +143,7 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 		bouncer.reset(req);
 		req.flash("genSuccess","You Successfully Logged In");
 		req.session.user = req.user;
-		res.redirect("/user");
+		return res.redirect("/user");
 	},
 	function(err, req, res, next) {
 		// handle error
