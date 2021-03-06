@@ -45,7 +45,7 @@
 						<% if(currentUser.methods === "local"){ %>
 							<form id="changeFirst" action="/user/changeInitials?_method=PUT" method="POST"></form>
 							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
-							<button class="btn btn-primary my-4 firstp" onclick="showInputs1()"style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
+							<button class="showInputs1 btn btn-primary my-4 firstp" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
 							<button class="btn btn-primary my-4  firsti hidden" form="changeFirst" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
 							<!-- NAME -->
 							<h4 class="text-black pt-5">Όνομα</h4>
@@ -64,7 +64,7 @@
 			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
 			                <!-- PASSWORD -->
 			                <form id="changeSecond" action="/user/changePassword?_method=PUT" method="POST"></form>
-			                <button class="btn btn-primary my-4 secondp" onclick="showInputs2()" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
+			                <button class="showInputs2 btn btn-primary my-4 secondp" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
 			                <button class="btn btn-primary my-4 secondi hidden" form="changeSecond" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
 			                <h4 class="text-black pt-5">Κωδικός</h4>
 			                <p class="mb-0 text-black-75 secondp">***********</p>
@@ -72,7 +72,7 @@
 			                <input type="password" name="password2" form="changeSecond" placeholder="Επιβεβαίωση Παλιού Κωδικού" class="form-control mb-2 w-50 secondi hidden">
 			                <input type="password" name="passwordnew" form="changeSecond" placeholder="Καινούργιος Κωδικός" class="form-control mb-2 w-50 secondi hidden">
 			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
-			                <button class="btn btn-primary my-4" onclick="deleteProfile(<%= JSON.stringify(currentUser._id) %> , <%= JSON.stringify(currentUser.local.email) %>)" style="float: right;">Διαγραφη Λογαριασμου <i class="far fa-trash-alt fa-lg"></i></button>
+			                <button class="deleteProfile btn btn-primary my-4" value="<%=currentUser._id%>,<%=currentUser.local.email%>" style="float: right;">Διαγραφη Λογαριασμου <i class="far fa-trash-alt fa-lg"></i></button>
 			                
 			            <%}else{%>
 							<hr class=" mb-2 mt-5" style="margin-left: -1em;">

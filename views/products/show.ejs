@@ -12,9 +12,11 @@
             <% } else{ %>
             ">
             <% } %>
-            <div class='zoom' id='forZoom' style="cursor:zoom-in;" onclick="window.open('<%=images[key].url%>')">
-              <img id="Zoom" class="shownImage" src="<%=images[key].url%>" alt="">
-            </div>
+            <a href="<%=images[key].url%>" target="_blank">
+              <div class='zoom' id='forZoom' style="cursor:zoom-in;">
+                <img id="Zoom" class="shownImage" src="<%=images[key].url%>" alt="">
+              </div>
+            </a>
           </div>
           <% }) %>
         </div>
@@ -36,7 +38,7 @@
           <span  class="<%= images[key].colorTag %>" value="<%=key %>" hidden></span>
         </div>
         <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin") {%>
-        <button type="button" class="btn-danger d-flex justify-content-center align-items-center" style="height:1.5em; width:1.5em; margin-left:-10px;" onclick="deleteImage('<%=product._id%>','<%=product.type%>','<%=images[key].name%>')">
+        <button type="button" class="dltImg btn-danger d-flex justify-content-center align-items-center" style="height:1.5em; width:1.5em; margin-left:-10px;" value="<%=product._id%>,<%=product.type%>,<%=images[key].name%>">
           <i class="fas fa-times fa-lg" style="z-index: 0"></i>
         </button>
         <% } %>
@@ -113,9 +115,9 @@
             <div class="col-12 col-sm-6 mb-3" align="center">
               <h4><b>Ποσότητα:</b></h4>
               <div class="def-number-input number-input safari_only bg-white" style="height:2.2em;">
-                <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();" class="minus"></button>
+                <button type="button" class="stepDown minus"></button>
                 <input class="quantity" name="qty" type="number" value="1" max="99" min="1">
-                <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp();" class="plus"></button>
+                <button type="button" class="stepUp plus"></button>
               </div>
             </div>
           </div>
@@ -123,9 +125,9 @@
           <div class="row mt-2 d-flex justify-content-around">
             <% product.sizes.forEach(function(match) { %>
             <% if(match.sizeStatus=="hidden"){ %>
-            <label style="opacity: 0.8;"> <%=match.size%>  <button type="button" style="height:3em; text-align: center;"class="btn btn-secondary d-flex justify-content-center align-items-center" onclick="hideSize('<%=product._id%>','<%=product.type%>','<%=match.size%>')"> <i class="fas fa-eye"></i></button></label>
+            <label style="opacity: 0.8;"> <%=match.size%>  <button type="button" style="height:3em; text-align: center;"class="hideSize btn btn-secondary d-flex justify-content-center align-items-center" value="<%=product._id%>,<%=product.type%>,<%=match.size%>"> <i class="fas fa-eye"></i></button></label>
             <%} else if(match.sizeStatus=="active") { %>
-            <label> <%=match.size%><button style="height:3em; text-align: center;" type="button" class="btn btn-secondary d-flex justify-content-center align-items-center"onclick="hideSize('<%=product._id%>','<%=product.type%>','<%=match.size%>')"> <i class="fas fa-eye-slash"></i></button> </label>
+            <label> <%=match.size%><button style="height:3em; text-align: center;" type="button" class="hideSize btn btn-secondary d-flex justify-content-center align-items-center" value="<%=product._id%>,<%=product.type%>,<%=match.size%>"> <i class="fas fa-eye-slash"></i></button> </label>
             <% } %>
             <%});%>
           </div>
@@ -146,7 +148,7 @@
                   <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1 d-flex justify-content-center" align="center" >
                     <li class="mx-auto">
                       <label>
-                        <input form="buyForm" type="radio" name="color" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %> onclick="goToImage('<%= match.colorHex %>');">
+                        <input form="buyForm" type="radio" name="color" class="radioColor" value="<%= match.colorHex %>"<% if(i==0) {%> checked <% } %>>
                         <span class="swatch" style="background-color:<%= match.colorHex %>"></span>
                       </label>
                       <%}else if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin" && match.colorStatus =="hidden"){%>
@@ -159,19 +161,19 @@
                           <%}%>
                           <% if(currentUser!= null && currentUser[currentUser.methods].priviledge=="Admin"){ %>
                           <div>
-                            <button type="button" class=" btn-danger" style="height:2.5em; width:2.5em; text-align: center; " onclick="deleteColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                            <button type="button" class="deleteColor btn-danger" style="height:2.5em; width:2.5em; text-align: center;" value="<%=product._id%>,<%=product.type%>,<%=match.colorHex%>">
                               <i class="fas fa-times fa-lg"></i>
                             </button>
                           </div>
                           <% if(match.colorStatus=="hidden"){ %>
                           <div>
-                            <button type="button"  class=" btn-secondary " style="height:2.5em;width:2.5em; text-align: center; " onclick="hideColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                            <button type="button"  class="hideColor btn-secondary " style="height:2.5em;width:2.5em; text-align: center;" value="<%=product._id%>,<%=product.type%>,<%=match.colorHex%>">
                             <i class="fas fa-eye"></i>
                             </button>
                           </div>
                           <%}else{%>
                           <div>
-                            <button type="button"  class=" btn-secondary" style="height:2.5em;width:2.5em; text-align: center; " onclick="hideColor('<%=product._id%>','<%=product.type%>','<%=match.colorHex%>')">
+                            <button type="button"  class="hideColor btn-secondary" style="height:2.5em;width:2.5em; text-align: center;" value="<%=product._id%>,<%=product.type%>,<%=match.colorHex%>">
                             <i class="fas fa-eye-slash"></i>
                             </button>
                           </div>
@@ -268,8 +270,8 @@
                     <% slice.forEach(function(product){ %>
                     <div class="col-md-3 clearfix">
                         <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white; z-index : 0" >
-                          <div class="product-img" onclick="window.location='/products/<%=product.type %>/<%=product._id%>';">                      
-                            <img src="<%=product.images[0].urlSmall %>" class="card-img-top product-img" alt="" style="border-radius:0px; z-index : 0;cursor: pointer;" onclick="window.location='/products/<%=product.type %>/<%=product._id%>';">
+                          <div class="goToProduct product-img" value='/products/<%=product.type %>/<%=product._id%>'>                      
+                            <img src="<%=product.images[0].urlSmall %>" class="goToProduct card-img-top product-img" alt="" style="border-radius:0px; z-index : 0;cursor: pointer;" value='/products/<%=product.type %>/<%=product._id%>'>
                             <div class="middle">
                               <div class="text" style="z-index: 1!important;cursor: pointer;">Προβολή</div>
                             </div>

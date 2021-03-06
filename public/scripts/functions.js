@@ -170,6 +170,10 @@ function ScrollToTop(element){
 	window.scrollTo(0,0);
 }
 
+function ScrollToTopNav(){
+	window.scrollTo(0,0);
+}
+
 function clickedback(element){
 	element.style.backgroundColor = "#65A07B";
 }
@@ -177,3 +181,62 @@ function clickedback(element){
 function normalback(element){
 	element.style.backgroundColor = "#2D2B30";
 }
+// InLineScripts
+$( "html" ).click(function(e) {
+    if($(event.target).attr('class') != "openOnDemand" || $(event.target).attr('id') == "CartToggle"){
+        $('.openOnDemand').removeClass("show");
+        $('#CartToggle').attr("aria-expanded","false");
+    }
+});
+
+$('.quickRemoveProduct').click(function(event){
+	quickRemoveProduct(event);
+})
+
+$('.removeProduct').click(function(){
+	removeProduct();
+})
+
+$('.ScrollToTopNav').click(function(event){
+	ScrollToTopNav();
+})
+
+$('.scrollToTop').click(function(){
+	ScrollToTop(this);
+})
+
+$('.scrollToTop').mouseover(function(){
+	clickedback(this);
+})
+
+$('.scrollToTop').mouseout(function(){
+	normalback(this);
+})
+
+$('.phonecall').click(function(){
+	MakePhoneCall(this);
+})
+
+$('.phonecall').mouseover(function(){
+	clickedback(this);
+})
+
+$('.phonecall').mouseout(function(){
+	normalback(this);
+})
+
+$( ".stepDown" ).click(function(e) {
+	this.parentNode.querySelector('input[type=number]').stepDown();
+	qtyUpdate();
+  });
+  
+$( ".stepUp" ).click(function(e) {
+	this.parentNode.querySelector('input[type=number]').stepUp();
+	qtyUpdate();
+});
+
+$( ".quantity" ).change(function(e) {
+	qtyUpdate();
+});
+
+// InLineScripts

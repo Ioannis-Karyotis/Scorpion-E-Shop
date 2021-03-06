@@ -1,4 +1,23 @@
 
+//inline Scripts
+$( ".showInputs1" ).click(function(e) {
+  showInputs1();
+});
+
+$( ".showInputs2" ).click(function(e) {
+  showInputs2();
+});
+
+$( ".deleteProfile" ).click(function(e) {
+
+  var val = $(this).val().split(",");
+  console.log(val);
+  deleteProfile(val[0],val[1]);
+});
+
+//inline Scripts
+
+
 function showInputs1(){
 	ps =document.querySelectorAll(".firstp")
 	is =document.querySelectorAll(".firsti")
@@ -53,12 +72,12 @@ function deleteProfile(id , email) {
       },
       body: JSON.stringify(userid)
     })
-    .then(function() { 
+    .then(function(result) { 
+      window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
       $('.circle-loader').toggleClass('load-complete');
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
-      setTimeout(function(result) {
-        window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));        
+      setTimeout(function() {
         window.location.replace("/login");
       }, 2000);             
     })

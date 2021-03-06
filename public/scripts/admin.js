@@ -1,3 +1,24 @@
+// Inline Scripts
+
+$('.deleteOrder').click(function() {
+  var val = $(this).val();
+  deleteOrder(val);
+});
+
+$('.verifyOrder').click(function() {
+  var val = $(this).val();
+  verifyOrder(JSON.parse(val));
+});
+
+$('.completeOrder').click(function() {
+  var val = $(this).val();
+  completeOrder(JSON.parse(val));
+});
+// Inline Scripts
+
+
+
+
 var verifyOrder =  async function(order){
    	var txt;
   var r = prompt("Σε πόσες μέρες θα είναι έτοιμη η παραγγελία; ", "Βάλε έναν αριθμό");
@@ -65,11 +86,11 @@ var completeOrder = function(order){
 }
 
 
-var deleteOrder = function(order){
+var deleteOrder = function(id){
   var txt;
   var r = confirm("Are you sure");
   if (r == true) {
-    fetch("/admin/deleteOrder/" + order._id, {
+    fetch("/admin/deleteOrder/" + id, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

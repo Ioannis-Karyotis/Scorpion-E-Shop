@@ -136,13 +136,13 @@ app.use(function(req, res, next){
 app.use((req, res, next) => {
 	csp({
 	  directives: {
-		defaultSrc: ["'self'",
+		"default-src": ["'self'",
 					"https://fonts.gstatic.com",
 					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/webfonts/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
 					"https://js.stripe.com/v3/",
 					"https://www.google.com/"],
-		styleSrc : ["'self'",
+		"style-src" : ["'self'",
 					"https://maxcdn.bootstrapcdn.com/",
 					"https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css",
 					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css",
@@ -152,13 +152,12 @@ app.use((req, res, next) => {
 					"https://fonts.gstatic.com/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
 					"'unsafe-inline'"],
-		imgSrc: ["'self'","data:",
+		"img-src": ["'self'","data:",
 				"https://platform-lookaside.fbsbx.com/platform/profilepic/",
 				"https://lh3.googleusercontent.com/"],
-		scriptSrc: [`'nonce-${res.locals.nonce}'`,"'unsafe-inline'","https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js"],
-		objectSrc : ["'none'"],
-		"base-uri" : ["'self'"],
-		"script-src-attr" : ["'unsafe-inline'"]
+		"script-src": [`'nonce-${res.locals.nonce}'`,"https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js"],
+		"object-src" : ["'none'"],
+		"base-uri" : ["'self'"]
 		}
 	})(req, res, next);
 });

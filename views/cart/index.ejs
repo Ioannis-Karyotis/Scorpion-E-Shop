@@ -17,7 +17,7 @@
       <div class="row d-flex justify-content-start mt-2 mb-4 mx-2">
         <div class="col-md-12 col-12 jumbotron-mini align-left">
           <div class="container">
-            <button id="rmvc_<%=id%>,<%=item.size%>,<%=item.color%>" class="btn-danger btn-dangerous Xbutton" onclick="removeProduct()" style="z-index: 0;">
+            <button id="rmvc_<%=id%>,<%=item.size%>,<%=item.color%>" class="removeProduct btn-danger btn-dangerous Xbutton" style="z-index: 0;">
               <i class="fa fa-trash-alt"></i>
             </button>
             <div class="row d-flex justify-content-start">
@@ -51,9 +51,9 @@
                       <B>Ποσότητα:</B>
                     </div>
                     <div class="def-number-input number-input safari_only bg-white">
-                      <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();qtyUpdate()" class="minus"></button>
-                      <input id="<%=id%>,<%=item.size%>,<%=item.color%>" class="quantity" name="quantity" type="number" value="<%=item.quantity%>" min="1" onchange="qtyUpdate()">
-                      <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();qtyUpdate()" class="plus"></button>
+                      <button type="button" class="stepDown minus"></button>
+                      <input id="<%=id%>,<%=item.size%>,<%=item.color%>" class="quantity" name="quantity" type="number" value="<%=item.quantity%>" min="1">
+                      <button type="button" class="stepUp plus"></button>
                     </div>  
                   </div>
                   <div class="col-12 col-sm-3" align="center">

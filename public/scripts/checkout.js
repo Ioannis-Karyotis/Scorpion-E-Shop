@@ -21,6 +21,33 @@ function showProgressNotification(){
   }
 }
 
+//Inline Scripts
+
+$( ".buttonSelect1" ).click(function(e) {
+  buttonSelect(1);
+});
+
+$( ".buttonSelect2" ).click(function(e) {
+  buttonSelect(2);
+});
+
+$( ".buttonSelect3" ).click(function(e) {
+  buttonSelect(3);
+});
+
+$( ".relocate" ).click(function(e) {
+  relocate();
+});
+
+$( ".relocate2" ).click(function(e) {
+  relocate2();
+});
+
+$( ".quitModal" ).click(function(e) {
+  quitModal();
+});
+//Inline Scripts
+
 var stripe
 
 var orderData = { //orderData are being used for creating the Payment Intent

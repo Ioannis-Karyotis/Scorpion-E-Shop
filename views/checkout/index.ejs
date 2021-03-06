@@ -27,17 +27,17 @@
 	  				<h3 style="display: inline-block;">Η πληρωμή ολοκληρώθηκε</h2>
 					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς. Θα λάβετε σχετικό <b>e-mail</b> κατά τη λήψη της και την ολοκλήρωσή της</h5>
 					<h3 class="mt-5"  style="display: inline-block;">Σας ευχαριστούμε</h3><br>
-					<button style="float: right" class="btn btn-primary mt-2"onclick="relocate()">Ενταξει</button>	
+					<button style="float: right" class="relocate btn btn-primary mt-2">Ενταξει</button>	
 	  			</div>
 				<div class="desc result2 hidden">
 					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς. Θα λάβετε σχετικό <b>e-mail</b> κατά τη λήψη της και την ολοκλήρωσή της</h5>
 					<h3 class="mt-5"  style="display: inline-block;">Σας ευχαριστούμε</h3><br>
-					<button style="float: right"class="btn btn-primary mt-2"onclick="relocate()">Ενταξει</button>	
+					<button style="float: right"class="relocate btn btn-primary mt-2">Ενταξει</button>	
 	  			</div>
 	  			<div class="desc result3 hidden">
 	  				<h3 class="mb-3" style="display: inline-block;">Κάτι πήγε στραβά</h3>
 					<h5  id="errormsg"  style="display: inline-block;"></h5><br>
-					<button style="float: right"class="btn btn-primary mt-5"onclick="relocate2()">Ενταξει</button>	
+					<button style="float: right"class="relocate2 btn btn-primary mt-5">Ενταξει</button>	
 	  			</div>
 			</div>
 		</div>	
@@ -88,7 +88,7 @@
   		</div>
   		<div class="content-chk">
 	  		<div class="row d-flex justify-content-end" style="margin-top: -10px; margin-right: -22px;">
-				<a onclick="quitModal()" class="cancelbtn">
+				<a class="quitModal cancelbtn">
 					<i class="fas fa-times fa-lg"></i>
 				</a>
 	  		</div>
@@ -218,17 +218,17 @@
 		     	<div class="container">
 			     	<div class="form-check" align="left">
 						<label class="form-check-label">
-							<input id="pay" type="radio" form="payment-form" class="form-check-input" name="optradio" onclick="buttonSelect(1)" <% if(validated != null && validated.method == 1) {%> checked <%}else if(Object.keys(validated).length === 0) {%> checked <% }%>>Πληρωμή με κάρτα
+							<input id="pay" type="radio" form="payment-form" class="buttonSelect1 form-check-input" name="optradio" <% if(validated != null && validated.method == 1) {%> checked <%}else if(Object.keys(validated).length === 0) {%> checked <% }%>>Πληρωμή με κάρτα
 						</label>
 					</div>
 					<div class="form-check"  align="left">
 						<label class="form-check-label">
-							<input id="send" type="radio" form="payment-form" class="form-check-input" onclick="buttonSelect(2)" name="optradio"<% if(validated != null && validated.method == 2) {%> checked <%}%>> Πληρωμή με αντικαταβολή
+							<input id="send" type="radio" form="payment-form" class="buttonSelect2 form-check-input" name="optradio"<% if(validated != null && validated.method == 2) {%> checked <%}%>> Πληρωμή με αντικαταβολή
 						</label>
 					</div>
 					<div class="form-check"  align="left">
 						<label class="form-check-label">
-							<input id="sent" type="radio" form="payment-form" class="form-check-input" onclick="buttonSelect(3)" name="optradio" <% if(validated != null && validated.method == 3) {%> checked <%}%>>Παραλαβή απο το κατάστημα
+							<input id="sent" type="radio" form="payment-form" class="buttonSelect3 form-check-input" name="optradio" <% if(validated != null && validated.method == 3) {%> checked <%}%>>Παραλαβή απο το κατάστημα
 						</label>
 					</div>
 				</div>
