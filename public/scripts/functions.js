@@ -4,15 +4,6 @@ $(window).on('load', function(){
 });
 function removeLoader(){
     $( "#loadingDiv" ).fadeOut(800, function() {
-		// fadeOut complete. Remove the loading div
-		$( "#loadingDiv" ).remove(); //makes page more lightweight
-		var element = document.getElementById("page-container");
-		var footer  = document.getElementById("page-footer");
-		var wholepage = document.getElementsByTagName('html');
-		wholepage[0].classList.remove("NotScrollable");
-		element.classList.remove("loading-container");
-		footer.classList.remove("hidden");
-		element.classList.add("after-loading-container");
 
 		// Page is loaded
 		const objects = document.getElementsByClassName('asyncImage');
@@ -28,6 +19,16 @@ function removeLoader(){
 				item.style.backgroundImage = `url(${item.dataset.src})`;
 			};
 		});
+
+		// fadeOut complete. Remove the loading div
+		$( "#loadingDiv" ).remove(); //makes page more lightweight
+		var element = document.getElementById("page-container");
+		var footer  = document.getElementById("page-footer");
+		var wholepage = document.getElementsByTagName('html');
+		wholepage[0].classList.remove("NotScrollable");
+		element.classList.remove("loading-container");
+		footer.classList.remove("hidden");
+		element.classList.add("after-loading-container");
 
 		//Scroll to Error In any case!!!
 		if (document.getElementById("error") != null) {
