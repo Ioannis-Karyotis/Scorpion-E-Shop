@@ -165,7 +165,7 @@ router.get("/products/:type/:id/addColors",passport.authenticate('jwtAdmin', { s
 	res.render("products/addColors",{type: req.params.type ,id : req.params.id});
 });
 
-router.post("/products/:type/:id/addColors" ,middleware.checkOrigin,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
+router.post("/products/:type/:id/addColors" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
 	Product.findById(req.params.id,function(err, foundProduct){
 		if(err){
 			logger.error("Error: ", err);
