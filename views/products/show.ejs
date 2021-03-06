@@ -1,6 +1,6 @@
 <%- include("./../partials/header")%>
 
-<div id="main" class="main ninety mx-auto main pb-2 mb-5">
+<div id="main" class="main ninety mx-auto main mb-5">
   <div class="row mx-auto  my-4 pt-2 justify-content-center">
     <div class="col-lg-5 col-md-6 col-sm-12 col-12 mb-2 bg-white" >
       <div id="carouselExampleIndicators" class="carousel slide jumbotron-mini" style="padding:0px 0px;" data-ride="carousel">
@@ -323,7 +323,7 @@
         <% } %> 
         <hr class="pic thick mx-5 mt-5">
 
-        <div class="pb-5 pt-2 mb-4" style="background-color: white;">
+        <div class="pb-5 pt-2" style="background-color: white;">
           <div class="row mx-auto my-2 pb-4" style="text-align:center">
             <div class="mx-auto">
               <h1>
@@ -344,17 +344,17 @@
         <%}%>
         
         <% if(genError&& genError.length > 0){ %>
-        <div id="error" class="alert alert-danger mx-3 my-4 desc" role="alert">
+        <div id="error" class="container alert alert-danger mx-auto my-4 desc" role="alert">
           <span><%= genError %> </span>
         </div>
         <%}%>
         <% if(genSuccess&& genSuccess.length > 0){ %>
-        <div id="error" class="alert alert-success mx-3 my-4 desc" role="alert">
+        <div id="error" class="container alert alert-success mx-auto my-4 desc" role="alert">
           <%= genSuccess %>
         </div>
         <%}%>
         <!-- <div class="py-4"style="background:#F5F5F5;"> -->
-        <form id="review-form" class="mb-5 container mx-auto" action="/products/<%=product.type%>/<%=product._id%>/review" method="POST">
+        <form id="review-form" class="container mx-auto" action="/products/<%=product.type%>/<%=product._id%>/review" method="POST">
           <input type="hidden" name="productType" value="<%=product.type%>">
           <input type="hidden" name="productId" value="<%=product._id%>">
           <div class="form-row">
@@ -419,8 +419,11 @@
           </div>
         </form>
         <!-- </div>   -->
+        <div class="container ">
+          <hr class="thin">
+        </div>
         <%reviews.forEach(function(review){%>
-        <div class="px-4 py-1 mx-3 mb-2 container">
+        <div class="container px-4 py-1 mx-auto mb-2 review-container">
           <div class="row px-4  py-1">
             <img class="pic mr-2" src="<%= review.photo %>"  height="80" width="80"></img>
             <div class="pt-2 pl-2 mb-2">
