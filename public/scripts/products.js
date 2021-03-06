@@ -1,5 +1,4 @@
-$(document).ready(function() { 
-
+$(window).on('load', function(){
   // Page is loaded
   const objects = document.getElementsByClassName('asyncImage');
   Array.from(objects).map((item) => {
@@ -14,6 +13,9 @@ $(document).ready(function() {
       item.style.backgroundImage = `url(${item.dataset.src})`;
     };
   });
+});
+
+$(document).ready(function() { 
 
   if (document.getElementById("error") != null) {
     var elmnt = document.getElementById("error");
