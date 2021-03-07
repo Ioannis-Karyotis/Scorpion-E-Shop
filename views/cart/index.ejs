@@ -33,7 +33,7 @@
                   <% prd.product.images.forEach(image => { %>
                     <% if (image.colorTag == item.color) { %>
                       <a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">
-                        <img class="quick-cart-img" src="<%=image.url%>"></img>
+                        <img class="quick-cart-img int-img" src="<%=image.url%>"></img>
                       </a>
                     <% } %>
                   <%});%>

@@ -54,6 +54,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
         date : today,
         confirm: false,
         complete: false,
+        archived: false,
         details :{
           name : result[0],
           surname: result[1],
@@ -131,6 +132,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
         date : today,
         confirm: false,
         complete: false,
+        archived: false,
         details :{
           name : req.autosan.body.name,
           surname: req.autosan.body.surname,

@@ -16,17 +16,17 @@
 					<% orders.forEach(function(order){ %>
 						<div class="container-sm jumbotron-mini my-4">
 						<div class="container-sm">
-							<div class="row mb-2 d-flex justify-content-center">	
-								<span style="font-size: 14px;"><b>Ημερομηνία: </b><%=order.date %></span>
-							</div>	
-							<div class="row mb-2 justify-content-center desc">
+							<div class="row mb-2 justify-content-start desc">
 								<h5><b>ID παραγγελίας: </b></h5><span class="ml-2" style="font-size: 16px;"> <%=order._id %></span>
 							</div>
-							<div class="row mb-2 d-flex justify-content-center">
-							<span style="font-size: 14px;" ><b>Μέθοδος: </b><%=order.method %></span>
+							<div class="row mb-2 d-flex justify-content-start">	
+								<span style="font-size: 14px;"><b>Ημερομηνία: </b><%=order.date %></span>
+							</div>	
+							<div class="row mb-2 d-flex justify-content-start">
+								<span style="font-size: 14px;" ><b>Μέθοδος: </b><%=order.method %></span>
 							</div>	
 						</div>	
-						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
+						<hr class="thin">
 						<div class="row d-flex justify-content-around">
 							
 							<div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -42,28 +42,40 @@
 								<p><b>Νομός: </b><%= order.details.address.state%></p>
 							</div>
 						</div>
-						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
+						<hr class="thin">
 						<div class="row mb-2 d-flex justify-content-start">
 							<%order.productList.forEach(function(productlist){%>
-								<div class="col-12 col-sm-12 col-md-6 col-lg-6  mb-2 d-flex justify-content-center">
-									<div class="mr-2" style="border-left: 1px solid grey; height: 110px;"></div>	
-									<img class="mr-2" style="width:5em; height:7em;" src="<%=productlist.product.images[0].url %>" >
-									<div >
-										<p><b>Προϊόν: </b><%= productlist.product.name%></p>
-										<p><b>Κωδικός: </b><%= productlist.product.code%></p>
-										<p><b>Μέγεθος: </b><%=productlist.size%></p>
-										<p style="display: inline-block;"><b>Χρώμα: </b><div class="align-middle ml-2" style="background-color:<%=productlist.color%>;width:1.5em;height:1.5em; display: inline-block;"></div> </p>
-										<p><b>Ποσότητα: </b><%=productlist.quantity%></p>
+								<div class="col-12 col-sm-12 col-md-12 col-lg-12  mb-2 d-flex justify-content-center">
+									<div class="mr-2" style="border-left: 1px solid grey; height: 100%;"></div>
+									<div class="row d-flex justify-content-center">
+										<div class="col-md-2 col-4 mb-2">
+											<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
+												<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=productlist.product.images[0].url %>" >
+											</a>
+										</div>
+										<div class="col-md-10 col-8">
+											<div class="row d-flex justify-content-center">
+												<div class="col-lg-6 col-12">
+													<p><b>Προϊόν: </b><a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>"><%= productlist.product.name%></a></p>
+													<p style="display: inline-block;"><b>Χρώμα: </b></p><div class="ml-2" style="background-color:<%=productlist.color%>;display: inline-block; width:15px; height:15px;"></div>
+													<p><b>Μέγεθος: </b><%=productlist.size%></p>
+												</div>
+												<div class="col-lg-6 col-12">
+													<p><b>Κωδικός: </b><%= productlist.product.code%></p>
+													<p><b>Ποσότητα: </b><%=productlist.quantity%></p>
+													<p><b>Τιμή: </b><%=productlist.product.price%> €</p>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>					
+								</div>
+								<hr class="thin w-50">					
 							<%}) %>				
 						</div>
-						<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
 						<div class="row mb-1 d-flex justify-content-center">
 							<h4><B>Σύνολο: </B> <%=order.totalPrice%> €</h4>
 						</div>
-						</div>
-						<hr>	
+						</div>	
 					<%});%>
 				</div>
 			</div>

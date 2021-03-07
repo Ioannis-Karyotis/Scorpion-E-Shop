@@ -590,6 +590,10 @@ hr.normal{
     z-index : 20!important;
 }
 
+.int-img:hover{
+  opacity: 0.7;
+}
+
 /*==============*/
 /*    NavBar    */
 /*==============*/

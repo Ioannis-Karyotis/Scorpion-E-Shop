@@ -290,7 +290,7 @@ router.get("/products/:type/:code", function(req ,res,next){
 				}
 
 			    var images = foundProducts[0].images;
-				var err,recommendedP = await Product.find({}).sort({"rating": -1}).limit(8).exec();
+				var err,recommendedP = await Product.find({"status": "active" }).sort({"rating": -1}).limit(8).exec();
 
 				var recommendedResult = new Array(Math.ceil(recommendedP.length / n))
 				.fill()

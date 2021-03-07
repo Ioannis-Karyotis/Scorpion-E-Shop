@@ -6,6 +6,7 @@ var OrderSchema = new mongoose.Schema({
     date : String,
     confirm: Boolean,
     complete : Boolean,
+    archived : Boolean,
     details :{
       name : String,
       surname : String,

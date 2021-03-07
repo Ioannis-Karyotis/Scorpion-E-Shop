@@ -25,10 +25,11 @@
 </div>
 
 
-<div id="main" class="main my-4 container mb-5">
+<div id="main" class="main my-5 container py-4 mb-5">
+	<h4 align="center"><u>Τρέχουσες Παραγγελίες</u></h4>
 	<% if(currentUser){ %>
 	<% orders.forEach(function(order){ %>
-		<div class="row">
+		<div class="row mb-2">
 			<% if(order.confirm==true && order.complete==true){%>
 				<div  class="container mt-2 px-2 card-admin stripes">
 			<%}else{ %>
@@ -51,7 +52,7 @@
 						</div>
 					</div>
 				</div>	
-				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1); margin-top: -2px; ">
+				<hr class="thin">
 				<div class="row d-flex justify-content-around">
 					
 					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -67,23 +68,36 @@
 						<p><b>Νομός: </b><%= order.details.address.state%></p>
 					</div>
 				</div>
-				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
-				<div class="row d-flex justify-content-start">
+				<hr class="thin">	
+				<div class="row mb-2 d-flex justify-content-center">
 					<%order.productList.forEach(function(productlist){%>
-						<div class="col-12 col-sm-12 col-md-6 col-lg-6  mb-2 d-flex justify-content-center">
-							<div class="mr-2" style="border-left: 1px solid grey; height: 110px;"></div>	
-							<img class="mr-2" style="width:5em; height:7em;" src="<%=productlist.product.images[0].url %>" >
-							<div >
-								<p><b>Προϊόν: </b><%= productlist.product.name%></p>
-								<p><b>Κωδικός: </b><%= productlist.product.code%></p>
-								<p><b>Μέγεθος: </b><%=productlist.size%> </p>
-								<p style="display: inline-block;"><b>Χρώμα: </b><div class="align-middle ml-2" style="background-color:<%=productlist.color%>;width:1.5em;height:1.5em; display: inline-block;"></div> </p>
-								<p><b>Ποσότητα: </b><%= productlist.quantity%></p>
+						<div class="col-12 col-sm-12 col-md-12 col-lg-12  mb-2 d-flex justify-content-center">
+							<div class="mr-2" style="border-left: 1px solid grey; height: 100%;"></div>
+							<div class="row d-flex justify-content-center">
+								<div class="col-md-2 col-4 mb-2">
+									<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
+										<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=productlist.product.images[0].url %>" >
+									</a>	
+								</div>
+								<div class="col-md-10 col-8">
+									<div class="row d-flex justify-content-center">
+										<div class="col-lg-6 col-12">
+											<p><b>Προϊόν: </b><a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>"><%= productlist.product.name%></a></p>
+											<p style="display: inline-block;"><b>Χρώμα: </b></p><div class="ml-2" style="background-color:<%=productlist.color%>;display: inline-block; width:15px; height:15px;"></div>
+											<p><b>Μέγεθος: </b><%=productlist.size%></p>
+										</div>
+										<div class="col-lg-6 col-12">
+											<p><b>Κωδικός: </b><%= productlist.product.code%></p>
+											<p><b>Ποσότητα: </b><%=productlist.quantity%></p>
+											<p><b>Τιμή: </b><%=productlist.product.price%> €</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
+						<hr class="thin w-50">					
 					<%}) %>				
 				</div>
-				<hr style="border: 0.2px solid rgba(0, 0, 0, 0.1);margin-top: -2px;">
 				<div class="row mb-1 d-flex justify-content-center">
 					<h4><B>Σύνολο: </B> <%=order.totalPrice%> €</h4>
 				</div>
@@ -96,7 +110,7 @@
 			<div class="container my-2 button-div">
 				<div class="row d-flex justify-content-center">
 					<button class="deleteOrder btn btn-secondary order-btn mx-2" value="<%= order._id %>">
-						<i class="fas fa-trash-alt"></i> Διαγραφή  
+						<i class="fas fa-trash-alt"></i> Διαγραφη  
 					</button>   
 				<% if(order.confirm==true){%>
 					<button class="btn btn-success order-btn mx-2" disabled>
@@ -123,8 +137,7 @@
 
 			</div>
 		</div>
-		<hr style="border: 1px solid rgba(0, 0, 0, 0.1); ">
-	<%})%>
+		<%})%>
 	<% }%>
 </div>
 

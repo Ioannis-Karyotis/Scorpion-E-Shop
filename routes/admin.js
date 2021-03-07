@@ -40,7 +40,7 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 })
 
 router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	Order.find({ }).populate("productList.product").exec(function(err , foundOrders ){
+	Order.find({ "archived" : false}).populate("productList.product").exec(function(err , foundOrders ){
       	if(err){
 			logger.error("Error: ",err)
       	}else{
@@ -122,14 +122,27 @@ router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, p
 });
 
 router.post("/admin/deleteOrder/:id",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	Order.deleteOne({ _id: req.params.id }, function(err) {
-	    if (err) {
+	// Order.deleteOne({ _id: req.params.id }, function(err) {
+	//     if (err) {
+	// 		logger.error("Error: ",err)
+	//     }
+	//     else {
+	//         res.redirect("/admin");
+	//     }
+	// });
+
+	//Hide Order
+	Order.findById(req.params.id,function(err, foundOrder){
+		if(err){
 			logger.error("Error: ",err)
-	    }
-	    else {
-	        res.redirect("/admin");
-	    }
-	});
+			res.header("x-api-key", req.session.xkey)
+			res.status(500).send("Failure");
+		} else {
+			foundOrder.archived = true;
+			foundOrder.save();
+			res.redirect("/admin");
+		}
+	})		
 });
 
 module.exports = router;
