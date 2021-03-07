@@ -205,6 +205,7 @@ router.post("/create-payment-intent",sanitization.route,middleware.checkOrigin ,
       var date = new Date();
       date.setTime(date.getTime() + (600 * 1000));
       res.cookie('stripe-gate', objEncDec.encrypt(paymentIntent) , {
+        secure: true,
         expires: date,
         httpOnly: true
       });
@@ -251,7 +252,8 @@ router.post("/create-payment-intent",sanitization.route,middleware.checkOrigin ,
       res.cookie('stripe-gate', paymentIntent , {
         expires: date,
         httpOnly: true,
-        overwrite: true
+        overwrite: true,
+        secure : true
       });
     }else if(req.cookies["stripe-gate"] != undefined){
        paymentIntent = objEncDec.decrypt(req.cookies["stripe-gate"]);

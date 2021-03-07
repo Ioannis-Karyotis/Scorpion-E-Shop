@@ -100,6 +100,7 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
     	const token = signToken(newUser);
     	// Send a cookie containing JWT
     	res.cookie('access_token', token, {
+			secure: true,
       		httpOnly: true
     	});
 
@@ -195,6 +196,7 @@ router.get('/auth/facebook/callback',
 	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
 	    		// expires: new Date(Date.now() + 10),
+				secure: true,
 	      		httpOnly: true
 	    	});
 	    	res.redirect('/');
@@ -213,6 +215,7 @@ router.get('/auth/google/callback',
 	  		const token = signToken(req.user);
 	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
+				secure: true,
 	      		httpOnly: true
 	    	});
 	    	res.redirect('/');

@@ -79,7 +79,8 @@ router.post('/fpass',sanitization.route, middleware.email,  middleware.emailExis
  	const token = signToken(hashobj);
 	res.cookie('Change_Pass', token, {
 		maxAge: 0.1 * 60 * 60 * 1000 ,
-  		httpOnly: true
+  		httpOnly: true,
+		secure : true
 	});
 
  	ejs.renderFile(__dirname + "/../views/mail2.ejs",{hashobj : hashobj , rootserver:  process.env.ROOT , option: "mail3" ,order :null } , function (err, data) {
