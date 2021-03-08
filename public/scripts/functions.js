@@ -241,12 +241,12 @@ $('.phonecall').mouseout(function(){
 	normalback(this);
 })
 
-$( ".stepDown" ).click(function(e) {
+$( ".stepDownCart" ).click(function(e) {
 	this.parentNode.querySelector('input[type=number]').stepDown();
 	qtyUpdate();
   });
   
-$( ".stepUp" ).click(function(e) {
+$( ".stepUpCart" ).click(function(e) {
 	this.parentNode.querySelector('input[type=number]').stepUp();
 	qtyUpdate();
 });
