@@ -75,9 +75,13 @@
 							<div class="mr-2" style="border-left: 1px solid grey; height: 100%;"></div>
 							<div class="row d-flex justify-content-center">
 								<div class="col-md-2 col-4 mb-2">
-									<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
-										<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=productlist.product.images[0].url %>" >
-									</a>	
+									<% productlist.product.images.forEach(image => { %>
+										<% if (image.colorTag == item.color) { %>
+											<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
+												<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=image.url %>" >
+											</a>
+										<% } %>
+									<%});%>	
 								</div>
 								<div class="col-md-10 col-8">
 									<div class="row d-flex justify-content-center">
