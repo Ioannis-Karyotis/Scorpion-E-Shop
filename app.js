@@ -202,8 +202,8 @@ app.use(function(req, res) {
 });
 
 // Handle 500
-app.use(function(error, req, res, next) {
-  	res.status(500);
-	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
-});
+// app.use(function(error, req, res, next) {
+//   	res.status(500);
+// 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+// });
 module.exports = app;
