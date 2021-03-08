@@ -1,6 +1,7 @@
 $('#page-container').append('<div class="d-flex justify-content-center align-items-center" id="loadingDiv"><div class="circle-loader"><div class="checkmark draw"></div><div class="status draw"></div></div></div>');
 $(window).on('load', function(){
-  setTimeout(removeLoader, 0); //wait for page load PLUS two seconds.
+	document.title = 'Βιοτεχνία Scorpion' ;
+  	setTimeout(removeLoader, 0); //wait for page load PLUS two seconds.
 });
 function removeLoader(){
     $( "#loadingDiv" ).fadeOut(800, function() {
@@ -35,7 +36,17 @@ function removeLoader(){
 			var elmnt = document.getElementById("error");
 			  elmnt.scrollIntoView();
 		}
-  	});  
+  	});
+	
+	var i=0;
+	setInterval(function(){
+		var titles=[ 'Μη ξεχνάς 👇','Βιοτεχνία Scorpion'];//add more titles if you want
+		if(i===titles.length) {
+			i=0;
+		}
+		document.title = titles[i];
+		i++;
+	}, 4000);
 }
 
 
