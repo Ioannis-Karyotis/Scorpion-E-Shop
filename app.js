@@ -25,7 +25,7 @@ const express 		= require("express"),
 	morgan 			= require('morgan'),
 	fs  			= require('fs'),
 	rfs 			= require('rotating-file-stream'),
-	config 	      	= require('./configuration'),
+	configENV 	      	= require('./configuration'),
 	nodemailer   	= require('nodemailer'),
 	dotenv        	= require('dotenv'),
 	logger        	= require('simple-node-logger').createSimpleLogger('Logs.log'),
@@ -35,8 +35,8 @@ const express 		= require("express"),
 		port: 465,
 		secure: true, // true for 465, false for other ports
 		auth: {
-		  user:  String(config.EMAIL_ERRORS),
-		  pass: String(config.EMAIL_PASSWORD_ERRORS)
+		  user:  String(configENV.EMAIL_ERRORS),
+		  pass: String(configENV.EMAIL_PASSWORD_ERRORS)
 		}
 	  });
 
@@ -51,7 +51,8 @@ const indexRoutes 	 = require("./routes/index"),
 	  cartRoutes	 = require("./routes/cart"),
 	  customRoutes	 = require("./routes/custom"),
 	  fpassRoutes 	 = require("./routes/fpass"),
-	  userdataRoutes = require("./routes/userdata");
+	  userdataRoutes = require("./routes/userdata"),
+	  config 		 = require("./configuration/passport");
 
 
 
@@ -216,9 +217,10 @@ app.use(function(req, res) {
 
 //Handle 500
 app.use(function(error, req, res, next) {
+	console.log(configENV.EMAIL_ERRORS.EMAIL_ERRORS);
 	var mailOptions = {
-		from: String(config.EMAIL_ERRORS),
-		to: String(config.EMAIL_ERRORS),
+		from: String(configENV.EMAIL_ERRORS),
+		to: String(configENV.EMAIL_ERRORS),
 		subject: '500 error',
 		html: '<h5>Error Message: '+ error.message+'</h5><p><h3>Error: </h3>'+error+'</p>'
 	};
