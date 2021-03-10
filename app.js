@@ -211,28 +211,44 @@ app.get('/Terms_Of_Service' ,function(req, res){
 
 // Handle 404
 app.use(function(req, res) {
+	console.log(err.name);
+	if (err.name === 'UnauthorizedError') {};
  	res.status(400);
 	res.render('404.ejs', {title: '404: File Not Found'});
 });
 
-//Handle 500
-app.use(function(error, req, res, next) {
-	console.log(configENV.EMAIL_ERRORS.EMAIL_ERRORS);
-	var mailOptions = {
-		from: String(configENV.EMAIL_ERRORS),
-		to: String(configENV.EMAIL_ERRORS),
-		subject: '500 error',
-		html: '<h5>Error Message: '+ error.message+'</h5><p><h3>Error: </h3>'+error+'</p>'
-	};
-	transporter.sendMail(mailOptions, function(error, info){
-		if (error) {
-		logger.error("Error: ", error);
-		} else {
-		logger.info("Email sent: ",  info.response);
-			logger.info("Error sent to private email");	
-		}
-	});
-  	res.status(500);
-	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+// // Handle 401 withi 404
+// app.use(function(req, res) {
+// 	res.status(401);
+//    res.render('404.ejs', {title: '404: File Not Found'});
+// });
+app.use(function (err, req, res, next) {
+	console.log(err.name);
+	if (err.name === 'UnauthorizedError') {
+		res.status(401);
+		res.render('404.ejs', {title: '404: File Not Found'});
+	} else
+		next(err);
 });
+
+// //Handle 500
+// app.use(function(error, req, res, next) {
+// 	console.log(configENV.EMAIL_ERRORS.EMAIL_ERRORS);
+// 	var mailOptions = {
+// 		from: String(configENV.EMAIL_ERRORS),
+// 		to: String(configENV.EMAIL_ERRORS),
+// 		subject: '500 error',
+// 		html: '<h5>Error Message: '+ error.message+'</h5><p><h3>Error: </h3>'+error+'</p>'
+// 	};
+// 	transporter.sendMail(mailOptions, function(error, info){
+// 		if (error) {
+// 		logger.error("Error: ", error);
+// 		} else {
+// 		logger.info("Email sent: ",  info.response);
+// 			logger.info("Error sent to private email");	
+// 		}
+// 	});
+//   	res.status(500);
+// 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+// });
 module.exports = app;

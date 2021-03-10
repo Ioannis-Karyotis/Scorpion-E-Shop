@@ -19,5 +19,9 @@ module.exports =
         {
             size : "XXL",
             sizeStatus: "active",
+        },
+        {
+            size : "One size",
+            sizeStatus: "active",
         }
     ]

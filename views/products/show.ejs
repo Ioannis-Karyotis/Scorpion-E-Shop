@@ -104,7 +104,7 @@
           <div class="row py-4 d-flex justify-content-center mr-sm-3">
             <div id="tshirtSize" name="size" class="colors col-12 col-sm-6 pb-4" align="center">
               <h4><b>Μέγεθος: </b></h4>
-              <select id="tshirtSize" name="size" style="width:5em; height:2.2em; display: block; text-align: center;" class=" form-control">
+              <select id="tshirtSize" name="size" style="width:8em; height:2.2em; display: block; text-align: center;" class=" form-control">
                 <% product.sizes.forEach(function(match) { %>
                 <% if(match.sizeStatus!="hidden"){ %>
                 <option> <%=match.size%> </option>
@@ -197,14 +197,13 @@
         <div class="row d-flex justify-content-center">
           <div class="col-md-6 col-12 pt-3" align="center">
             <div class="container">
-
+              <% if(product.sizesTable.length != 0){ %>   
               <button class="btn btn-primary w-100" style="border-radius: 0px;" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                   Μεγεθη
               </button>
-
+                
               <div class="collapse show" id="collapseExample2" style="overflow: auto;">
                 <div class="card card-body w-100 overflow-auto"  style="padding:0; box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);">
-                       
                   <table class="table table-bordered" style="table-layout:inherit;margin: 0;">
                     <thead>
                       <tr>
@@ -228,9 +227,14 @@
                   </table>
                 </div>
               </div>
+              <% } %> 
             </div>
           </div>
-          <div class="col-md-5 col-12 pt-3"  align="center">
+          <% if(product.sizesTable.length == 0){ %>   
+          <div class="col-12 pt-3"  align="center">
+          <% }else{ %>
+            <div class="col-md-5 col-12 pt-3"  align="center">
+          <% } %>        
             <div class="container">
 
               <button class="btn btn-primary w-100" style="border-radius: 0px; box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -270,8 +274,8 @@
                     <% slice.forEach(function(product){ %>
                     <div class="col-md-3 clearfix">
                         <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white; z-index : 0" >
-                          <div class="goToProduct product-img" value='/products/<%=product.type %>/<%=product._id%>'>                      
-                            <img src="<%=product.images[0].urlSmall %>" class="goToProduct card-img-top product-img" alt="" style="border-radius:0px; z-index : 0;cursor: pointer;" value='/products/<%=product.type %>/<%=product._id%>'>
+                          <div class="goToProduct product-img" value='/products/<%=product.type %>/<%=product.code%>'>                      
+                            <img src="<%=product.images[0].urlSmall %>" class="goToProduct card-img-top product-img" alt="" style="border-radius:0px; z-index : 0;cursor: pointer;" value='/products/<%=product.type %>/<%=product.code%>'>
                             <div class="middle">
                               <div class="text" style="z-index: 1!important;cursor: pointer;">Προβολή</div>
                             </div>
@@ -290,7 +294,7 @@
                                 <p><%=product.price %>€</p>
                               </div>
                               <div class="col-12 d-flex justify-content-center">
-                                <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product._id%>">
+                                <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product.code%>">
                                   Λεπτομερειες
                                 </a>
                               </div>
