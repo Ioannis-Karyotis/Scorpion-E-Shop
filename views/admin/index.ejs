@@ -75,11 +75,13 @@
 							<div class="mr-2" style="border-left: 1px solid grey; height: 100%;"></div>
 							<div class="row d-flex justify-content-center">
 								<div class="col-md-2 col-4 mb-2">
+									<%var seenOne = false %>
 									<% productlist.product.images.forEach(image => { %>
-										<% if (image.colorTag == productlist.color) { %>
+										<% if (image.colorTag == productlist.color && seenOne == false) { %>
 											<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
 												<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=image.url %>" >
 											</a>
+											<%seenOne = true %>
 										<% } %>
 									<%});%>	
 								</div>

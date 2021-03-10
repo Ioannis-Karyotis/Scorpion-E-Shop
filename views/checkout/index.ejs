@@ -127,11 +127,13 @@
 				      	<div class="jumbotron-mini product-micro mb-1">
 				      		<div class="row d-flex justify-content-around">
 					        	<div class="col-3" align="left">
+									<%var seenOne = false %>
 									<% prd.product.images.forEach(image => { %>
-										<% if (image.colorTag == item.color) { %>
+										<% if (image.colorTag == item.color && seenOne == false) { %>
 											<a href="/products/<%=prd.product.type%>/<%= prd.product.code %>">
 												<img class="quick-cart-img int-img" src="<%=image.url%>"></img>
 											</a>
+											<%seenOne = true %>
 										<% } %>
 									<%});%>
 					        	</div>

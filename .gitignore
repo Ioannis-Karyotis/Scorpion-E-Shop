@@ -1,5 +1,5 @@
 .env
-/public/images/**/
+#/public/images/**/
 #/public/images/
 /node_modules/**/
 Logs.log
