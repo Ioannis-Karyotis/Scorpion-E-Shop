@@ -21,7 +21,7 @@ const express 		= require("express"),
 
 	  storage = multer.diskStorage({
 	    destination: function(req, file, cb) {
-	        cb(null, "./public/images/"+req.params.type+"/");
+	        cb(null, "./public/images/product_images/");
 	    },
 
 	    // By default, multer removes file extensions so let's add them back
@@ -31,7 +31,7 @@ const express 		= require("express"),
 	  }),
 	  storageNewItem = multer.diskStorage({
 	    destination: function(req, file, cb) {
-	        cb(null, "./public/images/"+req.params.type+"/");
+	        cb(null, "./public/images/product_images/");
 	    },
 
 	    // By default, multer removes file extensions so let's add them back
@@ -130,6 +130,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 	    }
 	    req.files.forEach(function(file){
 			var str = file.path;
+			console.log(str);
 		  	var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
@@ -249,8 +250,17 @@ router.post("/products/:type/:id/deleteImage/:name" , middleware.checkOrigin, fu
 				if (img.name == req.params.name) {
 					foundProduct.images.splice(index,1);
 					var url = img.url.split("/");
-					var path = "./public/images/"+ req.params.type + "/" + url.pop();
+					var name = url.pop();
+					var path = "./public/images/product_images/" + name;
+					var ext = name.split(".");
+					var pathSmall = "./public/images/product_images/" + ext[0] + "_small." + ext[1];
+					console.log(pathSmall);
 					await fs.unlink(path ,function(err){
+						if(err){
+							logger.error("Error: ", err);
+						}
+					});
+					await fs.unlink(pathSmall ,function(err){
 						if(err){
 							logger.error("Error: ", err);
 						}
@@ -358,8 +368,9 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 			logger.error("Error: ", err);
 		} else {
 		    if(foundProducts[0]!= null){
-			    var images = foundProducts[0].images;  		    	
-			    return res.render("products/edit", {product: foundProducts[0],images :images});
+			    var images = foundProducts[0].images;
+				var ProductTypes = require('../configuration/productNames');		    	
+			    return res.render("products/edit", {product: foundProducts[0],images :images, productTypes: ProductTypes});
 		    } else{
 		        res.redirect("back");
 		    }

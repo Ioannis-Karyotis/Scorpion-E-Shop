@@ -274,8 +274,10 @@
                     <% slice.forEach(function(product){ %>
                     <div class="col-md-3 clearfix">
                         <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white; z-index : 0" >
-                          <div class="goToProduct product-img" value='/products/<%=product.type %>/<%=product.code%>'>                      
+                          <div class="goToProduct product-img" value='/products/<%=product.type %>/<%=product.code%>'>
+                            <% if(product.images.length != 0){ %>                      
                             <img src="<%=product.images[0].urlSmall %>" class="goToProduct card-img-top product-img" alt="" style="border-radius:0px; z-index : 0;cursor: pointer;" value='/products/<%=product.type %>/<%=product.code%>'>
+                            <% } %>
                             <div class="middle">
                               <div class="text" style="z-index: 1!important;cursor: pointer;">Προβολή</div>
                             </div>
