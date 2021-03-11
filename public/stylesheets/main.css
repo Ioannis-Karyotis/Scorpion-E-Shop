@@ -1221,6 +1221,7 @@ hr.normal{
   font-size: 16px;
   padding: 16px 32px;
 }
+.text:hover {opacity: 0.8}
 
 .product{
   background: #F8F9FA;
