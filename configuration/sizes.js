@@ -21,7 +21,7 @@ module.exports =
             sizeStatus: "active",
         },
         {
-            size : "One size",
+            size : "Unisize",
             sizeStatus: "active",
         }
     ]
