@@ -32,7 +32,6 @@ $(document).ready(function() {
 $('.goToProduct').click(function() {
   console.log($( this ).attr('value'));
   window.location.replace($( this ).attr('value'));
-  document.location.href($( this ).attr('value'));
 });
 
 
