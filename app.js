@@ -151,6 +151,7 @@ app.use((req, res, next) => {
 	csp({
 	  directives: {
 		"default-src": ["'self'",
+					"https://ipinfo.io/",
 					"https://fonts.gstatic.com",
 					"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/webfonts/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
