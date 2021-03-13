@@ -16,6 +16,7 @@ const express 		= require("express"),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = require('../configuration/productNames'),
 	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
+	  bouncer 		= require ("express-bouncer")(900000, 900000, 2),
 	  sizes 		= require('../configuration/sizes');
 
 
@@ -41,6 +42,12 @@ const express 		= require("express"),
 	  });
 
 dotenv.config();
+
+bouncer.blocked = function (req, res, next, remaining)
+{
+	res.status(429);
+	res.render('429.ejs', {title:'Too many requests'});
+};
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -489,7 +496,7 @@ router.post("/products/:type/:id/hideColor/:color" ,middleware.checkOrigin ,pass
 });
 
 
-router.post("/products/:type/:id/review",sanitization.route, middleware.rating, function(req,res){
+router.post("/products/:type/:id/review", bouncer.block ,sanitization.route, middleware.rating, function(req,res){
 	req.autosan.body = trimBody(req.autosan.body);
 	Product.find({_id : req.params.id}, function(err, foundProduct){
 		if(err){
