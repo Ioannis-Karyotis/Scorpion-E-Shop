@@ -295,6 +295,7 @@ router.get("/products/:type/:code", function(req ,res,next){
 		    	var lastReviews = sortedReviews.slice(0, 3);
 		    	var countReviews = foundProducts[0].reviewCount;
 		    	var validated = {};
+				
 		    	if (req.app.locals.specialContext != null) {
 		    		validated = req.app.locals.specialContext;
 		    		
