@@ -56,9 +56,12 @@
 					<label for="kind">Διάλεξε Είδος Μεγεθών</label>
 					<span class="d-flex align-items-center">						
 						<select name="kind" class="form-control mr-3" placeholder="Είδος" id="kind" required>
-							<option value="shirt">Μπλούζα</option>
+							<!-- <option value="shirt">Μπλούζα</option>
 							<option value="pants">Παντελόνι</option>
-							<option value="oneSize">One Size</option>
+							<option value="oneSize">One Size</option> -->
+							<% Object.keys(clothTypes).forEach(function(key,index){ %>
+								<option value="<%=key %>"><%=key %></option>
+							<% }); %> 
 						</select>
 						<i class="fas fa-info-circle fa-lg ">
 							<div class="tooltiptext">Το πεδίο αυτό αντιπροσωπεύει το είδος του ρούχου</div>

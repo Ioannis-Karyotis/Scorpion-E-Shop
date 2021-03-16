@@ -18,6 +18,7 @@ const express 		= require("express"),
 	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  bouncer 		= require ("express-bouncer")(900000, 900000, 2),
 	  sizes 		= require('../configuration/sizes');
+	  types 		= require('../configuration/clothType');
 
 
 	  storage = multer.diskStorage({
@@ -110,7 +111,8 @@ router.get("/products/:type", function(req, res, next){
 });
 
 router.get("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }), function(req, res, next){
-	res.render("products/add",{type: req.params.type});
+	var ClothTypes = types;	 
+	res.render("products/add",{type: req.params.type , clothTypes : ClothTypes});
 });
 
 router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: false }) ,middleware.addPrd,	 multer({ storage: storageNewItem, fileFilter: imageFilter }).array("profile_pic"),async function(req, res, next){
@@ -377,8 +379,9 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 		} else {
 		    if(foundProducts[0]!= null){
 			    var images = foundProducts[0].images;
-				var ProductTypes = require('../configuration/productNames');		    	
-			    return res.render("products/edit", {product: foundProducts[0],images :images, productTypes: ProductTypes});
+				var ProductTypes = require('../configuration/productNames');	
+				var ClothTypes = types;	    	
+			    return res.render("products/edit", {product: foundProducts[0],images :images, productTypes: ProductTypes, clothTypes : ClothTypes});
 		    } else{
 		        res.redirect("back");
 		    }
@@ -389,9 +392,12 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 
 
 router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }), async function(req, res){
+	console.log(req.autosan.body);
 	req.autosan.body = trimBody(req.autosan.body);
 	sizesSearch = require('../configuration/sizesTables');
 	req.autosan.body.sizesTable = sizesSearch[req.params.type + "_" + req.autosan.body.kind];
+	console.log(req.autosan.body);
+	console.log(req.autosan.body.sizesTable);
 
 	let err,prdWithCurrentPosition = await Product.findOne({type : req.params.type, showing : req.autosan.body.showing });
 	let err2,prdToBeUpd = await Product.findOne({type : req.params.type, _id : req.params.id });
