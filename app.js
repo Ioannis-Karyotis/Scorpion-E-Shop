@@ -88,10 +88,10 @@ var sess = {
 	})
 }
 
-if (process.env.ENV == "production") {
-	app.set('trust proxy', 1) // trust first proxy
-	sess.cookie.secure = true // serve secure cookies
-}
+// if (process.env.ENV == "production") {
+// 	app.set('trust proxy', 1) // trust first proxy
+// 	sess.cookie.secure = true // serve secure cookies
+// }
 
 app.use(require("express-session")(sess));
 
