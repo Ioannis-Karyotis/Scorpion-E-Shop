@@ -81,7 +81,8 @@ var sess = {
     cookie: {
 	  httpOnly : true,
       sameSite: 'strict',
-      maxAge: 3600000
+      maxAge: 3600000,
+	  secure : true
     },
 	store:	new mongoStore({	//for session
 		mongooseConnection: mongoose.connection
