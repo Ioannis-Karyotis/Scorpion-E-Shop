@@ -93,7 +93,7 @@ var sess = {
 // 	app.set('trust proxy', 1) // trust first proxy
 // 	sess.cookie.secure = true // serve secure cookies
 // }
-
+app.set('trust proxy', 1) // trust first proxy
 app.use(require("express-session")(sess));
 
 // create a rotating write stream
