@@ -97,7 +97,8 @@
 	  			<h3>Παρακαλώ εισάγετε τα στοιχεία της κάρτας</h3>
 	  		</div>
 		  	<div class="row d-flex justify-content-center ">
-		  		<form id="payment-form2" class="chkout chkout-pay">	
+		  		<form id="payment-form2" class="chkout chkout-pay">
+					<input type="hidden" name="_csrf" value="<%=csrfToken%>">  	
 		  			<div class="chk-group card-element">
 						<label>
 							<div id="card-element" class="chk-field"></div>
@@ -243,6 +244,7 @@
         </div>	
     	<div class="col-lg-6 order-lg-1 mx-auto d-flex justify-content-center pb-3">
 			<form id="payment-form" class="chkout">
+				<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 				<h4 class="mx-auto" align="center">Φόρμα πληρωμής</h4>
 				<hr class="thin mb-3"> 
 				<%if(user) {%>

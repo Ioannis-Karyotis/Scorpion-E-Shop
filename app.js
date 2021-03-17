@@ -135,11 +135,8 @@ app.use(passport.session());
 
 //Cors and Csrf
 app.use(cors());
-//app.use(csrf({ cookie: true }))
-// app.use(function(req, res, next){
-// 	res.cookie('XSRF-Token', req.csrfToken());
-// 	next();
-// });
+app.use(csrf({ cookie: true }))
+
 
 app.use(function(req, res, next){
 	if((req.user == undefined && req.cookies['access_token'] != undefined) || (req.user == undefined && req.cookies['admin_token'] != undefined)){
@@ -162,6 +159,8 @@ app.use(function(req, res, next){
 	res.locals.genError    = req.flash("genError");
 	res.locals.genSuccess  = req.flash("genSuccess");
 	res.locals.nonce 	   = crypto.randomBytes(16).toString("hex");
+	res.locals.csrfToken   = req.csrfToken();
+	
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
 });

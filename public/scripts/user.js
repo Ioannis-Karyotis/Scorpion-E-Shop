@@ -17,6 +17,8 @@ $( ".deleteProfile" ).click(function(e) {
 
 //inline Scripts
 
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')   
+
 
 function showInputs1(){
 	ps =document.querySelectorAll(".firstp")
@@ -68,7 +70,8 @@ function deleteProfile(id , email) {
         method: "DELETE",  
         headers: {
         "Content-Type": "application/json",
-        'x-api-key': window.sessionStorage.getItem("x-api-key")
+        'x-api-key': window.sessionStorage.getItem("x-api-key"),
+        'CSRF-Token': token
       },
       body: JSON.stringify(userid)
     })

@@ -3,6 +3,7 @@
 <div id="main" class="main container mb-5">
     <div class="row d-flex justify-content-around my-4">
 	    <form id="edit_form" action="/products/<%= product.type %>/<%=product._id %>/edit?_method=PUT" method="POST">
+			<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 	        <div class="desc py-5">
 				<h1 class="pb-5">Τροποποίηση προϊόντος</h1>
 	            <div class="form-group pl-2">

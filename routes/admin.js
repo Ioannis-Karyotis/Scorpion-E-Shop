@@ -52,7 +52,7 @@ router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), func
 
 
 router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){	
-	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body } , function (err, data) {
+	ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : req.autosan.body, type : "recieved" } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
 			res.header("x-api-key", req.session.xkey)

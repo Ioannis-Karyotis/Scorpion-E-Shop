@@ -15,6 +15,7 @@
     	<div class="col-12 col-md-6 py-3 ">
     		<div class="desc px-5 jumbotron-mini" style="border-radius: 5px;">
 				<form id="contact-form" action="/contact" method="POST">
+					<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 					<h4 >Επικοινωνήστε μαζί μας:</h4>
 					<hr class="thick">
 					<%if(user) {%>

@@ -101,6 +101,7 @@
         <%}%>
         <hr class="thin">
         <form action="/products/<%=product.type%>/<%=product._id%>/add" id="buyForm" method="POST">
+          <input type="hidden" name="_csrf" value="<%=csrfToken%>">
           <div class="row py-4 d-flex justify-content-center mr-sm-3">
             <div id="tshirtSize" name="size" class="colors col-12 col-sm-6 pb-4" align="center">
               <h4><b>Μέγεθος: </b></h4>
@@ -361,6 +362,7 @@
           <%}%>
           <!-- <div class="py-4"style="background:#F5F5F5;"> -->
           <form id="review-form" class="container mx-auto" action="/products/<%=product.type%>/<%=product._id%>/review" method="POST">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
             <input type="hidden" name="productType" value="<%=product.type%>">
             <input type="hidden" name="productId" value="<%=product._id%>">
             <div class="form-row">

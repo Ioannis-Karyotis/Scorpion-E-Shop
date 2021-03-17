@@ -2,6 +2,7 @@
 <div id="main" class="main container mb-5">
 	<div class="row d-flex justify-content-around my-4">
 		<form name="Form" action="/products/<%=type%>/add" class="col-lg-6" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 			<div class="desc py-5">
 				<h1 class="pb-5">Εισαγωγή προϊόντος</h1>
 				<div class="form-group pl-2">

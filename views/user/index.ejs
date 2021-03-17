@@ -32,6 +32,7 @@
 									<%}%>
 					        	</div>
 						    	<form class="mt-4" action="/user/changeImage?_method=PUT" method="POST" enctype="multipart/form-data">
+									<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 						        	<div class="col-12 justify-content-center" style="overflow:hidden;">
 						        		<input id="imgInp" type="file" name="profile_pic"required/>
 						    		</div>
@@ -43,7 +44,9 @@
 		            	</div>
 						
 						<% if(currentUser.methods === "local"){ %>
-							<form id="changeFirst" action="/user/changeInitials?_method=PUT" method="POST"></form>
+							<form id="changeFirst" action="/user/changeInitials?_method=PUT" method="POST">
+								<input type="hidden" name="_csrf" value="<%=csrfToken%>">
+							</form>
 							<hr class=" mb-2 mt-5" style="margin-left: -1em;">
 							<button class="showInputs1 btn btn-primary my-4 firstp" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
 							<button class="btn btn-primary my-4  firsti hidden" form="changeFirst" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
@@ -63,7 +66,9 @@
 			                <input type="text" name="email" class="form-control w-50 firsti hidden" form="changeFirst"  placeholder="E-mail" value="<%= currentUser[currentUser.methods].email %>">
 			                <hr class=" mb-2 mt-5" style="margin-left: -1em;">
 			                <!-- PASSWORD -->
-			                <form id="changeSecond" action="/user/changePassword?_method=PUT" method="POST"></form>
+			                <form id="changeSecond" action="/user/changePassword?_method=PUT" method="POST">
+								<input type="hidden" name="_csrf" value="<%=csrfToken%>">
+							</form>
 			                <button class="showInputs2 btn btn-primary my-4 secondp" style="float: right;">Επεξεργασια <i class="fas fa-cogs fa-lg"></i></button>
 			                <button class="btn btn-primary my-4 secondi hidden" form="changeSecond" style="float: right;">αλλαγη <i class="fas fa-cogs fa-lg"></i></button>
 			                <h4 class="text-black pt-5">Κωδικός</h4>

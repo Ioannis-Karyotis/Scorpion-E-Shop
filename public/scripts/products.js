@@ -89,6 +89,7 @@ $('.hideProduct').click(function(){
 
 // Inline EVENTS
 
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 function showProgressNotification(){
   if(document.getElementById("productsPrice") != null){
@@ -150,7 +151,8 @@ var deleteProduct = function(id,type){
     fetch("/products/"+ type +"/"+ id+ "/delete", {
         headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
         },
         method: "DELETE"  
         })
@@ -177,7 +179,8 @@ var hideProduct = function(id,type){
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           },  
          })
         .then(function(result) {  
@@ -195,7 +198,8 @@ var hideSize = function(id,type,size){
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          'x-api-key': window.sessionStorage.getItem("x-api-key")
+          'x-api-key': window.sessionStorage.getItem("x-api-key"),
+          'CSRF-Token': token
         },
        })
       .then(function(result) {
@@ -213,7 +217,8 @@ var deleteColor = function(id,type,color){
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           }, 
          })
         .then(function(result) {
@@ -231,7 +236,8 @@ var hideColor = function(id,type,color){
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           },  
          })
         .then(function(result) {
@@ -249,7 +255,8 @@ var deleteImage = function(id,type,name){
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           },  
          })
         .then(function(result) {

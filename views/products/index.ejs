@@ -165,6 +165,7 @@
 
               <div class="row align-center d-flex justify-content-center">
                 <form id="form_modal_<%= product._id %>" action="/products/<%=product.type%>/<%=product._id%>/add" method="POST">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                   <hr class="thin">
                   <div class="row pb-1 mt-3 d-flex d-flex justify-content-center">
                     <h6 class="pb-1"><b>Μέγεθος:</b></h6>

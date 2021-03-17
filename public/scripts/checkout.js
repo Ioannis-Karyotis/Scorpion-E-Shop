@@ -13,6 +13,8 @@ $(document).ready(function() {
   showProgressNotification();
 });
 
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')   
+
 function showProgressNotification(){
   var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
   if(productsTotal > 0){
@@ -119,7 +121,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
     method: "POST",
     headers : { 
       'Content-Type': 'application/json',
-      'x-api-key': window.sessionStorage.getItem("x-api-key")
+      'x-api-key': window.sessionStorage.getItem("x-api-key"),
+      'CSRF-Token': token
     },
     body: JSON.stringify(formData)
   })
@@ -141,7 +144,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
         method: "POST",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           },
           body: JSON.stringify(formData)
         })
@@ -176,7 +180,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            'x-api-key': window.sessionStorage.getItem("x-api-key")
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
           },
           body: JSON.stringify(orderData)
         })
@@ -192,8 +197,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             document.querySelector(".result3").classList.remove("hidden");
             document.getElementById("errormsg").innerHTML = result.error.message;
             statusChange('failed');
-          }
-          console.log(result.headers.get('x-api-key')) ;   
+          } 
           return result.json();
         })
         .then(function(data) {
@@ -220,7 +224,8 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
               method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-                  'x-api-key': window.sessionStorage.getItem("x-api-key")
+                  'x-api-key': window.sessionStorage.getItem("x-api-key"),
+                  'CSRF-Token': token
                 },
                 body: JSON.stringify(formData)
               })
@@ -356,7 +361,8 @@ var pay =async function(stripe, card, clientSecret) {
           method: "POST",
             headers: {
               "Content-Type": "application/json",
-              'x-api-key': window.sessionStorage.getItem("x-api-key")
+              'x-api-key': window.sessionStorage.getItem("x-api-key"),
+              'CSRF-Token': token
             },
             body: JSON.stringify(result)
           })

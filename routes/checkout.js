@@ -13,7 +13,21 @@ const express 			  = require("express"),
       sanitization    = require('express-autosanitizer'),
       dotenv          = require('dotenv'),
       logger          = require('simple-node-logger').createSimpleLogger('Logs.log'),
-      objEncDec       = require('object-encrypt-decrypt');
+      objEncDec       = require('object-encrypt-decrypt'),
+      config 		      = require('../configuration'),
+      nodemailer 	    = require('nodemailer'),
+      ejs       	    = require("ejs"),
+      smtpTransport   = require('nodemailer-smtp-transport'),
+      transporter 	  = nodemailer.createTransport({
+        host: "smtp.zoho.eu",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user:  String(config.EMAIL),
+          pass: String(config.EMAIL_PASSWORD)
+        }
+      }),
+	  attachments	= require('./../configuration/emailAttachments');
       
 dotenv.config();
 
@@ -31,6 +45,41 @@ function calculatePrice(ProductsPrice) {
   return finalPrice;
 }
 
+function EmailSend(body){
+  ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
+    if (err) {
+    logger.error("Error: ",err)
+    return false;
+    } else {
+        var mainOptions = {
+      from: String(config.EMAIL),
+      to: String(req.autosan.body.order.details.email),
+      subject: 'Λήψη παραγγελίας',
+      html : data,
+      attachments: attachments
+    };
+    transporter.sendMail(mainOptions, function(error, info){
+        if (error) {
+        logger.error("Error: ",error)
+        return false;
+        } else {
+        logger.info('Email sent: ' , info.response);
+          Order.findById(req.autosan.body.order._id,function(err, foundOrder){
+          if(err){
+            logger.error("Error: ",err)
+            return false;
+          } else {
+            foundOrder.confirm = true;
+            foundOrder.save();
+            return true;
+            }
+          })		
+        }
+    });
+    }  
+  })
+}
+
 
 router.post("/check_cart", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete,sanitization.route, async function(req,res){
 	res.header("x-api-key", req.session.xkey)
@@ -39,6 +88,17 @@ router.post("/check_cart", middleware.checkOrigin ,middleware.calculateDatabaseP
 
 router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
 
+  if(!EmailSend(req.autosan.body)){
+
+    const refund = await stripe.refunds.create({
+      payment_intent: req.autosan.body.paymentIntent.id,
+    });
+
+    res.send({
+      error : "To email δεν είναι έγκυρο"
+    });
+
+  }
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   var today = new Date();
@@ -118,6 +178,12 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
     var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
     await stripesk.paymentIntents.cancel(paymentIntent.id);
     await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
+  }
+
+  if(!EmailSend(req.autosan.body)){
+    res.send({
+      error : "To email δεν είναι έγκυρο"
+    });
   }
 
   var today = new Date();

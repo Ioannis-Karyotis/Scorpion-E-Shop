@@ -12,6 +12,7 @@
         <div class="col-12  d-flex justify-content-center py-5">
             
             <form action="/login" class="col-lg-6" method="post">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                 <div class="desc">
                     <h1 class='pb-3'>Είσοδος</h1>
 

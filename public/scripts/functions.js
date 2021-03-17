@@ -3,6 +3,9 @@ $(window).on('load', function(){
 	document.title = 'Βιοτεχνία Scorpion' ;
   	setTimeout(removeLoader, 0); //wait for page load PLUS two seconds.
 });
+
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 function removeLoader(){
     $( "#loadingDiv" ).fadeOut(800, function() {
 

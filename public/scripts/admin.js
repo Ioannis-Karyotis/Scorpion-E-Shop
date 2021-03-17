@@ -1,5 +1,7 @@
 // Inline Scripts
 
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')   
+
 $('.deleteOrder').click(function() {
   var val = $(this).val();
   deleteOrder(val);
@@ -35,7 +37,8 @@ var verifyOrder =  async function(order){
   			body: JSON.stringify(order2),
         headers: {
           "Content-Type": "application/json",
-          'x-api-key': window.sessionStorage.getItem("x-api-key")
+          'x-api-key': window.sessionStorage.getItem("x-api-key"),
+          'CSRF-Token': token
         }
   		})
         .then(function(result) {
@@ -68,7 +71,8 @@ var completeOrder = function(order){
         	method: "POST",  
          	headers: {
     			"Content-Type": "application/json",
-          'x-api-key': window.sessionStorage.getItem("x-api-key")
+          'x-api-key': window.sessionStorage.getItem("x-api-key"),
+          'CSRF-Token': token
   			},
   			body: JSON.stringify(order)
   		})
@@ -94,7 +98,8 @@ var deleteOrder = function(id){
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'x-api-key': window.sessionStorage.getItem("x-api-key")
+        'x-api-key': window.sessionStorage.getItem("x-api-key"),
+        'CSRF-Token': token
       }
     })
     .then(function(result) {
