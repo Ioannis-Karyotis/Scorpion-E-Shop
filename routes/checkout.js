@@ -14,7 +14,7 @@ const express 			  = require("express"),
       dotenv          = require('dotenv'),
       logger          = require('simple-node-logger').createSimpleLogger('Logs.log'),
       objEncDec       = require('object-encrypt-decrypt'),
-      config 		      = require('../configuration'),
+      config 		      = require('./../configuration'),
       nodemailer 	    = require('nodemailer'),
       ejs       	    = require("ejs"),
       smtpTransport   = require('nodemailer-smtp-transport'),
@@ -46,38 +46,39 @@ function calculatePrice(ProductsPrice) {
 }
 
 function EmailSend(body){
-  ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
-    if (err) {
-    logger.error("Error: ",err)
-    return false;
-    } else {
-      var mainOptions = {
-        from: String(config.EMAIL),
-        to: String(body.order.details.email),
-        subject: 'Λήψη παραγγελίας',
-        html : data,
-        attachments: attachments
-      };
-    transporter.sendMail(mainOptions, function(error, info){
-        if (error) {
-        logger.error("Error: ",error)
-        return false;
-        } else {
-        logger.info('Email sent: ' , info.response);
-          Order.findById(body.order._id,function(err, foundOrder){
-          if(err){
-            logger.error("Error: ",err)
-            return false;
-          } else {
-            foundOrder.confirm = true;
-            foundOrder.save();
-            return true;
-            }
-          })		
-        }
-    });
-    }  
-  })
+  // ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
+  //   if (err) {
+  //   logger.error("Error: ",err)
+  //   return false;
+  //   } else {
+  //     var mainOptions = {
+  //       from: String(config.EMAIL),
+  //       to: String(body.order.details.email),
+  //       subject: 'Λήψη παραγγελίας',
+  //       html : data,
+  //       attachments: attachments
+  //     };
+  //   transporter.sendMail(mainOptions, function(error, info){
+  //       if (error) {
+  //       logger.error("Error: ",error)
+  //       return false;
+  //       } else {
+  //       logger.info('Email sent: ' , info.response);
+  //         Order.findById(body.order._id,function(err, foundOrder){
+  //         if(err){
+  //           logger.error("Error: ",err)
+  //           return false;
+  //         } else {
+  //           foundOrder.confirm = true;
+  //           foundOrder.save();
+  //           return true;
+  //           }
+  //         })		
+  //       }
+  //   });
+  //   }  
+  // })
+  return true;
 }
 
 
