@@ -78,6 +78,7 @@ var sess = {
 	name: 'session_id',
     saveUninitialized: true,
     resave: false,
+	proxy: true,
     cookie: {
 	  httpOnly : true,
       sameSite: 'strict',
