@@ -46,39 +46,39 @@ function calculatePrice(ProductsPrice) {
 }
 
 function EmailSend(body){
-  // ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
-  //   if (err) {
-  //   logger.error("Error: ",err)
-  //   return false;
-  //   } else {
-  //     var mainOptions = {
-  //       from: String(config.EMAIL),
-  //       to: String(body.order.details.email),
-  //       subject: 'Λήψη παραγγελίας',
-  //       html : data,
-  //       attachments: attachments
-  //     };
-  //   transporter.sendMail(mainOptions, function(error, info){
-  //       if (error) {
-  //       logger.error("Error: ",error)
-  //       return false;
-  //       } else {
-  //       logger.info('Email sent: ' , info.response);
-  //         Order.findById(body.order._id,function(err, foundOrder){
-  //         if(err){
-  //           logger.error("Error: ",err)
-  //           return false;
-  //         } else {
-  //           foundOrder.confirm = true;
-  //           foundOrder.save();
-  //           return true;
-  //           }
-  //         })		
-  //       }
-  //   });
-  //   }  
-  // })
-  return true;
+  ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
+    if (err) {
+    logger.error("Error: ",err)
+
+    } else {
+      var mainOptions = {
+        from: String(config.EMAIL),
+        to: String(body.order.details.email),
+        subject: 'Λήψη παραγγελίας',
+        html : data,
+        attachments: attachments
+      };
+    transporter.sendMail(mainOptions, function(error, info){
+        if (error) {
+        logger.error("Error: ",error)
+
+        } else {
+        logger.info('Email sent: ' , info.response);
+          Order.findById(body.order._id,function(err, foundOrder){
+          if(err){
+            logger.error("Error: ",err)
+
+          } else {
+            foundOrder.confirm = true;
+            foundOrder.save();
+
+            }
+          })		
+        }
+    });
+    }  
+  })
+
 }
 
 
@@ -99,31 +99,27 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
   today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
 
-  var orderToSave = {
-    paymentIntent: req.autosan.body.paymentIntent.id,
-        method : "Πληρωμή με κάρτα",
-        date : today,
-        confirm: false,
-        complete: false,
-        archived: false,
-        details :{
-          name : result[0],
-          surname: result[1],
-          email : req.autosan.body.paymentIntent.receipt_email,
-          phone : req.autosan.body.paymentIntent.shipping.phone,
-          address: {
-            line1 : req.autosan.body.paymentIntent.shipping.address.line1,
-            city : req.autosan.body.paymentIntent.shipping.address.city,
-            zip : req.autosan.body.paymentIntent.shipping.address.postal_code,
-            state : req.autosan.body.paymentIntent.shipping.address.state
-          }
-        }, 
-        totalPrice :  (req.autosan.body.paymentIntent.amount / 100)
-  }
-  
-
-
-  Order.create({orderToSave},
+  Order.create({
+      paymentIntent: req.autosan.body.paymentIntent.id,
+      method : "Πληρωμή με κάρτα",
+      date : today,
+      confirm: false,
+      complete: false,
+      archived: false,
+      details :{
+        name : result[0],
+        surname: result[1],
+        email : req.autosan.body.paymentIntent.receipt_email,
+        phone : req.autosan.body.paymentIntent.shipping.phone,
+        address: {
+          line1 : req.autosan.body.paymentIntent.shipping.address.line1,
+          city : req.autosan.body.paymentIntent.shipping.address.city,
+          zip : req.autosan.body.paymentIntent.shipping.address.postal_code,
+          state : req.autosan.body.paymentIntent.shipping.address.state
+        }
+      }, 
+      totalPrice :  (req.autosan.body.paymentIntent.amount / 100)
+    },
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
@@ -150,19 +146,13 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           var mailBody = {
             order : order
           }
-        
-          if(!EmailSend(mailBody)){
-            const refund = await stripe.refunds.create({
-              payment_intent: req.autosan.body.paymentIntent.id,
-            });
-            res.send({
-              error : "To email δεν είναι έγκυρο"
-            });
-          }
+
+          order.save();
           
-          order.save();  
+          EmailSend(mailBody);
         }
       });
+
   var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
   await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
 
@@ -195,9 +185,10 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
   var yyyy = today.getFullYear();
   today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
+  var mailSent = false;
 
-  var orderToSave = {
-    method : method,
+  Order.create({
+      method : method,
         date : today,
         confirm: false,
         complete: false,
@@ -214,9 +205,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
             state : req.autosan.body.state
           }
         }
-  }
-
-  Order.create({ orderToSave },
+      },
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
@@ -244,24 +233,20 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
           var mailBody = {
             order : order
           }
-        
-          if(!EmailSend(mailBody)){
-            res.send({
-              error : "To email δεν είναι έγκυρο"
-            });
-          }
 
-          order.save();  
-        }
+          order.save();
+
+          EmailSend(mailBody);
+        }  
       });
-
-  req.session.cart = null;
-  req.session.productList = null
-  req.app.locals.specialContext = null;
-  res.clearCookie('stripe-gate');
-
-	res.header("x-api-key", req.session.xkey)
-  res.send({result : "succeeded"});
+  
+      req.session.cart = null;
+      req.session.productList = null
+      req.app.locals.specialContext = null;
+      res.clearCookie('stripe-gate');
+    
+      res.header("x-api-key", req.session.xkey)
+      res.send({result : "succeeded"});
 })
 
 
