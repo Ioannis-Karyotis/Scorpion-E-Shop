@@ -51,20 +51,20 @@ function EmailSend(body){
     logger.error("Error: ",err)
     return false;
     } else {
-        var mainOptions = {
-      from: String(config.EMAIL),
-      to: String(req.autosan.body.order.details.email),
-      subject: 'Λήψη παραγγελίας',
-      html : data,
-      attachments: attachments
-    };
+      var mainOptions = {
+        from: String(config.EMAIL),
+        to: String(body.order.details.email),
+        subject: 'Λήψη παραγγελίας',
+        html : data,
+        attachments: attachments
+      };
     transporter.sendMail(mainOptions, function(error, info){
         if (error) {
         logger.error("Error: ",error)
         return false;
         } else {
         logger.info('Email sent: ' , info.response);
-          Order.findById(req.autosan.body.order._id,function(err, foundOrder){
+          Order.findById(body.order._id,function(err, foundOrder){
           if(err){
             logger.error("Error: ",err)
             return false;
@@ -88,17 +88,7 @@ router.post("/check_cart", middleware.checkOrigin ,middleware.calculateDatabaseP
 
 router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
 
-  if(!EmailSend(req.autosan.body)){
-
-    const refund = await stripe.refunds.create({
-      payment_intent: req.autosan.body.paymentIntent.id,
-    });
-
-    res.send({
-      error : "To email δεν είναι έγκυρο"
-    });
-
-  }
+ 
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   var today = new Date();
@@ -107,9 +97,9 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
   var yyyy = today.getFullYear();
   today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
-  Order.create(
-      { 
-        paymentIntent: req.autosan.body.paymentIntent.id,
+
+  var orderToSave = {
+    paymentIntent: req.autosan.body.paymentIntent.id,
         method : "Πληρωμή με κάρτα",
         date : today,
         confirm: false,
@@ -128,7 +118,11 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           }
         }, 
         totalPrice :  (req.autosan.body.paymentIntent.amount / 100)
-      },
+  }
+  
+
+
+  Order.create({orderToSave},
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
@@ -151,6 +145,20 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
               order.productList.push(product);
             })
           }
+
+          var mailBody = {
+            order : order
+          }
+        
+          if(!EmailSend(mailBody)){
+            const refund = await stripe.refunds.create({
+              payment_intent: req.autosan.body.paymentIntent.id,
+            });
+            res.send({
+              error : "To email δεν είναι έγκυρο"
+            });
+          }
+          
           order.save();  
         }
       });
@@ -180,21 +188,15 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
     await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
   }
 
-  if(!EmailSend(req.autosan.body)){
-    res.send({
-      error : "To email δεν είναι έγκυρο"
-    });
-  }
-
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
   today = dd + '-' + mm + '-' + yyyy;
   cart = req.session.cart;
-  Order.create(
-      { 
-        method : method,
+
+  var orderToSave = {
+    method : method,
         date : today,
         confirm: false,
         complete: false,
@@ -211,7 +213,9 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
             state : req.autosan.body.state
           }
         }
-      },
+  }
+
+  Order.create({ orderToSave },
       async function(err, order){
         if(err){
           logger.error("Error: ", err);
@@ -235,10 +239,21 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
               order.productList.push(product);
             })
           }
-          order.totalPrice = (totalPrice) + 4;
+
+          var mailBody = {
+            order : order
+          }
+        
+          if(!EmailSend(mailBody)){
+            res.send({
+              error : "To email δεν είναι έγκυρο"
+            });
+          }
+
           order.save();  
         }
       });
+
   req.session.cart = null;
   req.session.productList = null
   req.app.locals.specialContext = null;

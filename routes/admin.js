@@ -61,7 +61,7 @@ router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, pas
 	        var mainOptions = {
 		  	from: String(config.EMAIL),
 		  	to: String(req.autosan.body.order.details.email),
-		  	subject: 'Λήψη παραγγελίας',
+		  	subject: 'Επιβεβαίωση παραγγελίας',
 		  	html : data,
 		  	attachments: attachments
 			};
