@@ -3,7 +3,6 @@ const express 		= require("express"),
 	path 			= require('path'),
 	favicon         = require('serve-favicon'),
 	bodyParser 		= require("body-parser"),
-	cors 			= require("cors"),
 	cookieParser 	= require("cookie-parser"),
 	sanitization	= require('express-autosanitizer'),
 	mongoose 		= require("mongoose"),
@@ -24,6 +23,8 @@ const express 		= require("express"),
 	crypto 			= require("crypto"),
 	morgan 			= require('morgan'),
 	fs  			= require('fs'),
+	csrf 			= require('csurf'),
+	cors 			= require('cors'),
 	rfs 			= require('rotating-file-stream'),
 	configENV 	      	= require('./configuration'),
 	nodemailer   	= require('nodemailer'),
@@ -71,30 +72,48 @@ const indexRoutes 	 = require("./routes/index"),
 	}
 });*/
 
+//Setup session
+var sess = {
+	secret: require("./configuration/index").SESSION_SECRET,
+	name: 'session_id',
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+	  httpOnly : true,
+      sameSite: 'strict',
+      maxAge: 3600000
+    },
+	store:	new mongoStore({	//for session
+		mongooseConnection: mongoose.connection
+	})
+}
+
+if (process.env.ENV == "production") {
+	app.set('trust proxy', 1) // trust first proxy
+	sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(require("express-session")(sess));
+
 // create a rotating write stream
 var accessLogStream = rfs.createStream('Access.log', {
 	interval: '1d', // rotate daily
 	path: path.join(__dirname, 'log')
-  })
+})
 
 // setup the logger
 app.use(morgan('dev', { stream: accessLogStream }))
 
+//Use favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-app.use(bodyParser.json({
-  verify: (req, res, buf) => {
-    if (req.originalUrl.startsWith('/webhook')) {
-      req.rawBody = buf.toString()
-    }
-  }
-}))
-
+//Parsers
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded());
 
+//More configs
 app.use("/",express.static(__dirname + "/public"));
 app.use(express.static('files'));
 app.use(methodOverride("_method"));
@@ -102,25 +121,24 @@ app.use(flash());
 app.set("view engine","ejs");
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
+//Mongoose connect
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
+
+//Seed with fake data
 //seedDB(); //seed the database with products
 
-
-
-app.use(require("express-session")({
-	secret: require("./configuration/index").SESSION_SECRET,
-	resave: false,
-	saveUninitialized: true,
-	store:	new mongoStore({	//for session
-		mongooseConnection: mongoose.connection
-	}),
-	cookie: {maxAge: 10 * 60 * 1000} //session timeout at specified time
-
-}));
-
+//Passport config
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Cors and Csrf
+app.use(cors());
+//app.use(csrf({ cookie: true }))
+// app.use(function(req, res, next){
+// 	res.cookie('XSRF-Token', req.csrfToken());
+// 	next();
+// });
 
 app.use(function(req, res, next){
 	if((req.user == undefined && req.cookies['access_token'] != undefined) || (req.user == undefined && req.cookies['admin_token'] != undefined)){
@@ -215,15 +233,6 @@ app.use(function(req, res) {
 	res.status(404);
    	res.render('404.ejs', {title: '404: File Not Found'});
 });
-
-// app.use(function (err, req, res, next) {
-// 	console.log(err.name);
-// 	if (err.name === 'UnauthorizedError') {
-// 		res.status(401);
-// 		res.render('404.ejs', {title: '404: File Not Found'});
-// 	} else
-// 		next(err);
-// });
 
 //Handle 500
 app.use(function(error, req, res, next) {
