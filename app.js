@@ -82,19 +82,18 @@ var sess = {
     cookie: {
 	  httpOnly : true,
       sameSite: 'strict',
-      maxAge: 3600000,
-	  secure : true
+      maxAge: 3600000
     },
 	store:	new mongoStore({	//for session
 		mongooseConnection: mongoose.connection
 	})
 }
 
-// if (process.env.ENV == "production") {
-// 	app.set('trust proxy', 1) // trust first proxy
-// 	sess.cookie.secure = true // serve secure cookies
-// }
-app.set('trust proxy', 1) // trust first proxy
+if (process.env.ENV == "production") {
+	app.set('trust proxy', 1) // trust first proxy
+	sess.cookie.secure = true // serve secure cookies
+}
+
 app.use(require("express-session")(sess));
 
 // create a rotating write stream
