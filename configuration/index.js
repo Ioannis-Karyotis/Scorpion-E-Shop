@@ -4,7 +4,7 @@ module.exports = {
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_SECRET_ADMIN :process.env.JWT_SECRET_ADMIN,
   ADMIN_PASS : process.env.ADMIN_PASS,
-  SESSION_SECRET : process.env.JWT_SECRET_ADMIN,
+  SESSION_SECRET : process.env.SESSION_SECRET,
   PUBLIC_STRIPE: process.env.PUBLIC_STRIPE,
   SECRET_STRIPE: process.env.SECRET_STRIPE,
   WEBHOOK_SECRET : process.env.WEBHOOK_SECRET,
