@@ -1,0 +1,104 @@
+<%- include("./../partials/header")%>
+
+<div id="main" class="container main mb-5">
+	<div class="container-fluid my-4">
+		<div class="row  d-flex justify-content-around ">
+			<div class="col-md-9">
+				<div class="my-4" align="center">
+				<% if(orders.length == 0){ %>
+					<h3 align="center">Η παραγγελία σου έιναι στο παρελθόν </h3> 
+				<% } %>	
+				<% orders.forEach(function(order){ %>
+					<% if(order.confirm == false && order.complete == false) { %>
+						<h3>Η παραγγελία σας έχει καταχωρηθεί</h3>
+					<% } else if(order.confirm == true && order.complete == false) { %>
+						<h3>Έχουμε λάβει τη παραγγελία σας και την ετοιμάζουμε</h3>
+					<% } if(order.confirm == true && order.complete == true) { %>
+						<h3 style=" display: inline; ">Η παραγγελία σας είναι έτοιμη</h3>
+						<div style=" display: inline; " class="col-12 py-2 d-flex justify-content-center desc">
+							<img src="./../../images/check.png" width="30px" height="30px"alt="">
+						</div>
+						<% if(order.method == "Πληρωμή με κάρτα") { %>
+							<a href="<%= order.trackingLink %>">Δείτε που βρίσκεται ή παραγγελία σας</a>
+						<% } else { %>
+							<p>Μπορείτε να τη παραλλάβετε από το κατάστημα εντός των ωρών λειτουργίας</p>
+						<% } %>		
+					<% } %>
+					</div>
+					<div class="container-sm jumbotron-mini my-4" style="border: 1px solid grey;">
+					<div class="container-sm">
+						<div class="row mb-2 justify-content-start desc">
+							<h5><b>ID παραγγελίας: </b></h5><span class="ml-2" style="font-size: 16px;"> <%=order._id %></span>
+						</div>
+						<div class="row mb-2 d-flex justify-content-start">	
+							<span style="font-size: 14px;"><b>Ημερομηνία: </b><%=order.date %></span>
+						</div>	
+						<div class="row mb-2 d-flex justify-content-start">
+							<span style="font-size: 14px;" ><b>Μέθοδος: </b><%=order.method %></span>
+						</div>	
+					</div>	
+					<hr class="thin">
+					<div class="row d-flex justify-content-around">
+						
+						<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+							<p><b>Όνομα: </b><%= order.details.name %></p>
+							<p><b>Επίθετο: </b><%= order.details.surname %></p>	
+							<p><b>E-mail: </b><%= order.details.email %></p>
+							<p><b>Τηλέφωνο : </b><%= order.details.phone %></p>
+						</div>
+						<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+							<p><b>Διεύθυνση: </b><%= order.details.address.line1%></p>
+							<p><b>Πόλη: </b><%= order.details.address.city%></p>	
+							<p><b>Ταχ. Κώδικας: </b><%= order.details.address.zip%></p>
+							<p><b>Νομός: </b><%= order.details.address.state%></p>
+						</div>
+					</div>
+					<hr class="thin">
+					<div class="row mb-2 d-flex justify-content-start">
+						<%order.productList.forEach(function(productlist){%>
+							<div class="col-12 col-sm-12 col-md-12 col-lg-12  mb-2 d-flex justify-content-center">
+								<div class="mr-2" style="border-left: 1px solid grey; height: 100%;"></div>
+								<div class="row d-flex justify-content-center">
+									<div class="col-md-2 col-4 mb-2">
+										<%var seenOne = false %>
+										<% productlist.product.images.forEach(image => { %>
+											<% if (image.colorTag == productlist.color && seenOne == false) { %>
+												<a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>">
+													<img class="int-img" style="max-width:100%; max-height:100%;" src="<%=image.url %>" >
+												</a>
+												<%seenOne = true %>
+											<% } %>
+										<%});%>	
+									</div>
+									<div class="col-md-10 col-8">
+										<div class="row d-flex justify-content-center">
+											<div class="col-lg-6 col-12">
+												<p><b>Προϊόν: </b><a href="/products/<%=productlist.product.type%>/<%= productlist.product.code %>"><%= productlist.product.name%></a></p>
+												<p style="display: inline-block;"><b>Χρώμα: </b></p><div class="ml-2" style="background-color:<%=productlist.color%>;display: inline-block; width:15px; height:15px;"></div>
+												<p><b>Μέγεθος: </b><%=productlist.size%></p>
+											</div>
+											<div class="col-lg-6 col-12">
+												<p><b>Κωδικός: </b><%= productlist.product.code%></p>
+												<p><b>Ποσότητα: </b><%=productlist.quantity%></p>
+												<p><b>Τιμή: </b><%=productlist.product.price%> €</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr class="thin w-50">					
+						<%}) %>				
+					</div>
+					<div class="mb-1" align="center">
+						<h6><B>Έξοδα Αποστολής: </B> <%=order.exApostolis%> €</h6>
+						<h6><B>Έξοδα Αντικαταβολής: </B> <%=order.exAntikatavolis%> €</h6>
+						<hr  class="thin w-25">
+						<h4><B>Σύνολο: </B> <%=order.totalPrice%> €</h4>
+					</div>
+					</div>	
+				<%});%>
+			</div>
+		</div>	
+	</div>
+</div> 
+<%- include("./../partials/footer")%>

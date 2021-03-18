@@ -166,7 +166,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
               document.getElementById("errormsg").innerHTML = data.error.message;
               statusChange('failed');
           }else{
-            orderComplete(clientSecret);
+            orderComplete(clientSecret,data.orderId);
           }    
         })
       }else{
@@ -382,7 +382,7 @@ var pay =async function(stripe, card, clientSecret) {
               document.getElementById("errormsg").innerHTML = data.error.message;
               statusChange('failed');
             }else{
-              orderComplete(clientSecret);
+              orderComplete(clientSecret, data.orderId);
             }
           });  
       }
@@ -393,12 +393,13 @@ var pay =async function(stripe, card, clientSecret) {
 
 /* Shows a success message when the payment is complete */
 
-var orderComplete = function(clientSecret) {
+var orderComplete = function(clientSecret ,orderId) {
   if(!clientSecret){ //when the user just post data to the database
     document.querySelector(".chkout").classList.add("hidden");
     $('.circle-loader').toggleClass('load-complete');
     $('.checkmark').toggle();
     document.querySelector(".result2").classList.remove("hidden");
+    $('#ShowOrderSent').attr("href", "/showOrder/"+ orderId);
        
     changeLoadingState(false);
 
@@ -410,6 +411,7 @@ var orderComplete = function(clientSecret) {
       $('.circle-loader').toggleClass('load-complete');
       $('.checkmark').toggle();
       document.querySelector(".result").classList.remove("hidden");
+      $('#ShowOrderPay').attr("href", "/showOrder/"+ orderId);
 
       changeLoadingState(false);
     });

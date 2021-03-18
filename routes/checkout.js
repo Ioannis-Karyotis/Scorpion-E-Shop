@@ -69,9 +69,7 @@ function EmailSend(body){
             logger.error("Error: ",err)
 
           } else {
-            foundOrder.confirm = true;
             foundOrder.save();
-
             }
           })		
         }
@@ -88,8 +86,7 @@ router.post("/check_cart", middleware.checkOrigin ,middleware.calculateDatabaseP
 }) 
 
 router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabasePrice, middleware.validateCartOrderComplete, middleware.validateCartVariantsOrderComplete, sanitization.route, async function(req,res){
-
- 
+   
   var fullname = req.autosan.body.paymentIntent.shipping.name;
   var result = fullname.split(" ");
   var today = new Date();
@@ -106,6 +103,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
       confirm: false,
       complete: false,
       archived: false,
+      exAntikatavolis : 0,
       details :{
         name : result[0],
         surname: result[1],
@@ -117,8 +115,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           zip : req.autosan.body.paymentIntent.shipping.address.postal_code,
           state : req.autosan.body.paymentIntent.shipping.address.state
         }
-      }, 
-      totalPrice :  (req.autosan.body.paymentIntent.amount / 100)
+      }
     },
       async function(err, order){
         if(err){
@@ -130,6 +127,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
         } else {
           var products= cart.products;
           var product_ids = await Object.keys(products);
+          var totalPrice = 0;
           for(i=0; i<product_ids.length; i++){
             products[product_ids[i]].variants.forEach(function(item){
               var product = {
@@ -138,9 +136,17 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
                 size : item.size,
                 color : item.color
               }
-              totalPrice =+ product.quantity * product.product.price;
+              totalPrice += product.quantity * product.product.price;
               order.productList.push(product);
             })
+          }
+
+          if(totalPrice < 30){
+            order.exApostolis = 2.5;
+            order.totalPrice = totalPrice + 2.5 ;
+          }else{
+            order.exApostolis = 0;
+            order.totalPrice = totalPrice;
           }
 
           var mailBody = {
@@ -148,28 +154,32 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           }
 
           order.save();
-          
           EmailSend(mailBody);
+
+          var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
+          await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
+
+          req.session.cart = null;
+          req.session.productList = null
+          req.app.locals.specialContext = null;
+          res.clearCookie('stripe-gate');
+
+          res.header("x-api-key", req.session.xkey)
+          res.send({
+            result : "succeeded",
+            orderId : order._id
+          });
         }
       });
-
-  var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
-  await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
-
-  req.session.cart = null;
-  req.session.productList = null
-  req.app.locals.specialContext = null;
-  res.clearCookie('stripe-gate');
-
-  res.header("x-api-key", req.session.xkey)
-  res.send({result : "succeeded"});
 })
 
 router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, sanitization.route,async function(req,res){
   var method = "";
+  var exAntikatavolis = 0;
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
+    exAntikatavolis = 1.8;
     method = "Αποστολή με αντικαταβολή"
   }
 
@@ -187,12 +197,15 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
   cart = req.session.cart;
   var mailSent = false;
 
-  Order.create({
+  var orderId = null;
+
+  await Order.create({
       method : method,
         date : today,
         confirm: false,
         complete: false,
         archived: false,
+        exAntikatavolis : exAntikatavolis,
         details :{
           name : req.autosan.body.name,
           surname: req.autosan.body.surname,
@@ -225,9 +238,17 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
                 size : item.size,
                 color : item.color
               }
-              totalPrice =+ product.quantity * product.product.price;
+              totalPrice += product.quantity * product.product.price;
               order.productList.push(product);
             })
+          }
+
+          if(totalPrice < 30){
+            order.exApostolis = 2.5;
+            order.totalPrice = totalPrice + 2.5 + order.exAntikatavolis;
+          }else{
+            order.exApostolis = 0;
+            order.totalPrice = totalPrice + order.exAntikatavolis;
           }
 
           var mailBody = {
@@ -235,18 +256,20 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
           }
 
           order.save();
-
           EmailSend(mailBody);
+
+          req.session.cart = null;
+          req.session.productList = null
+          req.app.locals.specialContext = null;
+          res.clearCookie('stripe-gate');
+        
+          res.header("x-api-key", req.session.xkey)
+          res.send({
+            result : "succeeded",
+            orderId : order._id
+          });
         }  
-      });
-  
-      req.session.cart = null;
-      req.session.productList = null
-      req.app.locals.specialContext = null;
-      res.clearCookie('stripe-gate');
-    
-      res.header("x-api-key", req.session.xkey)
-      res.send({result : "succeeded"});
+      });  
 })
 
 

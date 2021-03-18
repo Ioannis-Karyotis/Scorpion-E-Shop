@@ -118,6 +118,7 @@ function qtyUpdate(){
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");
+	http.setRequestHeader("CSRF-Token", token);
 	http.send(data);
 
 	http.onreadystatechange = function(){
@@ -148,6 +149,7 @@ function removeProduct(){
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");
+	http.setRequestHeader("CSRF-Token", token);
 	http.send(data);
 
 	http.onreadystatechange = function(){
@@ -169,6 +171,7 @@ function quickRemoveProduct(event){
 	let data = JSON.stringify(params);
 	http.open("POST", url, true);
 	http.setRequestHeader("Content-Type", "application/json");
+	http.setRequestHeader("CSRF-Token", token);
 	http.send(data);
 
 	http.onreadystatechange = function(){

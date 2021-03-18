@@ -30,7 +30,9 @@ var OrderSchema = new mongoose.Schema({
       size : String,
       color : String,
     }],
-    extraFee: Number,
+    exApostolis: Number,
+    exAntikatavolis: Number,
+    trackingLink : String,
     totalPrice : Number
     
 });

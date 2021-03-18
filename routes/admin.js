@@ -39,6 +39,19 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
         next();
 })
 
+router.get("/ShowOrder/:id" , function(req, res){
+	Order.find({"_id" : req.params.id ,"archived" : false}).populate("productList.product").exec(function(err , foundOrders ){
+      	if(err){
+			logger.error("Error: ",err)
+      	}else{
+      		var orders = foundOrders.reverse();
+	        return res.render("showOrder", {orders : orders });
+	    }
+	});
+});
+
+
+
 router.get("/admin" ,passport.authenticate('jwtAdmin', { session: false }), function(req, res){
 	Order.find({ "archived" : false}).populate("productList.product").exec(function(err , foundOrders ){
       	if(err){
