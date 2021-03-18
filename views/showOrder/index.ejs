@@ -18,7 +18,7 @@
 						<div style=" display: inline; " class="col-12 py-2 d-flex justify-content-center desc">
 							<img src="./../../images/check.png" width="30px" height="30px"alt="">
 						</div>
-						<% if(order.method == "Πληρωμή με κάρτα") { %>
+						<% if(order.method == "Πληρωμή με κάρτα" || order.method == "Αποστολή με αντικαταβολή") { %>
 							<a href="<%= order.trackingLink %>">Δείτε που βρίσκεται ή παραγγελία σας</a>
 						<% } else { %>
 							<p>Μπορείτε να τη παραλλάβετε από το κατάστημα εντός των ωρών λειτουργίας</p>
