@@ -104,13 +104,13 @@ router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, pas
 });
 
 router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body , option: "mail2" } , function (err, data) {
+	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body.order , option: "mail2" } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
 	    } else {
 	        var mainOptions = {
 		  	from: String(config.EMAIL),
-		  	to: String(req.autosan.body.details.email),
+		  	to: String(req.autosan.body.order.details.email),
 		  	subject: 'Ολοκλήρωση παραγγελίας',
 		  	html : data,
 		  	attachments: attachments
@@ -119,11 +119,14 @@ router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, p
 			  	if (error) {
 					logger.error("Error: ",error)
 				} else {
-					Order.findById(req.autosan.body._id,function(err, foundOrder){
+					Order.findById(req.autosan.body.order._id,function(err, foundOrder){
 						if(err){
 							logger.error("Error: ",error)
 						} else {
 							foundOrder.complete = true;
+							if( req.autosan.body.link != null){
+								foundOrder.trackingLink = req.autosan.body.link;
+							}
 							foundOrder.save();
 							res.redirect("/admin");
 						}

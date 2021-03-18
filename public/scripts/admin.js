@@ -62,31 +62,66 @@ var verifyOrder =  async function(order){
 }
 
 var completeOrder = function(order){
-   	var txt;
-	var r = confirm("Are you sure");
-	if (r == true) {
-      var modal = document.getElementById("adminModal");
-      modal.style.display = "block";
-  		fetch("/admin/completeOrder", {
-        	method: "POST",  
-         	headers: {
-    			"Content-Type": "application/json",
-          'x-api-key': window.sessionStorage.getItem("x-api-key"),
-          'CSRF-Token': token
-  			},
-  			body: JSON.stringify(order)
-  		})
-        .then(function(result) {   
-          window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
-	        $('.circle-loader').toggleClass('load-complete');
-          $('.checkmark').toggle();
-          document.querySelector(".wait").classList.add("hidden");
-          document.querySelector(".result").classList.remove("hidden");
-          setTimeout(function() {
-            window.location.reload();
-          }, 2000);
-	    })
-	}
+  if(order.method != "Παραλαβή από το κατάστημα"){
+    var txt;
+    var r = prompt("Πληκτρολόγησε τον link tracking της παραγγελίας");
+    if (r != null && r.length > 10) {
+        var order2 = {
+          link : r,
+          order: order
+        }
+        var modal = document.getElementById("adminModal");
+        modal.style.display = "block";
+        fetch("/admin/completeOrder", {
+            method: "POST",  
+             headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
+          },
+          body: JSON.stringify(order2)
+        })
+          .then(function(result) {   
+            window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
+            $('.circle-loader').toggleClass('load-complete');
+            $('.checkmark').toggle();
+            document.querySelector(".wait").classList.add("hidden");
+            document.querySelector(".result").classList.remove("hidden");
+            setTimeout(function() {
+              window.location.reload();
+            }, 2000);
+        })
+    }
+  }else{
+    var txt;
+    var r = confirm("Are you sure");
+    if (r == true) {
+        var order2 = {
+          order: order
+        }
+        var modal = document.getElementById("adminModal");
+        modal.style.display = "block";
+        fetch("/admin/completeOrder", {
+            method: "POST",  
+             headers: {
+            "Content-Type": "application/json",
+            'x-api-key': window.sessionStorage.getItem("x-api-key"),
+            'CSRF-Token': token
+          },
+          body: JSON.stringify(order2)
+        })
+          .then(function(result) {   
+            window.sessionStorage.setItem('x-api-key',result.headers.get('x-api-key'));     
+            $('.circle-loader').toggleClass('load-complete');
+            $('.checkmark').toggle();
+            document.querySelector(".wait").classList.add("hidden");
+            document.querySelector(".result").classList.remove("hidden");
+            setTimeout(function() {
+              window.location.reload();
+            }, 2000);
+        })
+    }
+  }
 }
 
 

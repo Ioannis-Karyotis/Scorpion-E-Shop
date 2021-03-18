@@ -177,7 +177,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
   var method = "";
   var exAntikatavolis = 0;
   if(req.autosan.body.method==="3"){
-    method = "Παραλαβή από το κατάστημα"
+    method = "v"
   }else{
     exAntikatavolis = 1.8;
     method = "Αποστολή με αντικαταβολή"
