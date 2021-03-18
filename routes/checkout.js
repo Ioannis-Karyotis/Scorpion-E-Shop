@@ -45,8 +45,15 @@ function calculatePrice(ProductsPrice) {
   return finalPrice;
 }
 
-function EmailSend(body){
-  ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : body, type : "sent" } , function (err, data) {
+ async function EmailSend(orderId){
+
+  var err,foundOrder = await Order.findById(orderId).exec();
+
+  var mailBody = {
+    order : foundOrder
+  }
+
+  ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : mailBody, type : "sent" } , function (err, data) {
     if (err) {
     logger.error("Error: ",err)
 
@@ -149,13 +156,8 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
             order.totalPrice = totalPrice;
           }
 
-          var mailBody = {
-            order : order
-          }
-
-          order.save();
-          EmailSend(mailBody);
-
+          await order.save();
+          
           var paymentIntent =  objEncDec.decrypt(req.cookies["stripe-gate"]);
           await Untracked.deleteOne({paymentIntentId : paymentIntent.id});
 
@@ -163,6 +165,8 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           req.session.productList = null
           req.app.locals.specialContext = null;
           res.clearCookie('stripe-gate');
+
+          await EmailSend(order._id);
 
           res.header("x-api-key", req.session.xkey)
           res.send({
@@ -251,18 +255,15 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
             order.totalPrice = totalPrice + order.exAntikatavolis;
           }
 
-          var mailBody = {
-            order : order
-          }
-
-          order.save();
-          EmailSend(mailBody);
+          await order.save();
 
           req.session.cart = null;
           req.session.productList = null
           req.app.locals.specialContext = null;
           res.clearCookie('stripe-gate');
         
+          await EmailSend(order._id);
+
           res.header("x-api-key", req.session.xkey)
           res.send({
             result : "succeeded",
