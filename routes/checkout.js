@@ -49,6 +49,7 @@ function calculatePrice(ProductsPrice) {
 
   var err,foundOrder = await Order.findById(orderId).exec();
 
+  console.log(foundOrder);
   var mailBody = {
     order : foundOrder
   }
@@ -60,7 +61,7 @@ function calculatePrice(ProductsPrice) {
     } else {
       var mainOptions = {
         from: String(config.EMAIL),
-        to: String(body.order.details.email),
+        to: String(mailBody.order.details.email),
         subject: 'Λήψη παραγγελίας',
         html : data,
         attachments: attachments
@@ -70,15 +71,7 @@ function calculatePrice(ProductsPrice) {
         logger.error("Error: ",error)
 
         } else {
-        logger.info('Email sent: ' , info.response);
-          Order.findById(body.order._id,function(err, foundOrder){
-          if(err){
-            logger.error("Error: ",err)
-
-          } else {
-            foundOrder.save();
-            }
-          })		
+        logger.info('Email sent (Order Placement) to : ' + mailBody.order.details.email , info.response);		
         }
     });
     }  
@@ -181,7 +174,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
   var method = "";
   var exAntikatavolis = 0;
   if(req.autosan.body.method==="3"){
-    method = "v"
+    method = "Παραλαβή από το κατάστημα"
   }else{
     exAntikatavolis = 1.8;
     method = "Αποστολή με αντικαταβολή"
