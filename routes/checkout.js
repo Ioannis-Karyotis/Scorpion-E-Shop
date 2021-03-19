@@ -166,7 +166,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
           req.app.locals.specialContext = null;
           res.clearCookie('stripe-gate');
 
-          await EmailSend(order._id);
+          EmailSend(order._id);
 
           res.header("x-api-key", req.session.xkey)
           res.send({
@@ -262,7 +262,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
           req.app.locals.specialContext = null;
           res.clearCookie('stripe-gate');
         
-          await EmailSend(order._id);
+          EmailSend(order._id);
 
           res.header("x-api-key", req.session.xkey)
           res.send({
