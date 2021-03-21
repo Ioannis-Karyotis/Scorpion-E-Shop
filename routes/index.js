@@ -212,13 +212,13 @@ router.get('/auth/google', passport.authenticate('google', {scope: ['profile', '
 router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	  	function(req, res) {
+			console.log("tried login to google");
 	  		const token = signToken(req.user);
 	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
 				secure: true,
 	      		httpOnly: true
 	    	});
-			res.cookie('access_token', token);
 	    	res.redirect('/');
 	  	}
 );
