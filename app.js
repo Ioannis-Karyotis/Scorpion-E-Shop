@@ -72,6 +72,12 @@ const indexRoutes 	 = require("./routes/index"),
 	}
 });*/
 
+//Parsers
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser(require("./configuration/index").SESSION_SECRET));
+app.use(express.urlencoded());
+
 //Setup session
 var sess = {
 	secret: require("./configuration/index").SESSION_SECRET,
@@ -107,12 +113,6 @@ app.use(morgan('dev', { stream: accessLogStream }))
 
 //Use favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-//Parsers
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(express.urlencoded());
 
 //More configs
 app.use("/",express.static(__dirname + "/public"));
