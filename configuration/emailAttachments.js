@@ -32,7 +32,7 @@ module.exports =
         },
         {   
             filename: 'logo4.png',
-            path: './public/images/mail/logo4.png',
+            path: './public/images/mail/logo.png',
             cid: 'logo'
            }
     ];
