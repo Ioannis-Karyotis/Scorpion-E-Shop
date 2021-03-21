@@ -218,6 +218,7 @@ router.get('/auth/google/callback',
 				secure: true,
 	      		httpOnly: true
 	    	});
+			res.cookie('access_token', token);
 	    	res.redirect('/');
 	  	}
 );
