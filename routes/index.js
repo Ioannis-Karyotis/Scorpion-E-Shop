@@ -212,14 +212,14 @@ router.get('/auth/google', passport.authenticate('google', {scope: ['profile', '
 router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	  	function(req, res) {
-	  		const token = signToken(req.user);
-	  		req.session.user = req.user;
-			console.log(token);
-			res.cookie('access_token', token, {
-				secure: true,
-	      		httpOnly: true
-	    	});
-	    	res.redirect('/');
+			const token = signToken(req.user);
+			req.session.user = req.user;
+		  	res.cookie('access_token', token, {
+			  // expires: new Date(Date.now() + 10),
+			  secure: true,
+			  httpOnly: true
+		  	});
+		  res.redirect('/');
 	  	}
 );
 
