@@ -104,7 +104,7 @@ router.post("/admin/verifyOrder",sanitization.route, middleware.checkOrigin, pas
 });
 
 router.post("/admin/completeOrder",sanitization.route, middleware.checkOrigin, passport.authenticate('jwtAdmin', { session: false }), function(req, res){
-	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body.order , option: "mail2" } , function (err, data) {
+	ejs.renderFile(__dirname + "/../views/mail2.ejs",{order : req.autosan.body.order , option: "mail2", trackingLink : req.autosan.body.link } , function (err, data) {
 	    if (err) {
 			logger.error("Error: ",err)
 	    } else {
