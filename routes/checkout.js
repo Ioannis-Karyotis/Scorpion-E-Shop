@@ -47,9 +47,8 @@ function calculatePrice(ProductsPrice) {
 
  async function EmailSend(orderId){
 
-  var err,foundOrder = await Order.findById(orderId).exec();
+  var err,foundOrder = await Order.findById(orderId).populate("productList.product").exec();
 
-  console.log(foundOrder);
   var mailBody = {
     order : foundOrder
   }
