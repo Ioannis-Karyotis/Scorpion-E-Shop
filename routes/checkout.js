@@ -53,7 +53,7 @@ function calculatePrice(ProductsPrice) {
   var mailBody = {
     order : foundOrder
   }
-
+  console.log(foundOrder);
   ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : mailBody, type : "sent" } , function (err, data) {
     if (err) {
     logger.error("Error: ",err)
@@ -173,6 +173,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
 router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateDatabasePrice,middleware.validateCartOrderComplete,middleware.validateCartVariantsOrderComplete, sanitization.route,async function(req,res){
   var method = "";
   var exAntikatavolis = 0;
+
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
@@ -240,7 +241,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
             })
           }
 
-          if(totalPrice < 30){
+          if(totalPrice < 30 && method == "Αποστολή με αντικαταβολή"){
             order.exApostolis = 2.5;
             order.totalPrice = totalPrice + 2.5 + order.exAntikatavolis;
           }else{
