@@ -179,6 +179,7 @@ passport.use("google" , new GoogleStrategy({
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
         User.findOne({'google.id': profile.id}, async function(err, user){
+          console.log(user);
           if(err)
             return done(err);
           if(user)
