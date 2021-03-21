@@ -213,6 +213,7 @@ router.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login' }),
 	  	function(req, res) {
 			console.log("tried login to google");
+			logger.info("tried login to google");
 	  		const token = signToken(req.user);
 	  		req.session.user = req.user;
 	    	res.cookie('access_token', token, {
