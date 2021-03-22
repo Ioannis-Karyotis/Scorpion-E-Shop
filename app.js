@@ -137,12 +137,6 @@ app.use(passport.session());
 app.use(cors());
 app.use(csrf({ cookie: true }))
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "https://scorpionclothing.gr");
-	res.header("Access-Control-Allow-Credentials",true);
-	next();
-  });
-
 app.use(function(req, res, next){
 	console.log("access token : " + req.cookies['access_token']);
 	console.log("user : " + req.session.user);
