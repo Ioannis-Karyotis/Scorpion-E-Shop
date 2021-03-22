@@ -72,6 +72,29 @@ const indexRoutes 	 = require("./routes/index"),
 	}
 });*/
 
+//Setup session
+var sess = {
+	secret: require("./configuration/index").SESSION_SECRET,
+	name: 'session_id',
+    saveUninitialized: true,
+    resave: false,
+	proxy: true,
+    cookie: {
+	  httpOnly : true,
+      sameSite: 'strict',
+      maxAge: 3600000
+    },
+	store:	new mongoStore({	//for session
+		mongooseConnection: mongoose.connection
+	})
+}
+
+if (process.env.ENV == "production") {
+	app.set('trust proxy', 1) // trust first proxy
+	sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess));
 
 // create a rotating write stream
 var accessLogStream = rfs.createStream('Access.log', {
@@ -102,30 +125,6 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 //Mongoose connect
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
-
-//Setup session
-var sess = {
-	secret: require("./configuration/index").SESSION_SECRET,
-	name: 'session_id',
-    saveUninitialized: true,
-    resave: false,
-	proxy: true,
-    cookie: {
-	  httpOnly : true,
-      sameSite: 'strict',
-      maxAge: 3600000
-    },
-	store:	new mongoStore({	//for session
-		mongooseConnection: mongoose.connection
-	})
-}
-
-if (process.env.ENV == "production") {
-	app.set('trust proxy', 1) // trust first proxy
-	sess.cookie.secure = true // serve secure cookies
-}
-
-app.use(session(sess));
 
 //Seed with fake data
 //seedDB(); //seed the database with products

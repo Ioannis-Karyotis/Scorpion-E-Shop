@@ -3,9 +3,10 @@ const crypto = require('crypto');
 
 var UserSchema = new mongoose.Schema({
 	methods: {
-    type: String,
-    required: true
-  	},
+    	type: String,
+    	required: true
+  	},  
+	createdAt : Date,  
    	local: {
 		name: {
 			type: String,

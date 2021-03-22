@@ -84,6 +84,7 @@ router.post("/register",sanitization.route, middleware.namesur , middleware.emai
 	req.autosan.body = trimBody(req.autosan.body);
 	var newUser = new User({
 	methods: 'local',
+	createdAt : Date.now(),
 	local:{
 		name    : req.autosan.body.name,
 		surname : req.autosan.body.surname,

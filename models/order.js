@@ -4,6 +4,7 @@ var OrderSchema = new mongoose.Schema({
     paymentIntent: String ,
     method: String,
     date : String,
+    createdAt : Date,
     confirm: Boolean,
     complete : Boolean,
     archived : Boolean,

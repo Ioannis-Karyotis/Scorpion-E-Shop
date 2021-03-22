@@ -98,6 +98,7 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
   Order.create({
       paymentIntent: req.autosan.body.paymentIntent.id,
       method : "Πληρωμή με κάρτα",
+      createdAt : Date.now(),
       date : today,
       confirm: false,
       complete: false,
@@ -198,6 +199,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
 
   await Order.create({
       method : method,
+        createdAt : Date.now(),
         date : today,
         confirm: false,
         complete: false,

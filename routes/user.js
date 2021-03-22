@@ -72,7 +72,7 @@ router.get("/user/orders" ,passport.authenticate('jwt', { session: false }), fun
 				logger.error("Error: ", err);
 				res.redirect("back");
 			}	
-			Order.find({ 'details.email': foundUser[foundUser.methods].email , 'complete':false }).populate("productList.product").exec(function(err , foundOrders ){
+			Order.find({ 'details.email': foundUser[foundUser.methods].email , 'createdAt' : { $gt : foundUser.createdAt }, 'complete':false }).populate("productList.product").exec(function(err , foundOrders ){
 		      	if(err){
 					logger.error("Error: ", err);
 				}else{

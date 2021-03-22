@@ -157,6 +157,7 @@ passport.use("facebook" , new FacebookStrategy({
               newUser.facebook.email = profile.emails[0].value;
               newUser.facebook.profile = profile.photos[0].value;
               newUser.methods = 'facebook';
+              newUser.createdAt = Date.now();
               newUser.save(function(err){
                 if(err){
                   throw err;
@@ -207,6 +208,7 @@ passport.use("google" , new GoogleStrategy({
               newUser.google.surname = fullname[1];
               newUser.google.email = profile.emails[0].value;
               newUser.methods = 'google';
+              newUser.createdAt = Date.now();
               newUser.google.profile = profile.photos[0].value;
               newUser.save(function(err){
                 if(err){
