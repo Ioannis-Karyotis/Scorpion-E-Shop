@@ -1,6 +1,7 @@
 .env
 /public/images/**/
 #/public/images/
+/node_modules
 /node_modules/**/
 /node_modules/
 Logs.log

@@ -72,6 +72,8 @@ const indexRoutes 	 = require("./routes/index"),
 	}
 });*/
 
+const FileStore = require('session-file-store')(session); 
+
 //Setup session
 var sess = {
 	secret: require("./configuration/index").SESSION_SECRET,
@@ -84,9 +86,10 @@ var sess = {
       sameSite: 'strict',
       maxAge: 3600000
     },
-	store:	new mongoStore({	//for session
-		mongooseConnection: mongoose.connection
-	})
+	store : new FileStore
+	// store:	new mongoStore({	//for session
+	// 	mongooseConnection: mongoose.connection
+	// })
 }
 
 if (process.env.ENV == "production") {
