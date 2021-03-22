@@ -72,24 +72,21 @@ const indexRoutes 	 = require("./routes/index"),
 	}
 });*/
 
-const FileStore = require('session-file-store')(session); 
-
 //Setup session
 var sess = {
 	secret: require("./configuration/index").SESSION_SECRET,
 	name: 'session_id',
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false,
 	proxy: true,
     cookie: {
 	  httpOnly : true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 3600000
     },
-	store : new FileStore
-	// store:	new mongoStore({	//for session
-	// 	mongooseConnection: mongoose.connection
-	// })
+	store:	new mongoStore({	//for session
+		mongooseConnection: mongoose.connection
+	})
 }
 
 if (process.env.ENV == "production") {
