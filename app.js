@@ -76,7 +76,7 @@ const indexRoutes 	 = require("./routes/index"),
 var sess = {
 	secret: require("./configuration/index").SESSION_SECRET,
 	name: 'session_id',
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
 	proxy: true,
     cookie: {
