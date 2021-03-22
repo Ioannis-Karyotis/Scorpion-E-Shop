@@ -175,7 +175,6 @@ passport.use("google" , new GoogleStrategy({
       clientID: config.oauth.google.clientID,
       clientSecret: config.oauth.google.clientSecret,
       callbackURL: process.env.ROOT+"/auth/google/callback",
-      passReqToCallback: true,
       profileFields: ['id', 'emails', 'name']
     },
     function(accessToken, refreshToken, profile, done) {
