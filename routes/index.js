@@ -218,7 +218,7 @@ router.get('/auth/google/callback',
 			  secure: true,
 			  httpOnly: true
 		  	});
-		  res.redirect('/');
+		  	res.redirect('/');
 	  	}
 );
 
