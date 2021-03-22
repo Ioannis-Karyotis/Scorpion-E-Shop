@@ -199,7 +199,9 @@ router.get('/auth/facebook/callback',
 				secure: true,
 	      		httpOnly: true
 	    	});
-	    	res.redirect('/');
+	    	req.session.save(function(){
+				res.redirect('/');
+			});
 	  	}
 );
 
@@ -218,7 +220,10 @@ router.get('/auth/google/callback',
 			  secure: true,
 			  httpOnly: true
 		  	});
-		  	res.redirect('/');
+			req.session.save(function(){
+				res.redirect('/');
+			});
+		  	
 	  	}
 );
 

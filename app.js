@@ -134,7 +134,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Cors and Csrf
-//app.use(cors());
+app.use(cors());
 app.use(csrf({ cookie: true }))
 
 
