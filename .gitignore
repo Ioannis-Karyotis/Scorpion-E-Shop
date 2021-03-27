@@ -5,3 +5,4 @@ Logs.log
 Logs.txt
 /log
 /log/
+node_modules/
