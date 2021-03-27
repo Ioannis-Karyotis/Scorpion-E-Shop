@@ -236,24 +236,25 @@ app.use(function(req, res) {
 });
 
 //Handle 500
-app.use(function(error, req, res, next) {
-	console.log(configENV.EMAIL_ERRORS.EMAIL_ERRORS);
-	var mailOptions = {
-		from: String(configENV.EMAIL_ERRORS),
-		to: String(configENV.EMAIL_ERRORS),
-		subject: '500 error',
-		html: '<h5>Error Message: '+ error.message+'</h5><p><h3>Error: </h3>'+error+'</p>'
-	};
-	transporter.sendMail(mailOptions, function(error, info){
-		if (error) {
-		logger.error("Error: ", error);
-		} else {
-		logger.info("Email sent: ",  info.response);
-			logger.info("Error sent to private email");	
-		}
-	});
-  	res.status(500);
-	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
-});
+// app.use(function(error, req, res, next) {
+// 	console.log(configENV.EMAIL_ERRORS.EMAIL_ERRORS);
+// 	console.log(error);
+	// var mailOptions = {
+	// 	from: String(configENV.EMAIL_ERRORS),
+	// 	to: String(configENV.EMAIL_ERRORS),
+	// 	subject: '500 error',
+	// 	html: '<h5>Error Message: '+ error.message+'</h5><p><h3>Error: </h3>'+error+'</p>'
+	// };
+	// transporter.sendMail(mailOptions, function(error, info){
+	// 	if (error) {
+	// 	logger.error("Error: ", error);
+	// 	} else {
+	// 	logger.info("Email sent: ",  info.response);
+	// 		logger.info("Error sent to private email");	
+	// 	}
+	// });
+//   	res.status(500);
+// 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+// });
 
 module.exports = app;
