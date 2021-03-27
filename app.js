@@ -138,8 +138,6 @@ app.use(cors());
 app.use(csrf({ cookie: true }))
 
 app.use(function(req, res, next){
-	console.log("access token : " + req.cookies['access_token']);
-	console.log("user : " + req.session.user);
 	if((req.user == undefined && req.cookies['access_token'] != undefined) || (req.user == undefined && req.cookies['admin_token'] != undefined)){
 		req.session.user = undefined;
 		res.clearCookie('access_token');

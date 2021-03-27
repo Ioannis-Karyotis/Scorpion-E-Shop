@@ -15,3 +15,6 @@ sessions/
 sessions
 sessions/**/
 **/sessions
+
+package-lock.json
+package.json
