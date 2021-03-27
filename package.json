@@ -50,7 +50,7 @@
     "rotating-file-stream": "^2.1.5",
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
-    "sharp": "^0.27.0",
+    "sharp": "^0.27.2",
     "simple-node-logger": "^18.12.24",
     "stripe": "^8.49.0",
     "zoho-node-mailer": "^1.0.6"

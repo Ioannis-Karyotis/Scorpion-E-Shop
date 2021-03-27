@@ -31,7 +31,7 @@
 										<img src="<%=currentUser[currentUser.methods].profile%>" id="blah" alt="" class="blank mr-1" >
 									<%}%>
 					        	</div>
-						    	<form class="mt-4" action="/user/changeImage?_method=PUT" method="POST" enctype="multipart/form-data">
+						    	<form class="mt-4" action="/user/changeImage?_method=PUT&_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
 									<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 						        	<div class="col-12 justify-content-center" style="overflow:hidden;">
 						        		<input id="imgInp" type="file" name="profile_pic"required/>
