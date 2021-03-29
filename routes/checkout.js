@@ -52,7 +52,6 @@ function calculatePrice(ProductsPrice) {
   var mailBody = {
     order : foundOrder
   }
-  console.log(foundOrder);
   ejs.renderFile(__dirname + "/../views/mail.ejs",{msg : mailBody, type : "sent" } , function (err, data) {
     if (err) {
     logger.error("Error: ",err)

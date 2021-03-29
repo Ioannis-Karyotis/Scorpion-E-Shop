@@ -139,7 +139,6 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 	    }
 	    req.files.forEach(function(file){
 			var str = file.path;
-			console.log(str);
 		  	var str2 = str.replace("public", "");
 			var final = str2.replace(/\\/g,"/");
 			var last = final.split("/");
@@ -263,7 +262,6 @@ router.post("/products/:type/:id/deleteImage/:name" , middleware.checkOrigin, fu
 					var path = "./public/images/product_images/" + name;
 					var ext = name.split(".");
 					var pathSmall = "./public/images/product_images/" + ext[0] + "_small." + ext[1];
-					console.log(pathSmall);
 					await fs.unlink(path ,function(err){
 						if(err){
 							logger.error("Error: ", err);
@@ -392,12 +390,9 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 
 
 router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }), async function(req, res){
-	console.log(req.autosan.body);
 	req.autosan.body = trimBody(req.autosan.body);
 	sizesSearch = require('../configuration/sizesTables');
 	req.autosan.body.sizesTable = sizesSearch[req.params.type + "_" + req.autosan.body.kind];
-	console.log(req.autosan.body);
-	console.log(req.autosan.body.sizesTable);
 
 	let err,prdWithCurrentPosition = await Product.findOne({type : req.params.type, showing : req.autosan.body.showing });
 	let err2,prdToBeUpd = await Product.findOne({type : req.params.type, _id : req.params.id });

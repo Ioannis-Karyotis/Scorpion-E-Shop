@@ -30,7 +30,6 @@ $(document).ready(function() {
 // Inline EVENTS
 
 $('.goToProduct').click(function() {
-  console.log($( this ).attr('value'));
   window.location.replace($( this ).attr('value'));
 });
 
