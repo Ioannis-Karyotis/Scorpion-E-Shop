@@ -49,7 +49,7 @@ router.get("/contact" , function(req, res){
 });
 
 
-router.post("/contact",sanitization.route,middleware.namesur , middleware.email ,function(req, res){
+router.post("/contact",sanitization.route, middleware.checkConcent ,middleware.namesur , middleware.email ,function(req, res){
   req.autosan.body = trimBody(req.autosan.body);
 	var mailOptions = {
 	  from: String(config.EMAIL),

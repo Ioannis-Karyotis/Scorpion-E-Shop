@@ -487,6 +487,19 @@ middlewareObj.sameEmail = async function (req , res ,  next){
   }
 }
 
+
+middlewareObj.checkConcent = async function (req , res ,  next){
+
+  req.autosan.body = trimBody(req.autosan.body);
+  if(req.autosan.body.concent == "on"){
+    next();
+  }
+  else{
+    req.flash("regError","Παρακαλώ Συμφωνήστε με τους όρους");
+    res.redirect("back");
+  }
+}
+
 middlewareObj.checkOrigin = async function (req , res ,  next){
   if(req.session.xkey != undefined && req.header('x-api-key') != undefined && req.session.xkey == req.header('x-api-key')){
     req.session.xkey = crypto.randomBytes(20).toString("hex");
