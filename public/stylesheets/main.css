@@ -387,7 +387,9 @@ body {
   background-attachment: fixed;
   overflow-x: hidden;
   overflow-y: hidden;
+  zoom: 0.9;
 }
+
 li{
   white-space: nowrap;
 }
@@ -600,7 +602,7 @@ hr.normal{
 
 .redIndicator{
   position: absolute;
-  top:2px;
+  top:6px;
   right: 5px;
   border-radius: 50%;
   width:20px;
@@ -618,12 +620,12 @@ hr.normal{
   font-weight: 500;
   font-size: 0.9rem;
 }
-
+/* 
 #header-container{
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 0.95rem;
-}
+} */
 
 .nav-link span{
   color: #3A3A3A;
@@ -668,8 +670,10 @@ hr.normal{
   margin-bottom: -0.5rem !important;
 }
 #menu-nav{
-  opacity: 0.8;
+  z-index: 2;
+  font-size: large;
 }
+
 #menu-nav a span{
   color:#FFFFFF;
 }
@@ -726,7 +730,7 @@ hr.normal{
 
 #main.fixed-theme{
   position: relative;
-  margin-top: 2.5em;
+  margin-top: 4em;
 }
 #main.fixed-theme2{
   position: relative;
@@ -743,6 +747,11 @@ hr.normal{
   width:3.8em;
   height:3.8em;
   border-radius: 50%;
+}
+
+.toggler-position{
+  position: absolute;
+  left: 1em;
 }
 
 @media screen and (max-width:960px){
@@ -770,6 +779,8 @@ hr.normal{
     display: none;
   }
 }
+
+
 
 /*==============*/
 /* Landing Page */
@@ -2314,12 +2325,6 @@ display: block;
     position: absolute;
     left:5em;
   }
-
-  #logo-bck img{
-    width:200px;
-    height: 50px;
-  }
-
   .or{
     display: block;
   }
@@ -2329,3 +2334,12 @@ display: block;
     font-size: 1rem;
   }
 }
+
+@media screen 
+   and (max-width : 480px) {
+
+    #logo-bck img{
+      width:230px;
+      height: 55px;
+    }
+  }

@@ -159,6 +159,7 @@ app.use(function(req, res, next){
 	res.locals.genSuccess  = req.flash("genSuccess");
 	res.locals.nonce 	   = crypto.randomBytes(16).toString("hex");
 	res.locals.csrfToken   = req.csrfToken();
+	res.locals.isProduction = process.env.ENV == "production" ? true : false
 	
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	next();
@@ -184,6 +185,7 @@ app.use((req, res, next) => {
 					"https://fonts.gstatic.com/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
 					"https://d3ulg9qjp0u8a7.cloudfront.net/c2/css/2.3.5.css",
+					"https://cdn.jsdelivr.net/gh/fitodac/bsnav@master/dist/bsnav.min.css",
 					"'unsafe-inline'"],
 		"img-src": ["'self'","data:","https://scorpionclothing.gr/",
 				"https://platform-lookaside.fbsbx.com/platform/profilepic/",
