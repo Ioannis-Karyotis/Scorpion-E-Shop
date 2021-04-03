@@ -183,6 +183,7 @@ app.use((req, res, next) => {
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css",
 					"https://fonts.gstatic.com/",
 					"http://netdna.bootstrapcdn.com/font-awesome/3.2.1/font/",
+					"https://d3ulg9qjp0u8a7.cloudfront.net/c2/css/2.3.5.css"
 					"'unsafe-inline'"],
 		"img-src": ["'self'","data:","https://scorpionclothing.gr/",
 				"https://platform-lookaside.fbsbx.com/platform/profilepic/",
