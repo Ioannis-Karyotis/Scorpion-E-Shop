@@ -187,7 +187,9 @@ app.use((req, res, next) => {
 		"img-src": ["'self'","data:","https://scorpionclothing.gr/",
 				"https://platform-lookaside.fbsbx.com/platform/profilepic/",
 				"https://lh3.googleusercontent.com/"],
-		"script-src": [`'nonce-${res.locals.nonce}'`,"https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js"],
+		"script-src": [`'nonce-${res.locals.nonce}'`,
+						"https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js",
+						"https://cookiehub.net/c2/fc60c124.js"],
 		"object-src" : ["'none'"],
 		"base-uri" : ["'self'"]
 		}
