@@ -439,9 +439,9 @@ hr.normal{
 }
 
 #content-wrap {
-  position: relative;
+
   padding-bottom: 20rem;
-  overflow-x: hidden;
+
 }
 
 .form-group input{
@@ -575,7 +575,7 @@ hr.normal{
 }
 
  #content-wrap {
-    position: relative;
+
     padding-bottom: 12em;
   }
 
@@ -895,7 +895,7 @@ hr.normal{
   padding:20px 20px;
   border-radius: 5px;
   color:white;
-  text-align: center;
+  text-align: left;
   font-size: large;
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                  0px 8px 13px rgba(0,0,0,0.1),
@@ -929,6 +929,10 @@ hr.normal{
   transform: scale(1.1);
 }
 
+.text-landing{
+  font-size: large;
+}
+
 @media screen and (max-width:1550px){
   .content{
     position: absolute;
@@ -936,7 +940,7 @@ hr.normal{
     top:8em;
     right:2em;
     color:white;
-    text-align: center;
+    text-align: left;
     font-size: medium;
     text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                   0px 8px 13px rgba(0,0,0,0.1),
@@ -945,19 +949,19 @@ hr.normal{
 
   .projects-section {
     box-shadow: 0px 12px 6px 7px rgba(0,0,0,0.67);
-    margin-top: -30em;
+    margin-top: -40em;
   }
 }  
 
 
-@media screen and (max-width:1200px){
+@media screen and (max-width:1300px){
   .content{
     position: absolute;
     width: 35em;
     top:8em;
     right:5em;
     color:white;
-    text-align: center;
+    text-align: left;
     font-size: small;
       text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                    0px 8px 13px rgba(0,0,0,0.1),
@@ -990,14 +994,17 @@ hr.normal{
   top:8em;
   right: 1em;
   color:white;
-  text-align: center;
+  text-align: left;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
                  0px 8px 13px rgba(0,0,0,0.1),
                  0px 18px 23px rgba(0,0,0,0.1);
 }
+.text-landing{
+  font-size: medium;
+}
 .projects-section {
   box-shadow: 0px 12px 6px 7px rgba(0,0,0,0.67);
-  margin-top: -30em;
+  margin-top: -25em;
 }
  .content-contact{
     position:absolute;
@@ -2019,8 +2026,7 @@ display: block;
 @media screen and (max-width:960px){
   
   #content-wrap {
-    overflow-y: hidden;
-    position: relative;
+
     padding-bottom: 13em;
   }
 
@@ -2042,8 +2048,6 @@ display: block;
 @media screen and (max-width:768px){
   
   #content-wrap {
-    overflow-y: hidden;
-    position: relative;
     padding-bottom: 34rem;
   }
 

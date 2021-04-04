@@ -1,5 +1,5 @@
 .env
-#/public/images/**/
+/public/images/**/
 #/public/images/
 Logs.log
 Logs.txt
