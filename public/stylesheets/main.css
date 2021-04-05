@@ -2395,6 +2395,21 @@ display: block;
 @media screen 
    and (max-width : 480px) {
 
+    .ninety{
+      width:100%;
+      border-radius: 0px;
+    }
+    
+    .product{
+      width:100%;
+      border-radius: 0px;
+    }
+
+    .container-fluid
+    {
+      padding: 0 0;
+    }
+
     #logo-bck img{
       width:230px;
       height: 55px;
