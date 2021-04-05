@@ -933,6 +933,10 @@ hr.normal{
   font-size: large;
 }
 
+.card-land-img{
+  width: 75%!important;
+}
+
 @media screen and (max-width:1550px){
   .content{
     position: absolute;
@@ -2403,6 +2407,10 @@ display: block;
     .product{
       width:100%;
       border-radius: 0px;
+    }
+
+    .card-land-img{
+      width: 100%!important;
     }
 
     .container-fluid
