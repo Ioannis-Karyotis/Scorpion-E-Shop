@@ -60,11 +60,11 @@
                         
                         <div name="color" class="colors col-6" align="center">
                           <ul>
-                            <div class="row d-flex justify-content-start" align="center">
+                            <div class="row d-flex justify-content-around" align="center">
                               <% product.colors.forEach(function(match,i) { %>
                               <% if(match.colorStatus!="hidden"){ %>
                               <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
-                                <li class="mx-auto mr-1">
+                                <li class="mx-auto">
                                   <label>
                                     <input class="radioColorThumb" type="radio" name="color" value="<%= product._id %>_<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                                     <span class="swatch-mini-2" style="background-color:<%= match.colorHex %>"></span>
