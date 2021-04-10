@@ -15,6 +15,7 @@ const express 		= require("express"),
 	  path 			= require('path'),
 	  sanitization	= require('express-autosanitizer'),
 	  productsNames = require('../configuration/productNames'),
+	  productsTypesDescription = require('../configuration/productTypeDescriptions'),
 	  logger        = require('simple-node-logger').createSimpleLogger('Logs.log'),
 	  bouncer 		= require ("express-bouncer")(900000, 900000, 2),
 	  sizes 		= require('../configuration/sizes');
@@ -102,9 +103,9 @@ router.get("/products/:type", function(req, res, next){
 	      			}
 				}
 		    	if (!admin) {
-		    		return	res.render("products", {products : showing , allProducts: foundProducts, pages : pages, page : req.query.page, name : productsNames[wantedType], admin :null,type: req.params.type });
+		    		return	res.render("products", {products : showing , allProducts: foundProducts, pages : pages, page : req.query.page, name : productsNames[wantedType], typeDesc: productsTypesDescription[wantedType] , admin :null,type: req.params.type });
 		    	}
-		        return res.render("products", {products : showing , allProducts: foundProducts ,pages : pages, page : req.query.page, name : productsNames[wantedType], admin : "admin" , type: req.params.type});
+		        return res.render("products", {products : showing , allProducts: foundProducts ,pages : pages, page : req.query.page, name : productsNames[wantedType], typeDesc: productsTypesDescription[wantedType], admin : "admin" , type: req.params.type});
 	    	})(req , res, next)
 	    }
 	});
