@@ -300,11 +300,11 @@ function goToImageThumb(imageId){
 }
 
 function goToImageShow(imageId){
-  classes = document.getElementsByClassName("modal_"+imageId);
-  var image = classes[0].getAttribute("value");
-  var res = image.split("_");
-  $('#carouselExampleIndicators').carousel(parseInt(res[1]));
+  classes = document.getElementsByClassName(imageId);
+  image = classes[0].getAttribute("value");
+  $('.carousel').carousel(parseInt(image));
 }
+
 
 
 $("#imgInp").change(function(){
