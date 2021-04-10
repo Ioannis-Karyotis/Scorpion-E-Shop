@@ -38,7 +38,7 @@
                           ">
                           <% } %>
                           <img class="d-block w-100 card-img-top" src="<%=product.images[key].urlSmall %>" style="border-radius:0px;cursor: pointer;" alt="">
-                          <span class="thumbCarousel_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
+                          <span class="thumbCarousel_<%= product._id %>_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
                         </div>
                         <% }) %>
                       </div>
@@ -66,7 +66,7 @@
                               <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                                 <li class="mx-auto">
                                   <label>
-                                    <input class="radioColorThumb" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
+                                    <input class="radioColorThumb" type="radio" name="color" value="<%= product._id %>_<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                                     <span class="swatch-mini-2" style="background-color:<%= match.colorHex %>"></span>
                                   </label>
                                 </li>
@@ -76,7 +76,8 @@
                             </div>
                           </ul>
                         </div>
-                        
+                      </div>
+                      <div class="col-11 d-flex justify-content-end">
                         <p style="font-size:large;"><%=product.price %>€</p>
                       </div>
                       <div class="col-12 d-flex justify-content-center">
@@ -144,7 +145,7 @@
                   <% Object.keys(product.images).forEach(function(key) { %>
                     <div class="col-11 pb-2 ml-2">
                       <img data-target="#carouselExampleControls_<%= product._id %>" data-slide-to="<%=key%>" class="mini-images" src="<%=product.images[key].urlSmall %>" alt="">
-                      <span class="modal_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
+                      <span class="modal_<%= product._id %>_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
                     </div>
                   <% }); %> 
                 </div>
@@ -225,7 +226,7 @@
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
                           <label>
-                            <input class="radioColor" form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
+                            <input class="radioColor" form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= product._id %>_<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                             <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
                           </label>
                         </li>
