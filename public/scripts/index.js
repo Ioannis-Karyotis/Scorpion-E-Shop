@@ -11,6 +11,10 @@ $(document).ready(function() {
             h: window.screen.height
         },
         success: function(data, textStatus, request){
+            if(window.sessionStorage.getItem('widthDefined') == false || window.sessionStorage.getItem('widthDefined') == null){
+                window.sessionStorage.setItem('widthDefined',true);
+                location.reload();
+            }
             window.sessionStorage.setItem('x-api-key',request.getResponseHeader('x-api-key'));  
         },
     });

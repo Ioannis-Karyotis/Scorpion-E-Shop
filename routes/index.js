@@ -60,8 +60,17 @@ router.get("/secret" ,passport.authenticate('jwt', { session: false }), function
 });
 
 
-router.get("/",  function(req, res){
-	res.render("landing");
+router.get("/", async function(req, res){
+	var err,recommendedP = await Product.find({"status": "active" }).sort({"rating": -1}).limit(8).exec();
+
+	var n = 4;
+	if(req.session.width <= 775){
+		n = 1;
+	}
+	var recommendedResult = new Array(Math.ceil(recommendedP.length / n))
+	.fill()
+	.map(_ => recommendedP.splice(0,n));
+	res.render("landing", { recommended : recommendedResult });
 });
 
 //======================

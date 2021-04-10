@@ -1424,6 +1424,17 @@ display: block;
   border-radius: 50%;
   border: 1px solid #d4d4d4;
 }
+
+.swatch-mini-2{
+  display:inline-block;
+  vertical-align: middle;
+  height: 30px;
+  width:30px;
+  margin: 0 2px 0 0 ;
+  border-radius: 0%;
+  border: 1px solid #d4d4d4;
+}
+
 .mini-images{
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1);
   border-radius: 5px;
