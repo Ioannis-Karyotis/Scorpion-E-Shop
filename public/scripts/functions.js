@@ -272,4 +272,9 @@ $( ".quantity" ).change(function(e) {
 	qtyUpdate();
 });
 
+$('.goToProduct').click(function() {
+	window.location.replace($( this ).attr('value'));
+});
+  
+
 // InLineScripts
