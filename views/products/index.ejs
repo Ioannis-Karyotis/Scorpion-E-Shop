@@ -27,7 +27,8 @@
                 <div class="card" style="box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.1); border-radius: 5px; border: 4px solid white;" >
                   <%} %>
                   <div id="open<%= product._id %>" class="openProductModal product-img" value="product_modal_<%=product._id%>">
-                    <div class="carousel slide" data-interval="false">
+
+                    <div id="thumbCarousel_<%= product._id %>" class="carousel slide" data-interval="false">
                       <div class="carousel-inner">
                         <% Object.keys(product.images).forEach(function(key) { %>
                         <div class="carousel-item modal-carousel
@@ -36,12 +37,12 @@
                           <% } else{ %>
                           ">
                           <% } %>
-                          <img class="d-block w-100 card-img-top" src="<%=product.images[key].urlSmall %>" style="border-radius:0px;cursor: pointer;">
+                          <img class="d-block w-100 card-img-top" src="<%=product.images[key].urlSmall %>" style="border-radius:0px;cursor: pointer;" alt="">
+                          <span class="thumbCarousel_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
                         </div>
                         <% }) %>
                       </div>
                     </div>
-                    <!-- <img src="<%=product.images[0].urlSmall %>"> -->
                     <div class="middle">
                       <div class="text" style="z-index: -1!important;cursor: pointer;">Προβολή</div>
                     </div>
@@ -55,10 +56,8 @@
                         <p><b><%= product.name %></b></p>
                         <% } %>
                       </div>
-                      <div class="col-12 d-flex justify-content-end">
-                        <p style="font-size:large;"><%=product.price %>€</p>
-                      </div>
-                      <div class="col-12 d-flex justify-content-center">
+                      <div class="col-12 d-flex justify-content-around">
+                        
                         <div name="color" class="colors col-6" align="center">
                           <ul>
                             <div class="row d-flex justify-content-center" align="center">
@@ -67,7 +66,7 @@
                               <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                                 <li class="mx-auto">
                                   <label>
-                                    <input class="radioColor" form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
+                                    <input class="radioColorThumb" form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                                     <span class="swatch-mini-2" style="background-color:<%= match.colorHex %>"></span>
                                   </label>
                                 </li>
@@ -77,6 +76,8 @@
                             </div>
                           </ul>
                         </div>
+                        
+                        <p style="font-size:large;"><%=product.price %>€</p>
                       </div>
                       <div class="col-12 d-flex justify-content-center">
                         <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product.code%>">
@@ -143,7 +144,7 @@
                   <% Object.keys(product.images).forEach(function(key) { %>
                     <div class="col-11 pb-2 ml-2">
                       <img data-target="#carouselExampleControls_<%= product._id %>" data-slide-to="<%=key%>" class="mini-images" src="<%=product.images[key].urlSmall %>" alt="">
-                      <span class="<%= product.images[key].colorTag %>" value="<%=key %>" hidden></span>
+                      <span class="modal_<%= product.images[key].colorTag %>" value="<%= product._id %>_<%=key %>" hidden></span>
                     </div>
                   <% }); %> 
                 </div>

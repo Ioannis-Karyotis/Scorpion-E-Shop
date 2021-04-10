@@ -56,6 +56,14 @@ $('.radioColor').click(function(){
   goToImage($(this).val());
 });
 
+$('.radioColorThumb').click(function(){
+  goToImageThumb($(this).val());
+});
+
+$('.radioColorShow').click(function(){
+  goToImageShow($(this).val());
+});
+
 $('.deleteColor').click(function(){
   var val = $(this).val().split(",");;
   deleteColor(val[0],val[1],val[2]);
@@ -276,11 +284,28 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 function goToImage(imageId){
-  classes = document.getElementsByClassName(imageId);
-  image = classes[0].getAttribute("value");
-  $('.carousel').carousel(parseInt(image));
+  classes = document.getElementsByClassName("modal_"+imageId);
+  var image = classes[0].getAttribute("value");
+  var res = image.split("_");
+  $('#carouselExampleControls_' + res[0]).carousel(parseInt(res[1]));
 }
+
+function goToImageThumb(imageId){
+  classes = document.getElementsByClassName("thumbCarousel_"+imageId);
+  var image = classes[0].getAttribute("value");
+  var res = image.split("_");
+  $('#thumbCarousel_' + res[0]).carousel(parseInt(res[1]));
+}
+
+function goToImageShow(imageId){
+  classes = document.getElementsByClassName("modal_"+imageId);
+  var image = classes[0].getAttribute("value");
+  var res = image.split("_");
+  $('#carouselExampleIndicators').carousel(parseInt(res[1]));
+}
+
 
 $("#imgInp").change(function(){
     readURL(this);
