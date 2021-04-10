@@ -48,7 +48,7 @@
                     </div>
                   </div>
                   <div class="card-footer">
-                    <div class="row">
+                    <div class="row d-flex justify-content-center">
                       <div class="col-12 d-flex justify-content-center" style="white-space: pre;">
                         <% if(product.name.length > 18){%>
                         <p><b><%= product.name.slice(0,15); %>...</b></p>
@@ -56,11 +56,11 @@
                         <p><b><%= product.name %></b></p>
                         <% } %>
                       </div>
-                      <div class="col-12 d-flex justify-content-center">
+                      <div class="col-11 d-flex justify-content-between px-4" align="center">
                         
                         <div name="color" class="colors col-6" align="center">
                           <ul>
-                            <div class="row d-flex justify-content-center" align="center">
+                            <div class="row d-flex justify-content-start" align="center">
                               <% product.colors.forEach(function(match,i) { %>
                               <% if(match.colorStatus!="hidden"){ %>
                               <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
@@ -76,10 +76,11 @@
                             </div>
                           </ul>
                         </div>
-                      </div>
-                      <div class="col-11 d-flex justify-content-end">
                         <p style="font-size:large;"><%=product.price %>€</p>
                       </div>
+                      <!-- <div class="col-11 d-flex justify-content-end">
+                        
+                      </div> -->
                       <div class="col-12 d-flex justify-content-center">
                         <a class="btn btn-primary btn-block btn-lg" href="/products/<%=product.type %>/<%=product.code%>">
                           Λεπτομερειες
