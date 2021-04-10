@@ -25,7 +25,7 @@
                   <%} %>
                   <div id="open<%= product._id %>" class="openProductModal product-img" value="product_modal_<%=product._id%>">
 
-                    <div id="thumbCarousel_<%= product._id %>" class="carousel slide" data-interval="false">
+                    <div id="thumbCarousel_<%= product._id %>" class="carousel slide noSwipe" data-interval="false">
                       <div class="carousel-inner">
                         <% Object.keys(product.images).forEach(function(key) { %>
                         <div class="carousel-item modal-carousel
