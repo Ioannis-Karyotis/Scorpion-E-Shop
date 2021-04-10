@@ -227,7 +227,7 @@
                       <div class="col-3 col-sm-3 d-flex justify-content-center" align="center" >
                         <li class="mx-auto">
                           <label>
-                            <input class="radioColor" form="form_modal_<%= product._id %>" type="radio" name="color" value="<%= product._id %>_<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
+                            <input class="radioColor" form="form_modal_<%= product._id %>" type="radio" name="color" alt="<%= product._id %>_<%= match.colorHex %>" value="<%= match.colorHex %>" <% if(i==0) {%> checked="checked" <% } %>>
                             <span class="swatch-mini" style="background-color:<%= match.colorHex %>"></span>
                           </label>
                         </li>

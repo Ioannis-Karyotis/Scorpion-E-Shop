@@ -53,7 +53,7 @@ $('.hideSize').click(function(){
 });
 
 $('.radioColor').click(function(){
-  goToImage($(this).val());
+  goToImage($(this).attr( "alt" ));
 });
 
 $('.radioColorThumb').click(function(){
