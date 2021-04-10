@@ -134,6 +134,36 @@ router.get("/login",middleware.user ,function(req,res){
 router.post('/login', bouncer.block, sanitization.route, passport.authenticate('local', { failWithError: true }),
 	function(req, res, next) {
 		// handle success
+		const token = signToken(req.user);
+		res.cookie('access_token', token, {
+			secure : true,
+			httpOnly: true,
+			maxAge: 2* 60 * 60 * 1000
+
+		});
+		bouncer.reset(req);
+		req.flash("genSuccess","You Successfully Logged In");
+		req.session.user = req.user;
+		req.session.save(function(){
+			res.redirect('/user');
+		});
+	},
+	function(err, req, res, next) {
+		// handle error
+		req.flash("error","Το E-mail ή ο κωδικός δεν είναι σωστά");
+		res.redirect('back');
+	}
+);
+
+
+router.get("/nexus/lol/whatever/mustnotsee",middleware.user ,function(req,res){
+	res.render("admin-login");
+});
+
+
+router.post('/nexus/lol/whatever/mustnotsee', bouncer.block, sanitization.route, passport.authenticate('localAdmin', { failWithError: true }),
+	function(req, res, next) {
+		// handle success
 		if(req.user.local.priviledge == "Admin"){
 			logger.info("Admin has logged in!!!");
 			const token = signAdminToken(req.user);
@@ -147,20 +177,6 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 			req.session.save(function(){
 				res.redirect('/admin');
 			});
-		}else{
-			const token = signToken(req.user);
-			res.cookie('access_token', token, {
-				secure : true,
-				httpOnly: true,
-				maxAge: 2* 60 * 60 * 1000
-	
-			});
-			bouncer.reset(req);
-			req.flash("genSuccess","You Successfully Logged In");
-			req.session.user = req.user;
-			req.session.save(function(){
-				res.redirect('/user');
-			});
 		}
 	},
 	function(err, req, res, next) {
@@ -169,6 +185,7 @@ router.post('/login', bouncer.block, sanitization.route, passport.authenticate('
 		res.redirect('back');
 	}
 );
+
 
 
 

@@ -232,16 +232,29 @@ passport.use('local', new LocalStrategy({
   email =  email.trim();
   password = password.trim();
   process.nextTick(function(){
+    User.findOne({ "local.email" : email }, function(err,user){
+      if(!user || !user.validatePassword(password)) {
+        user={};
+        return done(null, false);
+      }else{
+        logger.info("Logged in as user");
+        return done(null, user);
+      }
+    });
+  });
+}));
+  
+passport.use('localAdmin', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+}, function (email, password, done){
+  email =  email.trim();
+  password = password.trim();
+  process.nextTick(function(){
     Admin.findOne({"local.email" : email}, function(err,admin){
       if(!admin || !admin.validatePassword(password)){
-        User.findOne({ "local.email" : email }, function(err,user){
-          if(!user || !user.validatePassword(password)) {
-            user={};
-            return done(null, false);
-          }
-          logger.info("Logged in as user");
-          return done(null, user);
-        });
+        user={};
+        return done(null, false);
       }else{
         logger.info("Logged in as admin");
         return done(null,admin);

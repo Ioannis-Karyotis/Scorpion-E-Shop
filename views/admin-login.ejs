@@ -4,16 +4,16 @@
     <div class="row my-4">
         <div class="col-12  d-flex justify-content-center py-5">
             
-            <form action="/login" class="col-lg-6" method="post">
+            <form action="/nexus/lol/whatever/mustnotsee" class="col-lg-6" method="post">
                 <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                 <div class="desc">
-                    <h1 class='pb-3'>Είσοδος</h1>
+                    <h1 class='pb-3'>Είσοδος Διαχειρηστή</h1>
 
                     <div class="form-group mx-1">
                         <span class="d-flex align-items-center">    
                             <input type="text" name="email" class="form-control mr-3" placeholder="E-mail" required>
                             <i class="fas fa-info-circle fa-lg ">
-                                <div class="tooltiptext">Εισάγετε το ήδη υπάρχον E-mail σας</div>
+                                <div class="tooltiptext">Εισάγετε το ήδη υπάρχον E-mail Διαχειρηστή</div>
                             </i>
                         </span> 
                     </div>
@@ -21,7 +21,7 @@
                         <span class="d-flex align-items-center">    
                             <input type="password" name="password" class="form-control mr-3" placeholder="Password" required>
                             <i class="fas fa-info-circle fa-lg">
-                                <div class="tooltiptext">Εισάγετε το μυστικό κωδικό σας</div>
+                                <div class="tooltiptext">Εισάγετε το μυστικό κωδικό Διαχειρηστή</div>
                             </i>
                         </span> 
                     </div>
@@ -29,7 +29,6 @@
                         <button class="btn btn-primary mr-3" type="submit">Login</button>
                     </div>
                 </div>
-                <a href="/fpass">Ξέχασες το κωδικό σου?</a>
                 <% if(error&& error.length > 0){ %>
                     <div class="alert alert-danger mr-3 my-4 desc" role="alert">
                         <%= error %>
@@ -39,17 +38,7 @@
                     <div class="alert alert-success mr-3 my-4 desc" role="alert">
                         <%= genSuccess %>
                     </div>
-                <%}%>
-
-                <hr class="thick mr-3">
-                <div class='desc mr-3'>
-                    <h5>Δεν έχεις λογαριασμό;</h5>
-                    <h5>Κάνε <a href="/register">Εγγραφή</a> </h5>
-                    <h5>αλλιώς συνδέσου μέσω</h5>
-                    <a href="/auth/facebook" class="btn btn-primary facebook"><span><i class="fab fa-facebook-f fa-lg pr-2"></i></span>  Facebook</a>
-                    <span class="px-2 or">ή</span>
-                    <a href="/auth/google" class="btn btn-danger google"><span><i class="fab fa-google fa-lg pr-2"></i></span> Google</a>
-                </div>            
+                <%}%>         
             </form>
             
         </div>
