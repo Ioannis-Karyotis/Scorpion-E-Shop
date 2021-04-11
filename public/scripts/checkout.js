@@ -264,14 +264,14 @@ var setupElements = function(data) { // Set up Stripe.js and Elements to use in 
   var style = {
     base: {
       iconColor: '#666EE8',
-      color: '#313231',
+      color: '#000000',
       lineHeight: '60px',
       fontWeight: 500,
       fontFamily: 'Helvetica Neue',
       fontSize: '14px',
 
       '::placeholder': {
-        color: '#CFD7E0',
+        color: '#25323f',
       }
     },
     invalid: {

@@ -104,7 +104,15 @@
 							<div id="card-element" class="chk-field"></div>
 						</label>
 					</div>
-					<div class="sr-field-error desc" style="color:red;"></div>	
+					<div class="sr-field-error desc" style="color:red;"></div>
+					<div class="w-100 row d-flex justify-content-center mt-4">
+						<div class="col-10">
+							<p align="justify">* Οι Online πληρωμές γίνονται μέσω της Υπηρεσίας Stripe. Χρησιμοποιήται κρυπτογράφηση 256-bit ώστε τα στοιχεία της κάρτας να παραμένουν ασφαλή</p>	
+						</div>
+						<div class="col-6 mx-auto">
+							<img align="center" src="./../../images/Stripe-Logo.png" style="width:200px; height:100px" alt="">
+						</div>
+					</div>
 					<div class="payment ">
 						<button type="submit" id="finalPay" class="btn btn-primary">
 		            		<span id="button-text-pay">Πληρωμη</span>
@@ -119,8 +127,8 @@
 
 
 
-<div id="main" class="container main mb-5">
-    <div class="row pt-3 pb-3 mx-auto my-4" >
+<div id="main" class="ninety mx-auto main mb-5 px-lg-5">
+    <div class="row pt-3 pb-3 mx-auto my-4 px-lg-5" >
     <%if(session.productList && session.productList.length > 0){ %>
     	<div class="col-lg-6 order-lg-2 mx-auto pb-5" align="center">
 		    <div class="shopping-cart container-fluid">
@@ -175,7 +183,15 @@
 							<B>Σύνολο Προϊόντων :</B>
 						</div>
 						<div class="col-5" align="right">
-							<span class="mx-4"><%=session.cart.totalPrice.toFixed(1)%> €</span>
+							<span class="mx-4"><%= (session.cart.totalPrice - (session.cart.totalPrice * 0.24 )).toFixed(2) %> €</span>
+						</div>
+					</div>
+					<div class="row d-flex justify-content-end">
+						<div class="col-7" align="right">
+							<B>Φ.Π.Α :</B>
+						</div>
+						<div class="col-5" align="right">
+							<span class="mx-4"><span style="float:left;">+</span> <%= (session.cart.totalPrice * 0.24).toFixed(2) %> €</span>
 						</div>
 					</div>
 					<div id="antikatavoli" class="row d-flex justify-content-end" hidden>
@@ -184,7 +200,7 @@
 						</div>
 						<div class="col-5" align="right">
 							<% antikatavoli = 1.8;  %>
-							<span class="mx-4">+ <%= antikatavoli %> €</span>
+							<span class="mx-4"><span style="float:left;">+</span> <%= antikatavoli.toFixed(2) %> €</span>
 						</div>
 					</div>
 					<% if(discount == false) { %>
@@ -194,7 +210,7 @@
 						</div>
 						<div class="col-5" align="right">
 							<% shipping = 2.5;  %>
-							<span class="mx-4">+ <%= shipping %> €</span>
+							<span class="mx-4"><span style="float:left;">+</span> <%= shipping.toFixed(2) %> €</span>
 						</div>
 					</div>
 					<%}else{%>
@@ -204,7 +220,7 @@
 							</div>
 							<div class="col-5" align="right">
 								<% shipping = 2.5;  %>
-								<span class="mx-4">-  <s><%= shipping %> €</s></span>
+								<span class="mx-4"><span style="float:left;">+</span>  <s><%= shipping.toFixed(2) %> €</s></span>
 							</div>
 						</div>
 					<% } %>
@@ -237,12 +253,12 @@
 					</div>
 				</div>
 				<div class="container mt-5 d-flex justify-content-center">
-					<img src="./../../images/Stripe-Logo.png" class="w-50 h-50" alt="">
-					<img src="./../../images/elta-logo.png" class="ml-4" alt="">
+					<img src="./../../images/Stripe-Logo.png" style="width:200px; height:100px" alt="">
+					<img src="./../../images/elta-logo.png" class="ml-5 mt-2" style="width:140px; height:100px" alt="">
 				</div>
 			</div>	
         </div>	
-    	<div class="col-lg-6 order-lg-1 mx-auto d-flex justify-content-center pb-3">
+    	<div class="col-lg-6 order-lg-1 mx-auto d-flex justify-content-center pb-3 px-lg-5">
 			<form id="payment-form" class="chkout">
 				<input type="hidden" name="_csrf" value="<%=csrfToken%>">
 				<h4 class="mx-auto" align="center">Φόρμα πληρωμής</h4>
@@ -303,7 +319,7 @@
 					</label>
 					<label>
 						<span>Νομός</span>
-						<input id="state" name="state" class="chk-field" placeholder="Μακεδονία" value="<%= validated.state %>" />
+						<input id="state" name="state" class="chk-field" placeholder="Θεσσαλονίκης" value="<%= validated.state %>" />
 					</label>
 				</div>
 				

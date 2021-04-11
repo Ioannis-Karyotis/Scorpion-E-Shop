@@ -192,7 +192,7 @@ app.use((req, res, next) => {
 				"https://lh3.googleusercontent.com/",
 				"http://localhost:3000/"],
 		"script-src": [`'nonce-${res.locals.nonce}'`,
-						"https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-9cf6818a8cc69f2c5311a01d85d95c32.js",
+						"https://js.stripe.com/v3/",
 						"https://cookiehub.net/c2/fc60c124.js",
 						"https://scripts.sirv.com/sirvjs/v3/components/zoomapi.js",
 						"https://scripts.sirv.com/sirvjs/v3/components/lazyimage.js",
