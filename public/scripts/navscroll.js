@@ -66,15 +66,17 @@ function offSetManager(){
 
     if(yOffset < currYOffSet) {
         myNavBar.add();
-        document.getElementById("scrollToTop").classList.remove("d-flex");
-        document.getElementById("scrollToTop").classList.remove("d-block");
-        document.getElementById("scrollToTop").classList.add("d-none")
+        document.getElementById("scrollToTop").classList.add("d-flex");
+        document.getElementById("scrollToTop").classList.add("d-block");
+        document.getElementById("scrollToTop").classList.add("fade-in");
+        document.getElementById("scrollToTop").classList.remove("d-none")
     }
     else if(currYOffSet = yOffset){
         myNavBar.remove();
-        document.getElementById("scrollToTop").classList.add("d-flex");
-        document.getElementById("scrollToTop").classList.add("d-block");
-        document.getElementById("scrollToTop").classList.remove("d-none")
+        document.getElementById("scrollToTop").classList.remove("d-flex");
+        document.getElementById("scrollToTop").classList.remove("d-block");
+        document.getElementById("scrollToTop").classList.remove("fade-in");
+        document.getElementById("scrollToTop").classList.add("d-none");
     }
 
 }
