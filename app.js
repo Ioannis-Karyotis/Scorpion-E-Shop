@@ -245,20 +245,20 @@ app.get('/Terms_Of_Service' ,function(req, res){
 })
 
 
-app.get("/feed-sizes", function(req, res){
-	Product.find({}, function(err , foundProducts ){
-		if(err){
-		  logger.error("Error: ", err);
-		  res.json({ok : 'not ok'});	
-		}else{
-			foundProducts.forEach((prd) => {
-				prd.sizes = sizes
-				prd.save();
-			})
-			res.json({ok : 'ok'});	
-		}
-	});
-});
+// app.get("/feed-sizes", function(req, res){
+// 	Product.find({}, function(err , foundProducts ){
+// 		if(err){
+// 		  logger.error("Error: ", err);
+// 		  res.json({ok : 'not ok'});	
+// 		}else{
+// 			foundProducts.forEach((prd) => {
+// 				prd.sizes = sizes
+// 				prd.save();
+// 			})
+// 			res.json({ok : 'ok'});	
+// 		}
+// 	});
+// });
 
 // Handle 401 withi 404
 app.use(function(req, res) {

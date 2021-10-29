@@ -43,7 +43,7 @@ function removeLoader(){
 	
 	var i=0;
 	setInterval(function(){
-		var titles=[ 'Μη ξεχνάς 👇','Βιοτεχνία Scorpion'];//add more titles if you want
+		var titles=[ 'Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών','Βιοτεχνία Scorpion'];//add more titles if you want
 		if(i===titles.length) {
 			i=0;
 		}
