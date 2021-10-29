@@ -1,5 +1,8 @@
 module.exports = {
-    shirt : 'Μπλούζα',
-    pants : 'Παντελόνι',
-    oneSize : 'One Size'
+    t_shirt : 'T-Shirt',
+    footer : 'Φούτερ',
+    footer_stratiwtika : 'Στατιωτικό Φούτερ',
+    kolan : 'Κολάν',
+    isothermika : 'Ισοθερμικό',
+    unisize : 'Unisize'
   }

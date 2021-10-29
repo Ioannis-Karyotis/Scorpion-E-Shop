@@ -208,16 +208,13 @@
                   <table class="table table-bordered" style="table-layout:inherit;margin: 0;">
                     <thead>
                       <tr>
-                        <th>cm</th>
-                        <th>S</th>
-                        <th>M</th>
-                        <th>L</th>
-                        <th>XL</th>
-                        <th>XXL</th>
+                        <% product.sizesTable[0].forEach(element => { %>
+                          <th><%= element %></th>
+                        <% }); %> 
                       </tr>
                     </thead>
                     <tbody>
-                      <% product.sizesTable.forEach(row => { %>
+                      <% product.sizesTable.slice(1).forEach(row => { %>
                         <tr>
                           <% row.forEach(element => { %>
                             <td><%= element %></td>
@@ -239,13 +236,29 @@
             <div class="container">
 
               <button class="btn btn-primary w-100" style="border-radius: 0px; box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                  Φροντιδα
+                  πληροφοριες φροντιδας
               </button>
 
               <div class="collapse show" id="collapseExample">
                 <div class="card card-body w-100"  style="padding: 0 0;">
+                  <h5 align="start" class="container pt-2">
+                    <b>Ισοθερμικά, Φούτερ, Κολάν, T-shirts</b>
+                  </h5>
                   <p align="justify" class="container pt-2">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, rem dicta! Rem natus reiciendis accusamus earum nulla hic aliquam repudiandae ut iusto? Assumenda, suscipit error fugit rerum impedit eaque deleniti vitae aliquam fuga ex non, tempore voluptatibus doloremque unde eveniet a harum totam. Quisquam itaque quas nemo molestiae perspiciatis libero corrupti dignissimos voluptatum odit placeat, accusamus vel molestias magni voluptatibus ad dolore quae alias, recusandae ducimus rem. Dicta, veniam? Ut nisi, minus deleniti nemo, laboriosam illum sapiente vitae quidem pariatur blanditiis dignissimos provident harum suscipit tempore? Maxime nostrum, ea eligendi aperiam assumenda corrupti. Excepturi voluptas quos consectetur vero ullam assumenda?
+                    Πλύσιμο στους 40°C και ελαφρύ στύψιμο. Κανονικό σιδέρωμα.
+                  </p>
+                  <h5 align="start" class="container pt-2">
+                    <b>Tie Dyes</b>
+                  </h5>
+                  <p align="justify" class="container pt-2">
+                    Το πρώτο πλύσιμο θα πρέπει να γίνει στους 30°C. Τα επόμενα πλυσίματα θα μπορούν να γίνουν και στους 40°C στο πλυντήριο. Συνιστάται ελαφρύ στύψιμο και σιδέρωμα μέσα-έξω (inside-out) μετά το ξέπλυμα. 
+                  </p>
+                  <h6  align="start" class="container pt-2" style="color:red"><u>Σημαντικές Πληροφορίες</u></h6>
+                  <p align="justify" class="container pt-2">
+                    Για όλα τα ρούχα τύπου Tie Dyes, σημειώνεται πως το τελικό σχέδιο κάθε κωδικού, ενδέχεται να διαφέρει ελάχιστα στο χρωματισμό και στο σχέδιο, από αυτό που εμφανίζεται στη φωτογραφία. Αυτό μπορεί να προκύψει από το γεγονός, πως κάθε ρούχο βάφεται ξεχωριστά στο χέρι.
+                  </p>
+                  <p align="justify" class="container pt-2">
+                    Τέλος, σημειώνεται πως τα ρούχα που διαθέτουν στάμπα, πρέπει να σιδερώνονται σε όλες τις επιφάνειες εκτός απο αυτή του σχεδίου της στάμπας.
                   </p>
                 </div>
               </div>    

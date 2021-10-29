@@ -30,6 +30,7 @@ const express 		= require("express"),
 	nodemailer   	= require('nodemailer'),
 	dotenv        	= require('dotenv'),
 	logger        	= require('simple-node-logger').createSimpleLogger('Logs.log'),
+	sizes 		    = require('./configuration/sizes');
 	transporter = nodemailer.createTransport
 	  ({
 		host: "smtp.zoho.eu",
@@ -244,6 +245,21 @@ app.get('/Terms_Of_Service' ,function(req, res){
 })
 
 
+app.get("/feed-sizes", function(req, res){
+	Product.find({}, function(err , foundProducts ){
+		if(err){
+		  logger.error("Error: ", err);
+		  res.json({ok : 'not ok'});	
+		}else{
+			foundProducts.forEach((prd) => {
+				prd.sizes = sizes
+				prd.save();
+			})
+			res.json({ok : 'ok'});	
+		}
+	});
+});
+
 // Handle 401 withi 404
 app.use(function(req, res) {
 	res.status(404);
@@ -278,5 +294,6 @@ app.use(function(error, req, res, next) {
   	res.status(500);
 	res.render('500.ejs', {title:'500: Internal Server Error', error: error});
 });
+
 
 module.exports = app;

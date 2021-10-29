@@ -21,6 +21,10 @@ module.exports =
             sizeStatus: "active",
         },
         {
+            size : "3XL",
+            sizeStatus: "active",
+        },
+        {
             size : "Unisize",
             sizeStatus: "active",
         }

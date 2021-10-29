@@ -130,7 +130,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.showing = countTypes;
 
 		sizesSearch = require('../configuration/sizesTables');
-		newProduct.sizesTable = sizesSearch[req.params.type + "_" + newProduct.kind];
+		newProduct.sizesTable = sizesSearch[newProduct.kind];
 
 		if (req.fileValidationError) {
         return res.send(req.fileValidationError);
@@ -393,7 +393,7 @@ router.get("/products/:type/:id/edit",passport.authenticate('jwtAdmin', { sessio
 router.put("/products/:type/:id/edit" ,sanitization.route, passport.authenticate('jwtAdmin', { session: false }), async function(req, res){
 	req.autosan.body = trimBody(req.autosan.body);
 	sizesSearch = require('../configuration/sizesTables');
-	req.autosan.body.sizesTable = sizesSearch[req.params.type + "_" + req.autosan.body.kind];
+	req.autosan.body.sizesTable = sizesSearch[req.autosan.body.kind];
 
 	let err,prdWithCurrentPosition = await Product.findOne({type : req.params.type, showing : req.autosan.body.showing });
 	let err2,prdToBeUpd = await Product.findOne({type : req.params.type, _id : req.params.id });

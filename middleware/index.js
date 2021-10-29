@@ -65,12 +65,11 @@ middlewareObj.addPrd = async function (req , res ,  next){
         description : req.body.description,
         type : req.params.type,
         reviews: [],
-          rating: 0,
-          size : sizes,
-            colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
-            sizes: sizes,
-          reviewCount: 0,
-          status : "active"
+        rating: 0,
+        size : sizes,
+        colors: {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex},
+        reviewCount: 0,
+        status : "active"
       });
   await newProduct.save();
   req.id = newProduct._id;

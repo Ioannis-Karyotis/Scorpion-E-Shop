@@ -52,9 +52,9 @@
 						<select name="type" class="form-control mr-3" placeholder="Είδος Ρούχου"  required>
 							<% Object.keys(productTypes).forEach(function(key,index){ %>
 							<% if(product.type == key) {%>
-								<option value="<%=key %>" selected><%=key %></option>
+								<option value="<%=key %>" selected><%= productTypes[key] %></option>
 							<% }else { %>
-								<option value="<%=key %>"><%=key %></option>
+								<option value="<%=key %>"><%= productTypes[key] %></option>
 							<% } %> 
 							<% }); %> 
 						</select>
@@ -72,9 +72,9 @@
 							<option value="oneSize">One Size</option> -->
 							<% Object.keys(clothTypes).forEach(function(key,index){ %>
 							<% if(product.kind == key) {%>
-								<option value="<%=key %>" selected><%=key %></option>
+								<option value="<%=key %>" selected><%=clothTypes[key] %></option>
 							<% }else { %>
-								<option value="<%=key %>"><%=key %></option>
+								<option value="<%=key %>"><%=clothTypes[key] %></option>
 							<% } %> 
 							<% }); %> 
 						</select>
