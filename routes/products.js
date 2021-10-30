@@ -125,6 +125,7 @@ router.post("/products/:type/add",passport.authenticate('jwtAdmin', { session: f
 		newProduct.colors =  {color : req.body.color ,colorStatus: "active", colorHex : req.body.colorHex};
 		newProduct.code =  req.body.code;
 		newProduct.kind = req.body.kind;
+		newProduct.sizes = sizes;
 
 		let errCount,countTypes = await Product.count({type : req.params.type});
 		newProduct.showing = countTypes;
