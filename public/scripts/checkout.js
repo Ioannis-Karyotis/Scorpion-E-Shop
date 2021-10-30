@@ -50,7 +50,7 @@ $( ".quitModal" ).click(function(e) {
 });
 //Inline Scripts
 
-var stripe
+var stripe = 'pk_test_ukUnozz4Gh9b2hqg2rG1hDg200cvX20EWL';
 
 var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
