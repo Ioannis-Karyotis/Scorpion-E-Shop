@@ -50,7 +50,7 @@ $( ".quitModal" ).click(function(e) {
 });
 //Inline Scripts
 
-var stripe = Stripe('pk_test_ukUnozz4Gh9b2hqg2rG1hDg200cvX20EWL');;
+var stripe;
 
 var orderData = { //orderData are being used for creating the Payment Intent
   currency: "eur"
@@ -212,6 +212,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             document.getElementById("errormsg").innerHTML = data.error.message;
             statusChange('failed');
           }else{
+            console.log(data);
             return setupElements(data); //Setup the the card element along with the order data that were sent to the server
           }
         })
@@ -258,8 +259,9 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
   });  
 });
 
-var setupElements = function(data) { // Set up Stripe.js and Elements to use in checkout form
-  stripe = stripe;
+var setupElements = async function(data) { // Set up Stripe.js and Elements to use in checkout form
+  console.log(data);
+  stripe = Stripe(data.publishableKey);
   var elements = stripe.elements();
   var style = {
     base: {
