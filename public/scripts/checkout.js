@@ -215,7 +215,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
             return setupElements(data); //Setup the the card element along with the order data that were sent to the server
           }
         })
-        .then(function({ stripe, card, clientSecret, id }) {
+        .then(function({ stripe, card, clientSecret}) {
           changeLoadingState(false);
           var form = document.getElementById("payment-form2");
           form.addEventListener("submit", function(event2) { 
@@ -259,7 +259,7 @@ form.addEventListener("submit", function(event) { //Trigger the following event 
 });
 
 var setupElements = function(data) { // Set up Stripe.js and Elements to use in checkout form
-  stripe = Stripe(data.publishableKey);
+  stripe = stripe;
   var elements = stripe.elements();
   var style = {
     base: {
