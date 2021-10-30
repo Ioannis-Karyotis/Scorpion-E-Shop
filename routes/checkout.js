@@ -346,7 +346,7 @@ router.post("/create-payment-intent",sanitization.route,middleware.checkOrigin ,
 	  res.header("x-api-key", req.session.xkey)
     // Send publishable key and PaymentIntent details to client
     res.send({
-      publishableKey: PUBLIC_STRIPE,
+      publishableKey: stripepk,
       clientSecret: paymentIntent.client_secret
     });
   }
