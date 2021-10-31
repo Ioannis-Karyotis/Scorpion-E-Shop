@@ -11,7 +11,6 @@ $( ".showInputs2" ).click(function(e) {
 $( ".deleteProfile" ).click(function(e) {
 
   var val = $(this).val().split(",");
-  console.log(val);
   deleteProfile(val[0],val[1]);
 });
 

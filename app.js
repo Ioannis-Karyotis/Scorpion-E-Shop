@@ -268,13 +268,8 @@ app.use(function(req, res) {
 
 //Handle 500
 app.use(function(error, req, res, next) {
-	console.log("=============================")
 	logger.error(req);
-	console.log(req);
-	console.log("=============================")
 	logger.error(req.body);
-	console.log(req.body);
-	console.log("=============================")
 	logger.error(error);
 	console.log(error);
 	var mailOptions = {

@@ -1,6 +1,6 @@
 $('#page-container').append('<div class="d-flex justify-content-center align-items-center" id="loadingDiv"><div class="circle-loader"><div class="checkmark draw"></div><div class="status draw"></div></div></div>');
 $(window).on('load', function(){
-	document.title = 'Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών' ;
+	document.title = 'Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών Θεσσαλονίκη' ;
   	setTimeout(removeLoader, 0); //wait for page load PLUS two seconds.
 });
 
@@ -43,7 +43,7 @@ function removeLoader(){
 	
 	var i=0;
 	setInterval(function(){
-		var titles=[ 'Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών','Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών'];//add more titles if you want
+		var titles=[ 'Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών Θεσσαλονίκη','Scorpion Clothing | Βιοτεχνία Θερμοεσώρουχων, Στρατιωτικών Ειδών, Τie Dyes και Custom Επιλογών Θεσσαλονίκη'];//add more titles if you want
 		if(i===titles.length) {
 			i=0;
 		}
