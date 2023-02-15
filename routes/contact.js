@@ -15,7 +15,10 @@ const express 	    = require("express"),
           auth: {
             user:  String(config.EMAIL),
             pass: String(config.EMAIL_PASSWORD)
-          }
+          },
+          tls: {
+            rejectUnauthorized: false
+          }  
         });
 
 router.use(function(req, res, next) {

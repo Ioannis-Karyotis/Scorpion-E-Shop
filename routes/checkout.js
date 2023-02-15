@@ -25,6 +25,9 @@ const express 			  = require("express"),
         auth: {
           user:  String(config.EMAIL),
           pass: String(config.EMAIL_PASSWORD)
+        },
+        tls: {
+          rejectUnauthorized: false
         }
       }),
 	  attachments	= require('./../configuration/emailAttachments');
@@ -37,8 +40,8 @@ res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal
 })
 
 function calculatePrice(ProductsPrice) {
-  var exodaApostol = 2.5
-  if(ProductsPrice >= 30){
+  var exodaApostol = 4.0;
+  if(ProductsPrice >= 60){
     exodaApostol = 0
   }
   finalPrice = (ProductsPrice + exodaApostol) * 100;
@@ -140,9 +143,9 @@ router.post("/post_order", middleware.checkOrigin ,middleware.calculateDatabaseP
             })
           }
 
-          if(totalPrice < 30){
-            order.exApostolis = 2.5;
-            order.totalPrice = totalPrice + 2.5 ;
+          if(totalPrice < 60){
+            order.exApostolis = 4.0;
+            order.totalPrice = totalPrice + 4.0 ;
           }else{
             order.exApostolis = 0;
             order.totalPrice = totalPrice;
@@ -176,7 +179,7 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
   if(req.autosan.body.method==="3"){
     method = "Παραλαβή από το κατάστημα"
   }else{
-    exAntikatavolis = 1.8;
+    exAntikatavolis = 3.0;
     method = "Αποστολή με αντικαταβολή"
   }
 
@@ -241,9 +244,9 @@ router.post("/post_order_sent", middleware.checkOrigin ,middleware.calculateData
             })
           }
 
-          if(totalPrice < 30 && method == "Αποστολή με αντικαταβολή"){
-            order.exApostolis = 2.5;
-            order.totalPrice = totalPrice + 2.5 + order.exAntikatavolis;
+          if(totalPrice < 60 && method == "Αποστολή με αντικαταβολή"){
+            order.exApostolis = 4.0;
+            order.totalPrice = totalPrice + 4.0 + order.exAntikatavolis;
           }else{
             order.exApostolis = 0;
             order.totalPrice = totalPrice + order.exAntikatavolis;
@@ -408,7 +411,7 @@ router.get('/delete_cookie',  middleware.checkOrigin , function (req, res){
 
 router.get('/checkout', middleware.validateCart, middleware.validateCartVariants , function (req, res){
   var discount = false;
-  if(req.session.cart !=null && req.session.cart.totalPrice >= 30){
+  if(req.session.cart !=null && req.session.cart.totalPrice >= 60){
     discount = true;
   }
 

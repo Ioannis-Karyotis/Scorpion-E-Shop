@@ -39,7 +39,10 @@ const express 		= require("express"),
 		auth: {
 		  user:  String(configENV.EMAIL_ERRORS),
 		  pass: String(configENV.EMAIL_PASSWORD_ERRORS)
-		}
+		},
+		tls: {
+			rejectUnauthorized: false
+		}  
 	  });
 
 dotenv.config();
@@ -125,7 +128,7 @@ app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 //Mongoose connect
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
+mongoose.connect("mongodb://127.0.0.1/Scorpion",{ useNewUrlParser: true, useUnifiedTopology:true  });
 
 //Seed with fake data
 //seedDB(); //seed the database with products

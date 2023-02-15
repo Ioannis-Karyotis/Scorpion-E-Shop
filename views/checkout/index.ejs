@@ -32,7 +32,7 @@
 					<a id="ShowOrderPay" style="float: right" class="relocate btn btn-primary mt-2" href="">Προβολη παραγγελιας</a>	
 	  			</div>
 				<div class="desc result2 hidden">
-					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς.Σας έχει αποσταλεί e-mail στην ηλεκτρονική διέυθυνση που δηλώσατε</h5>
+					<h5 style="display: inline-block;">Η παραγγελία σας κατοχυρώθηκε επιτυχώς. Σας έχει αποσταλεί e-mail στην ηλεκτρονική διέυθυνση που δηλώσατε</h5>
 					<h3 class="mt-5"  style="display: inline-block;">Σας ευχαριστούμε</h3><br>
 					<a id="ShowOrderSent" style="float: right"class="relocate btn btn-primary mt-2" href="">Προβολη παραγγελιας</a>	
 	  			</div>
@@ -108,7 +108,7 @@
 					<div class="sr-field-error desc" style="color:red;"></div>
 					<div class="w-100 row d-flex justify-content-center mt-4">
 						<div class="col-10">
-							<p align="justify">* Οι Online πληρωμές γίνονται μέσω της Υπηρεσίας Stripe. Χρησιμοποιήται κρυπτογράφηση 256-bit ώστε τα στοιχεία της κάρτας να παραμένουν ασφαλή</p>	
+							<p>* Οι Online πληρωμές γίνονται μέσω της Υπηρεσίας Stripe. Χρησιμοποιείται κρυπτογράφηση 256-bit ώστε τα στοιχεία της κάρτας να παραμένουν ασφαλή</p>	
 						</div>
 						<div class="col-6 mx-auto">
 							<img align="center" src="./../../images/Stripe-Logo.png" style="width:200px; height:100px" alt="">
@@ -200,7 +200,7 @@
 							<B>Έξοδα αντικαταβολής :</B>
 						</div>
 						<div class="col-5" align="right">
-							<% antikatavoli = 1.8;  %>
+							<% antikatavoli = 3.0;  %>
 							<span class="mx-4"><span style="float:left;">+</span> <%= antikatavoli.toFixed(2) %> €</span>
 						</div>
 					</div>
@@ -210,7 +210,7 @@
 							<B>Έξοδα Αποστολής :</B>
 						</div>
 						<div class="col-5" align="right">
-							<% shipping = 2.5;  %>
+							<% shipping = 4.0;  %>
 							<span class="mx-4"><span style="float:left;">+</span> <%= shipping.toFixed(2) %> €</span>
 						</div>
 					</div>
@@ -220,7 +220,7 @@
 								<B>Έξοδα Αποστολής :</B>
 							</div>
 							<div class="col-5" align="right">
-								<% shipping = 2.5;  %>
+								<% shipping = 4.0;  %>
 								<span class="mx-4"><span style="float:left;">+</span>  <s><%= shipping.toFixed(2) %> €</s></span>
 							</div>
 						</div>

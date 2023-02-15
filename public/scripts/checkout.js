@@ -91,11 +91,11 @@ function getTotalPrice(){
   var productsTotal = parseFloat(document.getElementById("productsPrice").innerHTML);
 
   if(document.getElementById("antikatavoli").hasAttribute("hidden") == false){
-    antikatavoli = 1.8;
+    antikatavoli = 3.0;
   }
 
   if(document.getElementById("discount").innerHTML == "false" && document.getElementById("exodaApostol").hasAttribute("hidden") == false){
-    exodaApostol = 2.5;
+    exodaApostol = 4.0;
   }
   var all = productsTotal + antikatavoli + exodaApostol;
   document.getElementById("totalPrice").innerHTML = all.toFixed(1) + " €"
